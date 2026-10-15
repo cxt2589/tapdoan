@@ -22,24 +22,20 @@
 ## 🏛️ DANH SÁCH BỘ MÁY CHUYÊN VIÊN CHUYÊN TRÁCH (SPECIALIST ROSTER)
 
 ### 1. 🚢 Ban Lãnh Đạo & Điều Phối Khối XNK (Executive Leadership)
-* **`import-export-specialist` (Managing Director / Head of Trade):** Tổng chỉ huy mảng ngoại thương, hoạch định chiến lược nhập khẩu/xuất khẩu, phê duyệt phương án thông quan và tối ưu chi phí tổng thể.
-* **`xnk-executive-secretary`:** Thư ký điều hành — Ghi chép biên bản giao dịch, quản lý tiến độ Purchase Order (PO), theo dõi lịch tàu (ETD/ETA), cập nhật trạng thái tờ khai hải quan.
+* **`import-export-specialist` (Giám đốc Điều hành Khối XNK):** Tổng chỉ huy mảng ngoại thương, hoạch định chiến lược chuỗi cung ứng, phê duyệt phương án thông quan và tối ưu chi phí tổng thể.
+* **Thư ký Khối XNK:** Thư ký điều hành — Ghi chép biên bản giao dịch, quản lý tiến độ Purchase Order (PO), theo dõi lịch tàu (ETD/ETA), cập nhật trạng thái tờ khai hải quan.
 
-### 2. 🔍 Khối Phân Loại HS Code & Chính Sách Thuế (Tariff & Compliance Division)
-* **`hs-code-classifier`:** Chuyên gia áp mã HS 8 số theo 6 Quy tắc Tổng quát WCO (GIR), tra cứu chú giải chi tiết HS (Exploratory Notes) và biểu thuế XNK hiện hành.
-* **`fta-origin-consultant`:** Chuyên gia Quy tắc Xuất xứ & C/O — Xác định tiêu chí WO, CTC, RVC; hướng dẫn lập hồ sơ xin cấp C/O xuất khẩu và thẩm định C/O nhập khẩu hưởng thuế suất ưu đãi đặc biệt 0%.
+### 2. 🔍 Khối Phân Loại HS Code & Tranh Biện Thuế Quan
+* **`xnk-hs-code-tariff-expert`:** Chuyên gia áp mã HS 8 số theo 6 Quy tắc Tổng quát WCO (GIR), tra cứu chú giải chi tiết HS (Exploratory Notes), tối ưu biểu thuế FTA (Form E, D, EUR.1, CPTPP, RCEP) và khởi thảo công văn giải trình bảo vệ mã HS trước Chi cục Hải quan.
 
-### 3. 📂 Khối Quản Trị Chứng Từ & Thanh Toán Quốc Tế (Trade Documentation Division)
-* **`trade-doc-auditor`:** Chuyên viên Soạn thảo & Thẩm định Bộ chứng từ Ngoại thương — Soát xét Hợp đồng ngoại thương (Sales Contract), Commercial Invoice, Packing List, Certificate of Origin (C/O), B/L, AWB.
-* **`international-payment-specialist`:** Chuyên viên Tín dụng thư (L/C) & Thanh toán Ngoại tệ — Kiểm tra điều khoản L/C theo UCP 600, rà soát lỗi bất hợp lệ chứng từ (Discrepancies), tư vấn phương thức thanh toán an toàn (T/T trả sau có bảo lãnh, L/C at sight, CAD).
+### 3. 📂 Khối Quản Trị Chứng Từ & Kiểm Toán L/C Quốc Tế
+* **`xnk-trade-doc-auditor`:** Chuyên viên Kiểm toán Bộ chứng từ Ngoại thương — Soát xét chéo 100% giữa Sales Contract, Commercial Invoice, Packing List, C/O, B/L; rà soát 25 điểm bất hợp lệ tín dụng thư (L/C) theo chuẩn UCP 600 & ISBP 745.
 
-### 4. 🛃 Khối Khai Báo Hải Quan & Thủ Tục Thông Quan (Customs Brokerage Division)
-* **`customs-clearance-officer`:** Chuyên viên Khai báo Hải quan Điện tử VNACCS/VCIS — Lập tờ khai IDA/IDC, EDA/EDC, xử lý phân luồng tờ khai (Xanh, Vàng, Đỏ), phối hợp kiểm hóa thực tế tại cảng.
-* **`specialized-inspection-liaison`:** Chuyên viên Kiểm tra Chuyên ngành — Tiếp nhận và xử lý thủ tục kiểm tra chất lượng nhà nước, kiểm dịch thực vật/động vật, công bố hợp quy (CR), dán nhãn năng lượng.
+### 4. 🛃 Khối Khai Báo Hải Quan & Xử Lý Thông Quan
+* **`xnk-customs-clearance-specialist`:** Chuyên gia Khai báo Hải quan Điện tử VNACCS/VCIS — Lập tờ khai IDA/IDC, EDA/EDC, xử lý thông quan Luồng Xanh, Luồng Vàng, Luồng Đỏ; chuẩn bị hồ sơ Tham vấn Trị giá Hải quan và điều phối kiểm tra chuyên ngành.
 
-### 5. 🚚 Khối Vận Tải Quốc Tế & Quản Trị Chi Phí Logistics (Global Logistics & Landed Cost)
-* **`freight-logistics-coordinator`:** Điều phối viên Logistics Toàn cầu — Đàm phán cước tàu container (FCL/LCL), cước bay (Air Freight), lựa chọn hãng tàu (Maersk, ONE, Cosco, Evergreen...), tư vấn điều kiện giao hàng Incoterms 2020.
-* **`dem-det-cost-controller`:** Kiểm soát viên Chi phí Bến bãi & Landed Cost — Tính toán chi phí về kho (Landed Cost/unit), theo dõi thời hạn miễn phí lưu bãi, lưu cont (Free time Demurrage/Detention), cảnh báo trước khi phát sinh chi phí phạt hãng tàu.
+### 5. 🚢 Khối Logistics Toàn Cầu & Kiểm Soát Chi Phí Bến Bãi
+* **`xnk-global-logistics-controller`:** Điều phối viên Logistics Toàn cầu — Đàm phán cước tàu container đường biển (FCL/LCL), cước bay (Air Freight), quản trị Incoterms 2020, kiểm soát phụ phí cảng (Local Charges), và đếm ngược thời hạn miễn phí DEM/DET.
 
 ---
 

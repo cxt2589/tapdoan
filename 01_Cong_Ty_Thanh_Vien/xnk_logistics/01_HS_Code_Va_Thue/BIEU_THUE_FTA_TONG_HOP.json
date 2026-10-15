@@ -1,0 +1,114 @@
+{
+  "updated_at": "2026-10-15",
+  "source": "Biểu thuế Xuất nhập khẩu Tổng hợp & Các Hiệp định Thương mại Tự do (FTA) - Bộ Tài chính / Tổng cục Hải quan",
+  "commodities": [
+    {
+      "hs_code": "8456.11.00",
+      "description_vi": "Máy công cụ hoạt động bằng tia laser để gia công kim loại",
+      "description_en": "Machine-tools for working metal, operated by laser",
+      "unit": "Bộ / Chiếc",
+      "tax_rates": {
+        "thong_thuong": "5%",
+        "mfn": "0%",
+        "acfta_form_e": "0%",
+        "atiga_form_d": "0%",
+        "evfta_eur1": "0%",
+        "cptpp": "0%",
+        "rcep": "0%",
+        "vkfta": "0%",
+        "vat": "10%"
+      },
+      "policy_notes": "Không thuộc danh mục cấm nhập khẩu. Kiểm tra nhãn hàng hóa và tiêu chuẩn an toàn bức xạ laser theo quy định của Bộ Khoa học & Công nghệ."
+    },
+    {
+      "hs_code": "8428.39.90",
+      "description_vi": "Băng chuyền, băng tải hoạt động liên tục dùng cho hàng hóa, loại khác",
+      "description_en": "Other continuous-action elevators and conveyors, for goods or materials",
+      "unit": "Bộ",
+      "tax_rates": {
+        "thong_thuong": "5%",
+        "mfn": "0%",
+        "acfta_form_e": "0%",
+        "atiga_form_d": "0%",
+        "evfta_eur1": "0%",
+        "cptpp": "0%",
+        "rcep": "0%",
+        "vkfta": "0%",
+        "vat": "8% hoặc 10%"
+      },
+      "policy_notes": "Hàng mới 100% nhập khẩu bình thường. Nếu là hàng máy móc đã qua sử dụng phải tuân thủ Quyết định 18/2019/QĐ-TTg (tuổi thiết bị không quá 10 năm)."
+    },
+    {
+      "hs_code": "8542.31.00",
+      "description_vi": "Bộ xử lý và bộ điều khiển, có hoặc không kết hợp với bộ nhớ, bộ chuyển đổi",
+      "description_en": "Processors and controllers, whether or not combined with memories, converters",
+      "unit": "Chiếc",
+      "tax_rates": {
+        "thong_thuong": "0%",
+        "mfn": "0%",
+        "acfta_form_e": "0%",
+        "atiga_form_d": "0%",
+        "evfta_eur1": "0%",
+        "cptpp": "0%",
+        "rcep": "0%",
+        "vkfta": "0%",
+        "vat": "10%"
+      },
+      "policy_notes": "Linh kiện công nghệ cao được khuyến khích nhập khẩu. Miễn thuế nhập khẩu trên toàn bộ các biểu thuế theo Hiệp định Công nghệ Thông tin (ITA)."
+    },
+    {
+      "hs_code": "8517.62.59",
+      "description_vi": "Thiết bị định tuyến (Router) và thiết bị chuyển mạch (Switch) dùng cho mạng viễn thông",
+      "description_en": "Routers and switches for telecommunication network, other",
+      "unit": "Chiếc",
+      "tax_rates": {
+        "thong_thuong": "5%",
+        "mfn": "0%",
+        "acfta_form_e": "0%",
+        "atiga_form_d": "0%",
+        "evfta_eur1": "0%",
+        "cptpp": "0%",
+        "rcep": "0%",
+        "vkfta": "0%",
+        "vat": "10%"
+      },
+      "policy_notes": "Phải làm thủ tục Chứng nhận Hợp quy và Công bố Hợp quy tại Cục Viễn thông (Bộ Thông tin & Truyền thông) trước khi thông quan hoặc đưa ra lưu thông."
+    },
+    {
+      "hs_code": "8471.30.20",
+      "description_vi": "Máy tính xách tay (Laptop), kể cả notebook và subnotebook",
+      "description_en": "Laptops including notebooks and subnotebooks",
+      "unit": "Chiếc",
+      "tax_rates": {
+        "thong_thuong": "0%",
+        "mfn": "0%",
+        "acfta_form_e": "0%",
+        "atiga_form_d": "0%",
+        "evfta_eur1": "0%",
+        "cptpp": "0%",
+        "rcep": "0%",
+        "vkfta": "0%",
+        "vat": "10%"
+      },
+      "policy_notes": "Phải kiểm tra hiệu suất năng lượng tối thiểu và dán nhãn năng lượng (Bộ Công Thương) cùng chứng nhận hợp quy viễn thông."
+    },
+    {
+      "hs_code": "3901.10.12",
+      "description_vi": "Polyethylene có tỷ trọng dưới 0,94 ở dạng hạt nguyên sinh",
+      "description_en": "Polyethylene having a specific gravity of less than 0.94, in primary pellets",
+      "unit": "Kg",
+      "tax_rates": {
+        "thong_thuong": "5%",
+        "mfn": "3%",
+        "acfta_form_e": "0%",
+        "atiga_form_d": "0%",
+        "evfta_eur1": "0%",
+        "cptpp": "0%",
+        "rcep": "0%",
+        "vkfta": "0%",
+        "vat": "10%"
+      },
+      "policy_notes": "Nguyên liệu hạt nhựa nguyên sinh. Khuyến nghị lấy C/O Form E (Trung Quốc) hoặc Form D (ASEAN) để giảm thuế từ 3% xuống 0%."
+    }
+  ]
+}

@@ -13,5 +13,7 @@
 - [15/10/2026 13:38] Nâng cấp Typing Heartbeat: Duy trì trạng thái Thư ký đang soạn tin/làm việc liên tục khi Chủ tịch nhắn tin.
 - [15/10/2026 13:40] Ban hành Chuẩn mực Báo cáo Cấp cao (Executive Briefing Protocol): Triệt tiêu văn phong kịch bản sân khấu, bỏ toàn bộ ngoặc đơn miêu tả hành động *(...)*, định dạng tóm tắt tinh gọn tối ưu cho Telegram di động.
 - [15/10/2026 13:50] Cấm triệt để trích nguồn, link file (file://...) và tên file .md trong tin nhắn báo cáo Telegram gửi Chủ tịch.
+- [15/10/2026 13:55] Chuẩn hóa danh xưng cơ quan thường trực: Đổi toàn bộ "Văn phòng Tổng Hành Dinh" thành "Văn phòng Thư ký Tập đoàn".
+
 
 

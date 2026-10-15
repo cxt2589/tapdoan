@@ -22,7 +22,7 @@
 - **Vị trí Chủ tịch là ngoại lệ cao nhất** trong hệ thống với 2 phương thức truyền lệnh:
   - **Trường hợp A (Chỉ định trực tiếp):** Khi Chủ tịch có ghi chú rõ hoặc chỉ định đích danh cá nhân/bộ phận cụ thể (ví dụ: *"Giao Giám đốc Luật soạn thảo ngay..."*), lệnh sẽ đến thẳng người được chỉ định.
   - **Trường hợp B (Mặc định - Tuyến Văn phòng Thư ký):** Khi Chủ tịch ra lệnh chiến lược hoặc chỉ đạo chung mà **KHÔNG ghi chú hoặc KHÔNG chỉ định trực tiếp cá nhân cụ thể**, thì **MẶC ĐỊNH**:
-    1. **Thư ký Tổng Hành Dinh** tiếp nhận, phân loại và truyền lệnh chính thức xuống **Văn phòng Thư ký của từng công ty con** có liên quan.
+    1. **Văn phòng Thư ký Tập đoàn** tiếp nhận, phân loại và truyền lệnh chính thức xuống **Văn phòng Thư ký của từng công ty con** có liên quan.
     2. **Thư ký công ty con** ngay khi nhận lệnh có trách nhiệm ghi vào Sổ tay Thư ký (`SO_TAY_THU_KY.md`), chủ động **thông báo, giải trình và đôn đốc Giám đốc công ty con** của mình tổ chức triển khai thực hiện ngay lập tức.
 
 ---
@@ -38,7 +38,8 @@
 
 ### 3. Cơ chế Bàn giao Thông tin Phần trước theo Lệnh (Handover Briefing on Command)
 - **Điều kiện kích hoạt:** Chỉ khi Chủ tịch (hoặc người chủ trì) thấy cần thiết và **RA LỆNH** cho công ty con nắm bối cảnh trước đó.
-- **Thực thi bàn giao:** Khi có lệnh của Chủ tịch, **Tổng Thư Ký Tổng Hành Dinh** hoặc **Thư ký của một công ty khác đang có mặt trong cuộc họp** sẽ lập bản tóm lược ngắn gọn (Executive Briefing) các điểm cốt lõi trước đó và chuyển giao chính thức cho Thư ký công ty con mới vào nắm bắt.
+- **Thực thi bàn giao:** Khi có lệnh của Chủ tịch, **Văn phòng Thư ký Tập đoàn** hoặc **Thư ký của một công ty khác đang có mặt trong cuộc họp** sẽ lập bản tóm lược ngắn gọn (Executive Briefing) các điểm cốt lõi trước đó và chuyển giao chính thức cho Thư ký công ty con mới vào nắm bắt.
+
 
 ### 4. Tác nghiệp Đồng bộ 2 Chiều
 - Trong suốt thời gian có mặt: Thư ký tự động ghi chép chính xác mọi chỉ đạo, hạn chót (deadline), chỉ tiêu (KPI) vào mục `[CHỈ THỊ TỪ TỔNG HÀNH DINH]` trong file `SO_TAY_THU_KY.md` của đơn vị mình.

@@ -7,3 +7,4 @@
 - [15/10/2026] Kích hoạt chế độ Chat Tự Nhiên 100% không cần `/task`.
 - [15/10/2026] Thiết lập cơ chế quét ngầm 60s bắt SL/TP không spam.
 - [15/10/2026] Phê duyệt đề án thiết lập Chi nhánh Hải ngoại và kho tri thức Git `tapdoan`.
+- [15/10/2026 13:05] Kho tri thuc Holding Vault da ket noi thanh cong den VPS-01.

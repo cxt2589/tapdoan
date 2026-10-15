@@ -101,4 +101,18 @@ Tài liệu này lưu trữ danh sách các công ty con và dự án thành vi�
   - Hệ thống 4 Kỹ năng Chuyên gia: `trading-analyst` (Phân tích TA/FA/Macro), `trading-researcher` (Tranh biện Bull vs Bear), `trading-risk-manager` (Quản trị vốn 1-2%, Stop Loss, Drawdown), `trading-execution-trader` (Khớp lệnh, Trailing Stop, Dashboard).
   - Dashboard trực quan hoá thời gian thực: `http://localhost:8000/gold_dashboard.html`.
 
+---
+
+## 🚢 7. Khối Xuất Nhập Khẩu & Thương Mại Quốc Tế (Agency Global Logistics & Trade - XNK)
+* **Tên mã:** `SUBSIDIARY-05` (Công ty Thành viên Độc lập)
+* **Vị trí thư mục:** `D:\project antigravity\Project\XNK`
+* **Sổ tay Thư ký:** `D:\project antigravity\Project\XNK\SO_TAY_THU_KY.md`
+* **Đại diện & Thư ký:** Giám đốc Điều hành Xuất Nhập Khẩu & Logistics (kèm Thư ký riêng đi cùng).
+* **Quy mô & Lĩnh vực hoạt động:**
+  - Quản trị toàn diện chuỗi cung ứng ngoại thương xuất nhập khẩu hàng hóa hai chiều.
+  - Phân loại mã HS (6 Quy tắc WCO) & Tối ưu hóa biểu thuế xuất nhập khẩu (MFN, FTA: ACFTA, ATIGA, EVFTA, CPTPP, RCEP).
+  - Soạn thảo & Thẩm định 100% bộ chứng từ ngoại thương: Sales Contract, Commercial Invoice, Packing List, B/L, AWB, C/O (Form E/D/EUR.1...), Tín dụng thư L/C (UCP 600).
+  - Khai báo Hải quan điện tử VNACCS/VCIS, thông quan tờ khai phân luồng Xanh/Vàng/Đỏ, kiểm tra chuyên ngành.
+  - Điều phối vận tải quốc tế (FCL/LCL, Sea/Air Freight), Incoterms 2020, kiểm soát chi phí Landed Cost và cảnh báo hạn lưu bãi DEM/DET.
+
 

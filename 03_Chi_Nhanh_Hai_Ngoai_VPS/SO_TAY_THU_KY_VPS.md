@@ -12,4 +12,6 @@
 - [15/10/2026 13:22] Chu tich phe duyet Che Do Im Lang Tuyet Doi (Silent Guard): Chi thong bao khi Khop lenh, Cham SL, Dat TP, hoac cac moc Tin Do.
 - [15/10/2026 13:38] Nâng cấp Typing Heartbeat: Duy trì trạng thái Thư ký đang soạn tin/làm việc liên tục khi Chủ tịch nhắn tin.
 - [15/10/2026 13:40] Ban hành Chuẩn mực Báo cáo Cấp cao (Executive Briefing Protocol): Triệt tiêu văn phong kịch bản sân khấu, bỏ toàn bộ ngoặc đơn miêu tả hành động *(...)*, định dạng tóm tắt tinh gọn tối ưu cho Telegram di động.
+- [15/10/2026 13:50] Cấm triệt để trích nguồn, link file (file://...) và tên file .md trong tin nhắn báo cáo Telegram gửi Chủ tịch.
+
 

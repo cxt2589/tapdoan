@@ -1,0 +1,36 @@
+# System & OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Python & Node environments
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+node_modules/
+.npm/
+
+# Antigravity internal runtime & credentials
+.agent/
+.gemini/
+*oauth-token*
+*auth_code*
+
+# Databases, binaries & large media
+*.db
+*.sqlite
+*.sqlite3
+*.log
+*.tar.gz
+*.zip
+*.exe
+*.dll
+*.so
+
+# Sensitive configs
+.env
+.env.*
+secrets.json

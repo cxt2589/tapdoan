@@ -23,3 +23,16 @@
 
 
 
+
+
+---
+
+### [NHIỆM VỤ HOÀN TẤT - 2026-10-15 14:48:58] CƠ CHẾ TỰ ĐỘNG XÓA TIN NHẮN 24 GIỜ (AUTO-DELETE 24H)
+* **Chỉ thị từ Chủ tịch:** Thiết lập chế độ tự động xóa tin nhắn sau 1 ngày (24 giờ).
+* **Đơn vị thực thi:** Khối Trading Hải ngoại VPS-01 & Văn phòng Thư ký Tập đoàn.
+* **Giải pháp kỹ thuật đã triển khai:**
+  1. Xây dựng module `auto_delete.py` tích hợp cơ chế khóa tiến trình `fcntl.flock` chống xung đột đa tiến trình (PM2).
+  2. Bổ sung cơ chế ghi nhận mốc thời gian (timestamp) tự động cho 100% tin nhắn đến và đi trong `telegram_bot_listener.py` và `trading_agent_core.py`.
+  3. Thiết lập Background Worker Daemon quét định kỳ mỗi 60 giây, tự động kích hoạt API `deleteMessage` tiêu hủy các tin nhắn có thời gian lưu trữ từ 86.400 giây (24 giờ / 1 ngày).
+  4. Bổ sung lệnh tra cứu điều hành `/autodelete` để theo dõi hàng đợi và thời điểm tiêu hủy kế tiếp.
+* **Trạng thái:** HOÀN TẤT & ĐANG VẬN HÀNH 24/7 (Đã kiểm thử thực tế và xác nhận hoạt động chuẩn xác).

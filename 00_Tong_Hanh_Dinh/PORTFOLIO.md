@@ -20,6 +20,13 @@ Tài liệu này lưu trữ danh sách các công ty con và dự án thành vi�
 
 ---
 
+## 📢 QUY CHẾ PHÁT NGÔN, BAN HÀNH VĂN BẢN & TRUYỀN THÔNG ĐIỀU HÀNH TELEGRAM (COMMUNICATION GATEWAY)
+> **1. Cơ quan phụ trách độc quyền:** **Văn phòng Thư ký Tổng Hành Dinh** chịu trách nhiệm trực tiếp trước Chủ tịch về toàn bộ phát ngôn, thông báo, quyết định và tin nhắn điều hành trên toàn hệ sinh thái.  
+> **2. Cổng kiểm soát bắt buộc (Mandatory Pre-flight Check):** Mọi văn bản điều hành, thông báo chính thức và mọi tin nhắn phát đi trên các nhóm Telegram điều hành Tập đoàn / Công ty con **BẮT BUỘC PHẢI ĐƯỢC VĂN PHÒNG THƯ KÝ TỔNG HÀNH DINH RÀ SOÁT VÀ CHUẨN HÓA THÔNG QUA KỸ NĂNG `executive-admin-telegram-drafter` TRƯỚC KHI PHÁT NGÔN RA NGOÀI**.  
+> **3. Chuẩn mực Dual-Output:** Đảm bảo 100% nội dung phát ngôn vừa đạt tính trang trọng, chuẩn thể thức văn bản hành chính doanh nghiệp, vừa tối ưu thị giác vi mô Telegram đọc hiểu tức thì trong 30 giây.
+
+---
+
 ## 🏢 1. Khối Digital Marketing & Thương Mại D2C (Agency Digital)
 * **Tên mã:** `SUBSIDIARY-01`
 * **Vị trí thư mục:** `D:\project antigravity\Agency Agent`

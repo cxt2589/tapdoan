@@ -11,6 +11,25 @@
 | 15/10/2026 | **Độc quyền Cổng Phát ngôn & Soạn thảo:** Giao Văn phòng Thư ký THD độc quyền quản lý kỹ năng `executive-admin-telegram-drafter`. Mọi văn bản điều hành và tin nhắn Telegram toàn tập đoàn bắt buộc phải qua Thư ký THD kiểm soát và chuẩn hóa trước khi phát ngôn | Văn phòng Thư ký THD | Ngay lập tức | ✅ Có hiệu lực |
 | 15/10/2026 | **Đồng bộ hóa Git lên VPS:** Thiết lập kho GitHub `cxt2589/tapdoan` đồng bộ toàn bộ tài liệu điều hành, quy chế, danh mục và mã nguồn phục vụ Chi nhánh Hải Ngoại VPS | Ban Công nghệ & Thư ký THD | 15/10/2026 | ✅ Đang đồng bộ |
 | 15/10/2026 | **Thành lập Khối Trading Agent:** Chính thức thiết lập Khối Trading độc lập tại `D:\project antigravity\Project\Trading Agent` (SUBSIDIARY-04), hoàn tất mã nguồn, 4 kỹ năng và môi trường Python 3.13 | Bàn Trading & Quản trị Rủi ro | 15/10/2026 | ✅ Hoàn thành |
+| 15/10/2026 | **Thành lập Ban Tâm Linh & Trạch Cát Trực thuộc THD:** Do Chủ tịch trực tiếp chỉ đạo, Thư ký THD phát ngôn; cài đặt 5 kỹ năng chuyên gia (`weather-intelligence`, `tarot-reader`, `iching-oracle`, `eastern-metaphysics-tuvi`, `spiritual-executive-synthesizer`); thiết lập automation 06:30 sáng hàng ngày gửi Telegram | Văn phòng Thư ký THD & Ban Tâm Linh | 15/10/2026 | ✅ Hoàn thành |
+
+---
+
+## 👑 HỒ SƠ BẢN MỆNH CHỦ TỊCH TẬP ĐOÀN (CONFIDENTIAL MASTER PROFILE)
+* **Họ và Tên:** **Cao Xuân Trường**
+* **Nơi sinh:** **Việt Trì, Phú Thọ**
+* **Thời khắc sinh:** **13:45** ngày **19/04/1990** (Dương lịch)
+* **Âm lịch:** Giờ **Tân Mùi**, ngày **Kỷ Tỵ**, tháng **Canh Thìn**, năm **Canh Ngọ** (Ngày 24 tháng 3 năm Canh Ngọ).
+* **Mệnh Nạp Âm:** **Lộ Bàng Thổ** (Đất ven đường).
+* **Cát Thần Phù Trợ:**
+  - **Thiên Ất Quý Nhân:** `Sửu` và `Mùi` (Đắc cách "Tọa Quý" — Quý Nhân ngự tại giờ sinh).
+  - **Lộc Thần (Thiên Lộc) & Dịch Mã:** `Thân` (Tài lộc dồi dào, thuận lợi mở rộng chi nhánh hải ngoại).
+  - **Tam Hợp Quý:** `Dần` - `Ngọ` - `Tuất` (Hỏa cục sinh Thổ mệnh).
+  - **Lục Hợp Quý:** `Mùi` (Hóa Thổ tương sinh).
+* **Hung Sát Tránh Khởi Sự Đại Sự:**
+  - **Lục Xung:** Ngày `Tý` (Tý xung Ngọ).
+  - **Tương Hại:** Ngày `Sửu`.
+  - **Tự Hình:** Ngày `Ngọ`.
 
 ---
 

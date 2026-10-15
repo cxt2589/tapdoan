@@ -1,0 +1,23 @@
+{
+  "enabled": true,
+  "dispatch_time": "06:30",
+  "location": "Hà Nội",
+  "chairman_profile": {
+    "full_name": "Cao Xuân Trường",
+    "birth_datetime": "1990-04-19 13:45",
+    "lunar_birth": "24/03/1990 (Canh Ngọ - Lộ Bàng Thổ)",
+    "birth_place": "Việt Trì, Phú Thọ",
+    "nap_am": "Lộ Bàng Thổ",
+    "can_chi_year": "Canh Ngọ",
+    "can_chi_hour": "Tân Mùi (Tọa Quý)",
+    "quy_nhan": ["Sửu", "Mùi"],
+    "loc_than": "Thân",
+    "tam_hop": ["Dần", "Ngọ", "Tuất"],
+    "luc_hop": "Mùi",
+    "luc_xung": "Tý"
+  },
+  "telegram": {
+    "bot_token": "8844960516:AAG8gcsv_WA9ORpk6xSfwB6qFrFJ2utWKDo",
+    "chat_id": ""
+  }
+}

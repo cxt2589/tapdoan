@@ -23,14 +23,30 @@
 ## 🏢 Các Công Ty Thành Viên Trực Thuộc (Xem chi tiết tại PORTFOLIO.md)
 
 1. **Công Ty Digital Marketing & AdTech**: `D:\project antigravity\Agency Agent`
-   - Chuyên trách: Chạy Ads, Performance CRO, Branding, Web & Tracking.
 2. **Công Ty Dịch Vụ Kế Toán, Kiểm Toán & Tư Vấn Cổ Phần**: `D:\project antigravity\Project\ke toan`
-   - Chuyên trách: Quyết toán thuế, Kế toán trọn gói, Kiểm toán, Định giá, Cổ phần & M&A.
+3. **Hãng Luật & Tư Vấn Pháp Lý Doanh Nghiệp**: `D:\project antigravity\Project\luat`
+4. **Khối Giao Dịch Tài Chính & Quản Trị Vốn**: `D:\project antigravity\Project\Trading Agent`
+5. **Dự Án Ươm Tạo Nông Nghiệp Ba Hàng Đồi**: `D:\project antigravity\Project\Tong hanh dinh\du_an_nong_nghiep`
+6. **Chi Nhánh Hải Ngoại 24/7 (VPS Node Singapore)**: `03_Chi_Nhanh_Hai_Ngoai_VPS`
+
+---
+
+## 🔮 Ban Cố Vấn Tâm Linh & Phong Thủy Tập Đoàn (Spiritual & Metaphysical Board)
+*Cơ cấu quản trị: Do **Chủ tịch Cao Xuân Trường** trực tiếp chỉ đạo tối cao; **Văn phòng Thư ký Tổng Hành Dinh** làm cơ quan phát ngôn độc quyền (kiểm soát qua `executive-admin-telegram-drafter`).*
+*Hồ sơ Bản Mệnh Chủ tịch: **Cao Xuân Trường** — Sinh 13:45 ngày 19/04/1990 (Giờ Tân Mùi, ngày Kỷ Tỵ, tháng Canh Thìn, năm Canh Ngọ - Mệnh Lộ Bàng Thổ - Đắc cách Tọa Quý).*
+
+* **`weather-intelligence`**: Cố vấn Khí tượng & Môi trường (Vệ tinh Open-Meteo & wttr.in thời gian thực).
+* **`tarot-reader`**: Bậc thầy Chiêm niệm Bài Tarot & Trực giác Lãnh đạo (Elena - 78 lá Rider-Waite, tâm lý học Carl Jung).
+* **`iching-oracle`**: Bậc thầy Kinh Dịch & Biến Dịch Thời Thế (Thiệu Tiên Sinh - 64 Quẻ Dịch, Mai Hoa Dịch Số, Lục Hào).
+* **`eastern-metaphysics-tuvi`**: Bậc thầy Tử Vi Đẩu Số & Trạch Cát Bản Mệnh (Bạch Hạc Đạo Sĩ - Tra cứu ngày giờ hoàng đạo, tam hợp, quý nhân, việc nên/kỵ theo tuổi Canh Ngọ 1990).
+* **`spiritual-executive-synthesizer`**: Điều phối viên Trưởng Ban Tâm Linh (Tổng hợp đa chiều, đối chiếu mâu thuẫn và đúc kết chiến lược ngày).
+* **Module Automation 06:30 AM**: Tự động gieo quẻ, rút bài, xem ngày giờ, dự báo thời tiết và gửi bản tin chào ngày mới qua bot Telegram @tapdoan_bot.
 
 ---
 
 ## 🏛️ Ban Cố Vấn & Chuyên Gia Cấp Tập Đoàn (Holding HQ Advisors)
 
+* **`executive-admin-telegram-drafter`**: Cổng phát ngôn, soạn thảo văn bản điều hành và thiết kế tin nhắn Telegram độc quyền của Thư ký THD.
 * **`agency-business-strategist`**: Cố vấn Chiến lược Tập đoàn (Corporate Strategy & Portfolio Management).
 * **`agency-chief-of-staff`**: Chánh Văn phòng Tập đoàn (Executive Coordination & Operational Alignment).
 * **`agency-chief-financial-officer` (CFO)**: Giám đốc Tài chính Tập đoàn (Capital Allocation, Cashflow & M&A).

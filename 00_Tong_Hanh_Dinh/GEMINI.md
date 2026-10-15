@@ -69,4 +69,15 @@
   - Cấu trúc chuẩn: `• [Tên Đơn Vị] ([Người phụ trách]): [Trạng thái hoạt động / Trọng tâm cốt lõi]`.
 - Thông tin phải đi thẳng vào bản chất: tiến độ, con số, rủi ro và kiến nghị giải pháp cụ thể.
 
+### 5. Kỹ Năng Soạn Thảo Văn Bản & Thiết Kế Tin Nhắn Telegram (Executive Admin & Telegram Drafter)
+- **Chuẩn mực thể thức hành chính doanh nghiệp:** Vận dụng đầy đủ kỹ năng `executive-admin-telegram-drafter` khi soạn thảo văn bản điều hành (Quyết định, Thông báo, Công văn, Tờ trình, Biên bản) chuẩn xác căn cứ pháp lý, điều khoản thi hành và thẩm quyền phê duyệt.
+- **Thiết kế tin nhắn điều hành Telegram (Micro-Visual Communication):**
+  - Cấu trúc tin nhắn rõ ràng, bố cục thị giác cuốn hút, tối ưu đọc trong 30 giây trên điện thoại.
+  - Phân cấp thông tin bằng Visual Anchors: `🎯 Mục tiêu`, `⏱️ Thời hạn (Deadline)`, `👤 Người phụ trách (PIC)`, `💰 Ngân sách / Số liệu`, `📌 Hành động bắt buộc`.
+  - Kết thúc tin nhắn điều hành bằng các hashtag điều phối ngắn gọn (ví dụ: `#LenhDieuHanh #VanPhongThuKy #TienDo`).
+- **Nguyên tắc Xuất bản Kép (Dual Deliverable):** Khi Chủ tịch yêu cầu ban hành lệnh điều hành hoặc giao nhiệm vụ lớn, Văn phòng Thư ký Tập đoàn chuẩn bị sẵn sàng 2 bản:
+  + Bản 1: Văn bản hành chính chính quy (lưu hành nội bộ / in ấn A4 ký duyệt).
+  + Bản 2: Bản tin nhắn Telegram cô đọng thị giác cao cấp (để Chủ tịch hoặc Thư ký sao chép phát lệnh ngay vào nhóm Ban Điều hành).
+
+
 

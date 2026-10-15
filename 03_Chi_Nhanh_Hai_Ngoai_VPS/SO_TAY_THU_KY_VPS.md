@@ -15,7 +15,8 @@
 - [15/10/2026 13:50] Cấm triệt để trích nguồn, link file (file://...) và tên file .md trong tin nhắn báo cáo Telegram gửi Chủ tịch.
 - [15/10/2026 13:55] Chuẩn hóa danh xưng cơ quan thường trực: Đổi toàn bộ "Văn phòng Tổng Hành Dinh" thành "Văn phòng Thư ký Tập đoàn".
 - [15/10/2026 14:00] Chính thức thành lập Khối Trading Agent độc lập tại `01_Cong_Ty_Thanh_Vien/trading_agent` và `Project/Trading Agent`.
-- [15/10/2026 14:02] Giao Văn phòng Thư ký Tổng Hành Dinh độc quyền phụ trách soạn thảo & kiểm soát phát ngôn, thông báo, quyết định và tin nhắn Telegram điều hành; bắt buộc kiểm duyệt qua kỹ năng `executive-admin-telegram-drafter` trước khi phát ngôn.
+- [15/10/2026 14:02] Giao Văn phòng Thư ký Tập đoàn độc quyền phụ trách soạn thảo & kiểm soát phát ngôn, thông báo, quyết định và tin nhắn Telegram điều hành; bắt buộc áp dụng kỹ năng `executive-admin-telegram-drafter` trước khi phát ngôn.
+
 
 
 

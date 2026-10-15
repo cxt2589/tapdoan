@@ -364,7 +364,7 @@ def compose_morning_telegram_dispatch():
     synthesis = cross_validate(weather, iching, tarot, tuvi)
     
     # 3. Soạn tin nhắn Telegram đẳng cấp (Bản Markdown lưu trữ & Bản HTML tối ưu hiển thị di động)
-    msg = f"""👑 [TỔNG HÀNH DINH] — BẢN TIN TÂM LINH & KHÍ VẬN ĐẦU NGÀY
+    msg = f"""👑 BẢN TIN TÂM LINH & KHÍ VẬN ĐẦU NGÀY
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Chào buổi sáng Chủ tịch Cao Xuân Trường!
 📅 Ngày: {now_str} (Ngày {tuvi['day_can_chi']})
@@ -404,7 +404,7 @@ Chào buổi sáng Chủ tịch Cao Xuân Trường!
 Chúc Chủ tịch một ngày mới tràn đầy sinh khí, hanh thông vạn sự!
 #BanTamLinh #ChaoNgayMoi #ExecutiveBriefing #ChuTichCaoXuanTruong"""
 
-    msg_html = f"""👑 <b>[TỔNG HÀNH DINH] — BẢN TIN TÂM LINH & KHÍ VẬN ĐẦU NGÀY</b>
+    msg_html = f"""👑 <b>BẢN TIN TÂM LINH & KHÍ VẬN ĐẦU NGÀY</b>
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 <b>Kính chào Chủ tịch Cao Xuân Trường!</b>
 📅 <b>Ngày:</b> {now_str} (Ngày {tuvi['day_can_chi']})

@@ -17,7 +17,8 @@
     "luc_xung": "Tý"
   },
   "telegram": {
-    "bot_token": "8844960516:AAG8gcsv_WA9ORpk6xSfwB6qFrFJ2utWKDo",
-    "chat_id": ""
+    "bot_name": "@tapdoan_bot",
+    "bot_token": "8821881768:AAFysU6f0IGu4qHHVeN5P-b1fqgFHNPcECI",
+    "chat_id": "6034655358"
   }
 }

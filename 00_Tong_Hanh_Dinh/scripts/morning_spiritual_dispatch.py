@@ -363,7 +363,7 @@ def compose_morning_telegram_dispatch():
     # 2. Phân tích đối chiếu chéo
     synthesis = cross_validate(weather, iching, tarot, tuvi)
     
-    # 3. Soạn tin nhắn Telegram đẳng cấp
+    # 3. Soạn tin nhắn Telegram đẳng cấp (Bản Markdown lưu trữ & Bản HTML tối ưu hiển thị di động)
     msg = f"""👑 [TỔNG HÀNH DINH] — BẢN TIN TÂM LINH & KHÍ VẬN ĐẦU NGÀY
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Chào buổi sáng Chủ tịch Cao Xuân Trường!
@@ -404,24 +404,63 @@ Chào buổi sáng Chủ tịch Cao Xuân Trường!
 Chúc Chủ tịch một ngày mới tràn đầy sinh khí, hanh thông vạn sự!
 #BanTamLinh #ChaoNgayMoi #ExecutiveBriefing #ChuTichCaoXuanTruong"""
 
+    msg_html = f"""👑 <b>[TỔNG HÀNH DINH] — BẢN TIN TÂM LINH & KHÍ VẬN ĐẦU NGÀY</b>
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<b>Kính chào Chủ tịch Cao Xuân Trường!</b>
+📅 <b>Ngày:</b> {now_str} (Ngày {tuvi['day_can_chi']})
+👤 <b>Bản Mệnh:</b> Canh Ngọ 1990 (Lộ Bàng Thổ — Tọa Quý Giờ Tân Mùi)
+🌤️ <b>Thời tiết {city}:</b> {weather['temp']}°C (Cảm giác: {weather['feels_like']}°C), {weather['desc']}
+
+<blockquote>{synthesis['verdict']}</blockquote>
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1️⃣ ☯️ <b>KINH DỊCH THỜI THẾ (MAI HOA ĐẦU NGÀY)</b>
+• <b>Quẻ Chủ:</b> {iching['hex_name']} ({iching['nature']})
+• <b>Thoán Ý:</b> {iching['meaning']}
+• <b>Lời Khuyên:</b> {iching['advice']}
+
+2️⃣ 🔮 <b>CHIÊM NIỆM TAROT (ENERGY ARCHETYPE)</b>
+• <b>Lá Bài:</b> {tarot['name']} — {tarot['state']}
+• <b>Thông Điệp Năng Lượng:</b> {tarot['meaning']}
+
+3️⃣ 📜 <b>TỬ VI & TRẠCH CÁT BẢN MỆNH CHỦ TỊCH</b>
+• <b>Đánh Giá Ngày:</b> {tuvi['rating']} (Điểm khí vận: {tuvi['score']}/10)
+• <b>Cát Khí Chiếu Mệnh:</b>
+{chr(10).join(['  ' + b for b in tuvi['blessings']]) if tuvi['blessings'] else '  • Khí trường ổn định'}
+• <b>Cảnh Báo Cần Tránh:</b>
+{chr(10).join(['  ' + c for c in tuvi['cautions']]) if tuvi['cautions'] else '  • Không có xung khắc lớn'}
+• <b>Khung Giờ Hoàng Đạo:</b> {', '.join(tuvi['hoang_dao'][:3])}
+• <b>Hướng Nghênh Cát:</b> Hỷ Thần ({tuvi['hy_than']}) | Tài Thần ({tuvi['tai_than']})
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔍 <b>ĐỐI CHIẾU ĐA CHIỀU & KẾT LUẬN ĐIỀU HÀNH</b>
+{chr(10).join(['• <b>[ĐỒNG QUY]</b> ' + s for s in synthesis['sync_points']])}
+{chr(10).join(['• <b>[LƯU TÂM]</b> ' + c for c in synthesis['conflict_points']]) if synthesis['conflict_points'] else '• Các trường phái đồng thuận cao, không có xung đột năng lượng.'}
+
+📌 <b>HÀNH ĐỘNG TRỌNG TÂM HÔM NAY:</b>
+✅ Tập trung xử lý các hợp đồng và quyết sách lớn trong khung Giờ Hoàng Đạo.
+✅ Duy trì tâm thế vững vàng, dứt khoát theo chỉ dẫn quẻ {iching['hex_name']}.
+
+<i>Chúc Chủ tịch một ngày mới tràn đầy sinh khí, hanh thông vạn sự!</i>
+#BanTamLinh #ChaoNgayMoi #ExecutiveBriefing #ChuTichCaoXuanTruong"""
+
     # Lưu bản ghi ra file log nhật ký
     log_file = os.path.join(LOG_DIR, f"briefing_{now.strftime('%Y%m%d_%H%M%S')}.md")
     with open(log_file, "w", encoding="utf-8") as f:
         f.write(msg)
         
-    return msg, log_file
+    return msg, msg_html, log_file
 
 # ==============================================================================
 # 9. GỬI TIN NHẮN QUA TELEGRAM BOT
 # ==============================================================================
-def send_telegram_message(message_text):
+def send_telegram_message(message_text, html_text=None):
     """Gửi tin nhắn Telegram qua bot @tapdoan_bot"""
     config = {}
     if os.path.exists(CONFIG_FILE):
         with open(CONFIG_FILE, "r", encoding="utf-8") as f:
             config = json.load(f)
             
-    bot_token = config.get("telegram", {}).get("bot_token") or "8844960516:AAG8gcsv_WA9ORpk6xSfwB6qFrFJ2utWKDo"
+    bot_token = config.get("telegram", {}).get("bot_token") or "8821881768:AAFysU6f0IGu4qHHVeN5P-b1fqgFHNPcECI"
     chat_id = config.get("telegram", {}).get("chat_id")
     
     # Nếu chưa có chat_id, thử dò tự động qua getUpdates
@@ -446,18 +485,39 @@ def send_telegram_message(message_text):
         print("[WARNING] Chưa có Telegram chat_id của Chủ tịch. Tin nhắn đã được lưu trữ nội bộ.")
         return False
         
+    send_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+
+    # Thử gửi định dạng HTML trước để hiển thị tối ưu trên di động
+    if html_text:
+        try:
+            payload = {
+                "chat_id": chat_id,
+                "text": html_text,
+                "parse_mode": "HTML"
+            }
+            req_data = urllib.parse.urlencode(payload).encode("utf-8")
+            req = urllib.request.Request(send_url, data=req_data, headers={'User-Agent': 'Mozilla/5.0'})
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                res = json.loads(resp.read().decode())
+                if res.get("ok"):
+                    print("[SUCCESS] Đã gửi bản tin Telegram (HTML) chào ngày mới thành công!")
+                    return True
+        except Exception as e:
+            print(f"[NOTICE] Gửi HTML chưa thành công ({e}), chuyển sang fallback...")
+
+    # Fallback gửi Plain Text
     try:
-        send_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
         payload = {
             "chat_id": chat_id,
-            "text": message_text,
-            "parse_mode": "Markdown"
+            "text": message_text
         }
         req_data = urllib.parse.urlencode(payload).encode("utf-8")
         req = urllib.request.Request(send_url, data=req_data, headers={'User-Agent': 'Mozilla/5.0'})
         with urllib.request.urlopen(req, timeout=10) as resp:
-            print("[SUCCESS] Đã gửi bản tin Telegram chào ngày mới thành công!")
-            return True
+            res = json.loads(resp.read().decode())
+            if res.get("ok"):
+                print("[SUCCESS] Đã gửi bản tin Telegram chào ngày mới thành công!")
+                return True
     except Exception as e:
         print(f"[ERROR] Không thể gửi Telegram: {e}")
         return False
@@ -466,11 +526,12 @@ def send_telegram_message(message_text):
 # HÀM MAIN
 # ==============================================================================
 if __name__ == "__main__":
-    msg, path_or_err = compose_morning_telegram_dispatch()
-    if msg:
+    res = compose_morning_telegram_dispatch()
+    if res[0]:
+        msg, msg_html, log_path = res
         print("=== BẢN TIN TÂM LINH & KHÍ VẬN ĐẦU NGÀY ===")
         print(msg)
-        print(f"\n[INFO] Đã ghi nhật ký vào: {path_or_err}")
-        send_telegram_message(msg)
+        print(f"\n[INFO] Đã ghi nhật ký vào: {log_path}")
+        send_telegram_message(msg, msg_html)
     else:
-        print(f"[NOTICE] {path_or_err}")
+        print(f"[NOTICE] {res[1]}")

@@ -552,9 +552,11 @@ def run_all_tests():
             assert 'id="cd-gap-feasibility-score"' in html_text
             assert 'id="cd-gap-current-risk"' in html_text
             assert 'id="cd-gap-drivers-list"' in html_text
-            assert 'id="cd-gap-suggested-suppliers-list"' in html_text
             assert 'triggerOutreachFromSourcingGap' in html_text
             assert 'Cần NCC:' in html_text
+            assert 'Bấm tên để xem chi tiết' in html_text
+            assert 'openSupplierDetailModal' in html_text
+            assert 'Xem Chi Tiết' in html_text
         print(f"✅ Test 35/38: Đánh Giá Nhu Cầu Mở Rộng Nguồn Cung Địa Lý, Tỷ Lệ Khả Thi Kết Nối & Đề Xuất NCC chuẩn 100%")
         passed_count += 1
 

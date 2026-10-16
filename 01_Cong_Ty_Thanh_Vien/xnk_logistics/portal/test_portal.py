@@ -57,7 +57,7 @@ def run_all_tests():
     time.sleep(0.5)
 
     passed_count = 0
-    total_tests = 38
+    total_tests = 39
 
     try:
         # Test 1: Health Check
@@ -618,7 +618,27 @@ def run_all_tests():
             assert 'xnk_active_tab' in html_text
             assert 'history.replaceState' in html_text
             assert 'hashchange' in html_text
-        print(f"✅ Test 38/38: Nhấn Xem Hồ Sơ Chi Tiết Khách Hàng / NCC Tại Bàn Khớp Lệnh & Khôi Phục Tab Khi F5 chuẩn 100%")
+        print(f"✅ Test 38/39: Nhấn Xem Hồ Sơ Chi Tiết Khách Hàng / NCC Tại Bàn Khớp Lệnh & Khôi Phục Tab Khi F5 chuẩn 100%")
+        passed_count += 1
+
+        # Test 39: Khắc Phục Lỗi In Giấy Trắng & Hoàn Thiện Biểu Mẫu Hồ Sơ Thẩm Định Ngoại Thương 360° Chuẩn Quốc Tế
+        with urllib.request.urlopen(url_html, timeout=5) as html_resp:
+            html_text = html_resp.read().decode('utf-8')
+            assert '#printableDossier' in html_text
+            assert 'display: block !important' in html_text
+            assert 'BÁO CÁO THẨM ĐỊNH PHÁP NHÂN & ĐỐI TÁC NGOẠI THƯƠNG 360°' in html_text
+            assert 'INTERNATIONAL TRADE COUNTERPARTY DUE DILIGENCE & KYC DOSSIER' in html_text
+            assert 'I. THÔNG TIN ĐỊNH DANH PHÁP NHÂN' in html_text
+            assert 'II. KẾT QUẢ RÀ SOÁT TÌNH BÁO & THẨM ĐỊNH 4 TẦNG' in html_text
+            assert 'III. NĂNG LỰC THƯƠNG MẠI, NGUỒN CUNG & LỊCH SỬ VẬN ĐƠN' in html_text
+            assert 'IV. BỨC TƯỜNG LỬA TÀI CHÍNH & KHUYẾN NGHỊ ĐIỀU KHOẢN HỢP ĐỒNG' in html_text
+            assert 'V. Ý KIẾN THẨM ĐỊNH & PHÊ DUYỆT ĐIỀU HÀNH 3 CẤP' in html_text
+            assert 'CHUYÊN VIÊN THẨM ĐỊNH' in html_text
+            assert 'GIÁM ĐỐC ĐIỀU HÀNH KHỐI XNK' in html_text
+            assert 'KÍNH TRÌNH CHỦ TỊCH TẬP ĐOÀN' in html_text
+            assert "printCurrentDossier('supplier')" in html_text
+            assert "printCurrentDossier('buyer')" in html_text
+        print(f"✅ Test 39/39: Khắc Phục Lỗi In Giấy Trắng & Hoàn Thiện Biểu Mẫu Hồ Sơ Thẩm Định Ngoại Thương 360° Chuẩn Quốc Tế chuẩn 100%")
         passed_count += 1
 
     finally:

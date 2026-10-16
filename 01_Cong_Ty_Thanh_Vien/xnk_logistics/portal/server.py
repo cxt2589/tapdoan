@@ -863,6 +863,19 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
             self._send_json(history)
             return
 
+        elif path == "/api/prices/benchmarks":
+            prices_file = os.path.join(BASE_DIR, "data", "multi_exchange_commodity_prices.json")
+            if os.path.exists(prices_file):
+                try:
+                    with open(prices_file, "r", encoding="utf-8") as f:
+                        p_data = json.load(f)
+                    self._send_json({"ok": True, "data": p_data})
+                except Exception as e:
+                    self._send_json({"ok": False, "error": str(e)}, 500)
+            else:
+                self._send_json({"ok": False, "error": "Prices file not found"}, 404)
+            return
+
         elif path == "/" or path == "/index.html":
             index_path = os.path.join(STATIC_DIR, "index.html")
             if os.path.exists(index_path):

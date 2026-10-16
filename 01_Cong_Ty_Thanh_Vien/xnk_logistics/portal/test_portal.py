@@ -57,7 +57,7 @@ def run_all_tests():
     time.sleep(0.5)
 
     passed_count = 0
-    total_tests = 39
+    total_tests = 42
 
     try:
         # Test 1: Health Check
@@ -649,7 +649,79 @@ def run_all_tests():
             assert 'KÍNH TRÌNH CHỦ TỊCH TẬP ĐOÀN' in html_text
             assert "printCurrentDossier('supplier')" in html_text
             assert "printCurrentDossier('buyer')" in html_text
-        print(f"✅ Test 39/39: Khắc Phục Lỗi In Giấy Trắng & Hoàn Thiện Biểu Mẫu Hồ Sơ Thẩm Định Ngoại Thương 360° Chuẩn Quốc Tế chuẩn 100%")
+        print(f"✅ Test 39/42: Khắc Phục Lỗi In Giấy Trắng & Hoàn Thiện Biểu Mẫu Hồ Sơ Thẩm Định Ngoại Thương 360° Chuẩn Quốc Tế chuẩn 100%")
+        passed_count += 1
+
+        # Test 40: Mạng Lưới Đối Tác Ngoại Thương Theo Quốc Gia (Counterparty Network)
+        code_lead, res_lead = http_get("/api/leads/detail?id=LEAD-AGRI-001")
+        assert code_lead == 200 and res_lead["ok"] == True
+        net_lead = res_lead["lead"].get("counterparty_network", {})
+        assert net_lead.get("total_partners", 0) >= 6
+        assert net_lead.get("total_countries", 0) >= 3
+        assert len(net_lead.get("countries", [])) >= 3
+        assert len(net_lead.get("partners", [])) >= 6
+        assert any(p.get("role") == "Nhà Xuất Khẩu (Shipper)" for p in net_lead.get("partners", []))
+
+        code_sup, res_sup = http_get("/api/suppliers/detail?id=SP-001")
+        assert code_sup == 200 and res_sup["ok"] == True
+        net_sup = res_sup["supplier"].get("counterparty_network", {})
+        assert net_sup.get("total_partners", 0) >= 6
+        assert net_sup.get("total_countries", 0) >= 3
+        assert any(p.get("role") == "Nhà Nhập Khẩu (Consignee)" for p in net_sup.get("partners", []))
+
+        with urllib.request.urlopen(url_html, timeout=5) as html_resp:
+            html_text = html_resp.read().decode('utf-8')
+            assert 'id="cd-network-section"' in html_text
+            assert 'id="cd-network-country-filters"' in html_text
+            assert 'id="cd-network-partners-list"' in html_text
+            assert 'id="supd-network-section"' in html_text
+            assert 'id="supd-network-country-filters"' in html_text
+            assert 'id="supd-network-partners-list"' in html_text
+            assert 'filterLeadNetworkByCountry' in html_text
+            assert 'filterSupplierNetworkByCountry' in html_text
+        print(f"✅ Test 40/42: Mạng Lưới Đối Tác Ngoại Thương Theo Quốc Gia & Bộ Lọc Nước Linh Hoạt chuẩn 100%")
+        passed_count += 1
+
+        # Test 41: Đơn Giá (Unit Price), Tổng Trị Giá (Total Value) & Nhãn Minh Bạch Trong Vận Đơn B/L
+        lead_bls = res_lead["lead"].get("historical_bl_records", [])
+        assert len(lead_bls) >= 1
+        first_bl = lead_bls[0]
+        assert "unit_price" in first_bl
+        assert "total_value" in first_bl
+        assert "price_type" in first_bl
+        assert first_bl["price_type"] in ["CUSTOMS_DECLARATION", "INTELLIGENCE_ESTIMATE"]
+
+        sup_bls = res_sup["supplier"].get("customs_bl_records", [])
+        assert len(sup_bls) >= 1
+        first_s_bl = sup_bls[0]
+        assert "unit_price" in first_s_bl
+        assert "total_value" in first_s_bl
+        assert "price_type" in first_s_bl
+
+        with urllib.request.urlopen(url_html, timeout=5) as html_resp:
+            html_text = html_resp.read().decode('utf-8')
+            assert 'Đơn giá:' in html_text
+            assert 'Tổng trị giá:' in html_text
+            assert '🟢 Giá Khai Báo Hải Quan Thực Tế' in html_text
+            assert '🔵 Giá Ước Tính Tình Báo' in html_text
+        print(f"✅ Test 41/42: Đơn Giá (Unit Price), Tổng Trị Giá & Nhãn Minh Bạch Hải Quan Trong Vận Đơn B/L chuẩn 100%")
+        passed_count += 1
+
+        # Test 42: Đổi Nhãn Nút 'Sơ Đồ Phân Hệ' & API Đối Soát Giá Hàng Hóa Đa Sàn (/api/prices/benchmarks)
+        code_prices, res_prices = http_get("/api/prices/benchmarks")
+        assert code_prices == 200 and res_prices["ok"] == True
+        p_sectors = res_prices["data"].get("sectors", [])
+        assert len(p_sectors) >= 6
+        coffee_sec = next((s for s in p_sectors if s["commodity_id"] == "coffee_robusta"), None)
+        assert coffee_sec is not None
+        assert len(coffee_sec["benchmarks"]) >= 4
+        assert "arbitrage_analysis" in coffee_sec
+
+        with urllib.request.urlopen(url_html, timeout=5) as html_resp:
+            html_text = html_resp.read().decode('utf-8')
+            assert 'Sơ Đồ Phân Hệ' in html_text
+            assert 'Tất Cả Phân Hệ (5/5)' not in html_text
+        print(f"✅ Test 42/42: Đổi Nhãn Nút Sơ Đồ Phân Hệ & CSDL Đối Soát Giá Hàng Hóa Đa Sàn chuẩn 100%")
         passed_count += 1
 
     finally:

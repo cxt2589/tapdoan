@@ -528,11 +528,11 @@
           <span class="font-mono text-cyan-400 text-[11px]" id="syncTime">16/10/2026</span>
         </div>
 
-        <!-- All Features Hub Dropdown Button (Trung Tâm Tất Cả Phân Hệ) -->
+        <!-- All Features Hub Dropdown Button (Sơ Đồ Phân Hệ) -->
         <button id="allModulesHubBtn" onclick="toggleAllModulesHub()" class="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-mono font-bold transition-all cursor-pointer bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 shadow-sm" title="Bấm để xem danh mục toàn bộ các phân hệ tính năng">
           <i data-lucide="layout-grid" class="w-3.5 h-3.5 text-cyan-400"></i>
-          <span class="hidden md:inline">Tất Cả Phân Hệ (5/5)</span>
-          <span class="md:hidden">Phân Hệ</span>
+          <span class="hidden md:inline">Sơ Đồ Phân Hệ</span>
+          <span class="md:hidden">Sơ Đồ</span>
           <i data-lucide="chevron-down" class="w-3 h-3 text-cyan-400 transition-transform" id="modulesHubChevron"></i>
         </button>
 
@@ -681,7 +681,7 @@
                 <i data-lucide="layout-grid" class="w-4 h-4"></i>
               </div>
               <div>
-                <h3 class="font-bold text-white text-base">Trung Tâm Tất Cả Phân Hệ Ngoại Thương Tập Đoàn</h3>
+                <h3 class="font-bold text-white text-base">Sơ Đồ Phân Hệ Ngoại Thương Tập Đoàn</h3>
                 <p class="text-xs text-slate-400">Truy cập tức thì mọi công cụ tình báo, thẩm định đối tác và chuỗi cung ứng mà không cần cuộn ngang</p>
               </div>
             </div>
@@ -1958,6 +1958,29 @@
 
         </div>
 
+        <!-- Section 1.8: Global Counterparty Trading Network by Country -->
+        <div class="space-y-3 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-cyan-950/30 via-brand-950 to-blue-950/30 border border-cyan-500/30 shadow-lg" id="cd-network-section">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-3">
+            <div class="flex items-center gap-2">
+              <i data-lucide="network" class="w-4 h-4 text-cyan-400"></i>
+              <h4 class="text-xs font-bold text-white font-mono uppercase tracking-wider">Mạng Lưới Đối Tác Ngoại Thương Theo Quốc Gia (Counterparty Network):</h4>
+            </div>
+            <span id="cd-network-summary-badge" class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+              🌐 24 Đối Tác • 6 Quốc Gia
+            </span>
+          </div>
+
+          <!-- Country Filter Chips -->
+          <div id="cd-network-country-filters" class="flex flex-wrap gap-1.5 pt-1">
+            <!-- Injected by JS -->
+          </div>
+
+          <!-- Partner Cards List -->
+          <div id="cd-network-partners-list" class="space-y-2 max-h-64 overflow-y-auto overscroll-contain pr-1">
+            <!-- Injected by JS -->
+          </div>
+        </div>
+
         <!-- Section 2: Historical Customs B/L Manifest -->
         <div class="space-y-2.5">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/5 pb-2">
@@ -2208,6 +2231,29 @@
             <div id="supd-terms-container" class="space-y-1 text-xs">
               <!-- Injected by JS -->
             </div>
+          </div>
+        </div>
+
+        <!-- Section 2.5: Global Counterparty Trading Network by Country -->
+        <div class="space-y-3 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-cyan-950/30 via-brand-950 to-blue-950/30 border border-cyan-500/30 shadow-lg" id="supd-network-section">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-3">
+            <div class="flex items-center gap-2">
+              <i data-lucide="network" class="w-4 h-4 text-cyan-400"></i>
+              <h4 class="text-xs font-bold text-white font-mono uppercase tracking-wider">Mạng Lưới Đối Tác Ngoại Thương Theo Quốc Gia (Counterparty Network):</h4>
+            </div>
+            <span id="supd-network-summary-badge" class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+              🌐 24 Đối Tác • 6 Quốc Gia
+            </span>
+          </div>
+
+          <!-- Country Filter Chips -->
+          <div id="supd-network-country-filters" class="flex flex-wrap gap-1.5 pt-1">
+            <!-- Injected by JS -->
+          </div>
+
+          <!-- Partner Cards List -->
+          <div id="supd-network-partners-list" class="space-y-2 max-h-64 overflow-y-auto overscroll-contain pr-1">
+            <!-- Injected by JS -->
           </div>
         </div>
 
@@ -4464,6 +4510,9 @@
       document.getElementById('cd-outreach-angle').innerText = lead.outreach_angle || 'Tiếp cận trực tiếp với thư chào hàng song ngữ kèm hồ sơ chứng nhận SGS và Form E/EUR.1 hưởng thuế ưu đãi 0%.';
       document.getElementById('cd-certs-required').innerText = (lead.certification_required || ['HACCP', 'ISO 22000', 'SGS']).join(', ');
 
+      // Render Global Counterparty Network by Country
+      renderLeadNetwork(lead);
+
       document.getElementById('companyDetailModal').classList.remove('hidden');
       lucide.createIcons();
     }
@@ -5417,6 +5466,9 @@
       document.getElementById('supd-action-advice').innerText = sup.recommended_action || 'Ưu tiên ký Sales Contract CFR/CIF qua L/C At Sight.';
       document.getElementById('supd-audit-status').innerText = sup.sanctions_check || 'Đã đối soát tiêu chuẩn cấm vận & pháp lý';
 
+      // Render Global Counterparty Network by Country
+      renderSupplierNetwork(sup);
+
       document.getElementById('supplierDetailModal').classList.remove('hidden');
       lucide.createIcons();
     }
@@ -5458,20 +5510,40 @@
 
       const displayed = isExpanded ? records : records.slice(0, INITIAL_BL_LIMIT);
 
-      container.innerHTML = displayed.map((b, idx) => `
-        <div class="p-3 rounded-xl bg-blue-950/25 border border-blue-500/25 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs transition-all ${idx >= INITIAL_BL_LIMIT ? 'animate-fade-in' : ''}">
-          <div class="space-y-0.5">
-            <div class="flex flex-wrap items-center gap-2">
-              <span class="font-mono font-bold text-blue-300">${b.bl_number}</span>
-              <span class="text-[10px] font-mono text-slate-400">📅 ${b.date}</span>
-              <span class="px-1.5 py-0.2 rounded text-[10px] font-mono bg-blue-500/20 text-blue-300">🚢 ${b.vessel}</span>
+      container.innerHTML = displayed.map((b, idx) => {
+        const uPrice = b.unit_price || '$4,620 USD/MT (FOB)';
+        const tVal = b.total_value || '$1,250,000 USD';
+        const isDeclaration = b.price_type === 'CUSTOMS_DECLARATION';
+        const priceBadgeClass = isDeclaration ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' : 'bg-cyan-500/15 text-cyan-300 border-cyan-500/30';
+        const priceBadgeLabel = isDeclaration ? '🟢 Giá Khai Báo Hải Quan Thực Tế' : '🔵 Giá Ước Tính Tình Báo';
+
+        return `
+        <div class="p-3 rounded-xl bg-blue-950/25 border border-blue-500/25 flex flex-col justify-between gap-2 text-xs transition-all ${idx >= INITIAL_BL_LIMIT ? 'animate-fade-in' : ''}">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div class="space-y-0.5">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="font-mono font-bold text-blue-300">${b.bl_number}</span>
+                <span class="text-[10px] font-mono text-slate-400">📅 ${b.date}</span>
+                <span class="px-1.5 py-0.2 rounded text-[10px] font-mono bg-blue-500/20 text-blue-300">🚢 ${b.vessel}</span>
+              </div>
+              <p class="text-slate-200 font-medium">${b.volume}</p>
+              <p class="text-[11px] text-slate-400 font-mono">Cảng dỡ hàng / Điểm cập: <strong class="text-cyan-300 font-semibold">${b.discharge_port}</strong></p>
             </div>
-            <p class="text-slate-200 font-medium">${b.volume}</p>
-            <p class="text-[11px] text-slate-400 font-mono">Cảng dỡ hàng / Điểm cập: <strong class="text-cyan-300 font-semibold">${b.discharge_port}</strong></p>
+            <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 self-start sm:self-auto shrink-0">${b.status}</span>
           </div>
-          <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 self-start sm:self-auto shrink-0">${b.status}</span>
+
+          <!-- Unit Price & Total Value Row -->
+          <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-white/5 text-[11px] font-mono">
+            <span class="text-slate-300">Đơn giá: <strong class="text-amber-400 font-bold">${uPrice}</strong></span>
+            <span class="text-slate-600">•</span>
+            <span class="text-slate-300">Tổng trị giá: <strong class="text-emerald-400 font-bold">${tVal}</strong></span>
+            <span class="px-2 py-0.5 rounded-full text-[9px] font-mono font-bold border ${priceBadgeClass}">
+              ${priceBadgeLabel}
+            </span>
+          </div>
         </div>
-      `).join('');
+        `;
+      }).join('');
 
       if (records.length > INITIAL_BL_LIMIT) {
         if (moreWrapper) moreWrapper.classList.remove('hidden');
@@ -5510,20 +5582,40 @@
 
       const displayed = isExpanded ? records : records.slice(0, INITIAL_BL_LIMIT);
 
-      container.innerHTML = displayed.map((b, idx) => `
-        <div class="p-3 rounded-xl bg-blue-950/25 border border-blue-500/25 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs transition-all ${idx >= INITIAL_BL_LIMIT ? 'animate-fade-in' : ''}">
-          <div class="space-y-0.5">
-            <div class="flex flex-wrap items-center gap-2">
-              <span class="font-mono font-bold text-blue-300">${b.bl_number}</span>
-              <span class="text-[10px] font-mono text-slate-400">📅 ${b.date}</span>
-              <span class="px-1.5 py-0.2 rounded text-[10px] font-mono bg-blue-500/20 text-blue-300">🚢 ${b.vessel}</span>
+      container.innerHTML = displayed.map((b, idx) => {
+        const uPrice = b.unit_price || '$4,650 USD/MT (FOB)';
+        const tVal = b.total_value || '$930,000 USD';
+        const isDeclaration = b.price_type === 'CUSTOMS_DECLARATION';
+        const priceBadgeClass = isDeclaration ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' : 'bg-cyan-500/15 text-cyan-300 border-cyan-500/30';
+        const priceBadgeLabel = isDeclaration ? '🟢 Giá Khai Báo Hải Quan Thực Tế' : '🔵 Giá Ước Tính Tình Báo';
+
+        return `
+        <div class="p-3 rounded-xl bg-blue-950/25 border border-blue-500/25 flex flex-col justify-between gap-2 text-xs transition-all ${idx >= INITIAL_BL_LIMIT ? 'animate-fade-in' : ''}">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div class="space-y-0.5">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="font-mono font-bold text-blue-300">${b.bl_number}</span>
+                <span class="text-[10px] font-mono text-slate-400">📅 ${b.date}</span>
+                <span class="px-1.5 py-0.2 rounded text-[10px] font-mono bg-blue-500/20 text-blue-300">🚢 ${b.vessel}</span>
+              </div>
+              <p class="text-slate-200 font-medium">${b.commodity}</p>
+              <p class="text-[11px] text-slate-400 font-mono">Khối lượng: <strong class="text-emerald-400">${b.volume}</strong> | Cảng đến: <strong class="text-cyan-300 font-semibold">${b.port}</strong></p>
             </div>
-            <p class="text-slate-200 font-medium">${b.commodity}</p>
-            <p class="text-[11px] text-slate-400 font-mono">Khối lượng: <strong class="text-emerald-400">${b.volume}</strong> | Cảng đến: <strong class="text-cyan-300 font-semibold">${b.port}</strong></p>
+            <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 self-start sm:self-auto shrink-0">${b.status}</span>
           </div>
-          <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 self-start sm:self-auto shrink-0">${b.status}</span>
+
+          <!-- Unit Price & Total Value Row -->
+          <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-white/5 text-[11px] font-mono">
+            <span class="text-slate-300">Đơn giá: <strong class="text-amber-400 font-bold">${uPrice}</strong></span>
+            <span class="text-slate-600">•</span>
+            <span class="text-slate-300">Tổng trị giá: <strong class="text-emerald-400 font-bold">${tVal}</strong></span>
+            <span class="px-2 py-0.5 rounded-full text-[9px] font-mono font-bold border ${priceBadgeClass}">
+              ${priceBadgeLabel}
+            </span>
+          </div>
         </div>
-      `).join('');
+        `;
+      }).join('');
 
       if (records.length > INITIAL_BL_LIMIT) {
         if (moreWrapper) moreWrapper.classList.remove('hidden');
@@ -5544,6 +5636,178 @@
     function toggleMoreLeadBLs() {
       isLeadBLExpanded = !isLeadBLExpanded;
       renderLeadBLList(currentLeadBLs, isLeadBLExpanded);
+    }
+
+    // =============================================================
+    // GLOBAL COUNTERPARTY TRADING NETWORK CONTROLLERS
+    // =============================================================
+    let currentDetailLeadNetwork = null;
+    let selectedLeadNetworkCountry = 'ALL';
+    let currentDetailSupplierNetwork = null;
+    let selectedSupplierNetworkCountry = 'ALL';
+
+    function renderLeadNetwork(lead, selectedCountry = 'ALL') {
+      const net = lead.counterparty_network;
+      const section = document.getElementById('cd-network-section');
+      const badge = document.getElementById('cd-network-summary-badge');
+      const filterContainer = document.getElementById('cd-network-country-filters');
+      const listContainer = document.getElementById('cd-network-partners-list');
+
+      if (!net || !net.partners || !net.partners.length) {
+        if (section) section.classList.add('hidden');
+        return;
+      }
+      if (section) section.classList.remove('hidden');
+
+      currentDetailLeadNetwork = net;
+      selectedLeadNetworkCountry = selectedCountry;
+
+      if (badge) {
+        badge.innerHTML = `🌐 ${net.total_partners} Đối Tác • ${net.total_countries} Quốc Gia`;
+      }
+
+      // Filter chips
+      if (filterContainer) {
+        let chipsHtml = `
+          <button type="button" onclick="filterLeadNetworkByCountry('ALL')" class="px-2.5 py-1 rounded-full text-[11px] font-mono font-bold transition-all cursor-pointer ${selectedCountry === 'ALL' ? 'bg-cyan-500 text-brand-950 shadow-md shadow-cyan-500/20' : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10'}">
+            Tất Cả (${net.total_partners})
+          </button>
+        `;
+        (net.countries || []).forEach(c => {
+          const isAct = selectedCountry === c.code;
+          chipsHtml += `
+            <button type="button" onclick="filterLeadNetworkByCountry('${c.code}')" class="px-2.5 py-1 rounded-full text-[11px] font-mono font-bold transition-all cursor-pointer flex items-center gap-1 ${isAct ? 'bg-cyan-500 text-brand-950 shadow-md shadow-cyan-500/20' : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10'}">
+              <span>${c.flag}</span>
+              <span>${c.name} (${c.count})</span>
+            </button>
+          `;
+        });
+        filterContainer.innerHTML = chipsHtml;
+      }
+
+      // Partners list
+      if (listContainer) {
+        const filtered = selectedCountry === 'ALL' ? net.partners : net.partners.filter(p => p.country_code === selectedCountry);
+        if (!filtered.length) {
+          listContainer.innerHTML = `<div class="p-3 rounded-xl bg-cyan-950/20 text-xs text-slate-400 font-mono">Không có đối tác nào thuộc quốc gia này.</div>`;
+          return;
+        }
+
+        listContainer.innerHTML = filtered.map(p => {
+          const relBadgeClass = p.relationship === 'Đối Tác Chiến Lược' ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' : (
+            p.relationship === 'Định Kỳ Thường Xuyên' ? 'bg-cyan-500/15 text-cyan-300 border-cyan-500/30' : 'bg-amber-500/15 text-amber-300 border-amber-500/30'
+          );
+          return `
+            <div class="p-3 rounded-xl bg-cyan-950/20 border border-cyan-500/20 hover:border-cyan-500/40 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-xs">
+              <div class="space-y-1">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="text-sm">${p.flag}</span>
+                  <span class="font-bold text-white">${p.name}</span>
+                  <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">${p.role}</span>
+                  <span class="text-[10px] font-mono text-slate-400">📅 Lần cuối: ${p.last_trade}</span>
+                </div>
+                <p class="text-[11px] text-slate-300 font-medium">Mặt hàng chính: <strong class="text-cyan-200">${p.commodity}</strong></p>
+                <div class="flex flex-wrap items-center gap-2 text-[10px] font-mono text-slate-400">
+                  <span>Số vận đơn: <strong class="text-white">${p.shipments_count} đơn</strong></span>
+                  <span>•</span>
+                  <span>Sản lượng: <strong class="text-emerald-400">${p.volume_est}</strong></span>
+                </div>
+              </div>
+              <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold border ${relBadgeClass} self-start sm:self-auto shrink-0">
+                ${p.relationship}
+              </span>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+
+    function filterLeadNetworkByCountry(code) {
+      if (currentDetailLead) {
+        renderLeadNetwork(currentDetailLead, code);
+      }
+    }
+
+    function renderSupplierNetwork(supplier, selectedCountry = 'ALL') {
+      const net = supplier.counterparty_network;
+      const section = document.getElementById('supd-network-section');
+      const badge = document.getElementById('supd-network-summary-badge');
+      const filterContainer = document.getElementById('supd-network-country-filters');
+      const listContainer = document.getElementById('supd-network-partners-list');
+
+      if (!net || !net.partners || !net.partners.length) {
+        if (section) section.classList.add('hidden');
+        return;
+      }
+      if (section) section.classList.remove('hidden');
+
+      currentDetailSupplierNetwork = net;
+      selectedSupplierNetworkCountry = selectedCountry;
+
+      if (badge) {
+        badge.innerHTML = `🌐 ${net.total_partners} Đối Tác • ${net.total_countries} Quốc Gia`;
+      }
+
+      // Filter chips
+      if (filterContainer) {
+        let chipsHtml = `
+          <button type="button" onclick="filterSupplierNetworkByCountry('ALL')" class="px-2.5 py-1 rounded-full text-[11px] font-mono font-bold transition-all cursor-pointer ${selectedCountry === 'ALL' ? 'bg-cyan-500 text-brand-950 shadow-md shadow-cyan-500/20' : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10'}">
+            Tất Cả (${net.total_partners})
+          </button>
+        `;
+        (net.countries || []).forEach(c => {
+          const isAct = selectedCountry === c.code;
+          chipsHtml += `
+            <button type="button" onclick="filterSupplierNetworkByCountry('${c.code}')" class="px-2.5 py-1 rounded-full text-[11px] font-mono font-bold transition-all cursor-pointer flex items-center gap-1 ${isAct ? 'bg-cyan-500 text-brand-950 shadow-md shadow-cyan-500/20' : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10'}">
+              <span>${c.flag}</span>
+              <span>${c.name} (${c.count})</span>
+            </button>
+          `;
+        });
+        filterContainer.innerHTML = chipsHtml;
+      }
+
+      // Partners list
+      if (listContainer) {
+        const filtered = selectedCountry === 'ALL' ? net.partners : net.partners.filter(p => p.country_code === selectedCountry);
+        if (!filtered.length) {
+          listContainer.innerHTML = `<div class="p-3 rounded-xl bg-cyan-950/20 text-xs text-slate-400 font-mono">Không có đối tác nào thuộc quốc gia này.</div>`;
+          return;
+        }
+
+        listContainer.innerHTML = filtered.map(p => {
+          const relBadgeClass = p.relationship === 'Đối Tác Chiến Lược' ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' : (
+            p.relationship === 'Định Kỳ Thường Xuyên' ? 'bg-cyan-500/15 text-cyan-300 border-cyan-500/30' : 'bg-amber-500/15 text-amber-300 border-amber-500/30'
+          );
+          return `
+            <div class="p-3 rounded-xl bg-cyan-950/20 border border-cyan-500/20 hover:border-cyan-500/40 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-xs">
+              <div class="space-y-1">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="text-sm">${p.flag}</span>
+                  <span class="font-bold text-white">${p.name}</span>
+                  <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">${p.role}</span>
+                  <span class="text-[10px] font-mono text-slate-400">📅 Lần cuối: ${p.last_trade}</span>
+                </div>
+                <p class="text-[11px] text-slate-300 font-medium">Mặt hàng chính: <strong class="text-cyan-200">${p.commodity}</strong></p>
+                <div class="flex flex-wrap items-center gap-2 text-[10px] font-mono text-slate-400">
+                  <span>Số vận đơn: <strong class="text-white">${p.shipments_count} đơn</strong></span>
+                  <span>•</span>
+                  <span>Sản lượng: <strong class="text-emerald-400">${p.volume_est}</strong></span>
+                </div>
+              </div>
+              <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold border ${relBadgeClass} self-start sm:self-auto shrink-0">
+                ${p.relationship}
+              </span>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+
+    function filterSupplierNetworkByCountry(code) {
+      if (currentDetailSupplier) {
+        renderSupplierNetwork(currentDetailSupplier, code);
+      }
     }
 
     function triggerTaxAuditFromDetail() {

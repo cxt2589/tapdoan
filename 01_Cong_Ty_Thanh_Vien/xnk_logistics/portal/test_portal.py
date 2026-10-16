@@ -57,7 +57,7 @@ def run_all_tests():
     time.sleep(0.5)
 
     passed_count = 0
-    total_tests = 43
+    total_tests = 44
 
     try:
         # Test 1: Health Check
@@ -769,7 +769,37 @@ def run_all_tests():
             assert 'closeCounterpartyDetailModal' in html_text
             assert 'createRfqFromCounterparty' in html_text
             assert 'DANH SÁCH ĐỐI TÁC NGOẠI THƯƠNG' in html_text
-        print(f"✅ Test 43/43: Làm Rõ Đối Tác Toàn Thế Giới & Chi Tiết Theo Quốc Gia & Chi Tiết Từng Đối Tác 360° chuẩn 100%")
+        print(f"✅ Test 43/44: Làm Rõ Đối Tác Toàn Thế Giới & Chi Tiết Theo Quốc Gia & Chi Tiết Từng Đối Tác 360° chuẩn 100%")
+        passed_count += 1
+
+        # Test 44: Động Cơ Cố Định Menu & Hướng Dẫn Vuốt Phải Sticky Top Đa Thiết Bị (Cross-Device Sticky Engine)
+        with urllib.request.urlopen(url_html, timeout=5) as html_resp:
+            html_text = html_resp.read().decode('utf-8')
+            # 1. Bảo đảm overflow-x: clip (loại bỏ hoàn toàn overflow-x: hidden trên html/body phá vỡ sticky)
+            assert 'overflow-x: clip' in html_text
+            assert 'html, body {\n      overflow-x: hidden' not in html_text
+            assert 'html, body {\r\n      overflow-x: hidden' not in html_text
+
+            # 2. Header chuẩn Universal Sticky
+            assert 'executive-sticky-header' in html_text
+            assert 'id="mainExecutiveHeader"' in html_text
+            assert 'position: -webkit-sticky !important' in html_text
+            assert 'position: sticky !important' in html_text
+
+            # 3. JavaScript Sticky Guardian Polyfill cho mọi dòng máy / trình duyệt nhúng
+            assert 'initStickyHeaderGuardian' in html_text
+            assert 'headerStickyPlaceholder' in html_text
+            assert 'sticky-fixed-fallback' in html_text
+            assert 'updateStickyHeaderHeight' in html_text
+
+            # 4. Hướng dẫn vuốt phải đính dưới menu tab
+            assert 'id="tableSwipeGuidanceWrapper"' in html_text
+            assert 'tableSwipeGuidance' in html_text
+
+            # 5. Phân hệ Thẩm định không bị đè chữ Sanctions và Quốc gia trên Mobile
+            assert 'id="b-sanctions-pill"' in html_text
+            assert 'id="b-country-badge"' in html_text
+        print(f"✅ Test 44/44: Động Cơ Cố Định Menu & Hướng Dẫn Vuốt Phải Sticky Top Đa Thiết Bị chuẩn 100%")
         passed_count += 1
 
     finally:

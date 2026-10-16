@@ -428,6 +428,37 @@
       overscroll-behavior: contain !important;
       overscroll-behavior-y: contain !important;
       -webkit-overflow-scrolling: touch !important;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(6, 182, 212, 0.45) transparent;
+    }
+    .modal-scroll-container::-webkit-scrollbar {
+      width: 6px;
+    }
+    .modal-scroll-container::-webkit-scrollbar-track {
+      background: transparent !important;
+      margin-top: 28px !important;
+      margin-bottom: 28px !important;
+    }
+    .modal-scroll-container::-webkit-scrollbar-thumb {
+      background: rgba(6, 182, 212, 0.45) !important;
+      border-radius: 9999px !important;
+    }
+    .modal-scroll-container::-webkit-scrollbar-thumb:hover {
+      background: rgba(6, 182, 212, 0.85) !important;
+    }
+
+    /* Light mode modal scrollbar */
+    html:not(.dark) .modal-scroll-container,
+    html.light .modal-scroll-container {
+      scrollbar-color: #cbd5e1 transparent;
+    }
+    html:not(.dark) .modal-scroll-container::-webkit-scrollbar-thumb,
+    html.light .modal-scroll-container::-webkit-scrollbar-thumb {
+      background: #cbd5e1 !important;
+    }
+    html:not(.dark) .modal-scroll-container::-webkit-scrollbar-thumb:hover,
+    html.light .modal-scroll-container::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8 !important;
     }
   </style>
 </head>
@@ -1754,7 +1785,7 @@
   <!-- MODAL: COMPANY DOSSIER & HISTORICAL TRADE INTELLIGENCE        -->
   <!-- ============================================================= -->
   <div id="companyDetailModal" onclick="handleModalBackdropClick(event, 'companyDetailModal')" class="fixed inset-0 z-[60] bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 overscroll-contain">
-    <div onclick="event.stopPropagation()" class="w-full max-w-4xl rounded-3xl p-1 bg-gradient-to-b from-cyan-500/30 via-white/10 to-white/5 border border-cyan-500/40 shadow-2xl">
+    <div onclick="event.stopPropagation()" class="w-full max-w-4xl rounded-3xl overflow-hidden p-1 bg-gradient-to-b from-cyan-500/30 via-white/10 to-white/5 border border-cyan-500/40 shadow-2xl">
       <div class="bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-5 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container">
         
         <!-- Header -->
@@ -1999,7 +2030,7 @@
   <!-- MODAL: COMPANY CONTACTS DOSSIER (ĐẦU MỐI LIÊN LẠC BỔ SUNG)     -->
   <!-- ============================================================= -->
   <div id="companyContactsModal" onclick="handleModalBackdropClick(event, 'companyContactsModal')" class="fixed inset-0 z-[70] bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 overscroll-contain">
-    <div onclick="event.stopPropagation()" class="w-full max-w-3xl rounded-3xl p-1 bg-gradient-to-b from-cyan-500/30 via-white/10 to-white/5 border border-cyan-500/40 shadow-2xl">
+    <div onclick="event.stopPropagation()" class="w-full max-w-3xl rounded-3xl overflow-hidden p-1 bg-gradient-to-b from-cyan-500/30 via-white/10 to-white/5 border border-cyan-500/40 shadow-2xl">
       <div class="bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-5 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container">
         
         <!-- Header -->
@@ -2056,7 +2087,7 @@
   <!-- MODAL: SUPPLIER & GLOBAL TIER-1 AGENT DOSSIER DETAIL          -->
   <!-- ============================================================= -->
   <div id="supplierDetailModal" onclick="handleModalBackdropClick(event, 'supplierDetailModal')" class="fixed inset-0 z-[60] bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 overscroll-contain">
-    <div onclick="event.stopPropagation()" class="w-full max-w-4xl rounded-3xl p-1 bg-gradient-to-b from-cyan-500/30 via-white/10 to-white/5 border border-cyan-500/40 shadow-2xl">
+    <div onclick="event.stopPropagation()" class="w-full max-w-4xl rounded-3xl overflow-hidden p-1 bg-gradient-to-b from-cyan-500/30 via-white/10 to-white/5 border border-cyan-500/40 shadow-2xl">
       <div class="bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-5 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container">
         
         <!-- Header -->
@@ -2236,7 +2267,7 @@
   <!-- MODAL: UNIVERSAL HS CODE & 97 CHAPTERS EXPANDED CATALOG       -->
   <!-- ============================================================= -->
   <div id="hsCatalogModal" onclick="handleModalBackdropClick(event, 'hsCatalogModal')" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 overscroll-contain">
-    <div onclick="event.stopPropagation()" class="w-full max-w-4xl rounded-3xl p-1 bg-gradient-to-b from-cyan-500/30 via-white/10 to-white/5 border border-cyan-500/40 shadow-2xl">
+    <div onclick="event.stopPropagation()" class="w-full max-w-4xl rounded-3xl overflow-hidden p-1 bg-gradient-to-b from-cyan-500/30 via-white/10 to-white/5 border border-cyan-500/40 shadow-2xl">
       <div class="bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-5 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container">
         
         <!-- Header -->
@@ -2326,7 +2357,7 @@
   <!-- MODAL: B2B EXPORT OUTREACH QUOTATION LETTER GENERATOR         -->
   <!-- ============================================================= -->
   <div id="outreachModal" onclick="handleModalBackdropClick(event, 'outreachModal')" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4 overscroll-contain">
-    <div onclick="event.stopPropagation()" class="w-full max-w-3xl rounded-3xl p-1 bg-gradient-to-b from-cyan-500/30 via-white/10 to-white/5 border border-cyan-500/40 shadow-2xl">
+    <div onclick="event.stopPropagation()" class="w-full max-w-3xl rounded-3xl overflow-hidden p-1 bg-gradient-to-b from-cyan-500/30 via-white/10 to-white/5 border border-cyan-500/40 shadow-2xl">
       <div class="bg-brand-900 rounded-[22px] p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container">
         
         <div class="flex items-start justify-between">
@@ -2450,7 +2481,7 @@
   <!-- MODAL: DUAL B2B RFQ (BUYER QUOTATION + SUPPLIER INQUIRY)      -->
   <!-- ============================================================= -->
   <div id="dualRfqModal" onclick="handleModalBackdropClick(event, 'dualRfqModal')" class="fixed inset-0 z-[60] bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 overscroll-contain">
-    <div onclick="event.stopPropagation()" class="w-full max-w-4xl rounded-3xl p-1 bg-gradient-to-b from-emerald-500/40 via-white/10 to-white/5 border border-emerald-500/40 shadow-2xl">
+    <div onclick="event.stopPropagation()" class="w-full max-w-4xl rounded-3xl overflow-hidden p-1 bg-gradient-to-b from-emerald-500/40 via-white/10 to-white/5 border border-emerald-500/40 shadow-2xl">
       <div class="bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-5 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container">
         
         <!-- Header -->
@@ -2573,7 +2604,7 @@
   <!-- MODAL: 6-DIMENSIONAL DEAL GAP ANALYSIS & MATCH DOSSIER         -->
   <!-- ============================================================= -->
   <div id="matchDetailModal" onclick="handleModalBackdropClick(event, 'matchDetailModal')" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4 overscroll-contain">
-    <div onclick="event.stopPropagation()" class="w-full max-w-4xl rounded-3xl p-1 bg-gradient-to-b from-emerald-500/30 via-white/10 to-white/5 border border-emerald-500/40 shadow-2xl">
+    <div onclick="event.stopPropagation()" class="w-full max-w-4xl rounded-3xl overflow-hidden p-1 bg-gradient-to-b from-emerald-500/30 via-white/10 to-white/5 border border-emerald-500/40 shadow-2xl">
       <div class="bg-brand-900 rounded-[22px] p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container">
         
         <!-- Header -->

@@ -30,6 +30,7 @@
   - **Lục Xung:** Ngày `Tý` (Tý xung Ngọ).
   - **Tương Hại:** Ngày `Sửu`.
   - **Tự Hình:** Ngày `Ngọ`.
+| 15/10/2026 | **Triệu tập Ban Điều hành các Công ty con:** Triệu tập khẩn cấp Giám đốc các công ty thành viên (kèm Thư ký riêng) vào phòng họp theo lệnh của Chủ tịch | Văn phòng Thư ký Tập đoàn | Ngay lập tức | ✅ Đã phát lệnh & Sẵn sàng |
 
 ---
 

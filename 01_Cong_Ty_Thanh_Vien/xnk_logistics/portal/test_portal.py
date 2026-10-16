@@ -57,7 +57,7 @@ def run_all_tests():
     time.sleep(0.5)
 
     passed_count = 0
-    total_tests = 49
+    total_tests = 50
 
     try:
         # Test 1: Health Check
@@ -968,7 +968,40 @@ def run_all_tests():
             assert 'id="regulatoryRadarScrollBody"' in html_text
             assert 'max-h-[82vh]' in html_text
             assert 'modal-scroll-container' in html_text
-        print(f"✅ Test 49/49: Bảng Giá Đa Sàn (6 Mặt Hàng Chiến Lược), Bộ Chuẩn Hóa Đơn Vị & Khắc Phục Cuộn Trang Desktop/Mobile/Radar chuẩn 100%")
+        print(f"✅ Test 49/50: Bảng Giá Đa Sàn (6 Mặt Hàng Chiến Lược), Bộ Chuẩn Hóa Đơn Vị & Khắc Phục Cuộn Trang Desktop/Mobile/Radar chuẩn 100%")
+        passed_count += 1
+
+        # Test 50: Cơ Chế Tự Động Khôi Phục Vị Trí Cuộn Lên Đầu (Scroll Reset to Top) Cho Mọi Popup & Modal Khi Mở/Đóng
+        with urllib.request.urlopen(url_html, timeout=5) as html_resp:
+            html_text = html_resp.read().decode('utf-8')
+            # 1. Hàm universal resetModalScroll tồn tại và xử lý đa container
+            assert 'function resetModalScroll(modalOrId)' in html_text
+            assert 'modal.scrollTop = 0' in html_text
+            assert 'container.scrollTop = 0' in html_text
+            assert 'requestAnimationFrame(() => resetModalScroll' in html_text
+
+            # 2. Toàn bộ các Modal Scroll Container được định danh ID rõ ràng
+            assert 'id="companyContactsScrollBody"' in html_text
+            assert 'id="companyDetailScrollBody"' in html_text
+            assert 'id="supplierDetailScrollBody"' in html_text
+            assert 'id="counterpartyDetailScrollBody"' in html_text
+            assert 'id="hsCatalogScrollBody"' in html_text
+            assert 'id="outreachScrollBody"' in html_text
+            assert 'id="dualRfqScrollBody"' in html_text
+            assert 'id="matchDetailScrollBody"' in html_text
+            assert 'id="regulatoryRadarScrollBody"' in html_text
+            assert 'id="crossExchangePricesScrollBody"' in html_text
+
+            # 3. Popup Đầu Mối Liên Lạc (companyContactsModal) tự động reset cuộn lên đầu khi mở & khi đóng
+            assert 'lockBodyScroll(\'companyContactsModal\')' in html_text
+            assert 'resetModalScroll(\'companyContactsModal\')' in html_text
+            assert 'scBody.scrollTop = 0' in html_text
+
+            # 4. Universal Modal Manager tích hợp resetModalScroll vào lockBodyScroll, closeModalById, closeAllModals
+            assert 'function lockBodyScroll(modalId)' in html_text
+            assert 'resetModalScroll(modalId)' in html_text
+            assert 'allModalIds.forEach(id => resetModalScroll(id))' in html_text
+        print(f"✅ Test 50/50: Cơ Chế Tự Động Khôi Phục Vị Trí Cuộn Lên Đầu (Universal Modal Scroll Reset to Top) chuẩn 100%")
         passed_count += 1
 
     finally:

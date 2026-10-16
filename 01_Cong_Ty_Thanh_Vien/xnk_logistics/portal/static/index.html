@@ -2098,7 +2098,7 @@
   <!-- ============================================================= -->
   <div id="companyDetailModal" onclick="handleModalBackdropClick(event, 'companyDetailModal')" class="fixed inset-0 z-[60] bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 overscroll-contain">
     <div onclick="event.stopPropagation()" class="w-full max-w-4xl rounded-3xl overflow-hidden p-1 bg-gradient-to-b from-cyan-500/30 via-white/10 to-white/5 border border-cyan-500/40 shadow-2xl">
-      <div class="bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-5 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container">
+      <div id="companyDetailScrollBody" class="bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-5 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container" style="touch-action: pan-y !important; -webkit-overflow-scrolling: touch !important;">
         
         <!-- Header -->
         <div class="flex items-start justify-between border-b border-white/10 pb-4">
@@ -2420,7 +2420,7 @@
   <!-- ============================================================= -->
   <div id="companyContactsModal" onclick="handleModalBackdropClick(event, 'companyContactsModal')" class="fixed inset-0 z-[70] bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 overscroll-contain">
     <div onclick="event.stopPropagation()" class="w-full max-w-3xl rounded-3xl overflow-hidden p-1 bg-gradient-to-b from-cyan-500/30 via-white/10 to-white/5 border border-cyan-500/40 shadow-2xl">
-      <div class="bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-5 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container">
+      <div id="companyContactsScrollBody" class="bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-5 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container" style="touch-action: pan-y !important; -webkit-overflow-scrolling: touch !important;">
         
         <!-- Header -->
         <div class="flex items-start justify-between border-b border-white/10 pb-4">
@@ -2477,7 +2477,7 @@
   <!-- ============================================================= -->
   <div id="supplierDetailModal" onclick="handleModalBackdropClick(event, 'supplierDetailModal')" class="fixed inset-0 z-[70] bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 overscroll-contain">
     <div onclick="event.stopPropagation()" class="w-full max-w-4xl rounded-3xl overflow-hidden p-1 bg-gradient-to-b from-cyan-500/30 via-white/10 to-white/5 border border-cyan-500/40 shadow-2xl">
-      <div class="bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-5 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container">
+      <div id="supplierDetailScrollBody" class="bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-5 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container" style="touch-action: pan-y !important; -webkit-overflow-scrolling: touch !important;">
         
         <!-- Header -->
         <div class="flex items-start justify-between border-b border-white/10 pb-4">
@@ -2728,7 +2728,7 @@
   <!-- ============================================================= -->
   <div id="counterpartyDetailModal" onclick="handleModalBackdropClick(event, 'counterpartyDetailModal')" class="fixed inset-0 z-[70] bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 overscroll-contain">
     <div onclick="event.stopPropagation()" class="w-full max-w-3xl rounded-3xl overflow-hidden p-1 bg-gradient-to-b from-cyan-500/40 via-blue-500/20 to-brand-950 border border-cyan-500/50 shadow-2xl">
-      <div class="bg-brand-900 rounded-[22px] p-5 sm:p-6 space-y-5 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container">
+      <div id="counterpartyDetailScrollBody" class="bg-brand-900 rounded-[22px] p-5 sm:p-6 space-y-5 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container" style="touch-action: pan-y !important; -webkit-overflow-scrolling: touch !important;">
         
         <!-- Header -->
         <div class="flex items-start justify-between border-b border-white/10 pb-4">
@@ -2867,7 +2867,7 @@
   <!-- ============================================================= -->
   <div id="hsCatalogModal" onclick="handleModalBackdropClick(event, 'hsCatalogModal')" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 overscroll-contain">
     <div onclick="event.stopPropagation()" class="w-full max-w-4xl rounded-3xl overflow-hidden p-1 bg-gradient-to-b from-cyan-500/30 via-white/10 to-white/5 border border-cyan-500/40 shadow-2xl">
-      <div class="bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-5 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container">
+      <div id="hsCatalogScrollBody" class="bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-5 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container" style="touch-action: pan-y !important; -webkit-overflow-scrolling: touch !important;">
         
         <!-- Header -->
         <div class="flex items-start justify-between border-b border-white/10 pb-4">
@@ -2957,7 +2957,7 @@
   <!-- ============================================================= -->
   <div id="outreachModal" onclick="handleModalBackdropClick(event, 'outreachModal')" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4 overscroll-contain">
     <div onclick="event.stopPropagation()" class="w-full max-w-3xl rounded-3xl overflow-hidden p-1 bg-gradient-to-b from-cyan-500/30 via-white/10 to-white/5 border border-cyan-500/40 shadow-2xl">
-      <div class="bg-brand-900 rounded-[22px] p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container">
+      <div id="outreachScrollBody" class="bg-brand-900 rounded-[22px] p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container" style="touch-action: pan-y !important; -webkit-overflow-scrolling: touch !important;">
         
         <div class="flex items-start justify-between">
           <div>
@@ -3199,7 +3199,7 @@
   <!-- ============================================================= -->
   <div id="dualRfqModal" onclick="handleModalBackdropClick(event, 'dualRfqModal')" class="fixed inset-0 z-[60] bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 overscroll-contain">
     <div onclick="event.stopPropagation()" class="w-full max-w-4xl rounded-3xl overflow-hidden p-1 bg-gradient-to-b from-emerald-500/40 via-white/10 to-white/5 border border-emerald-500/40 shadow-2xl">
-      <div class="bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-5 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container">
+      <div id="dualRfqScrollBody" class="bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-5 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container" style="touch-action: pan-y !important; -webkit-overflow-scrolling: touch !important;">
         
         <!-- Header -->
         <div class="flex items-start justify-between border-b border-white/10 pb-4">
@@ -3322,7 +3322,7 @@
   <!-- ============================================================= -->
   <div id="matchDetailModal" onclick="handleModalBackdropClick(event, 'matchDetailModal')" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4 overscroll-contain">
     <div onclick="event.stopPropagation()" class="w-full max-w-4xl rounded-3xl overflow-hidden p-1 bg-gradient-to-b from-emerald-500/30 via-white/10 to-white/5 border border-emerald-500/40 shadow-2xl">
-      <div class="bg-brand-900 rounded-[22px] p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container">
+      <div id="matchDetailScrollBody" class="bg-brand-900 rounded-[22px] p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container" style="touch-action: pan-y !important; -webkit-overflow-scrolling: touch !important;">
         
         <!-- Header -->
         <div class="flex items-start justify-between border-b border-white/10 pb-4">
@@ -4340,16 +4340,24 @@
     let currentHsModalMode = 'volume';
 
     function openHsCatalogModal() {
-      lockBodyScroll();
+      lockBodyScroll('hsCatalogModal');
+      resetModalScroll('hsCatalogModal');
       const modal = document.getElementById('hsCatalogModal');
-      if (modal) modal.classList.remove('hidden');
+      if (modal) {
+        modal.classList.remove('hidden');
+        resetModalScroll('hsCatalogModal');
+        requestAnimationFrame(() => resetModalScroll('hsCatalogModal'));
+      }
       setHsModalMode(currentHsModalMode);
       lucide.createIcons();
     }
 
     function closeHsCatalogModal() {
       const modal = document.getElementById('hsCatalogModal');
-      if (modal) modal.classList.add('hidden');
+      if (modal) {
+        modal.classList.add('hidden');
+        resetModalScroll('hsCatalogModal');
+      }
       unlockBodyScroll();
     }
 
@@ -5229,11 +5237,33 @@
     // 2. COMPANY DETAIL & INTELLIGENCE DOSSIER MODAL
     // ==========================================
     // ==========================================
-    // UNIVERSAL MODAL MANAGER (SCROLL LOCK & BACKDROP CLOSE)
+    // UNIVERSAL MODAL MANAGER (SCROLL LOCK, RESET SCROLL & BACKDROP CLOSE)
     // ==========================================
-    function lockBodyScroll() {
+    function resetModalScroll(modalOrId) {
+      if (!modalOrId) return;
+      const modal = typeof modalOrId === 'string' ? document.getElementById(modalOrId) : modalOrId;
+      if (!modal) return;
+      
+      try {
+        modal.scrollTop = 0;
+      } catch (e) {}
+
+      const scrollContainers = modal.querySelectorAll('.modal-scroll-container, .overflow-y-auto, [class*="overflow-y-auto"], #companyContactsScrollBody, #companyDetailScrollBody, #supplierDetailScrollBody, #counterpartyDetailScrollBody, #hsCatalogScrollBody, #outreachScrollBody, #dualRfqScrollBody, #matchDetailScrollBody, #regulatoryRadarScrollBody, #crossExchangePricesScrollBody');
+      scrollContainers.forEach(container => {
+        try {
+          container.scrollTop = 0;
+        } catch (e) {}
+      });
+    }
+
+    function lockBodyScroll(modalId) {
       document.body.classList.add('modal-open');
       document.documentElement.classList.add('modal-open');
+      if (modalId) {
+        resetModalScroll(modalId);
+        requestAnimationFrame(() => resetModalScroll(modalId));
+        setTimeout(() => resetModalScroll(modalId), 50);
+      }
     }
 
     function unlockBodyScroll() {
@@ -5255,6 +5285,7 @@
     }
 
     function closeModalById(modalId) {
+      resetModalScroll(modalId);
       if (modalId === 'companyDetailModal') closeCompanyDetailModal();
       else if (modalId === 'supplierDetailModal') closeSupplierDetailModal();
       else if (modalId === 'hsCatalogModal') closeHsCatalogModal();
@@ -5268,11 +5299,19 @@
       else {
         const el = document.getElementById(modalId);
         if (el) el.classList.add('hidden');
+        resetModalScroll(modalId);
         unlockBodyScroll();
       }
     }
 
     function closeAllModals() {
+      const allModalIds = [
+        'companyDetailModal', 'supplierDetailModal', 'hsCatalogModal',
+        'outreachModal', 'dualRfqModal', 'matchDetailModal',
+        'companyContactsModal', 'counterpartyDetailModal',
+        'regulatoryRadarModal', 'crossExchangePricesModal'
+      ];
+      allModalIds.forEach(id => resetModalScroll(id));
       closeCompanyDetailModal();
       closeSupplierDetailModal();
       closeHsCatalogModal();
@@ -5291,7 +5330,8 @@
     let currentDetailLead = null;
 
     async function openCompanyDetailModal(leadId) {
-      lockBodyScroll();
+      lockBodyScroll('companyDetailModal');
+      resetModalScroll('companyDetailModal');
       let lead = (cachedLeadsData || []).find(l => l.lead_id === leadId);
       if (!lead) {
         try {
@@ -5469,12 +5509,15 @@
       renderLeadNetwork(lead);
 
       document.getElementById('companyDetailModal').classList.remove('hidden');
+      resetModalScroll('companyDetailModal');
+      requestAnimationFrame(() => resetModalScroll('companyDetailModal'));
       lucide.createIcons();
     }
 
     function closeCompanyDetailModal() {
       const modal = document.getElementById('companyDetailModal');
       if (modal) modal.classList.add('hidden');
+      resetModalScroll('companyDetailModal');
       unlockBodyScroll();
     }
 
@@ -5491,7 +5534,11 @@
     // 2.1 COMPANY CONTACTS DOSSIER MODAL & MORE CONTACTS LOOKUP
     // ==========================================
     function openCompanyContactsModal(compName, compCountry, contacts) {
-      lockBodyScroll();
+      lockBodyScroll('companyContactsModal');
+      resetModalScroll('companyContactsModal');
+      const scBodyPre = document.getElementById('companyContactsScrollBody');
+      if (scBodyPre) scBodyPre.scrollTop = 0;
+
       document.getElementById('ccm-company-name').innerHTML = `
         <span>${compName}</span>
         <span class="text-xs px-2.5 py-0.5 rounded-full font-mono bg-blue-500/20 text-blue-300 font-semibold border border-blue-500/30">${compCountry || 'Quốc tế'}</span>
@@ -5586,13 +5633,32 @@
         `;
       }).join('');
 
-      document.getElementById('companyContactsModal').classList.remove('hidden');
+      const modal = document.getElementById('companyContactsModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        resetModalScroll(modal);
+        const scBody = document.getElementById('companyContactsScrollBody');
+        if (scBody) scBody.scrollTop = 0;
+        requestAnimationFrame(() => {
+          resetModalScroll('companyContactsModal');
+          if (scBody) scBody.scrollTop = 0;
+        });
+        setTimeout(() => {
+          resetModalScroll('companyContactsModal');
+          if (scBody) scBody.scrollTop = 0;
+        }, 50);
+      }
       if (window.lucide) lucide.createIcons();
     }
 
     function closeCompanyContactsModal() {
       const modal = document.getElementById('companyContactsModal');
-      if (modal) modal.classList.add('hidden');
+      if (modal) {
+        modal.classList.add('hidden');
+        resetModalScroll(modal);
+        const scBody = document.getElementById('companyContactsScrollBody');
+        if (scBody) scBody.scrollTop = 0;
+      }
       unlockBodyScroll();
     }
 
@@ -5704,14 +5770,21 @@
     // 3. OUTREACH LETTER GENERATOR MODAL
     // ==========================================
     async function openOutreachModal(leadId) {
-      lockBodyScroll();
+      lockBodyScroll('outreachModal');
+      resetModalScroll('outreachModal');
       currentActiveLead = leadId;
       document.getElementById('outreachModal').classList.remove('hidden');
+      resetModalScroll('outreachModal');
+      requestAnimationFrame(() => resetModalScroll('outreachModal'));
       await generateOutreachContent(leadId, currentOutreachLang);
     }
 
     function closeOutreachModal() {
-      document.getElementById('outreachModal').classList.add('hidden');
+      const modal = document.getElementById('outreachModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        resetModalScroll('outreachModal');
+      }
       unlockBodyScroll();
     }
 
@@ -6313,7 +6386,8 @@
     let currentDetailSupplier = null;
 
     async function openSupplierDetailModal(supId) {
-      lockBodyScroll();
+      lockBodyScroll('supplierDetailModal');
+      resetModalScroll('supplierDetailModal');
       let sup = (cachedSuppliersList || []).find(s => s.id === supId);
       if (!sup) {
         try {
@@ -6425,12 +6499,17 @@
       renderSupplierNetwork(sup);
 
       document.getElementById('supplierDetailModal').classList.remove('hidden');
+      resetModalScroll('supplierDetailModal');
+      requestAnimationFrame(() => resetModalScroll('supplierDetailModal'));
       lucide.createIcons();
     }
 
     function closeSupplierDetailModal() {
       const modal = document.getElementById('supplierDetailModal');
-      if (modal) modal.classList.add('hidden');
+      if (modal) {
+        modal.classList.add('hidden');
+        resetModalScroll('supplierDetailModal');
+      }
       unlockBodyScroll();
     }
 
@@ -7063,15 +7142,23 @@
       }
 
       // Show Modal
-      lockBodyScroll();
+      lockBodyScroll('counterpartyDetailModal');
+      resetModalScroll('counterpartyDetailModal');
       const modal = document.getElementById('counterpartyDetailModal');
-      if (modal) modal.classList.remove('hidden');
+      if (modal) {
+        modal.classList.remove('hidden');
+        resetModalScroll('counterpartyDetailModal');
+        requestAnimationFrame(() => resetModalScroll('counterpartyDetailModal'));
+      }
       if (window.lucide) lucide.createIcons();
     }
 
     function closeCounterpartyDetailModal() {
       const modal = document.getElementById('counterpartyDetailModal');
-      if (modal) modal.classList.add('hidden');
+      if (modal) {
+        modal.classList.add('hidden');
+        resetModalScroll('counterpartyDetailModal');
+      }
       unlockBodyScroll();
     }
 
@@ -7807,7 +7894,9 @@
           const modal = document.getElementById('matchDetailModal');
           if (modal) {
             modal.classList.remove('hidden');
-            lockBodyScroll();
+            lockBodyScroll('matchDetailModal');
+            resetModalScroll('matchDetailModal');
+            requestAnimationFrame(() => resetModalScroll('matchDetailModal'));
           }
           if (window.lucide) lucide.createIcons();
         }
@@ -8429,7 +8518,10 @@
 
     function closeMatchDetailModal() {
       const modal = document.getElementById('matchDetailModal');
-      if (modal) modal.classList.add('hidden');
+      if (modal) {
+        modal.classList.add('hidden');
+        resetModalScroll('matchDetailModal');
+      }
       unlockBodyScroll();
     }
 
@@ -8502,7 +8594,8 @@
     }
 
     async function openDualOutreach(buyerId, supplierId, commodity, hs) {
-      lockBodyScroll();
+      lockBodyScroll('dualRfqModal');
+      resetModalScroll('dualRfqModal');
       currentDualBuyerId = buyerId;
       currentDualSupplierId = supplierId;
       currentDualCommodity = commodity;
@@ -8510,7 +8603,11 @@
 
       switchDualRfqTab('buyer');
       const modal = document.getElementById('dualRfqModal');
-      if (modal) modal.classList.remove('hidden');
+      if (modal) {
+        modal.classList.remove('hidden');
+        resetModalScroll('dualRfqModal');
+        requestAnimationFrame(() => resetModalScroll('dualRfqModal'));
+      }
       if (window.lucide) lucide.createIcons();
 
       await fetchAndPopulateDualRfq();
@@ -8562,7 +8659,10 @@
 
     function closeDualRfqModal() {
       const modal = document.getElementById('dualRfqModal');
-      if (modal) modal.classList.add('hidden');
+      if (modal) {
+        modal.classList.add('hidden');
+        resetModalScroll('dualRfqModal');
+      }
       unlockBodyScroll();
     }
 
@@ -8744,8 +8844,11 @@
     async function openRegulatoryRadarModal() {
       const modal = document.getElementById('regulatoryRadarModal');
       if (!modal) return;
+      lockBodyScroll('regulatoryRadarModal');
+      resetModalScroll('regulatoryRadarModal');
       modal.classList.remove('hidden');
-      lockBodyScroll();
+      resetModalScroll('regulatoryRadarModal');
+      requestAnimationFrame(() => resetModalScroll('regulatoryRadarModal'));
       await fetchRegulatoryRadarData();
       if (window.lucide) lucide.createIcons();
     }
@@ -8754,6 +8857,7 @@
       const modal = document.getElementById('regulatoryRadarModal');
       if (!modal) return;
       modal.classList.add('hidden');
+      resetModalScroll('regulatoryRadarModal');
       unlockBodyScroll();
     }
 
@@ -8979,8 +9083,11 @@
     async function openCrossExchangePricesModal(defaultCommodityId) {
       const modal = document.getElementById('crossExchangePricesModal');
       if (!modal) return;
+      lockBodyScroll('crossExchangePricesModal');
+      resetModalScroll('crossExchangePricesModal');
       modal.classList.remove('hidden');
-      lockBodyScroll();
+      resetModalScroll('crossExchangePricesModal');
+      requestAnimationFrame(() => resetModalScroll('crossExchangePricesModal'));
       if (defaultCommodityId) {
         currentSelectedCommodityId = defaultCommodityId;
       }
@@ -8992,6 +9099,7 @@
       const modal = document.getElementById('crossExchangePricesModal');
       if (!modal) return;
       modal.classList.add('hidden');
+      resetModalScroll('crossExchangePricesModal');
       unlockBodyScroll();
     }
 

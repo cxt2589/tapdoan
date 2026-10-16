@@ -177,6 +177,10 @@
     html.light .border-cyan-500\/40 {
       border-color: rgba(2, 132, 199, 0.28) !important; /* Soft cerulean border */
     }
+    html:not(.dark) #tableSwipeGuidance, html.light #tableSwipeGuidance {
+      background: linear-gradient(to right, rgba(2, 132, 199, 0.10), rgba(2, 132, 199, 0.04), #ffffff) !important;
+      border-color: rgba(2, 132, 199, 0.28) !important;
+    }
 
     /* 7. Soft Ambient Shadows */
     html:not(.dark) .shadow-xl, html:not(.dark) .shadow-2xl,
@@ -610,6 +614,35 @@
       </div>
     </div>
 
+    <!-- GUIDANCE CALLOUT: SWIPE RIGHT TO EXPLORE DATA (STICKY ĐÍNH NGAY DƯỚI MENU KHI Ở TAB KHÁCH HÀNG) -->
+    <div id="tableSwipeGuidanceWrapper" class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 pb-1.5 sm:pb-2 transition-all">
+      <div id="tableSwipeGuidance" class="rounded-xl p-2 sm:p-2.5 bg-gradient-to-r from-cyan-500/15 via-blue-500/10 to-brand-900 border border-cyan-500/30 shadow-md flex items-center justify-between gap-2.5 w-full max-w-full overflow-hidden">
+        <div class="flex items-center gap-2 sm:gap-2.5 min-w-0">
+          <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-cyan-500/25 border border-cyan-500/40 flex items-center justify-center shrink-0 text-cyan-300 shadow-sm animate-pulse">
+            <i data-lucide="hand" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+          </div>
+          <div class="min-w-0">
+            <div class="flex items-center gap-1.5 sm:gap-2">
+              <span class="font-extrabold text-white text-xs tracking-tight flex items-center gap-1">
+                <span>Hướng Dẫn:</span>
+                <span class="text-cyan-400 font-bold">Vuốt Sang Phải 👉</span>
+              </span>
+              <span class="px-1.5 py-0.2 rounded-full text-[9px] font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 uppercase">Thao Tác</span>
+            </div>
+            <p id="tableSwipeGuidanceText" class="text-[10px] sm:text-xs text-slate-300 mt-0.5 line-clamp-1 sm:line-clamp-none">
+              Bảng dữ liệu nhiều cột: Hãy <strong>vuốt/lướt sang phải 👉</strong> để xem trọn vẹn <strong>Mã HS, Sản Lượng, Phễu Điểm, Vận Đơn B/L, Đầu Mối Liên Hệ</strong>.
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center gap-1 shrink-0">
+          <span class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1 rounded-xl text-[10px] font-mono font-bold bg-brand-950 text-cyan-300 border border-cyan-500/30">
+            <i data-lucide="chevrons-right" class="w-3.5 h-3.5 text-cyan-400"></i>
+            <span>Cuộn Ngang</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
     <!-- ALL MODULES HUB DROPDOWN POPUP (MEGA MENU DÀNH CHO TOÀN BỘ PHÂN HỆ) -->
     <div id="allModulesHubPopover" class="hidden absolute top-full left-0 right-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-6 z-50">
       <div class="rounded-3xl p-1 bg-gradient-to-b from-cyan-500/30 via-white/10 to-white/5 border border-cyan-500/40 shadow-2xl backdrop-blur-2xl">
@@ -713,33 +746,6 @@
     <!-- ============================================================= -->
     <section id="section-prospecting" class="space-y-4 sm:space-y-6 w-full max-w-full overflow-hidden">
       
-      <!-- GUIDANCE CALLOUT: SWIPE RIGHT TO EXPLORE DATA (HƯỚNG DẪN NGAY DƯỚI MENU) -->
-      <div id="tableSwipeGuidance" class="rounded-2xl p-2.5 sm:p-3 bg-gradient-to-r from-cyan-500/15 via-blue-500/10 to-brand-900 border border-cyan-500/30 shadow-md flex items-center justify-between gap-2.5 w-full max-w-full overflow-hidden">
-        <div class="flex items-center gap-2 sm:gap-2.5 min-w-0">
-          <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-cyan-500/25 border border-cyan-500/40 flex items-center justify-center shrink-0 text-cyan-300 shadow-sm animate-pulse">
-            <i data-lucide="hand" class="w-4 h-4 sm:w-4.5 sm:h-4.5"></i>
-          </div>
-          <div class="min-w-0">
-            <div class="flex items-center gap-1.5 sm:gap-2">
-              <span class="font-extrabold text-white text-xs sm:text-sm tracking-tight flex items-center gap-1">
-                <span>Hướng Dẫn:</span>
-                <span class="text-cyan-400 font-bold">Vuốt Sang Phải 👉</span>
-              </span>
-              <span class="px-1.5 py-0.2 rounded-full text-[9px] font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 uppercase">Thao Tác</span>
-            </div>
-            <p id="tableSwipeGuidanceText" class="text-[11px] sm:text-xs text-slate-300 mt-0.5 line-clamp-1 sm:line-clamp-none">
-              Bảng dữ liệu nhiều cột: Hãy <strong>vuốt/lướt sang phải 👉</strong> để xem trọn vẹn <strong>Mã HS, Sản Lượng, Phễu Điểm, Vận Đơn B/L, Đầu Mối Liên Hệ</strong>.
-            </p>
-          </div>
-        </div>
-        <div class="flex items-center gap-1 shrink-0">
-          <span class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1 rounded-xl text-[10px] font-mono font-bold bg-brand-950 text-cyan-300 border border-cyan-500/30">
-            <i data-lucide="chevrons-right" class="w-3.5 h-3.5 text-cyan-400"></i>
-            <span>Cuộn Ngang</span>
-          </span>
-        </div>
-      </div>
-
       <!-- Executive Banner -->
       <div class="rounded-3xl p-1 bg-gradient-to-b from-cyan-500/20 via-white/5 to-white/[0.02] border border-cyan-500/30 shadow-2xl w-full max-w-full overflow-hidden">
         <div class="bg-brand-900 rounded-[22px] p-4 sm:p-8 space-y-4 sm:space-y-6 w-full max-w-full overflow-hidden">
@@ -1039,16 +1045,16 @@
           <div class="lg:col-span-8 rounded-3xl p-1 bg-gradient-to-b from-white/10 to-white/[0.02] border border-white/10">
             <div class="bg-brand-900 rounded-[22px] p-6 sm:p-7 space-y-6">
               
-              <div class="flex items-start justify-between">
-                <div>
-                  <div class="flex items-center gap-3">
-                    <h3 class="text-2xl font-bold text-white tracking-tight" id="b-company-name">Trammo, Inc.</h3>
-                    <span id="b-country-badge" class="px-2.5 py-0.5 rounded-md text-xs font-mono font-semibold bg-blue-500/15 text-blue-400 border border-blue-500/30">United States</span>
+              <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4">
+                <div class="min-w-0 flex-1">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <h3 class="text-lg sm:text-2xl font-bold text-white tracking-tight break-words" id="b-company-name">Trammo, Inc.</h3>
+                    <span id="b-country-badge" class="px-2.5 py-0.5 rounded-md text-xs font-mono font-semibold bg-blue-500/15 text-blue-400 border border-blue-500/30 shrink-0">United States</span>
                   </div>
-                  <p class="text-xs text-slate-400 mt-1 font-mono">Mã Hồ Sơ: <span id="b-id" class="text-cyan-400">BY-001</span> | ĐKKD: <span id="b-reg-no">US-DE-1049281</span> | DUNS: <span id="b-duns">00-132-9481</span></p>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 font-mono break-words">Mã Hồ Sơ: <span id="b-id" class="text-cyan-400 font-bold">BY-001</span> | ĐKKD: <span id="b-reg-no">US-DE-1049281</span> | DUNS: <span id="b-duns">00-132-9481</span></p>
                 </div>
                 
-                <div id="b-sanctions-pill" class="px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wide uppercase flex items-center gap-2 bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                <div id="b-sanctions-pill" class="self-start sm:self-auto px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-xs font-bold tracking-wide uppercase flex items-center gap-2 shrink-0 bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
                   <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                   <span>SANCTIONS: SẠCH</span>
                 </div>
@@ -1364,16 +1370,16 @@
             <div class="lg:col-span-8 rounded-3xl p-1 bg-gradient-to-b from-white/10 to-white/[0.02] border border-white/10">
               <div class="bg-brand-900 rounded-[22px] p-6 sm:p-7 space-y-6">
                 
-                <div class="flex items-start justify-between">
-                  <div>
-                    <div class="flex items-center gap-3">
-                      <h3 class="text-2xl font-bold text-white tracking-tight" id="s-company-name">Công Ty Cổ Phần Phân Bón Bình Điền</h3>
-                      <span id="s-province-badge" class="px-2.5 py-0.5 rounded-md text-xs font-mono font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">TP. Hồ Chí Minh</span>
+                <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4">
+                  <div class="min-w-0 flex-1">
+                    <div class="flex flex-wrap items-center gap-2">
+                      <h3 class="text-lg sm:text-2xl font-bold text-white tracking-tight break-words" id="s-company-name">Công Ty Cổ Phần Phân Bón Bình Điền</h3>
+                      <span id="s-province-badge" class="px-2.5 py-0.5 rounded-md text-xs font-mono font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 shrink-0">TP. Hồ Chí Minh</span>
                     </div>
-                    <p class="text-xs text-slate-400 mt-1 font-mono">MST: <span id="s-tax-code" class="text-emerald-400 font-bold">0300481234</span> | Người đại diện: <span id="s-legal-rep">Ngô Văn Đông</span> | Vốn điều lệ: <span id="s-capital">571 tỷ VNĐ</span></p>
+                    <p class="text-[11px] sm:text-xs text-slate-400 mt-1 font-mono break-words">MST: <span id="s-tax-code" class="text-emerald-400 font-bold">0300481234</span> | Người đại diện: <span id="s-legal-rep">Ngô Văn Đông</span> | Vốn điều lệ: <span id="s-capital">571 tỷ VNĐ</span></p>
                   </div>
                   
-                  <div id="s-tax-risk-pill" class="px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wide uppercase flex items-center gap-2 bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                  <div id="s-tax-risk-pill" class="self-start sm:self-auto px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-xs font-bold tracking-wide uppercase flex items-center gap-2 shrink-0 bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                     <span id="s-tax-risk-text">THUẾ: AN TOÀN CAO</span>
                   </div>
@@ -2945,6 +2951,15 @@
       }
       if (tab === 'matchmaker') {
         fetchMatchmakerData();
+      }
+
+      const swipeGuideWrap = document.getElementById('tableSwipeGuidanceWrapper');
+      if (swipeGuideWrap) {
+        if (tab === 'prospecting') {
+          swipeGuideWrap.classList.remove('hidden');
+        } else {
+          swipeGuideWrap.classList.add('hidden');
+        }
       }
 
       toggleAllModulesHub(false);
@@ -4715,17 +4730,17 @@
 
       const sPill = document.getElementById('b-sanctions-pill');
       if (data.sanctions_status === 'CLEAR') {
-        sPill.className = "px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wide uppercase flex items-center gap-2 bg-emerald-500/15 text-emerald-400 border border-emerald-500/30";
+        sPill.className = "self-start sm:self-auto px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-xs font-bold tracking-wide uppercase flex items-center gap-2 shrink-0 bg-emerald-500/15 text-emerald-400 border border-emerald-500/30";
         sPill.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span><span>SANCTIONS: SẠCH</span>`;
         document.getElementById('b-sanctions-summary').innerText = "OFAC / EU / UN: Đạt Chuẩn";
         document.getElementById('b-sanctions-desc').innerText = "Không có tên trong danh sách trừng phạt tài chính.";
       } else if (data.sanctions_status === 'WATCHLIST') {
-        sPill.className = "px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wide uppercase flex items-center gap-2 bg-amber-500/15 text-amber-400 border border-amber-500/30";
+        sPill.className = "self-start sm:self-auto px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-xs font-bold tracking-wide uppercase flex items-center gap-2 shrink-0 bg-amber-500/15 text-amber-400 border border-amber-500/30";
         sPill.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-400"></span><span>THEO DÕI ĐẶC BIỆT</span>`;
         document.getElementById('b-sanctions-summary').innerText = "Cảnh Báo Dòng Tiền";
         document.getElementById('b-sanctions-desc').innerText = data.sanctions_details;
       } else {
-        sPill.className = "px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wide uppercase flex items-center gap-2 bg-rose-500/15 text-rose-400 border border-rose-500/30";
+        sPill.className = "self-start sm:self-auto px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-xs font-bold tracking-wide uppercase flex items-center gap-2 shrink-0 bg-rose-500/15 text-rose-400 border border-rose-500/30";
         sPill.innerHTML = `<span class="w-2 h-2 rounded-full bg-rose-400 animate-ping"></span><span>NGUY CƠ LỪA ĐẢO</span>`;
         document.getElementById('b-sanctions-summary').innerText = "Báo Động Đỏ";
         document.getElementById('b-sanctions-desc').innerText = data.sanctions_details;
@@ -4812,17 +4827,17 @@
       const invoiceRisk = document.getElementById('s-invoice-risk');
       
       if (data.vat_refund_safety_percent >= 85) {
-        riskPill.className = "px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wide uppercase flex items-center gap-2 bg-emerald-500/15 text-emerald-400 border border-emerald-500/30";
+        riskPill.className = "self-start sm:self-auto px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-xs font-bold tracking-wide uppercase flex items-center gap-2 shrink-0 bg-emerald-500/15 text-emerald-400 border border-emerald-500/30";
         document.getElementById('s-tax-risk-text').innerText = "THUẾ: AN TOÀN CAO";
         invoiceRisk.className = "text-sm font-semibold text-emerald-400";
         invoiceRisk.innerText = "0% (Không thuộc diện rủi ro)";
       } else if (data.vat_refund_safety_percent >= 60) {
-        riskPill.className = "px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wide uppercase flex items-center gap-2 bg-amber-500/15 text-amber-400 border border-amber-500/30";
+        riskPill.className = "self-start sm:self-auto px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-xs font-bold tracking-wide uppercase flex items-center gap-2 shrink-0 bg-amber-500/15 text-amber-400 border border-amber-500/30";
         document.getElementById('s-tax-risk-text').innerText = "THUẾ: CẦN GIÁM SÁT";
         invoiceRisk.className = "text-sm font-semibold text-amber-400";
         invoiceRisk.innerText = "Cần kiểm tra bảng kê thu mua";
       } else {
-        riskPill.className = "px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wide uppercase flex items-center gap-2 bg-rose-500/15 text-rose-400 border border-rose-500/30";
+        riskPill.className = "self-start sm:self-auto px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-xs font-bold tracking-wide uppercase flex items-center gap-2 shrink-0 bg-rose-500/15 text-rose-400 border border-rose-500/30";
         document.getElementById('s-tax-risk-text').innerText = "THUẾ: NGUY HIỂM CAO";
         invoiceRisk.className = "text-sm font-semibold text-rose-400";
         invoiceRisk.innerText = "RỦI RO CÔNG TY MA / HÓA ĐƠN ẢO";

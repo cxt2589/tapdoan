@@ -341,6 +341,15 @@ def evaluate_deal_match(buyer_lead, supplier):
     matched_commodity = d1_match.get("buyer_item", "Hàng hóa ngoại thương") if d1_match else "Hàng hóa"
     matched_hs = d1_match.get("buyer_hs", "") if d1_match else ""
 
+    # Phân tích độ trùng khớp Thẻ Tag Quy Chuẩn Ngoại Thương (Trade Tags)
+    b_tags = buyer_lead.get("trade_tags", [])
+    s_tags = supplier.get("trade_tags", [])
+    b_set = set(b_tags)
+    s_set = set(s_tags)
+    matched_tags = sorted(list(b_set.intersection(s_set)))
+    missing_tags = sorted(list(b_set.difference(s_set)))
+    tag_match_rate = round((len(matched_tags) / len(b_set) * 100) if b_set else 100.0, 1)
+
     return {
         "match_id": f"MATCH-{buyer_lead.get('lead_id')}-{supplier.get('id')}",
         "buyer_id": buyer_lead.get("lead_id"),
@@ -363,6 +372,16 @@ def evaluate_deal_match(buyer_lead, supplier):
         "badge_color": badge_color,
         "is_disqualified": is_disqualified,
         "disqualify_reason": disqualify_reason,
+        "trade_tags": {
+            "buyer_tags": b_tags,
+            "supplier_tags": s_tags,
+            "matched_tags": matched_tags,
+            "missing_tags": missing_tags,
+            "tag_match_rate": tag_match_rate
+        },
+        "matched_tags": matched_tags,
+        "missing_tags": missing_tags,
+        "tag_match_rate": tag_match_rate,
         "dimensions": {
             "d1_hs_and_specs": {
                 "name": "Mã HS & Quy Cách Hàng Hóa",

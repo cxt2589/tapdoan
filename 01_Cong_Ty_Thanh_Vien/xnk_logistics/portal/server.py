@@ -710,7 +710,8 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                 if tier_filter and tier_filter != "ALL" and m.get("tier") != tier_filter:
                     continue
                 if q:
-                    searchable = f"{m.get('buyer_name','')} {m.get('buyer_country','')} {m.get('supplier_name','')} {m.get('supplier_short_name','')} {m.get('matched_commodity','')} {m.get('matched_hs','')}".lower()
+                    tags_str = " ".join(m.get("matched_tags", []))
+                    searchable = f"{m.get('buyer_name','')} {m.get('buyer_country','')} {m.get('supplier_name','')} {m.get('supplier_short_name','')} {m.get('matched_commodity','')} {m.get('matched_hs','')} {tags_str}".lower()
                     if q not in searchable:
                         continue
                 filtered.append(m)

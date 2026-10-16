@@ -56,7 +56,7 @@ def run_all_tests():
     time.sleep(0.5)
 
     passed_count = 0
-    total_tests = 32
+    total_tests = 33
 
     try:
         # Test 1: Health Check
@@ -466,7 +466,40 @@ def run_all_tests():
             assert 'viewMoreSupplierContactsFromDetail' in html_text
             assert 'copyContactEmail' in html_text
             assert 'Xem thêm liên hệ' in html_text
-        print(f"✅ Test 32/32: Giao Diện Popup Modal Đầu Mối Liên Lạc (companyContactsModal) & Phím Xem Thêm tích hợp hoàn hảo")
+        print(f"✅ Test 32/33: Giao Diện Popup Modal Đầu Mối Liên Lạc (companyContactsModal) & Phím Xem Thêm tích hợp hoàn hảo")
+        passed_count += 1
+
+        # Test 33: Hệ Thống Thẻ Tag Quy Chuẩn Ngoại Thương (Trade Tags) & Đối Soát Điểm Vênh
+        code_tag, tag_matches = http_get("/api/matches?page=1&page_size=5")
+        assert code_tag == 200
+        assert len(tag_matches["data"]) > 0
+        first_deal = tag_matches["data"][0]
+        assert "matched_tags" in first_deal
+        assert "missing_tags" in first_deal
+        assert "tag_match_rate" in first_deal
+        assert isinstance(first_deal["matched_tags"], list)
+        assert len(first_deal["matched_tags"]) > 0
+
+        code_anl, anl_res = http_post("/api/matches/analyze", {
+            "buyer_id": first_deal["buyer_id"],
+            "supplier_id": first_deal["supplier_id"]
+        })
+        assert code_anl == 200 and anl_res["ok"] == True
+        anl_deal = anl_res["match"]
+        assert "matched_tags" in anl_deal
+        assert "missing_tags" in anl_deal
+        assert "trade_tags" in anl_deal
+
+        with urllib.request.urlopen(url_html, timeout=5) as html_resp:
+            html_text = html_resp.read().decode('utf-8')
+            assert 'id="md-tags-section"' in html_text
+            assert 'id="md-matched-tags-list"' in html_text
+            assert 'id="md-missing-tags-list"' in html_text
+            assert 'id="md-tag-rate-badge"' in html_text
+            assert 'Tags khớp:' in html_text
+            # Kiểm tra không còn icon nút: ấn để xem hồ sơ chi tiết (external-link)
+            assert 'data-lucide="external-link"' not in html_text
+        print(f"✅ Test 33/33: Động Cơ Thẻ Tag Quy Chuẩn Ngoại Thương (Trade Tags), Điểm Vênh Thương Thảo & Loại Bỏ Icon Nút Hồ Sơ chuẩn 100%")
         passed_count += 1
 
     finally:

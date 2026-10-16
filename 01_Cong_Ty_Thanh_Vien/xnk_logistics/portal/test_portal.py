@@ -57,7 +57,7 @@ def run_all_tests():
     time.sleep(0.5)
 
     passed_count = 0
-    total_tests = 47
+    total_tests = 48
 
     try:
         # Test 1: Health Check
@@ -895,7 +895,40 @@ def run_all_tests():
             assert 'fetchRegulatoryRadarData' in html_text
             assert 'sendRegulatoryRiskAlertTelegram' in html_text
             assert 'regulatoryRadarBtn' in html_text
-        print(f"✅ Test 47/47: Radar Pháp Lý & Giám Sát Chân Trời Chính Sách Ngoại Thương (EUDR, CBAM, UFLPA, GACC & Telegram Alert) chuẩn 100%")
+        print(f"✅ Test 47/48: Radar Pháp Lý & Giám Sát Chân Trời Chính Sách Ngoại Thương (EUDR, CBAM, UFLPA, GACC & Telegram Alert) chuẩn 100%")
+        passed_count += 1
+
+        # Test 48: Giải Thích Chi Tiết & Khuyến Nghị Nghiệp Vụ Khi Rê Chuột / Chạm Thẻ Tag
+        code, tag_explain_res = http_get("/api/trade-tags/explain?tag=%23Moist_Max12.5%25")
+        assert code == 200
+        assert tag_explain_res["status"] == "SUCCESS"
+        assert "Độ ẩm tối đa" in tag_explain_res["info"]["name"]
+        assert "Quy Cách Kỹ Thuật" in tag_explain_res["info"]["category"]
+        assert "SGS" in tag_explain_res["info"]["advice"]
+
+        code, tag_halal_res = http_get("/api/trade-tags/explain?tag=%23Halal_JAKIM")
+        assert code == 200
+        assert "Halal" in tag_halal_res["info"]["name"]
+        assert "Sharia" in tag_halal_res["info"]["desc"]
+
+        code, catalog_res = http_get("/api/trade-tags/catalog")
+        assert code == 200
+        assert catalog_res["total"] >= 20
+
+        # Kiểm tra giao diện Frontend hỗ trợ hover/click và banner giải thích
+        with urllib.request.urlopen(url_html, timeout=5) as html_resp:
+            html_text = html_resp.read().decode('utf-8')
+            assert 'id="md-tag-detail-banner"' in html_text
+            assert 'id="tradeTagFloatingTooltip"' in html_text
+            assert 'handleTradeTagHover' in html_text
+            assert 'handleTradeTagClick' in html_text
+            assert 'handleTradeTagLeave' in html_text
+            assert 'TRADE_TAG_DEFINITIONS' in html_text
+            assert 'getTradeTagInfo' in html_text
+            assert 'trade-tag-item' in html_text
+            assert 'TIÊU CHÍ & QUY CHUẨN ĐÃ KHỚP HOÀN TOÀN' in html_text
+            assert 'ĐIỂM VÊNH QUY CHUẨN CẦN THƯƠNG THẢO' in html_text
+        print(f"✅ Test 48/48: Hiển Thị Nội Dung & Khuyến Nghị Khi Ấn / Rê Chuột Vào Thẻ Tag (Trade Tags Tooltip & Detail Engine) chuẩn 100%")
         passed_count += 1
 
     finally:

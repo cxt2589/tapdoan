@@ -520,6 +520,34 @@
     html.light .modal-scroll-container::-webkit-scrollbar-thumb:hover {
       background: #94a3b8 !important;
     }
+    /* Trade Tag Interactive Badges & Tooltip Engine */
+    .trade-tag-item {
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+    }
+    html:not(.dark) #tradeTagFloatingTooltip, html.light #tradeTagFloatingTooltip {
+      background-color: #ffffff !important;
+      color: #0f172a !important;
+      border-color: #cbd5e1 !important;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+    }
+    html:not(.dark) #tradeTagFloatingTooltip .text-white, html.light #tradeTagFloatingTooltip .text-white {
+      color: #0f172a !important;
+    }
+    html:not(.dark) #tradeTagFloatingTooltip .text-slate-300, html.light #tradeTagFloatingTooltip .text-slate-300 {
+      color: #334155 !important;
+    }
+    html:not(.dark) #tradeTagFloatingTooltip .text-cyan-300, html.light #tradeTagFloatingTooltip .text-cyan-300 {
+      color: #0284c7 !important;
+    }
+    html:not(.dark) #md-tag-detail-banner, html.light #md-tag-detail-banner {
+      background-color: #f8fafc !important;
+      border-color: #e2e8f0 !important;
+    }
+    html:not(.dark) #md-tag-detail-banner .text-slate-300, html.light #md-tag-detail-banner .text-slate-300 {
+      color: #1e293b !important;
+    }
   </style>
 </head>
 <body class="bg-brand-950 text-slate-100 font-sans antialiased min-h-screen selection:bg-brand-cyan/20 selection:text-brand-cyan relative bg-mesh">
@@ -3172,10 +3200,15 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
             <!-- Matched Tags -->
             <div class="p-3.5 rounded-xl bg-brand-950/80 border border-emerald-500/30 space-y-2">
-              <span class="text-[10px] font-mono uppercase text-emerald-400 font-bold flex items-center gap-1.5">
-                <i data-lucide="check" class="w-3.5 h-3.5"></i>
-                TIÊU CHÍ & QUY CHUẨN ĐÃ KHỚP HOÀN TOÀN:
-              </span>
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-[10px] font-mono uppercase text-emerald-400 font-bold flex items-center gap-1.5">
+                  <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                  TIÊU CHÍ & QUY CHUẨN ĐÃ KHỚP HOÀN TOÀN:
+                </span>
+                <span class="text-[9px] text-emerald-400/80 font-mono flex items-center gap-1 shrink-0" title="Chạm hoặc rê chuột vào từng thẻ tag để xem ý nghĩa chi tiết">
+                  <i data-lucide="info" class="w-3 h-3"></i> Ấn/rê xem nghĩa
+                </span>
+              </div>
               <div id="md-matched-tags-list" class="flex flex-wrap gap-1.5">
                 <!-- Rendered tags -->
               </div>
@@ -3183,12 +3216,34 @@
 
             <!-- Missing / Negotiation Tags -->
             <div class="p-3.5 rounded-xl bg-brand-950/80 border border-amber-500/30 space-y-2">
-              <span class="text-[10px] font-mono uppercase text-amber-400 font-bold flex items-center gap-1.5">
-                <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i>
-                ĐIỂM VÊNH QUY CHUẨN CẦN THƯƠNG THẢO / BÙ ĐẮP:
-              </span>
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-[10px] font-mono uppercase text-amber-400 font-bold flex items-center gap-1.5">
+                  <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i>
+                  ĐIỂM VÊNH QUY CHUẨN CẦN THƯƠNG THẢO / BÙ ĐẮP:
+                </span>
+                <span class="text-[9px] text-amber-400/80 font-mono flex items-center gap-1 shrink-0" title="Chạm hoặc rê chuột vào từng thẻ tag để xem điểm vênh và phương án giải quyết">
+                  <i data-lucide="info" class="w-3 h-3"></i> Ấn/rê xem nghĩa
+                </span>
+              </div>
               <div id="md-missing-tags-list" class="flex flex-wrap gap-1.5">
                 <!-- Rendered tags -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Tag Explanation Box -->
+          <div id="md-tag-detail-banner" class="p-3 rounded-xl bg-brand-950/90 border border-slate-700/60 transition-all text-xs">
+            <div class="flex items-center justify-between gap-2 text-[10px] font-mono">
+              <span class="flex items-center gap-1.5 font-bold text-slate-300">
+                <i data-lucide="info" class="w-3.5 h-3.5 text-cyan-400"></i>
+                GIẢI THÍCH CHI TIẾT QUY CHUẨN & ĐIỂM VÊNH NGOẠI THƯƠNG:
+              </span>
+              <span class="text-[9px] text-slate-400 italic">Rê chuột hoặc chạm vào tag bất kỳ để xem</span>
+            </div>
+            <div id="md-tag-detail-content" class="mt-2">
+              <div class="p-2.5 rounded-lg bg-white/5 border border-white/5 text-slate-400 text-[11px] leading-relaxed flex items-center gap-2">
+                <i data-lucide="mouse-pointer-click" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+                <span>Chạm hoặc rê chuột vào bất kỳ thẻ tag nào ở trên để xem ngay phân loại, ý nghĩa thực tế trong hợp đồng ngoại thương và khuyến nghị đàm phán cụ thể.</span>
               </div>
             </div>
           </div>
@@ -7440,6 +7495,468 @@
       }
     }
 
+    // =========================================================================
+    // 🏷️ TỪ ĐIỂN & ĐỘNG CƠ TRA CỨU GIẢI THÍCH THẺ TAG QUY CHUẨN NGOẠI THƯƠNG
+    // =========================================================================
+    const TRADE_TAG_DEFINITIONS = {
+      "#Moist_Max12.5%": {
+        name: "Độ ẩm tối đa 12.5% (Moisture Max 12.5%)",
+        category: "Quy Cách Kỹ Thuật (Specs)",
+        category_color: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30",
+        desc: "Quy chuẩn độ ẩm an toàn cao nhất cho phép đối với nông sản khô (cà phê nhân, hạt tiêu, ngũ cốc). Đảm bảo hàng hóa không bị nấm mốc hoặc lên men sinh nhiệt trong hành trình vận chuyển biển dài ngày.",
+        advice: "Yêu cầu cấp Chứng thư Giám định độ ẩm độc lập (SGS / Vinacontrol / Cafecontrol) trước khi niêm phong chì container."
+      },
+      "#Screen_S18": {
+        name: "Kích thước hạt Sàng 18 (Screen 18 - 7.1mm)",
+        category: "Quy Cách Kỹ Thuật (Specs)",
+        category_color: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30",
+        desc: "Quy chuẩn phân loại cỡ hạt nông sản (cà phê, hạt điều) có đường kính lỗ sàng 7.1mm. Đây là phẩm cấp hạt loại 1 cao cấp (Grade 1), giá trị thương phẩm cao nhất trên sàn giao dịch quốc tế.",
+        advice: "Tỷ lệ hạt trên sàng 18 phải đạt tối thiểu 90% khối lượng mẫu thử nghiệm theo tiêu chuẩn hợp đồng."
+      },
+      "#Screen_S16": {
+        name: "Kích thước hạt Sàng 16 (Screen 16 - 6.3mm)",
+        category: "Quy Cách Kỹ Thuật (Specs)",
+        category_color: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30",
+        desc: "Quy chuẩn cỡ hạt nông sản qua sàng 16 (đường kính lỗ sàng 6.3mm), là phẩm cấp hạt tiêu chuẩn thương mại phổ thông (Grade 2) dùng cho rang xay và chế biến công nghiệp.",
+        advice: "Thích hợp làm hàng phối trộn công nghiệp; giá thành cạnh tranh hơn so với Sàng 18."
+      },
+      "#Urea_N46%": {
+        name: "Hàm lượng Đạm Nitơ tối thiểu 46.0% (Urea N46%)",
+        category: "Quy Cách Kỹ Thuật (Specs)",
+        category_color: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30",
+        desc: "Tiêu chuẩn quốc tế cao nhất cho phân đạm Urê tinh khiết. Hàm lượng Nitơ đạt từ 46% trở lên, đảm bảo hiệu suất dinh dưỡng tối đa cho cây trồng.",
+        advice: "Yêu cầu giấy phân tích chất lượng COA kiểm tra thêm hàm lượng Biuret (phải dưới 1.0%) để tránh làm cháy lá cây trồng."
+      },
+      "#Granular": {
+        name: "Dạng hạt to đúc nén (Granular 2.0 - 4.75mm)",
+        category: "Quy Cách Kỹ Thuật (Specs)",
+        category_color: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30",
+        desc: "Quy chuẩn phân bón/hóa chất dạng hạt to tròn ép nén. Có độ cứng cao, chống vỡ vụn, ít hút ẩm, tan chậm và hạn chế vón cục khi vận chuyển biển dài ngày.",
+        advice: "Rất phù hợp cho máy bón phân cơ giới và vận chuyển hàng rời (bulk) bằng tàu hàng khô chuyên dụng."
+      },
+      "#Prilled": {
+        name: "Dạng hạt tháp mịn (Prilled 1.0 - 2.8mm)",
+        category: "Quy Cách Kỹ Thuật (Specs)",
+        category_color: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30",
+        desc: "Dạng hạt phân bón tròn nhỏ mịn tạo từ tháp làm lạnh. Độ đồng đều cao, tốc độ hòa tan trong nước cực nhanh, thích hợp cho hệ thống tưới tự động hoặc phun hòa tan.",
+        advice: "Cần đóng bao màng PE kép chống ẩm cẩn thận trong kho bảo quản để chống chảy nước."
+      },
+      "#WhiteMeat": {
+        name: "Phi lê thịt trắng cao cấp (White Meat Spec)",
+        category: "Quy Cách Kỹ Thuật (Specs)",
+        category_color: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30",
+        desc: "Quy chuẩn phi lê thủy sản (cá tra, cá basa, cá tuyết) yêu cầu thịt trắng tinh khiết, lọc sạch hoàn toàn mỡ, da, xương và không bị vệt đỏ/màu vàng.",
+        advice: "Thị trường Mỹ và Châu Âu định giá thịt trắng cao hơn 15 - 25% so với thịt hồng hoặc vàng nhạt."
+      },
+      "#Glazing_10-20%": {
+        name: "Tỷ lệ mạ băng bảo quản lạnh 10% - 20% (Glazing)",
+        category: "Quy Cách Kỹ Thuật (Specs)",
+        category_color: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30",
+        desc: "Lớp nước tinh khiết mạ băng bao bọc bên ngoài sản phẩm đông lạnh để bảo vệ bề mặt thịt cá khỏi hiện tượng cháy lạnh (freezer burn) và oxy hóa trong quá trình lưu trữ.",
+        advice: "Hợp đồng ngoại thương phải ghi rõ 'Net Weight without Glazing' (Trọng lượng tịnh thực không tính nước mạ băng) để tránh tranh chấp hải quan."
+      },
+      "#DeepFrozen_-20C": {
+        name: "Cấp đông sâu âm 20 độ C (Deep Frozen -20°C)",
+        category: "Quy Cách Kỹ Thuật (Specs)",
+        category_color: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30",
+        desc: "Tiêu chuẩn bảo quản lạnh nhiệt độ tâm sản phẩm đạt từ -18°C đến -20°C xuyên suốt chuỗi logistics bằng container lạnh Reefer và kho lạnh chuyên dụng.",
+        advice: "Bắt buộc đặt thiết bị theo dõi nhiệt độ điện tử (Temperature Data Logger) trong từng container để đối chiếu bảo hiểm hàng hải khi hàng đến cảng."
+      },
+      "#ASTM_A500": {
+        name: "Tiêu chuẩn Thép kết cấu nguội ASTM A500",
+        category: "Quy Cách Kỹ Thuật (Specs)",
+        category_color: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30",
+        desc: "Tiêu chuẩn kỹ thuật Hoa Kỳ quy định cho thép hộp, ống thép hàn kết cấu dạng tròn, vuông và chữ nhật. Đáp ứng khả năng chịu lực, uốn dẻo và tính hàn trong xây dựng.",
+        advice: "Yêu cầu Mill Test Certificate (MTC) từ nhà máy ghi rõ giới hạn chảy (Yield Strength) và độ bền kéo (Tensile Strength)."
+      },
+      "#Zinc_Z275": {
+        name: "Độ dày lớp mạ kẽm tối thiểu 275 g/m² (Zinc Coating Z275)",
+        category: "Quy Cách Kỹ Thuật (Specs)",
+        category_color: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30",
+        desc: "Quy chuẩn mạ kẽm nhúng nóng hai mặt đạt tổng khối lượng kẽm 275 g/m². Cung cấp khả năng kháng ăn mòn muối biển vượt trội và tuổi thọ trên 25 năm ngoài trời.",
+        advice: "Tiêu chuẩn bắt buộc cho công trình ven biển, giàn khung điện mặt trời và nhà xưởng công nghiệp."
+      },
+      "#WoodPellet_6-8mm": {
+        name: "Viên nén gỗ sinh khối đường kính 6 - 8mm",
+        category: "Quy Cách Kỹ Thuật (Specs)",
+        category_color: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30",
+        desc: "Kích thước tiêu chuẩn công nghiệp của viên nén nhiên liệu sinh khối (Wood Pellets) phục vụ lò hơi nhà máy nhiệt điện than Nhật Bản và Hàn Quốc.",
+        advice: "Đảm bảo độ nén chặt, độ bền cơ học cao để hạn chế tỷ lệ mùn vụn phát sinh khi rót hàng lên tàu rời."
+      },
+      "#Caloric_Min4200kcal": {
+        name: "Nhiệt lượng sinh nhiệt tối thiểu 4,200 kcal/kg",
+        category: "Quy Cách Kỹ Thuật (Specs)",
+        category_color: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30",
+        desc: "Mức nhiệt năng cháy tiêu chuẩn của viên nén gỗ loại 1, hàm lượng tro dưới 1.5%, không phối trộn phụ gia hóa chất hay vỏ cây độc hại.",
+        advice: "Yêu cầu giấy chứng nhận kiểm nghiệm nhiệt lượng từ cơ quan kiểm định độc lập SGS hoặc Intertek."
+      },
+      "#Clean_FAQ": {
+        name: "Phẩm cấp thương mại sạch chuẩn FAQ (Fair Average Quality)",
+        category: "Quy Cách Kỹ Thuật (Specs)",
+        category_color: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30",
+        desc: "Tiêu chuẩn chất lượng trung bình khá phổ biến trong thương mại nông sản thế giới, sàng sạch tạp chất lớn, tỷ lệ hạt hỏng và hạt lép dưới ngưỡng quy định.",
+        advice: "Phù hợp làm nguyên liệu thô đầu vào cho các nhà máy tinh chế công nghiệp."
+      },
+
+      // 2. Certifications
+      "#HACCP": {
+        name: "Phân tích Mối nguy & Điểm Kiểm soát Tới hạn HACCP",
+        category: "Chứng Chỉ Chất Lượng (Cert)",
+        category_color: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
+        desc: "Hệ thống quản lý an toàn thực phẩm được quốc tế công nhận, kiểm soát nguy cơ vật lý, hóa học và sinh học tại các công đoạn chế biến trọng yếu.",
+        advice: "Điều kiện tiên quyết để được cấp phép xuất khẩu nông - thủy sản chế biến vào hầu hết các quốc gia."
+      },
+      "#ISO22000": {
+        name: "Hệ thống Quản lý An Toàn Thực Phẩm ISO 22000",
+        category: "Chứng Chỉ Chất Lượng (Cert)",
+        category_color: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
+        desc: "Tiêu chuẩn an toàn thực phẩm tích hợp giữa hệ thống HACCP và quy trình quản trị doanh nghiệp ISO, bao phủ toàn bộ chuỗi cung ứng từ nông trại đến bàn ăn.",
+        advice: "Giúp đối tác nhập khẩu tin tưởng tuyệt đối vào quy trình truy xuất nguồn gốc và kiểm soát rủi ro của nhà máy."
+      },
+      "#ISO9001": {
+        name: "Hệ thống Quản lý Chất lượng Tiêu chuẩn Quốc tế ISO 9001",
+        category: "Chứng Chỉ Chất Lượng (Cert)",
+        category_color: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
+        desc: "Chứng nhận doanh nghiệp sở hữu quy trình vận hành và kiểm soát chất lượng sản xuất đồng bộ, ổn định và tuân thủ nghiêm ngặt các quy định tiêu chuẩn.",
+        advice: "Là thước đo cơ bản để các tập đoàn đa quốc gia phê duyệt nhà cung cấp vào danh sách Vendor đủ điều kiện."
+      },
+      "#Rainforest_Alliance": {
+        name: "Chứng nhận Nông nghiệp Bền vững Rainforest Alliance",
+        category: "Chứng Chỉ Bền Vững (ESG)",
+        category_color: "bg-green-500/20 text-green-300 border-green-500/30",
+        desc: "Chứng chỉ quốc tế chứng minh sản phẩm nông sản (cà phê, cacao, chè) được canh tác bảo vệ rừng tự nhiên, không hủy hoại sinh thái, bảo vệ đất và đảm bảo phúc lợi xã hội người lao động.",
+        advice: "Thị trường Châu Âu và Bắc Mỹ ưu tiên thu mua và sẵn sàng trả mức giá chênh lệch thưởng (Premium) $50 - $120/tấn cho hàng có chứng chỉ này."
+      },
+      "#FDA_US": {
+        name: "Đăng ký Cơ sở Thực phẩm Cục Quản lý FDA Hoa Kỳ",
+        category: "Chứng Nhận Pháp Lý Mỹ",
+        category_color: "bg-blue-500/20 text-blue-300 border-blue-500/30",
+        desc: "Nhà máy sản xuất đã được cấp mã số đăng ký FFRN (Food Facility Registration Number) với FDA và chỉ định đại lý pháp lý tại Mỹ (U.S. Agent), đủ điều kiện thông quan vào Hoa Kỳ.",
+        advice: "Phải nộp Thông Báo Trước Khi Nhập Khẩu (Prior Notice) trước khi tàu cập cảng Mỹ để tránh bị giữ hàng tại cảng."
+      },
+      "#CE_Europe": {
+        name: "Dấu Hợp Chuẩn Châu Âu CE Marking (Conformité Européenne)",
+        category: "Dấu Hợp Chuẩn EU",
+        category_color: "bg-indigo-500/20 text-indigo-300 border-indigo-500/30",
+        desc: "Tuyên bố của nhà sản xuất rằng sản phẩm (thép, vật liệu xây dựng, thiết bị điện máy) tuân thủ đầy đủ các chỉ thị an toàn, sức khỏe và bảo vệ môi trường của Liên minh Châu Âu.",
+        advice: "Hàng hóa không có dấu CE hợp pháp sẽ bị từ chối thông quan và cấm lưu hành trên toàn bộ 27 quốc gia EU."
+      },
+      "#REACH_EU": {
+        name: "Quy định Đăng ký & Đánh giá Hóa chất Châu Âu (REACH)",
+        category: "Tuân Thủ Môi Trường EU",
+        category_color: "bg-indigo-500/20 text-indigo-300 border-indigo-500/30",
+        desc: "Quy định khắt khe của EU kiểm soát việc sử dụng hóa chất và các chất có nguy cơ rất cao (SVHC) trong sản phẩm dệt may, da giày, phân bón và hàng tiêu dùng.",
+        advice: "Cần cung cấp bảng kiểm định hàm lượng kim loại nặng và hóa chất cấm từ các phòng thử nghiệm được EU ủy quyền."
+      },
+      "#Halal_JAKIM": {
+        name: "Chứng nhận Tiêu chuẩn Hồi giáo Halal (JAKIM / BPJPH / GCC)",
+        category: "Chứng Chỉ Halal Quốc Tế",
+        category_color: "bg-teal-500/20 text-teal-300 border-teal-500/30",
+        desc: "Xác nhận toàn bộ nguyên liệu, phụ gia và dây chuyền chế biến hoàn toàn hợp pháp theo luật Sharia của người Hồi giáo; tuyệt đối không nhiễm cấm (Haram) hoặc nhiễm bẩn (Najis).",
+        advice: "Tấm vé vàng mở toang cánh cửa xuất khẩu sang thị trường 2 tỷ dân tại Indonesia, Malaysia và các nước vùng Vịnh GCC."
+      },
+      "#GlobalGAP": {
+        name: "Thực hành Nông nghiệp Tốt Toàn cầu GlobalGAP",
+        category: "Tiêu Chuẩn Nông Nghiệp",
+        category_color: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
+        desc: "Bộ tiêu chuẩn trang trại toàn cầu kiểm soát an toàn thực phẩm từ khâu làm đất, hạt giống, nguồn nước tưới, thuốc bảo vệ thực vật đến khâu thu hoạch và đóng gói ban đầu.",
+        advice: "Điều kiện bắt buộc nếu muốn đưa trái cây tươi và rau củ Việt Nam lên kệ các chuỗi siêu thị hàng đầu thế giới."
+      },
+      "#FSC_100%": {
+        name: "Chứng chỉ Quản lý Rừng Bền vững Quốc tế FSC 100%",
+        category: "Chứng Nhận Lâm Sản Bền Vững",
+        category_color: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
+        desc: "Chứng nhận gỗ và các sản phẩm từ gỗ (viên nén, ván ép, đồ gỗ nội thất) có nguồn gốc 100% từ rừng trồng được quy hoạch và quản lý bền vững, có trách nhiệm xã hội.",
+        advice: "Yếu tố sống còn để vượt qua rào cản Đạo luật Chống phá rừng Châu Âu (EUDR) và Đạo luật Lacey của Hoa Kỳ."
+      },
+
+      // 3. Incoterms
+      "#Inco_FOB": {
+        name: "Giao hàng lên tàu (Free On Board - FOB)",
+        category: "Điều Kiện Incoterms",
+        category_color: "bg-blue-500/20 text-blue-300 border-blue-500/30",
+        desc: "Người bán hoàn thành nghĩa vụ khi hàng đã được xếp lên tàu tại cảng bốc quy định. Chi phí cước tàu biển quốc tế và bảo hiểm hàng hải do Người mua chịu trách nhiệm chi trả.",
+        advice: "Thuận tiện cho người bán Việt Nam vì không phải chịu biến động cước tàu biển quốc tế (Ocean Freight Volatility)."
+      },
+      "#Inco_FOB_CatLai": {
+        name: "FOB Cảng Tân Cảng Cát Lái, TP. Hồ Chí Minh",
+        category: "Điều Kiện Incoterms",
+        category_color: "bg-blue-500/20 text-blue-300 border-blue-500/30",
+        desc: "Hàng hóa được làm thủ tục thông quan xuất khẩu và xếp lên tàu tại Cảng Tân Cảng Cát Lái - trung tâm xuất khẩu hàng container lớn nhất miền Nam Việt Nam.",
+        advice: "Lưu ý hạn chế tắc nghẽn giao thông quanh nút giao An Phú trong mùa cao điểm xuất khẩu cuối năm."
+      },
+      "#Inco_FOB_CaiMep": {
+        name: "FOB Cụm Cảng Nước Sâu Cái Mép - Thị Vải",
+        category: "Điều Kiện Incoterms",
+        category_color: "bg-blue-500/20 text-blue-300 border-blue-500/30",
+        desc: "Xếp hàng lên các tàu mẹ (Mother Vessels) siêu trọng tải đi thẳng sang Bờ Tây nước Mỹ và Châu Âu, không phải trung chuyển qua Singapore hay Hong Kong.",
+        advice: "Rút ngắn thời gian vận chuyển (transit time) từ 5 đến 7 ngày so với đi tàu gom feeders từ cảng sông."
+      },
+      "#Inco_CIF": {
+        name: "Tiền hàng, Bảo hiểm & Cước phí (CIF)",
+        category: "Điều Kiện Incoterms",
+        category_color: "bg-blue-500/20 text-blue-300 border-blue-500/30",
+        desc: "Người bán chịu trách nhiệm thuê tàu, trả cước vận chuyển đường biển và mua bảo hiểm hàng hải cho lô hàng đến tận cảng dỡ hàng quy định của người mua.",
+        advice: "Người bán cần chọn đơn vị bảo hiểm uy tín với điều kiện bảo hiểm loại A (All Risks) theo Viện Bảo hiểm London (ICC)."
+      },
+      "#Inco_CIF_Hamburg": {
+        name: "CIF Cảng Hamburg, CHLB Đức",
+        category: "Điều Kiện Incoterms",
+        category_color: "bg-blue-500/20 text-blue-300 border-blue-500/30",
+        desc: "Giao hàng cập cảng biển quốc tế Hamburg - cửa ngõ logistics chiến lược của nước Đức và toàn khu vực Trung Âu.",
+        advice: "Theo dõi lịch thông quan kiểm dịch thực vật tại trạm kiểm soát biên giới cảng Hamburg."
+      },
+      "#Inco_CIF_Rotterdam": {
+        name: "CIF Cảng Rotterdam, Hà Lan",
+        category: "Điều Kiện Incoterms",
+        category_color: "bg-blue-500/20 text-blue-300 border-blue-500/30",
+        desc: "Giao hàng đến Cảng Rotterdam - cảng biển lớn nhất Châu Âu, đầu mối trung chuyển và phân phối hàng hóa đi khắp các nước EU.",
+        advice: "Thời gian dỡ hàng và quay vòng container tại Rotterdam rất nhanh, tối ưu chi phí lưu kho bãi."
+      },
+      "#Inco_CIF_StPetersburg": {
+        name: "CIF Cảng St. Petersburg, Liên Bang Nga",
+        category: "Điều Kiện Incoterms",
+        category_color: "bg-blue-500/20 text-blue-300 border-blue-500/30",
+        desc: "Giao hàng đến cảng biển lớn nhất của Nga tại Vịnh Phần Lan, phục vụ cung ứng hàng hóa cho thị trường Moscow và toàn bộ Tây Bắc nước Nga.",
+        advice: "Cần điều phối hãng tàu có tuyến vận tải trực tiếp sang Nga và cơ chế thanh toán không bị cản trở bởi lệnh trừng phạt phương Tây."
+      },
+      "#Inco_CFR": {
+        name: "Tiền hàng & Cước phí đường biển (CFR - Cost and Freight)",
+        category: "Điều Kiện Incoterms",
+        category_color: "bg-blue-500/20 text-blue-300 border-blue-500/30",
+        desc: "Người bán trả cước tàu đường biển đến cảng đích; tuy nhiên người mua tự chịu chi phí và thủ tục mua bảo hiểm hàng hải cho lô hàng của mình.",
+        advice: "Người bán phải lập tức gửi Thông Báo Gửi Hàng (Shipping Advice) kèm bản scan vận đơn ngay khi tàu rời cảng để người mua kịp mua bảo hiểm."
+      },
+
+      // 4. Payment terms
+      "#LC_AtSight": {
+        name: "Tín dụng thư không hủy ngang trả ngay (L/C At Sight)",
+        category: "Thanh Toán Quốc Tế",
+        category_color: "bg-amber-500/20 text-amber-300 border-amber-500/30",
+        desc: "Phương thức thanh toán an toàn nhất trong ngoại thương. Ngân hàng mở L/C cam kết thanh toán 100% tiền hàng ngay khi người bán xuất trình bộ chứng từ xuất khẩu hoàn hảo hợp lệ.",
+        advice: "Người bán phải kiểm tra kỹ từng câu chữ trong thông báo mở L/C để phát hiện và tu chỉnh sớm các điều khoản bẫy (soft clauses)."
+      },
+      "#Usance_LC": {
+        name: "Tín dụng thư trả chậm (Usance L/C 30/60/90 Ngày)",
+        category: "Thanh Toán Quốc Tế",
+        category_color: "bg-amber-500/20 text-amber-300 border-amber-500/30",
+        desc: "Người mua được hoãn thanh toán trong một thời hạn nhất định (30, 60 hoặc 90 ngày) sau ngày phát hành vận đơn B/L hoặc ngày chấp nhận hối phiếu.",
+        advice: "Người bán nên tính toán chi phí tài trợ thương mại và lãi suất vay vốn vào giá chào hàng để bù đắp chi phí thời gian chờ tiền về."
+      },
+      "#TT_Deposit_30_70": {
+        name: "Chuyển tiền điện T/T (Cọc 30% - Thanh toán 70% khi có B/L scan)",
+        category: "Thanh Toán Quốc Tế",
+        category_color: "bg-amber-500/20 text-amber-300 border-amber-500/30",
+        desc: "Người mua chuyển cọc 30% giá trị hợp đồng để nhà sản xuất mua nguyên liệu; 70% còn lại thanh toán ngay khi người bán gửi bản scan bộ chứng từ và vận đơn B/L gốc đường biển.",
+        advice: "Chỉ giải phóng bản gốc vận đơn Surrendered / Telex Release khi tiền 70% đã báo có (Credited) vào tài khoản ngân hàng."
+      },
+      "#CAD_Payment": {
+        name: "Giao chứng từ trả tiền (Cash Against Documents - CAD)",
+        category: "Thanh Toán Quốc Tế",
+        category_color: "bg-amber-500/20 text-amber-300 border-amber-500/30",
+        desc: "Người bán chuyển bộ chứng từ qua ngân hàng chỉ định tại nước người mua. Người mua phải nộp đủ 100% tiền vào ngân hàng thì mới được nhận chứng từ để ra cảng nhận hàng.",
+        advice: "Chi phí dịch vụ rẻ hơn L/C nhưng vẫn bảo đảm quyền kiểm soát hàng hóa thông qua quyền giữ bộ chứng từ gốc của ngân hàng."
+      }
+    };
+
+    let currentActiveClickedTag = null;
+
+    function getTradeTagInfo(tag) {
+      if (!tag) return null;
+      const cleanTag = tag.trim();
+      if (TRADE_TAG_DEFINITIONS[cleanTag]) {
+        return TRADE_TAG_DEFINITIONS[cleanTag];
+      }
+
+      if (cleanTag.startsWith('#HS_')) {
+        const code = cleanTag.replace('#HS_', '');
+        return {
+          name: `Mã Ngành Hàng HS ${code}`,
+          category: 'Mã Ngành Hàng WCO',
+          category_color: 'bg-purple-500/20 text-purple-300 border-purple-500/30',
+          desc: `Mã phân loại hàng hóa xuất nhập khẩu 4 số theo chuẩn của Tổ chức Hải quan Thế giới (WCO). Xác định danh mục thuế quan và thủ tục hải quan áp dụng đối với mặt hàng này.`,
+          advice: 'Đối soát tính chính xác của 6 số hoặc 8 số trên tờ khai hải quan thực tế giữa nước xuất khẩu và nước nhập khẩu.'
+        };
+      }
+
+      if (cleanTag.startsWith('#Inco_')) {
+        const term = cleanTag.replace('#Inco_', '').replace(/_/g, ' ');
+        return {
+          name: `Điều Kiện Giao Nhận Incoterms ${term}`,
+          category: 'Điều Kiện Incoterms',
+          category_color: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
+          desc: 'Quy tắc thương mại quốc tế của Phòng Thương mại Quốc tế (ICC) xác định rõ điểm phân chia chi phí, rủi ro và trách nhiệm xếp dỡ vận tải biển.',
+          advice: 'Kiểm tra địa điểm giao nhận cụ thể và người chịu trách nhiệm mua bảo hiểm hàng hải cho lô hàng.'
+        };
+      }
+
+      if (cleanTag.startsWith('#LC_') || cleanTag.startsWith('#TT_') || cleanTag.startsWith('#CAD_')) {
+        return {
+          name: 'Phương Thức Thanh Toán Quốc Tế',
+          category: 'Thanh Toán Quốc Tế',
+          category_color: 'bg-amber-500/20 text-amber-300 border-amber-500/30',
+          desc: 'Điều kiện và phương thức thanh toán tiền hàng qua hệ thống ngân hàng thương mại quốc tế (SWIFT).',
+          advice: 'Đảm bảo chứng từ hoàn hảo theo quy tắc thực hành thống nhất tín dụng chứng từ UCP 600.'
+        };
+      }
+
+      return {
+        name: cleanTag.replace('#', '').replace(/_/g, ' '),
+        category: 'Quy Chuẩn Ngoại Thương',
+        category_color: 'bg-slate-500/20 text-slate-300 border-slate-500/30',
+        desc: 'Tiêu chuẩn kỹ thuật, chứng chỉ chất lượng hoặc điều kiện thương mại thỏa thuận giữa hai bên trong giao dịch xuất nhập khẩu.',
+        advice: 'Làm rõ chi tiết tiêu chuẩn kỹ thuật cụ thể trong phụ lục hợp đồng mua bán ngoại thương.'
+      };
+    }
+
+    function renderTradeTagDetailContent(tag, type) {
+      const info = getTradeTagInfo(tag);
+      if (!info) return '';
+
+      const isMatched = type === 'matched';
+      const typeBadge = isMatched 
+        ? `<span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1"><i data-lucide="check" class="w-3 h-3"></i> ĐÃ KHỚP HOÀN TOÀN</span>`
+        : `<span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center gap-1"><i data-lucide="alert-triangle" class="w-3 h-3"></i> ĐIỂM VÊNH CẦN THƯƠNG THẢO</span>`;
+
+      const typeContext = isMatched
+        ? `<div class="p-2 rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-[11px] flex items-start gap-1.5 mt-1.5">
+             <span class="font-bold shrink-0">✓ Đánh giá:</span>
+             <span>Cả Bên Mua và Nhà Cung Cấp đều cam kết đáp ứng trọn vẹn tiêu chí này. Không phát sinh rủi ro kỹ thuật hay tranh chấp hợp đồng.</span>
+           </div>`
+        : `<div class="p-2 rounded bg-amber-500/10 border border-amber-500/20 text-amber-300 text-[11px] flex items-start gap-1.5 mt-1.5">
+             <span class="font-bold shrink-0">⚡ Khuyến nghị:</span>
+             <span>Bên Mua yêu cầu nhưng Nhà Cung Cấp chưa xác nhận sẵn có. Chuyên viên ngoại thương cần đưa nội dung này vào Phụ lục đàm phán thương thảo bổ sung, thỏa thuận chi phí chứng chỉ hoặc bảo hiểm tương đương.</span>
+           </div>`;
+
+      return `
+        <div class="p-3 rounded-lg bg-brand-900 border ${isMatched ? 'border-emerald-500/40' : 'border-amber-500/40'} space-y-2 transition-all">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2">
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold ${info.category_color}">${info.category}</span>
+              <span class="font-bold font-mono text-cyan-400 text-xs">${tag}</span>
+            </div>
+            <div>${typeBadge}</div>
+          </div>
+          <div>
+            <h5 class="font-bold text-white text-xs">${info.name}</h5>
+            <p class="text-slate-300 text-[11px] leading-relaxed mt-1">${info.desc}</p>
+          </div>
+          ${info.advice ? `
+            <div class="text-[11px] text-slate-300 bg-white/5 p-2 rounded border border-white/5">
+              <span class="font-bold text-cyan-400">💡 Lưu ý nghiệp vụ:</span> ${info.advice}
+            </div>
+          ` : ''}
+          ${typeContext}
+        </div>
+      `;
+    }
+
+    function handleTradeTagHover(event, tag, type) {
+      const info = getTradeTagInfo(tag);
+      if (!info) return;
+
+      // Update inline detail banner if no tag is pinned by click
+      if (!currentActiveClickedTag) {
+        const bannerContent = document.getElementById('md-tag-detail-content');
+        if (bannerContent) {
+          bannerContent.innerHTML = renderTradeTagDetailContent(tag, type);
+          if (window.lucide) lucide.createIcons({ root: bannerContent });
+        }
+      }
+
+      // Show floating tooltip
+      const tooltip = document.getElementById('tradeTagFloatingTooltip');
+      if (!tooltip) return;
+
+      const isMatched = type === 'matched';
+      tooltip.className = `fixed pointer-events-none z-[130] transition-opacity duration-150 ease-out opacity-100 max-w-xs sm:max-w-sm rounded-xl p-3 shadow-2xl backdrop-blur-md border ${
+        isMatched ? 'bg-slate-950/95 border-emerald-500/50 text-slate-200' : 'bg-slate-950/95 border-amber-500/50 text-slate-200'
+      } text-xs`;
+
+      tooltip.innerHTML = `
+        <div class="space-y-1.5 font-sans">
+          <div class="flex items-center justify-between gap-1.5 border-b border-white/10 pb-1.5">
+            <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold ${info.category_color}">${info.category}</span>
+            <span class="text-[10px] font-mono font-bold ${isMatched ? 'text-emerald-400' : 'text-amber-400'}">${isMatched ? '✓ ĐÃ KHỚP' : '⚡ ĐIỂM VÊNH'}</span>
+          </div>
+          <div class="font-bold text-white text-xs font-mono">${tag}</div>
+          <div class="text-[11px] font-medium text-cyan-300">${info.name}</div>
+          <p class="text-[11px] text-slate-300 leading-snug">${info.desc}</p>
+          <div class="pt-1 text-[10px] text-slate-400 italic border-t border-white/5">
+            ${isMatched ? '🟢 Cả 2 bên đều đáp ứng' : '⚡ Cần thương thảo bổ sung'}
+          </div>
+        </div>
+      `;
+
+      // Position tooltip relative to hovered element
+      const rect = event.currentTarget.getBoundingClientRect();
+      const tooltipWidth = 320;
+      let top = rect.bottom + 8;
+      let left = rect.left + (rect.width / 2) - (tooltipWidth / 2);
+
+      if (left < 10) left = 10;
+      if (left + tooltipWidth > window.innerWidth - 10) {
+        left = window.innerWidth - tooltipWidth - 10;
+      }
+      if (top + 200 > window.innerHeight) {
+        top = Math.max(10, rect.top - 180);
+      }
+
+      tooltip.style.top = `${top}px`;
+      tooltip.style.left = `${left}px`;
+      tooltip.style.display = 'block';
+    }
+
+    function handleTradeTagLeave() {
+      const tooltip = document.getElementById('tradeTagFloatingTooltip');
+      if (tooltip) {
+        tooltip.classList.remove('opacity-100');
+        tooltip.classList.add('opacity-0');
+        setTimeout(() => {
+          if (tooltip.classList.contains('opacity-0')) {
+            tooltip.style.display = 'none';
+          }
+        }, 150);
+      }
+
+      // If no tag is clicked/pinned, restore default hint
+      if (!currentActiveClickedTag) {
+        const bannerContent = document.getElementById('md-tag-detail-content');
+        if (bannerContent) {
+          bannerContent.innerHTML = `
+            <div class="p-2.5 rounded-lg bg-white/5 border border-white/5 text-slate-400 text-[11px] leading-relaxed flex items-center gap-2">
+              <i data-lucide="mouse-pointer-click" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+              <span>Chạm hoặc rê chuột vào bất kỳ thẻ tag nào ở trên để xem ngay phân loại, ý nghĩa thực tế trong hợp đồng ngoại thương và khuyến nghị đàm phán cụ thể.</span>
+            </div>
+          `;
+          if (window.lucide) lucide.createIcons({ root: bannerContent });
+        }
+      }
+    }
+
+    function handleTradeTagClick(event, tag, type) {
+      if (event) event.stopPropagation();
+      currentActiveClickedTag = tag;
+
+      // Highlight active tag button
+      document.querySelectorAll('.trade-tag-item').forEach(el => {
+        el.classList.remove('ring-2', 'ring-cyan-400', 'ring-offset-1', 'ring-offset-slate-900');
+      });
+      if (event && event.currentTarget) {
+        event.currentTarget.classList.add('ring-2', 'ring-cyan-400', 'ring-offset-1', 'ring-offset-slate-900');
+      }
+
+      // Update inline detail banner
+      const bannerContent = document.getElementById('md-tag-detail-content');
+      if (bannerContent) {
+        bannerContent.innerHTML = renderTradeTagDetailContent(tag, type);
+        if (window.lucide) lucide.createIcons({ root: bannerContent });
+      }
+
+      // Also trigger tooltip
+      if (event) handleTradeTagHover(event, tag, type);
+    }
+
     function renderMatchDetailModalContent(m) {
       document.getElementById('md-parties-title').textContent = `${m.buyer_name} ⇄ ${m.supplier_short_name}`;
       document.getElementById('md-commodity-sub').textContent = `Mặt hàng: ${m.matched_commodity} • Mã HS: ${m.matched_hs} • Điểm: ${m.total_score}/100`;
@@ -7472,12 +7989,39 @@
         rateBadge.className = `px-2.5 py-0.5 rounded text-[10px] font-mono font-bold ${matchRate >= 80 ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : (matchRate >= 50 ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30' : 'bg-rose-500/20 text-rose-300 border border-rose-500/30')}`;
       }
 
+      // Reset active clicked tag and reset inline banner to default
+      currentActiveClickedTag = null;
+      const bannerContent = document.getElementById('md-tag-detail-content');
+      if (bannerContent) {
+        bannerContent.innerHTML = `
+          <div class="p-2.5 rounded-lg bg-white/5 border border-white/5 text-slate-400 text-[11px] leading-relaxed flex items-center gap-2">
+            <i data-lucide="mouse-pointer-click" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+            <span>Chạm hoặc rê chuột vào bất kỳ thẻ tag nào ở trên để xem ngay phân loại, ý nghĩa thực tế trong hợp đồng ngoại thương và khuyến nghị đàm phán cụ thể.</span>
+          </div>
+        `;
+      }
+
       const matchedContainer = document.getElementById('md-matched-tags-list');
       if (matchedContainer) {
         if (matchedTags.length > 0) {
-          matchedContainer.innerHTML = matchedTags.map(tag => 
-            `<span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">✓ ${tag}</span>`
-          ).join('');
+          matchedContainer.innerHTML = matchedTags.map(tag => {
+            const info = getTradeTagInfo(tag);
+            const tooltipTitle = info ? `${info.name} (${info.category})` : tag;
+            return `
+              <button type="button" 
+                      class="trade-tag-item group relative inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/25 hover:border-emerald-400 hover:shadow-sm hover:shadow-emerald-500/20 active:scale-95 transition-all text-left cursor-pointer"
+                      data-tag="${tag}"
+                      data-type="matched"
+                      onmouseenter="handleTradeTagHover(event, '${tag}', 'matched')"
+                      onmouseleave="handleTradeTagLeave()"
+                      onclick="handleTradeTagClick(event, '${tag}', 'matched')"
+                      title="${tooltipTitle} - Bấm hoặc rê chuột xem chi tiết">
+                <span class="text-emerald-400 font-extrabold">✓</span>
+                <span>${tag}</span>
+                <i data-lucide="info" class="w-2.5 h-2.5 opacity-60 group-hover:opacity-100 transition-opacity"></i>
+              </button>
+            `;
+          }).join('');
         } else {
           matchedContainer.innerHTML = `<span class="text-[11px] text-slate-400 italic font-mono">Chưa có tag chung ghi nhận</span>`;
         }
@@ -7486,9 +8030,24 @@
       const missingContainer = document.getElementById('md-missing-tags-list');
       if (missingContainer) {
         if (missingTags.length > 0) {
-          missingContainer.innerHTML = missingTags.map(tag => 
-            `<span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30">⚡ ${tag}</span>`
-          ).join('');
+          missingContainer.innerHTML = missingTags.map(tag => {
+            const info = getTradeTagInfo(tag);
+            const tooltipTitle = info ? `${info.name} (${info.category})` : tag;
+            return `
+              <button type="button" 
+                      class="trade-tag-item group relative inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30 hover:bg-amber-500/25 hover:border-amber-400 hover:shadow-sm hover:shadow-amber-500/20 active:scale-95 transition-all text-left cursor-pointer"
+                      data-tag="${tag}"
+                      data-type="missing"
+                      onmouseenter="handleTradeTagHover(event, '${tag}', 'missing')"
+                      onmouseleave="handleTradeTagLeave()"
+                      onclick="handleTradeTagClick(event, '${tag}', 'missing')"
+                      title="${tooltipTitle} - Bấm hoặc rê chuột xem chi tiết">
+                <span class="text-amber-400 font-extrabold">⚡</span>
+                <span>${tag}</span>
+                <i data-lucide="info" class="w-2.5 h-2.5 opacity-60 group-hover:opacity-100 transition-opacity"></i>
+              </button>
+            `;
+          }).join('');
         } else {
           missingContainer.innerHTML = `<span class="text-[11px] text-emerald-400 font-mono">Tuyệt đối trùng khớp - Không có điểm vênh tiêu chuẩn!</span>`;
         }
@@ -8089,5 +8648,11 @@
       }
     }
   </script>
+
+  <!-- Floating Trade Tag Tooltip Popover -->
+  <div id="tradeTagFloatingTooltip" 
+       class="fixed pointer-events-none z-[130] hidden transition-opacity duration-150 ease-out opacity-0 max-w-xs sm:max-w-sm rounded-xl p-3 shadow-2xl backdrop-blur-md border font-sans text-xs"
+       style="top: 0; left: 0;">
+  </div>
 </body>
 </html>

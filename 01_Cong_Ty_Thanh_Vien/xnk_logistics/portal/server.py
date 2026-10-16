@@ -68,6 +68,11 @@ try:
 except ImportError:
     regulatory_radar = None
 
+try:
+    import trade_tags_dict
+except ImportError:
+    trade_tags_dict = None
+
 def load_database():
     try:
         with open(DATA_FILE, "r", encoding="utf-8") as f:
@@ -499,6 +504,27 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                 self._send_json({"status": "SUCCESS", "regulation": reg})
             else:
                 self._send_json({"status": "ERROR", "message": "Regulation not found"}, 404)
+            return
+
+        elif path == "/api/trade-tags/explain":
+            # Tra cứu giải thích chi tiết ý nghĩa và khuyến nghị nghiệp vụ của thẻ tag
+            tag_query = query.get("tag", [""])[0].strip()
+            info = trade_tags_dict.get_trade_tag_info(tag_query) if trade_tags_dict else {}
+            self._send_json({
+                "status": "SUCCESS",
+                "tag": tag_query,
+                "info": info
+            })
+            return
+
+        elif path == "/api/trade-tags/catalog":
+            # Toàn bộ danh mục thẻ tag chuẩn hóa
+            catalog = trade_tags_dict.TRADE_TAG_CATALOG if trade_tags_dict else {}
+            self._send_json({
+                "status": "SUCCESS",
+                "total": len(catalog),
+                "catalog": catalog
+            })
             return
 
         elif path == "/api/hs/summary":

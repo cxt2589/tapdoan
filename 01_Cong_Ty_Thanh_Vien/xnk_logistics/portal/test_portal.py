@@ -56,7 +56,7 @@ def run_all_tests():
     time.sleep(0.5)
 
     passed_count = 0
-    total_tests = 30
+    total_tests = 32
 
     try:
         # Test 1: Health Check
@@ -420,7 +420,53 @@ def run_all_tests():
         assert metrics_test["total_matches_found"] >= 50
         assert metrics_test["diamond_count"] >= 5
         assert os.path.exists(morning_trade_matcher_dispatch.DATA_FILE)
-        print(f"✅ Test 30/30: Module Tự Động Hóa Bắn Bản Tin Khớp Lệnh 06:30 Sáng Telegram sẵn sàng 100%")
+        print(f"✅ Test 30/32: Module Tự Động Hóa Bắn Bản Tin Khớp Lệnh 06:30 Sáng Telegram sẵn sàng 100%")
+        passed_count += 1
+
+        # Test 31: API Đầu Mối Liên Lạc Doanh Nghiệp (/api/contacts) - Đầy đủ 2 trường hợp (Có thêm & Không có thêm)
+        # 1. Trường hợp Có thêm thông tin liên lạc (Tier-A lead & Major supplier)
+        code, c_lead_multi = http_get("/api/contacts?type=lead&id=LEAD-AGRI-001")
+        assert code == 200
+        assert c_lead_multi["ok"] == True
+        assert c_lead_multi["has_additional"] == True
+        assert c_lead_multi["total_contacts"] >= 3
+        assert len(c_lead_multi["additional_contacts"]) >= 2
+        assert any(c.get("role_type") == "logistics" for c in c_lead_multi["all_contacts"])
+        assert any(c.get("role_type") == "trade_finance" for c in c_lead_multi["all_contacts"])
+
+        code, c_sup_multi = http_get("/api/contacts?type=supplier&id=SP-001")
+        assert code == 200
+        assert c_sup_multi["ok"] == True
+        assert c_sup_multi["has_additional"] == True
+        assert len(c_sup_multi["additional_contacts"]) >= 1
+
+        # 2. Trường hợp Không có thêm thông tin liên lạc -> Trả về thông báo chuẩn
+        # Tìm lead có đúng 1 contact
+        single_lead_id = next((l["lead_id"] for l in db_test.get("industry_leads", []) if len(l.get("sourcing_contacts", [])) == 1), None)
+        assert single_lead_id is not None
+        code, c_lead_single = http_get(f"/api/contacts?type=lead&id={single_lead_id}")
+        assert code == 200
+        assert c_lead_single["ok"] == True
+        assert c_lead_single["has_additional"] == False
+        assert c_lead_single["total_contacts"] == 1
+        assert "hiện chỉ có 01 đầu mối liên lạc chính thức" in c_lead_single["message"]
+
+        print(f"✅ Test 31/32: API Tra cứu Đầu Mối Liên Lạc (/api/contacts) chuẩn xác cho cả 2 luồng (Có thêm đầu mối & Thông báo khi chỉ có 1 đầu mối)")
+        passed_count += 1
+
+        # Test 32: Giao Diện Frontend Modal Đầu Mối Liên Lạc & Các Nút Bấm Xem Thêm
+        with urllib.request.urlopen(url_html, timeout=5) as html_resp:
+            html_text = html_resp.read().decode('utf-8')
+            assert 'id="companyContactsModal"' in html_text
+            assert 'id="ccm-contacts-list"' in html_text
+            assert 'openCompanyContactsModal' in html_text
+            assert 'closeCompanyContactsModal' in html_text
+            assert 'viewMoreContacts' in html_text
+            assert 'viewMoreContactsFromDetail' in html_text
+            assert 'viewMoreSupplierContactsFromDetail' in html_text
+            assert 'copyContactEmail' in html_text
+            assert 'Xem thêm liên hệ' in html_text
+        print(f"✅ Test 32/32: Giao Diện Popup Modal Đầu Mối Liên Lạc (companyContactsModal) & Phím Xem Thêm tích hợp hoàn hảo")
         passed_count += 1
 
     finally:

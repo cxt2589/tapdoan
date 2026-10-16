@@ -512,6 +512,75 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                 self._send_json({"ok": False, "error": f"Supplier '{sup_id}' not found"}, 404)
             return
 
+        elif path == "/api/contacts":
+            db = load_database()
+            entity_id = query.get("id", [""])[0].strip() or query.get("lead_id", [""])[0].strip() or query.get("supplier_id", [""])[0].strip()
+            entity_type = query.get("type", [""])[0].strip().lower()
+            name_query = query.get("name", [""])[0].strip().lower()
+
+            lead = None
+            supplier = None
+
+            # Auto-detect or search
+            if entity_type == "supplier" or entity_id.startswith("SP-") or entity_id.startswith("SUP-"):
+                suppliers = db.get("suppliers", [])
+                supplier = next((s for s in suppliers if s.get("id") == entity_id or (name_query and name_query in (s.get("company_name") or s.get("name", "")).lower())), None)
+            elif entity_type == "lead" or entity_id.startswith("LEAD-"):
+                leads = db.get("industry_leads", [])
+                lead = next((l for l in leads if l.get("lead_id") == entity_id or (name_query and name_query in l.get("company_name", "").lower())), None)
+            else:
+                # Try finding in leads first, then suppliers
+                leads = db.get("industry_leads", [])
+                lead = next((l for l in leads if l.get("lead_id") == entity_id or (name_query and name_query in l.get("company_name", "").lower())), None)
+                if not lead:
+                    suppliers = db.get("suppliers", [])
+                    supplier = next((s for s in suppliers if s.get("id") == entity_id or (name_query and name_query in (s.get("company_name") or s.get("name", "")).lower())), None)
+
+            if lead:
+                contacts = lead.get("sourcing_contacts", [])
+                has_additional = len(contacts) > 1
+                comp_name = lead.get("company_name", "Doanh Nghiệp")
+                primary_name = contacts[0].get("name", "N/A") if contacts else "N/A"
+                self._send_json({
+                    "ok": True,
+                    "id": lead.get("lead_id"),
+                    "type": "lead",
+                    "company_name": comp_name,
+                    "country": lead.get("country"),
+                    "scale": lead.get("scale"),
+                    "has_additional": has_additional,
+                    "total_contacts": len(contacts),
+                    "primary_contact": contacts[0] if contacts else None,
+                    "additional_contacts": contacts[1:] if has_additional else [],
+                    "all_contacts": contacts,
+                    "message": None if has_additional else f"Doanh nghiệp {comp_name} hiện chỉ có 01 đầu mối liên lạc chính thức đã xác minh ({primary_name}). Chưa ghi nhận thêm đầu mối liên hệ phụ trong cơ sở dữ liệu ngoại thương."
+                })
+                return
+            elif supplier:
+                primary = supplier.get("contact", {})
+                additionals = supplier.get("additional_contacts", [])
+                all_contacts = ([primary] if primary and primary.get("name") else []) + additionals
+                has_additional = len(additionals) > 0
+                s_name = supplier.get("company_name") or supplier.get("name") or "Nhà Cung Cấp"
+                primary_name = primary.get("name", "N/A") if primary else (all_contacts[0].get("name", "N/A") if all_contacts else "N/A")
+                self._send_json({
+                    "ok": True,
+                    "id": supplier.get("id"),
+                    "type": "supplier",
+                    "company_name": s_name,
+                    "country": supplier.get("country"),
+                    "has_additional": has_additional,
+                    "total_contacts": len(all_contacts),
+                    "primary_contact": primary if primary else (all_contacts[0] if all_contacts else None),
+                    "additional_contacts": additionals,
+                    "all_contacts": all_contacts,
+                    "message": None if has_additional else f"Doanh nghiệp {s_name} hiện chỉ có 01 đầu mối liên lạc chính thức đã xác minh ({primary_name}). Chưa ghi nhận thêm đầu mối liên hệ phụ trong cơ sở dữ liệu ngoại thương."
+                })
+                return
+            else:
+                self._send_json({"ok": False, "error": f"Entity '{entity_id}' not found"}, 404)
+                return
+
         elif path == "/api/suppliers":
             db = load_database()
             suppliers = db.get("suppliers", [])

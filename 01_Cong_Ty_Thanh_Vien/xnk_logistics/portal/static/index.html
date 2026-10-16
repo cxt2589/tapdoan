@@ -1791,10 +1791,16 @@
         <!-- Section 4: Direct Sourcing Contact & Strategic Hook -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
           <div class="p-3.5 rounded-xl bg-brand-950/70 border border-white/5 space-y-1">
-            <span class="text-[10px] font-mono uppercase text-slate-400 flex items-center gap-1.5">
-              <i data-lucide="user-check" class="w-3.5 h-3.5 text-cyan-400"></i>
-              ĐẦU MỐI THU MUA CHÍNH THỨC:
-            </span>
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-mono uppercase text-slate-400 flex items-center gap-1.5 font-bold">
+                <i data-lucide="user-check" class="w-3.5 h-3.5 text-cyan-400"></i>
+                ĐẦU MỐI THU MUA CHÍNH THỨC:
+              </span>
+              <button type="button" onclick="viewMoreContactsFromDetail()" class="inline-flex items-center gap-1 text-[10px] font-mono font-semibold text-cyan-400 hover:text-cyan-300 bg-cyan-950/60 hover:bg-cyan-900 px-2 py-0.5 rounded border border-cyan-500/30 transition-all cursor-pointer" title="Xem thêm đầu mối liên hệ nếu có">
+                <i data-lucide="users" class="w-3 h-3"></i>
+                <span>Xem thêm</span>
+              </button>
+            </div>
             <p class="text-sm font-bold text-white" id="cd-contact-name">Head of Procurement</p>
             <p class="text-xs text-slate-400" id="cd-contact-title">Procurement Director</p>
             <p class="text-xs text-cyan-400 font-mono mt-1" id="cd-contact-email">sourcing@company.com</p>
@@ -1834,6 +1840,63 @@
               <span>Báo Cáo Bot</span>
             </button>
           </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- MODAL: COMPANY CONTACTS DOSSIER (ĐẦU MỐI LIÊN LẠC BỔ SUNG)     -->
+  <!-- ============================================================= -->
+  <div id="companyContactsModal" onclick="handleModalBackdropClick(event, 'companyContactsModal')" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 overscroll-contain">
+    <div onclick="event.stopPropagation()" class="w-full max-w-3xl rounded-3xl p-1 bg-gradient-to-b from-cyan-500/30 via-white/10 to-white/5 border border-cyan-500/40 shadow-2xl">
+      <div class="bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-5 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container">
+        
+        <!-- Header -->
+        <div class="flex items-start justify-between border-b border-white/10 pb-4">
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider bg-cyan-500/15 text-cyan-400 border border-cyan-500/30 font-bold flex items-center gap-1">
+                <i data-lucide="users" class="w-3 h-3"></i> HỒ SƠ ĐẦU MỐI LIÊN LẠC NGOẠI THƯƠNG
+              </span>
+              <span id="ccm-badge-count" class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">3 Đầu Mối Đã Xác Minh</span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-black text-white mt-2 tracking-tight flex items-center gap-2" id="ccm-company-name">
+              <span>Tên Doanh Nghiệp</span>
+            </h3>
+            <p class="text-xs text-slate-400 mt-1 font-mono" id="ccm-location-sub">Quốc gia • Danh bạ nhân sự thu mua, logistics & thanh toán quốc tế</p>
+          </div>
+          <button type="button" onclick="closeCompanyContactsModal()" class="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all cursor-pointer">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- Explanatory Banner -->
+        <div class="p-3.5 rounded-2xl bg-cyan-950/30 border border-cyan-500/25 flex items-start gap-3">
+          <div class="w-8 h-8 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center shrink-0 mt-0.5">
+            <i data-lucide="info" class="w-4 h-4 text-cyan-400"></i>
+          </div>
+          <div class="text-xs space-y-1">
+            <p class="text-slate-200 font-medium">Danh bạ đầu mối liên hệ được chuẩn hóa theo hồ sơ đối tác ngoại thương SOP-XNK-01.</p>
+            <p class="text-[11px] text-slate-400">Bạn có thể sao chép nhanh email, kết nối qua WhatsApp/WeChat/Telegram hoặc bấm gọi điện/gửi email đàm phán hợp đồng trực tiếp.</p>
+          </div>
+        </div>
+
+        <!-- Contacts Grid Container -->
+        <div id="ccm-contacts-list" class="space-y-3">
+          <!-- Injected dynamically by JS -->
+        </div>
+
+        <!-- Modal Actions Footer -->
+        <div class="flex items-center justify-between pt-3 border-t border-white/10">
+          <div class="flex items-center gap-2 text-xs text-emerald-400 font-mono">
+            <i data-lucide="shield-check" class="w-4 h-4"></i>
+            <span>Dữ liệu liên hệ được bảo mật & kiểm toán định kỳ</span>
+          </div>
+          <button type="button" onclick="closeCompanyContactsModal()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/10 transition-all cursor-pointer">
+            Đóng (Esc)
+          </button>
         </div>
 
       </div>
@@ -1943,10 +2006,16 @@
         <!-- Section 4: Asia Hub & Contact Desk -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
           <div class="p-3.5 rounded-xl bg-brand-950/70 border border-white/5 space-y-1">
-            <span class="text-[10px] font-mono uppercase text-slate-400 flex items-center gap-1.5 font-bold">
-              <i data-lucide="user-check" class="w-3.5 h-3.5 text-cyan-400"></i>
-              ĐẦU MỐI ĐÀM PHÁN CUNG ỨNG:
-            </span>
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-mono uppercase text-slate-400 flex items-center gap-1.5 font-bold">
+                <i data-lucide="user-check" class="w-3.5 h-3.5 text-cyan-400"></i>
+                ĐẦU MỐI ĐÀM PHÁN CUNG ỨNG:
+              </span>
+              <button type="button" onclick="viewMoreSupplierContactsFromDetail()" class="inline-flex items-center gap-1 text-[10px] font-mono font-semibold text-cyan-400 hover:text-cyan-300 bg-cyan-950/60 hover:bg-cyan-900 px-2 py-0.5 rounded border border-cyan-500/30 transition-all cursor-pointer" title="Xem thêm đầu mối liên hệ nếu có">
+                <i data-lucide="users" class="w-3 h-3"></i>
+                <span>Xem thêm</span>
+              </button>
+            </div>
             <p class="text-sm font-bold text-white" id="supd-contact-name">Mr. David Miller</p>
             <p class="text-xs text-slate-400" id="supd-contact-title">VP Asia Fertilizer Sourcing</p>
             <p class="text-xs text-cyan-400 font-mono mt-1" id="supd-contact-email">asia-desk@supplier.com</p>
@@ -3394,6 +3463,10 @@
               <div class="text-[10px] text-cyan-400 font-mono truncate max-w-[150px]" title="${contact.email}">${contact.email || 'N/A'}</div>
               <div class="text-[10px] text-slate-400 font-mono mt-1">Incoterms: <strong class="text-white">${lead.preferred_incoterms || 'FOB'}</strong></div>
               <div class="text-[10px] text-slate-400 font-mono mt-0.5">TT: ${lead.payment_terms_accepted || 'L/C'}</div>
+              <button type="button" onclick="viewMoreContacts('lead', '${lead.lead_id}')" class="mt-2 inline-flex items-center gap-1 text-[10px] font-mono font-semibold text-cyan-400 hover:text-cyan-300 bg-cyan-950/40 hover:bg-cyan-900/60 px-2 py-0.5 rounded border border-cyan-500/30 transition-all cursor-pointer" title="Xem thêm đầu mối liên hệ nếu có">
+                <i data-lucide="users" class="w-3 h-3"></i>
+                <span>Xem thêm liên hệ</span>
+              </button>
             </td>
 
             <td class="py-3 px-4 align-top">
@@ -3538,7 +3611,13 @@
               <!-- Contact & Commercial Terms Strip -->
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 rounded-xl bg-brand-950/60 border border-white/5 text-xs">
                 <div>
-                  <span class="text-[10px] font-mono uppercase text-slate-400 block">ĐẦU MỐI THU MUA TRỰC TIẾP:</span>
+                  <div class="flex items-center justify-between">
+                    <span class="text-[10px] font-mono uppercase text-slate-400 block">ĐẦU MỐI THU MUA TRỰC TIẾP:</span>
+                    <button type="button" onclick="viewMoreContacts('lead', '${lead.lead_id}')" class="inline-flex items-center gap-1 text-[10px] font-mono font-semibold text-cyan-400 hover:text-cyan-300 bg-cyan-950/60 hover:bg-cyan-900 px-2 py-0.5 rounded border border-cyan-500/30 transition-all cursor-pointer" title="Xem thêm đầu mối liên hệ nếu có">
+                      <i data-lucide="users" class="w-3 h-3"></i>
+                      <span>Xem thêm</span>
+                    </button>
+                  </div>
                   <p class="text-white font-bold mt-0.5">${contact.name || 'Sourcing Desk'}</p>
                   <p class="text-slate-400 text-[11px]">${contact.title || 'Head of Procurement'}</p>
                   <p class="text-cyan-400 font-mono text-[11px] mt-0.5">${contact.email || 'N/A'}</p>
@@ -3615,7 +3694,7 @@
 
     function unlockBodyScroll() {
       setTimeout(() => {
-        const openModals = document.querySelectorAll('#companyDetailModal:not(.hidden), #supplierDetailModal:not(.hidden), #hsCatalogModal:not(.hidden), #outreachModal:not(.hidden)');
+        const openModals = document.querySelectorAll('#companyDetailModal:not(.hidden), #supplierDetailModal:not(.hidden), #hsCatalogModal:not(.hidden), #outreachModal:not(.hidden), #matchDetailModal:not(.hidden), #companyContactsModal:not(.hidden)');
         if (openModals.length === 0) {
           document.body.classList.remove('modal-open');
           document.documentElement.classList.remove('modal-open');
@@ -3636,6 +3715,8 @@
       else if (modalId === 'supplierDetailModal') closeSupplierDetailModal();
       else if (modalId === 'hsCatalogModal') closeHsCatalogModal();
       else if (modalId === 'outreachModal') closeOutreachModal();
+      else if (modalId === 'matchDetailModal') closeMatchDetailModal();
+      else if (modalId === 'companyContactsModal') closeCompanyContactsModal();
       else {
         const el = document.getElementById(modalId);
         if (el) el.classList.add('hidden');
@@ -3649,6 +3730,7 @@
       closeHsCatalogModal();
       closeOutreachModal();
       closeMatchDetailModal();
+      closeCompanyContactsModal();
     }
 
     // ==========================================
@@ -3770,6 +3852,200 @@
       const modal = document.getElementById('companyDetailModal');
       if (modal) modal.classList.add('hidden');
       unlockBodyScroll();
+    }
+
+    // ==========================================
+    // 2.1 COMPANY CONTACTS DOSSIER MODAL & MORE CONTACTS LOOKUP
+    // ==========================================
+    function openCompanyContactsModal(compName, compCountry, contacts) {
+      lockBodyScroll();
+      document.getElementById('ccm-company-name').innerHTML = `
+        <span>${compName}</span>
+        <span class="text-xs px-2.5 py-0.5 rounded-full font-mono bg-blue-500/20 text-blue-300 font-semibold border border-blue-500/30">${compCountry || 'Quốc tế'}</span>
+      `;
+      document.getElementById('ccm-location-sub').innerText = `${compCountry || 'Toàn cầu'} • Danh bạ nhân sự thu mua, logistics & thanh toán quốc tế`;
+      document.getElementById('ccm-badge-count').innerText = `${contacts.length} Đầu Mối Đã Xác Minh`;
+
+      const listContainer = document.getElementById('ccm-contacts-list');
+      listContainer.innerHTML = contacts.map((c, idx) => {
+        const isPrimary = (idx === 0) || (c.role_type === 'primary');
+        const badgeClass = isPrimary
+          ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+          : (c.role_type === 'logistics'
+            ? 'bg-blue-500/20 text-blue-300 border-blue-500/40'
+            : (c.role_type === 'trade_finance'
+              ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
+              : (c.role_type === 'vietnam_desk'
+                ? 'bg-purple-500/20 text-purple-300 border-purple-500/40'
+                : 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40')));
+
+        const badgeIcon = isPrimary
+          ? 'crown'
+          : (c.role_type === 'logistics' ? 'ship' : (c.role_type === 'trade_finance' ? 'credit-card' : (c.role_type === 'vietnam_desk' ? 'map-pin' : 'user-check')));
+
+        const cardBorder = isPrimary ? 'border-amber-500/40 bg-amber-950/15' : 'border-white/10 bg-brand-950/60';
+
+        return `
+          <div class="p-4 sm:p-5 rounded-2xl ${cardBorder} border space-y-3 transition-all hover:border-cyan-500/40">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/5 pb-3">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+                  <i data-lucide="${badgeIcon}" class="w-5 h-5 ${isPrimary ? 'text-amber-400' : 'text-cyan-400'}"></i>
+                </div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <h4 class="text-sm sm:text-base font-bold text-white">${c.name || 'Đầu Mối Ngoại Thương'}</h4>
+                    ${c.verified ? `<span class="inline-flex items-center gap-0.5 text-[10px] font-mono text-emerald-400 font-semibold" title="Đã đối soát qua cổng hải quan & dữ liệu doanh nghiệp"><i data-lucide="check-circle" class="w-3 h-3"></i> Verified</span>` : ''}
+                  </div>
+                  <p class="text-xs text-slate-300 font-medium">${c.title || 'Chuyên viên'} • <span class="text-slate-400">${c.department || 'Phòng Ngoại Thương'}</span></p>
+                </div>
+              </div>
+              <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold border ${badgeClass} self-start sm:self-auto flex items-center gap-1">
+                <i data-lucide="${badgeIcon}" class="w-3 h-3"></i>
+                <span>${c.role_badge || (isPrimary ? 'Đầu Mối Thu Mua Chính' : 'Đầu Mối Chuyên Trách')}</span>
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+              <div class="space-y-1 bg-black/20 p-2.5 rounded-xl border border-white/5">
+                <span class="text-[10px] font-mono uppercase text-slate-400 block font-bold">EMAIL CÔNG VỤ:</span>
+                <div class="flex items-center justify-between gap-1">
+                  <span class="text-cyan-400 font-mono font-semibold truncate" title="${c.email}">${c.email || 'N/A'}</span>
+                  ${c.email ? `
+                    <button type="button" onclick="copyContactEmail('${c.email}')" class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-500/30 transition-all flex items-center gap-1 shrink-0 cursor-pointer" title="Sao chép email">
+                      <i data-lucide="copy" class="w-3 h-3"></i> Copy
+                    </button>
+                  ` : ''}
+                </div>
+              </div>
+
+              <div class="space-y-1 bg-black/20 p-2.5 rounded-xl border border-white/5">
+                <span class="text-[10px] font-mono uppercase text-slate-400 block font-bold">ĐIỆN THOẠI TRỰC TIẾP & KÊNH CHAT:</span>
+                <div class="text-slate-200 font-mono font-medium flex items-center justify-between gap-1">
+                  <span>${c.phone || c.direct_phone || 'Tổng đài đối tác'}</span>
+                  ${c.social ? `<span class="text-[11px] text-amber-300 font-mono">${c.social}</span>` : ''}
+                </div>
+              </div>
+            </div>
+
+            ${(c.working_hours || c.notes) ? `
+              <div class="text-[11px] font-mono text-slate-400 bg-white/[0.02] p-2.5 rounded-xl border border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
+                ${c.working_hours ? `<div><strong class="text-slate-300">Giờ làm việc:</strong> ${c.working_hours}</div>` : ''}
+                ${c.notes ? `<div class="text-slate-300 italic">${c.notes}</div>` : ''}
+              </div>
+            ` : ''}
+
+            <div class="flex items-center justify-end gap-2 pt-1">
+              ${c.email ? `
+                <a href="mailto:${c.email}?subject=${encodeURIComponent('Hợp Tác Xuất Nhập Khẩu & Thương Mại Quốc Tế - ' + compName)}" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-cyan-500/20 hover:bg-cyan-500 text-cyan-300 hover:text-brand-950 border border-cyan-500/40 transition-all inline-flex items-center gap-1.5 cursor-pointer">
+                  <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+                  <span>Gửi Email Trực Tiếp</span>
+                </a>
+              ` : ''}
+              ${c.phone ? `
+                <a href="tel:${c.phone.replace(/[^0-9+]/g, '')}" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/10 transition-all inline-flex items-center gap-1.5 cursor-pointer">
+                  <i data-lucide="phone-call" class="w-3.5 h-3.5 text-emerald-400"></i>
+                  <span>Gọi Điện</span>
+                </a>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('companyContactsModal').classList.remove('hidden');
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function closeCompanyContactsModal() {
+      const modal = document.getElementById('companyContactsModal');
+      if (modal) modal.classList.add('hidden');
+      unlockBodyScroll();
+    }
+
+    function copyContactEmail(email) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(email).then(() => {
+          showToast('Đã Sao Chép Email', `Đã lưu email "${email}" vào bộ nhớ tạm.`);
+        }).catch(() => {
+          showToast('Thông Báo', `Email: ${email}`);
+        });
+      } else {
+        showToast('Thông Báo', `Email: ${email}`);
+      }
+    }
+
+    async function viewMoreContacts(type, id) {
+      let entity = null;
+      let compName = '';
+      let compCountry = '';
+      let allContacts = [];
+      let hasAdditional = false;
+
+      if (type === 'lead') {
+        entity = (cachedLeadsData || []).find(l => l.lead_id === id);
+        if (!entity && currentDetailLead && currentDetailLead.lead_id === id) {
+          entity = currentDetailLead;
+        }
+        if (entity) {
+          compName = entity.company_name || 'Doanh Nghiệp';
+          compCountry = entity.country || '';
+          allContacts = entity.sourcing_contacts || [];
+          hasAdditional = allContacts.length > 1;
+        }
+      } else if (type === 'supplier') {
+        entity = (cachedSuppliersList || []).find(s => s.id === id);
+        if (!entity && currentDetailSupplier && currentDetailSupplier.id === id) {
+          entity = currentDetailSupplier;
+        }
+        if (entity) {
+          compName = entity.company_name || entity.name || 'Nhà Cung Cấp';
+          compCountry = entity.country || '';
+          const primary = entity.contact || {};
+          const add = entity.additional_contacts || [];
+          allContacts = ([primary].filter(x => x && x.name)).concat(add);
+          hasAdditional = add.length > 0;
+        }
+      }
+
+      // If not cached or need API data
+      if (!entity || allContacts.length === 0) {
+        try {
+          const res = await fetch(`/api/contacts?type=${encodeURIComponent(type)}&id=${encodeURIComponent(id)}`);
+          const data = await res.json();
+          if (data.ok) {
+            compName = data.company_name;
+            compCountry = data.country;
+            hasAdditional = data.has_additional;
+            allContacts = data.all_contacts || [];
+          }
+        } catch (e) {
+          console.warn("Contact lookup error:", e);
+        }
+      }
+
+      // Decision check
+      if (hasAdditional && allContacts.length > 1) {
+        openCompanyContactsModal(compName, compCountry, allContacts);
+      } else {
+        const primary = allContacts[0] || {};
+        const pName = primary.name ? primary.name : 'đầu mối phụ trách';
+        const pTitle = primary.title ? ` (${primary.title})` : '';
+        showToast(
+          'Thông Báo Đầu Mối Liên Hệ',
+          `Doanh nghiệp "${compName}" hiện chỉ có 01 đầu mối liên lạc chính thức đã xác minh: ${pName}${pTitle}. Chưa ghi nhận thêm đầu mối liên hệ phụ trong cơ sở dữ liệu.`
+        );
+      }
+    }
+
+    function viewMoreContactsFromDetail() {
+      if (!currentDetailLead) return;
+      viewMoreContacts('lead', currentDetailLead.lead_id);
+    }
+
+    function viewMoreSupplierContactsFromDetail() {
+      if (!currentDetailSupplier) return;
+      viewMoreContacts('supplier', currentDetailSupplier.id);
     }
 
     function openOutreachFromDetail() {
@@ -4353,6 +4629,10 @@
                 </div>
 
                 <div class="flex items-center gap-2 w-full sm:w-auto">
+                  <button type="button" onclick="viewMoreContacts('supplier', '${s.id}')" class="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-cyan-950/50 hover:bg-cyan-900/70 text-cyan-300 border border-cyan-500/30 transition-all flex items-center gap-1 cursor-pointer" title="Xem thêm đầu mối liên hệ">
+                    <i data-lucide="users" class="w-3.5 h-3.5"></i>
+                    <span>Liên Hệ</span>
+                  </button>
                   <button type="button" onclick="openSupplierDetailModal('${s.id}')" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/10 transition-all flex items-center gap-1 cursor-pointer">
                     <i data-lucide="eye" class="w-3.5 h-3.5"></i>
                     <span>Hồ Sơ</span>
@@ -5291,7 +5571,7 @@
       }
     });
 
-    ['companyDetailModal', 'supplierDetailModal', 'hsCatalogModal', 'outreachModal', 'matchDetailModal'].forEach(id => {
+    ['companyDetailModal', 'supplierDetailModal', 'hsCatalogModal', 'outreachModal', 'matchDetailModal', 'companyContactsModal'].forEach(id => {
       const el = document.getElementById(id);
       if (el) {
         el.addEventListener('touchmove', function(e) {

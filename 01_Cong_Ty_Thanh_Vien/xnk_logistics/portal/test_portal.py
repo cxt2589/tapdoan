@@ -57,7 +57,7 @@ def run_all_tests():
     time.sleep(0.5)
 
     passed_count = 0
-    total_tests = 42
+    total_tests = 43
 
     try:
         # Test 1: Health Check
@@ -721,7 +721,55 @@ def run_all_tests():
             html_text = html_resp.read().decode('utf-8')
             assert 'Sơ Đồ Phân Hệ' in html_text
             assert 'Tất Cả Phân Hệ (5/5)' not in html_text
-        print(f"✅ Test 42/42: Đổi Nhãn Nút Sơ Đồ Phân Hệ & CSDL Đối Soát Giá Hàng Hóa Đa Sàn chuẩn 100%")
+        print(f"✅ Test 42/43: Đổi Nhãn Nút Sơ Đồ Phân Hệ & CSDL Đối Soát Giá Hàng Hóa Đa Sàn chuẩn 100%")
+        passed_count += 1
+
+        # Test 43: Làm Rõ Đối Tác Toàn Thế Giới & Chi Tiết Theo Quốc Gia & Chi Tiết Từng Đối Tác 360°
+        code_lead, res_lead = http_get("/api/leads/detail?id=LEAD-AGRI-001")
+        assert code_lead == 200 and res_lead["ok"] == True
+        net_lead = res_lead["lead"].get("counterparty_network", {})
+        assert net_lead.get("total_partners", 0) >= 6
+        assert net_lead.get("total_countries", 0) >= 3
+        assert net_lead.get("total_volume_tons", 0) > 0
+        assert net_lead.get("total_value_usd", 0) > 0
+
+        # Kiểm tra chi tiết từng quốc gia (Country Deep-Dive)
+        first_country = net_lead["countries"][0]
+        assert "code" in first_country
+        assert "fta_status" in first_country
+        assert "shipping_lane" in first_country
+        assert "transit_days" in first_country
+        assert first_country["total_volume_tons"] > 0
+        assert first_country["share_pct"] > 0
+
+        # Kiểm tra chi tiết từng đối tác (Partner Deep Intelligence)
+        first_partner = net_lead["partners"][0]
+        assert "id" in first_partner
+        assert "hs_code" in first_partner
+        assert "volume_tons" in first_partner
+        assert "unit_price_usd" in first_partner
+        assert "value_usd" in first_partner
+        assert "credit_score" in first_partner
+        assert "payment_terms" in first_partner
+        assert "sanctions_status" in first_partner
+        assert len(first_partner.get("sample_bl_records", [])) >= 2
+        first_bl = first_partner["sample_bl_records"][0]
+        assert "bl_number" in first_bl
+        assert "unit_price" in first_bl
+        assert "total_value" in first_bl
+
+        with urllib.request.urlopen(url_html, timeout=5) as html_resp:
+            html_text = html_resp.read().decode('utf-8')
+            assert 'id="cd-network-kpi-bar"' in html_text
+            assert 'id="cd-network-country-detail"' in html_text
+            assert 'id="supd-network-kpi-bar"' in html_text
+            assert 'id="supd-network-country-detail"' in html_text
+            assert 'id="counterpartyDetailModal"' in html_text
+            assert 'openCounterpartyDetail' in html_text
+            assert 'closeCounterpartyDetailModal' in html_text
+            assert 'createRfqFromCounterparty' in html_text
+            assert 'DANH SÁCH ĐỐI TÁC NGOẠI THƯƠNG' in html_text
+        print(f"✅ Test 43/43: Làm Rõ Đối Tác Toàn Thế Giới & Chi Tiết Theo Quốc Gia & Chi Tiết Từng Đối Tác 360° chuẩn 100%")
         passed_count += 1
 
     finally:

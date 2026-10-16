@@ -1760,6 +1760,87 @@
           </div>
         </div>
 
+        <!-- Section 1.5: Geographic Sourcing Gap & Connectivity Feasibility -->
+        <div class="space-y-3 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-blue-950/40 via-brand-950 to-indigo-950/30 border border-blue-500/30 shadow-lg" id="cd-sourcing-gap-section">
+          
+          <!-- Header Bar -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-3">
+            <div class="flex items-center gap-2">
+              <i data-lucide="compass" class="w-4 h-4 text-cyan-400"></i>
+              <h4 class="text-xs font-bold text-white font-mono uppercase tracking-wider">Đánh Giá Nhu Cầu Mở Rộng Nguồn Cung Địa Lý & Khả Năng Kết Nối NCC:</h4>
+            </div>
+            
+            <div class="flex flex-wrap items-center gap-1.5" id="cd-gap-badges">
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30" id="cd-gap-target-badge">
+                <span id="cd-gap-flag">🇻🇳</span>
+                <span>Cần thêm NCC tại: <strong id="cd-gap-target-country" class="text-white">Việt Nam</strong></span>
+              </span>
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30" id="cd-gap-feasibility-badge">
+                <i data-lucide="zap" class="w-3 h-3 text-emerald-400"></i>
+                <span>Khả thi kết nối: <strong id="cd-gap-feasibility-score">94%</strong> [<span id="cd-gap-urgency">RẤT CẤP THIẾT</span>]</span>
+              </span>
+            </div>
+          </div>
+
+          <!-- 2 Analysis Blocks: Current Risk vs Strategic Drivers -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <!-- Current Risk Assessment -->
+            <div class="p-3.5 rounded-xl bg-brand-950/80 border border-amber-500/25 space-y-2">
+              <span class="text-[10px] font-mono uppercase text-amber-400 font-bold flex items-center gap-1.5">
+                <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i>
+                PHÂN TÍCH RỦI RO CHUỖI CUNG ỨNG HIỆN TẠI:
+              </span>
+              <p class="text-xs text-slate-300 leading-relaxed font-mono" id="cd-gap-current-risk">
+                <!-- Injected by JS -->
+              </p>
+              <div class="pt-1.5 border-t border-white/5">
+                <span class="text-[10px] font-mono text-slate-400 block font-bold">LÝ DO CẤP BÁCH CẦN BỔ SUNG:</span>
+                <p class="text-xs text-slate-200 mt-0.5" id="cd-gap-rationale">
+                  <!-- Injected by JS -->
+                </p>
+              </div>
+            </div>
+
+            <!-- Strategic Drivers & Arbitrage -->
+            <div class="p-3.5 rounded-xl bg-brand-950/80 border border-cyan-500/25 space-y-2">
+              <span class="text-[10px] font-mono uppercase text-cyan-400 font-bold flex items-center gap-1.5">
+                <i data-lucide="trending-up" class="w-3.5 h-3.5"></i>
+                ĐỘNG LỰC CHIẾN LƯỢC KHI BỔ SUNG NCC TẠI ĐÂY:
+              </span>
+              <div id="cd-gap-drivers-list" class="space-y-1.5 text-xs text-slate-300 font-mono">
+                <!-- Injected by JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Holding Matched Suppliers Recommendation -->
+          <div class="p-3.5 rounded-xl bg-emerald-950/30 border border-emerald-500/30 space-y-2.5">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-mono uppercase text-emerald-400 font-bold flex items-center gap-1.5">
+                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+                NHÀ CUNG CẤP TRONG HỆ SINH THÁI TẬP ĐOÀN ĐỀ XUẤT KẾT NỐI NGAY:
+              </span>
+              <span class="text-[10px] font-mono text-slate-400" id="cd-gap-suppliers-count">2 Nhà cung cấp phù hợp</span>
+            </div>
+
+            <div id="cd-gap-suggested-suppliers-list" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <!-- Injected by JS -->
+            </div>
+
+            <!-- Action Recommendation Hook -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2.5 border-t border-white/10 text-xs">
+              <p class="text-slate-300 text-[11px] font-mono italic" id="cd-gap-action-hook">
+                <!-- Injected by JS -->
+              </p>
+              <button type="button" onclick="triggerOutreachFromSourcingGap()" class="shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold font-mono bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-brand-950 shadow-md shadow-emerald-500/20 transition-all flex items-center justify-center gap-1.5 cursor-pointer active:scale-95">
+                <i data-lucide="mail-plus" class="w-3.5 h-3.5"></i>
+                <span>Soạn Chào Hàng Ngay</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
         <!-- Section 2: Historical Customs B/L Manifest -->
         <div class="space-y-2.5">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/5 pb-2">
@@ -3502,6 +3583,12 @@
               <div class="flex flex-wrap items-center gap-1.5 mt-1">
                 <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-blue-500/15 text-blue-300 border border-blue-500/30 font-medium">${lead.country}</span>
                 <span class="px-1.5 py-0.5 rounded text-[10px] font-mono bg-purple-500/15 text-purple-300 border border-purple-500/30">${regLabel}</span>
+                ${lead.sourcing_evaluation && lead.sourcing_evaluation.target_country_needed ? `
+                  <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 inline-flex items-center gap-1" title="Khả thi kết nối: ${lead.sourcing_evaluation.feasibility_score}% • ${lead.sourcing_evaluation.urgency_level}">
+                    <span>${lead.sourcing_evaluation.target_flag || '🌐'}</span>
+                    <span>Cần NCC: ${lead.sourcing_evaluation.target_country_needed}</span>
+                  </span>
+                ` : ''}
               </div>
               <div class="text-[11px] text-slate-400 font-mono mt-1">${lead.scale} • DT: <strong class="text-slate-200">${lead.annual_revenue_usd}</strong></div>
             </td>
@@ -3634,6 +3721,12 @@
                     <span class="px-2.5 py-0.5 rounded-md text-xs font-mono font-semibold bg-blue-500/15 text-blue-400 border border-blue-500/30">${lead.country} (${lead.city})</span>
                     <span class="px-2 py-0.5 rounded-md text-xs font-mono font-medium bg-purple-500/15 text-purple-300 border border-purple-500/30">${regLabel}</span>
                     ${stageBadge}
+                    ${lead.sourcing_evaluation && lead.sourcing_evaluation.target_country_needed ? `
+                      <span class="px-2 py-0.5 rounded-md text-xs font-mono font-bold bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 inline-flex items-center gap-1" title="Khả thi kết nối: ${lead.sourcing_evaluation.feasibility_score}% • ${lead.sourcing_evaluation.urgency_level}">
+                        <span>${lead.sourcing_evaluation.target_flag || '🌐'}</span>
+                        <span>Cần NCC: ${lead.sourcing_evaluation.target_country_needed} (${lead.sourcing_evaluation.feasibility_score}%)</span>
+                      </span>
+                    ` : ''}
                   </div>
                   <p class="text-xs text-slate-400 mt-1">${lead.scale} | Doanh thu: <strong class="text-slate-200">${lead.annual_revenue_usd} USD/năm</strong> | Năng lực nhập: <strong class="text-cyan-300 font-mono">${lead.annual_import_capacity || 'N/A'}</strong></p>
                 </div>
@@ -3864,6 +3957,72 @@
         </div>
       `).join('');
 
+      // Geographic Sourcing Gap & Connectivity Feasibility
+      const se = lead.sourcing_evaluation || {};
+      const targetCountry = se.target_country_needed || 'Việt Nam';
+      const targetCode = se.target_country_code || 'VN';
+      const targetFlag = se.target_flag || '🇻🇳';
+      const score = se.feasibility_score || 90;
+      const urgency = se.urgency_level || 'RẤT CẤP THIẾT';
+
+      const flagEl = document.getElementById('cd-gap-flag');
+      if (flagEl) flagEl.textContent = targetFlag;
+      const targetCountryEl = document.getElementById('cd-gap-target-country');
+      if (targetCountryEl) targetCountryEl.textContent = `${targetCountry} (${targetCode})`;
+      const scoreEl = document.getElementById('cd-gap-feasibility-score');
+      if (scoreEl) scoreEl.textContent = `${score}%`;
+      const urgencyEl = document.getElementById('cd-gap-urgency');
+      if (urgencyEl) urgencyEl.textContent = urgency;
+
+      const riskEl = document.getElementById('cd-gap-current-risk');
+      if (riskEl) riskEl.textContent = se.current_risk_assessment || 'Đang phụ thuộc vào một số thị trường truyền thống; chi phí cước biển và rủi ro địa chính trị gia tăng.';
+      const rationaleEl = document.getElementById('cd-gap-rationale');
+      if (rationaleEl) rationaleEl.textContent = se.expansion_rationale || `Cần bổ sung thêm Nhà cung cấp tại ${targetCountry} để hưởng ưu đãi thuế quan FTA và tối ưu giá vốn.`;
+
+      const driversContainer = document.getElementById('cd-gap-drivers-list');
+      if (driversContainer) {
+        const drivers = se.strategic_drivers || [
+          'Hưởng ưu đãi thuế quan 0% theo Hiệp định thương mại tự do',
+          'Rút ngắn chu kỳ giao nhận logistics đường biển',
+          'Tối ưu hóa giá vốn FOB cạnh tranh',
+          'Đa dạng hóa rủi ro đứt gãy chuỗi cung ứng'
+        ];
+        driversContainer.innerHTML = drivers.map(d => `
+          <div class="flex items-start gap-1.5">
+            <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5"></i>
+            <span>${d}</span>
+          </div>
+        `).join('');
+      }
+
+      const suggestedSuppliers = se.suggested_suppliers || [];
+      const countEl = document.getElementById('cd-gap-suppliers-count');
+      if (countEl) countEl.textContent = `${suggestedSuppliers.length} Nhà cung cấp phù hợp`;
+
+      const supContainer = document.getElementById('cd-gap-suggested-suppliers-list');
+      if (supContainer) {
+        if (suggestedSuppliers.length > 0) {
+          supContainer.innerHTML = suggestedSuppliers.map(s => `
+            <div class="p-2.5 rounded-xl bg-brand-950 border border-white/5 space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-white truncate" title="${s.supplier_name}">${s.short_name}</span>
+                <span class="text-[10px] font-mono text-emerald-400 font-bold">${s.score}/100</span>
+              </div>
+              <p class="text-[11px] text-slate-400 font-mono">📍 ${s.country} • ${s.supplier_type}</p>
+              <div class="flex items-center justify-between pt-1 border-t border-white/5">
+                <span class="text-[10px] font-mono text-cyan-300">${s.accepted_terms}</span>
+                <button type="button" onclick="openSupplierDetailModal('${s.supplier_id}')" class="text-[10px] font-mono text-blue-400 hover:text-blue-300 underline cursor-pointer">Xem hồ sơ</button>
+              </div>
+            </div>
+          `).join('');
+        } else {
+          supContainer.innerHTML = `<div class="col-span-full p-2 text-center text-xs text-slate-400 font-mono">Đang tổng hợp danh sách nhà cung cấp nội địa tương thích.</div>`;
+        }
+      }
+
+      const hookEl = document.getElementById('cd-gap-action-hook');
+      if (hookEl) hookEl.textContent = se.action_hook || `Khuyến nghị Khối XNK phát hành Thư chào hàng kết nối đối tác với nguồn cung ${targetCountry}.`;
+
       // Historical Customs B/L Manifest & 1-Year Statistics
       currentLeadBLs = lead.historical_bl_records || [];
       isLeadBLExpanded = false;
@@ -3920,6 +4079,15 @@
       const modal = document.getElementById('companyDetailModal');
       if (modal) modal.classList.add('hidden');
       unlockBodyScroll();
+    }
+
+    function triggerOutreachFromSourcingGap() {
+      if (!currentDetailLead) return;
+      const lead = currentDetailLead;
+      closeCompanyDetailModal();
+      const comm = (lead.commodities_demanded && lead.commodities_demanded[0] && lead.commodities_demanded[0].name) || 'Hàng hóa ngoại thương';
+      const hs = (lead.commodities_demanded && lead.commodities_demanded[0] && lead.commodities_demanded[0].hs_code) || '';
+      openOutreachModal(lead.lead_id, comm, hs);
     }
 
     // ==========================================

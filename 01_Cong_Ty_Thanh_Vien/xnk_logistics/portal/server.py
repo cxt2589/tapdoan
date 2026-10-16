@@ -496,6 +496,28 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                 self._send_json({"ok": False, "error": f"Lead '{lead_id}' not found"}, 404)
             return
 
+        elif path == "/api/leads/sourcing-evaluation":
+            db = load_database()
+            lead_id = query.get("id", [""])[0].strip() or query.get("lead_id", [""])[0].strip()
+            leads = db.get("industry_leads", [])
+            selected_lead = next((l for l in leads if l.get("lead_id") == lead_id), None)
+            if not selected_lead:
+                q_name = query.get("name", [""])[0].strip().lower()
+                if q_name:
+                    selected_lead = next((l for l in leads if q_name in l.get("company_name", "").lower()), None)
+            if selected_lead:
+                eval_res = selected_lead.get("sourcing_evaluation")
+                if not eval_res:
+                    try:
+                        import sourcing_evaluator
+                        eval_res = sourcing_evaluator.evaluate_lead_sourcing_expansion(selected_lead, db.get("suppliers", []))
+                    except Exception as e:
+                        eval_res = None
+                self._send_json({"ok": True, "evaluation": eval_res})
+            else:
+                self._send_json({"ok": False, "error": f"Lead '{lead_id}' not found"}, 404)
+            return
+
         elif path == "/api/buyers":
             db = load_database()
             self._send_json(db.get("buyers", []))

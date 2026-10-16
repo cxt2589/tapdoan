@@ -56,7 +56,7 @@ def run_all_tests():
     time.sleep(0.5)
 
     passed_count = 0
-    total_tests = 34
+    total_tests = 35
 
     try:
         # Test 1: Health Check
@@ -531,7 +531,30 @@ def run_all_tests():
             assert 'id="cd-bl-more-wrapper"' in html_text
             assert 'id="btn-cd-more-bl"' in html_text
             assert 'toggleMoreLeadBLs' in html_text
-        print(f"✅ Test 34/34: Thống Kê Vận Đơn Hải Quan 1 Năm Qua, Tần Suất Trung Bình / Tháng & Phím Bấm 'Xem Thêm' chuẩn 100%")
+        print(f"✅ Test 34/35: Thống Kê Vận Đơn Hải Quan 1 Năm Qua, Tần Suất Trung Bình / Tháng & Phím Bấm 'Xem Thêm' chuẩn 100%")
+        passed_count += 1
+
+        # Test 35: Đánh Giá Nhu Cầu Mở Rộng Nguồn Cung Địa Lý & Khả Năng Kết Nối NCC
+        code_se, res_se = http_get("/api/leads/sourcing-evaluation?id=LEAD-AGRI-001")
+        assert code_se == 200 and res_se["ok"] == True
+        eval_data = res_se["evaluation"]
+        assert eval_data["target_country_needed"] == "Việt Nam"
+        assert eval_data["target_country_code"] == "VN"
+        assert eval_data["feasibility_score"] >= 80
+        assert len(eval_data.get("strategic_drivers", [])) >= 3
+        assert len(eval_data.get("suggested_suppliers", [])) >= 1
+
+        with urllib.request.urlopen(url_html, timeout=5) as html_resp:
+            html_text = html_resp.read().decode('utf-8')
+            assert 'id="cd-sourcing-gap-section"' in html_text
+            assert 'id="cd-gap-target-country"' in html_text
+            assert 'id="cd-gap-feasibility-score"' in html_text
+            assert 'id="cd-gap-current-risk"' in html_text
+            assert 'id="cd-gap-drivers-list"' in html_text
+            assert 'id="cd-gap-suggested-suppliers-list"' in html_text
+            assert 'triggerOutreachFromSourcingGap' in html_text
+            assert 'Cần NCC:' in html_text
+        print(f"✅ Test 35/35: Đánh Giá Nhu Cầu Mở Rộng Nguồn Cung Địa Lý, Tỷ Lệ Khả Thi Kết Nối & Đề Xuất NCC chuẩn 100%")
         passed_count += 1
 
     finally:

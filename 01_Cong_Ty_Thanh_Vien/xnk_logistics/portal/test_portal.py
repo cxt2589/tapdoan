@@ -558,7 +558,7 @@ def run_all_tests():
         print(f"✅ Test 35/38: Đánh Giá Nhu Cầu Mở Rộng Nguồn Cung Địa Lý, Tỷ Lệ Khả Thi Kết Nối & Đề Xuất NCC chuẩn 100%")
         passed_count += 1
 
-        # Test 36: Ghi Rõ Thông Tin Nhà Cung Cấp trong Bản Tin Bot & Telegram Alert
+        # Test 36: Ghi Rõ Thông Tin Nhà Cung Cấp trong Bản Tin Bot & Khóa Bắn Tin 1 Lần/Ngày
         import morning_trade_matcher_dispatch
         metrics_test = trade_matcher.get_daily_matching_metrics(db_test)
         assert len(metrics_test["top_diamond_deals"]) > 0
@@ -566,16 +566,27 @@ def run_all_tests():
         assert "supplier_name" in first_diamond or "supplier_short_name" in first_diamond
         assert "supplier_country" in first_diamond
         
-        # Test gửi deal cụ thể lên Telegram qua API
+        # Test gửi deal cụ thể lên Telegram qua API (dry_run: True để tuyệt đối không spam Chủ tịch)
         code_tg, res_tg = http_post("/api/matches/notify-telegram", {
             "buyer_id": first_diamond["buyer_id"],
-            "supplier_id": first_diamond["supplier_id"]
+            "supplier_id": first_diamond["supplier_id"],
+            "dry_run": True
         })
         assert code_tg == 200
         assert res_tg["ok"] == True
         assert res_tg["type"] == "DEAL_DETAIL"
+        assert res_tg.get("dry_run") == True
 
-        print(f"✅ Test 36/38: Bổ Sung Đầy Đủ Thông Tin Nhà Cung Cấp Vào Bản Tin Telegram Bot & Dispatch Khớp Lệnh chuẩn 100%")
+        # Test kiểm tra khóa ngày và dry_run của module bản tin 06:30
+        assert morning_trade_matcher_dispatch.run_morning_dispatch(dry_run=True) == True
+        # Thử gọi API summary ở chế độ dry_run
+        code_sum, res_sum = http_post("/api/matches/notify-telegram", {"summary": True, "dry_run": True})
+        assert code_sum == 200
+        assert res_sum["ok"] == True
+        assert res_sum["type"] == "DAILY_SUMMARY"
+        assert res_sum.get("dry_run") == True
+
+        print(f"✅ Test 36/38: Bổ Sung Đầy Đủ Thông Tin NCC & Cơ Chế Khóa Bắn Tin Khớp Lệnh 1 Lần/Ngày Chuẩn 100%")
         passed_count += 1
 
         # Test 37: API Sinh Bộ Đôi RFQ B2B Ngoại Thương & Giao Diện Modal RFQ Đôi

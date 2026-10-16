@@ -46,10 +46,31 @@ def get_portal_url():
             pass
     return "https://cup-specialist-class-nickname.trycloudflare.com"
 
-def run_morning_dispatch():
+def run_morning_dispatch(force=False, dry_run=False):
     if not os.path.exists(DATA_FILE):
         print(f"[ERROR] Database file not found at: {DATA_FILE}")
         return False
+
+    # Giờ hiện tại GMT+7
+    now_vn = datetime.now(timezone(timedelta(hours=7)))
+    date_str = now_vn.strftime("%d/%m/%Y")
+    time_str = now_vn.strftime("%H:%M")
+
+    # =========================================================================
+    # KIỂM SOÁT TẦN SUẤT THEO CHỈ THỊ CỦA CHỦ TỊCH:
+    # CHỈ PHÁT 1 LẦN/NGÀY VÀO BUỔI SÁNG (06:30), TUYỆT ĐỐI KHÔNG GỬI LẶP LẠI
+    # =========================================================================
+    if not force and not dry_run and os.path.exists(LOG_FILE):
+        try:
+            with open(LOG_FILE, "r", encoding="utf-8") as f:
+                history = json.load(f)
+                for entry in history:
+                    if entry.get("date") == date_str and entry.get("telegram_sent") is True:
+                        print(f"[ONCE_PER_DAY_LOCK] Bản tin khớp giao dịch cho ngày {date_str} đã được phát thành công trước đó (lúc {entry.get('timestamp')}).")
+                        print(f"[ONCE_PER_DAY_LOCK] Thực thi nghiêm lệnh Chủ tịch: Hệ thống chỉ gửi 1 lần mỗi ngày vào buổi sáng. Bỏ qua lượt gửi này.")
+                        return True
+        except Exception as e:
+            print(f"[WARNING] Không thể đọc log lịch sử để kiểm tra khóa ngày: {e}")
 
     with open(DATA_FILE, "r", encoding="utf-8") as f:
         db = json.load(f)
@@ -57,11 +78,6 @@ def run_morning_dispatch():
     metrics = trade_matcher.get_daily_matching_metrics(db)
     portal_url = get_portal_url()
     matchmaker_url = f"{portal_url}#tab-matchmaker"
-
-    # Giờ hiện tại GMT+7
-    now_vn = datetime.now(timezone(timedelta(hours=7)))
-    date_str = now_vn.strftime("%d/%m/%Y")
-    time_str = now_vn.strftime("%H:%M")
 
     pipe_millions = round(metrics["total_pipeline_val_usd"] / 1_000_000, 1)
 
@@ -133,6 +149,11 @@ def run_morning_dispatch():
         ]
     }
 
+    if dry_run:
+        print(f"[DRY_RUN] Chế độ kiểm thử (dry_run=True): Bản tin khớp lệnh 06:30 đã được biên soạn và kiểm tra cú pháp thành công.")
+        print(f"[DRY_RUN] Bỏ qua bước gọi Telegram API để không gửi tin nhắn tới Chủ tịch.")
+        return True
+
     send_url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
 
     payload = {
@@ -193,4 +214,6 @@ def run_morning_dispatch():
     return success
 
 if __name__ == "__main__":
-    run_morning_dispatch()
+    force_flag = "--force" in sys.argv
+    dry_run_flag = "--dry-run" in sys.argv or "-d" in sys.argv
+    run_morning_dispatch(force=force_flag, dry_run=dry_run_flag)

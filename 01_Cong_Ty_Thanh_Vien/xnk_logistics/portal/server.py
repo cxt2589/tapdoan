@@ -1186,15 +1186,25 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
             match_id = params.get("match_id", "")
             b_id = params.get("buyer_id", "")
             s_id = params.get("supplier_id", "")
+            dry_run = params.get("dry_run", False) or params.get("test_mode", False)
+            force = params.get("force", False)
 
             # Nếu là trigger gửi bản tin tóm tắt
             if is_summary or (not match_id and not (b_id and s_id)):
+                if dry_run:
+                    self._send_json({"ok": True, "sent": True, "dry_run": True, "type": "DAILY_SUMMARY"})
+                    return
                 try:
                     import morning_trade_matcher_dispatch
-                    sent = morning_trade_matcher_dispatch.run_morning_dispatch()
+                    sent = morning_trade_matcher_dispatch.run_morning_dispatch(force=force, dry_run=dry_run)
                     self._send_json({"ok": True, "sent": sent, "type": "DAILY_SUMMARY"})
                 except Exception as e:
                     self._send_json({"ok": False, "error": str(e)}, 500)
+                return
+
+            # Nếu là chế độ dry_run cho deal cụ thể
+            if dry_run:
+                self._send_json({"ok": True, "sent": True, "dry_run": True, "type": "DEAL_DETAIL"})
                 return
 
             # Nếu là gửi chi tiết 1 deal cụ thể

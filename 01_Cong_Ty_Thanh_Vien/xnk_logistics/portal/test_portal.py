@@ -56,7 +56,7 @@ def run_all_tests():
     time.sleep(0.5)
 
     passed_count = 0
-    total_tests = 33
+    total_tests = 34
 
     try:
         # Test 1: Health Check
@@ -499,7 +499,39 @@ def run_all_tests():
             assert 'Tags khớp:' in html_text
             # Kiểm tra không còn icon nút: ấn để xem hồ sơ chi tiết (external-link)
             assert 'data-lucide="external-link"' not in html_text
-        print(f"✅ Test 33/33: Động Cơ Thẻ Tag Quy Chuẩn Ngoại Thương (Trade Tags), Điểm Vênh Thương Thảo & Loại Bỏ Icon Nút Hồ Sơ chuẩn 100%")
+        print(f"✅ Test 33/34: Động Cơ Thẻ Tag Quy Chuẩn Ngoại Thương (Trade Tags), Điểm Vênh Thương Thảo & Loại Bỏ Icon Nút Hồ Sơ chuẩn 100%")
+        passed_count += 1
+
+        # Test 34: Thống Kê Vận Đơn 1 Năm, Tần Suất Hàng Tháng & Nút Xem Thêm Vận Đơn
+        code_sup, res_sup = http_get("/api/suppliers/detail?id=SP-001")
+        assert code_sup == 200 and res_sup["ok"] == True
+        sup_obj = res_sup["supplier"]
+        assert "bl_stats_1y" in sup_obj
+        assert sup_obj["bl_stats_1y"]["total_bl_1y"] >= 20
+        assert sup_obj["bl_stats_1y"]["monthly_avg"] > 0
+        assert len(sup_obj.get("customs_bl_records", [])) >= 5
+
+        code_lead, res_lead = http_get("/api/leads/detail?id=LEAD-AGRI-001")
+        assert code_lead == 200 and res_lead["ok"] == True
+        lead_obj = res_lead["lead"]
+        assert "bl_stats_1y" in lead_obj
+        assert lead_obj["bl_stats_1y"]["total_bl_1y"] > 0
+        assert lead_obj["bl_stats_1y"]["monthly_avg"] > 0
+        assert len(lead_obj.get("historical_bl_records", [])) >= 5
+
+        with urllib.request.urlopen(url_html, timeout=5) as html_resp:
+            html_text = html_resp.read().decode('utf-8')
+            assert 'id="supd-bl-total-1y"' in html_text
+            assert 'id="supd-bl-avg-month"' in html_text
+            assert 'id="supd-bl-more-wrapper"' in html_text
+            assert 'id="btn-supd-more-bl"' in html_text
+            assert 'toggleMoreSupplierBLs' in html_text
+            assert 'id="cd-bl-total-1y"' in html_text
+            assert 'id="cd-bl-avg-month"' in html_text
+            assert 'id="cd-bl-more-wrapper"' in html_text
+            assert 'id="btn-cd-more-bl"' in html_text
+            assert 'toggleMoreLeadBLs' in html_text
+        print(f"✅ Test 34/34: Thống Kê Vận Đơn Hải Quan 1 Năm Qua, Tần Suất Trung Bình / Tháng & Phím Bấm 'Xem Thêm' chuẩn 100%")
         passed_count += 1
 
     finally:

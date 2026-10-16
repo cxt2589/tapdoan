@@ -1761,16 +1761,36 @@
         </div>
 
         <!-- Section 2: Historical Customs B/L Manifest -->
-        <div class="space-y-2">
-          <div class="flex items-center justify-between">
+        <div class="space-y-2.5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/5 pb-2">
             <div class="flex items-center gap-2">
               <i data-lucide="ship" class="w-4 h-4 text-blue-400"></i>
               <h4 class="text-xs font-bold text-white font-mono uppercase tracking-wider">Lịch Sử Vận Đơn Hải Quan Quốc Tế (Customs B/L Manifest):</h4>
             </div>
-            <span class="text-[10px] font-mono text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded border border-blue-500/20">Dữ Liệu Khai Báo Hải Quan</span>
+
+            <!-- 1-Year & Monthly Frequency Statistics -->
+            <div class="flex flex-wrap items-center gap-1.5" id="cd-bl-stats-badges">
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-blue-500/15 text-blue-300 border border-blue-500/30" title="Tổng số vận đơn nhập khẩu trong 12 tháng qua">
+                <i data-lucide="package-check" class="w-3 h-3 text-blue-400"></i>
+                <span id="cd-bl-total-1y">36 Vận Đơn / 1 Năm Qua</span>
+              </span>
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30" title="Tần suất trung bình nhập khẩu hàng tháng">
+                <i data-lucide="activity" class="w-3 h-3 text-emerald-400"></i>
+                <span id="cd-bl-avg-month">TB: 3.0 Vận Đơn / Tháng</span>
+              </span>
+            </div>
           </div>
+
           <div id="cd-bl-container" class="space-y-2">
             <!-- Injected by JS -->
+          </div>
+
+          <!-- Load More Button -->
+          <div id="cd-bl-more-wrapper" class="pt-1 text-center hidden">
+            <button type="button" id="btn-cd-more-bl" onclick="toggleMoreLeadBLs()" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-mono font-bold bg-blue-500/10 hover:bg-blue-500/20 text-blue-300 hover:text-white border border-blue-500/30 transition-all cursor-pointer active:scale-95 shadow-sm">
+              <i data-lucide="chevron-down" id="cd-bl-more-icon" class="w-3.5 h-3.5"></i>
+              <span id="cd-bl-more-text">Xem thêm vận đơn</span>
+            </button>
           </div>
         </div>
 
@@ -1990,16 +2010,36 @@
         </div>
 
         <!-- Section 3: Customs B/L Manifest History -->
-        <div class="space-y-2">
-          <div class="flex items-center justify-between">
+        <div class="space-y-2.5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/5 pb-2">
             <div class="flex items-center gap-2">
               <i data-lucide="ship" class="w-4 h-4 text-blue-400"></i>
               <h4 class="text-xs font-bold text-white font-mono uppercase tracking-wider">Lịch Sử Vận Đơn Hải Quan Đã Cập Cảng / Giao Hàng:</h4>
             </div>
-            <span class="text-[10px] font-mono text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded border border-blue-500/20">Manifest Khai Báo Hải Quan</span>
+            
+            <!-- 1-Year & Monthly Frequency Statistics -->
+            <div class="flex flex-wrap items-center gap-1.5" id="supd-bl-stats-badges">
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-blue-500/15 text-blue-300 border border-blue-500/30" title="Tổng số vận đơn cập cảng trong 12 tháng qua">
+                <i data-lucide="package-check" class="w-3 h-3 text-blue-400"></i>
+                <span id="supd-bl-total-1y">28 Vận Đơn / 1 Năm Qua</span>
+              </span>
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30" title="Tần suất trung bình giao nhận hàng tháng">
+                <i data-lucide="activity" class="w-3 h-3 text-emerald-400"></i>
+                <span id="supd-bl-avg-month">TB: 2.3 Vận Đơn / Tháng</span>
+              </span>
+            </div>
           </div>
+
           <div id="supd-bl-container" class="space-y-2">
             <!-- Injected by JS -->
+          </div>
+
+          <!-- Load More Button -->
+          <div id="supd-bl-more-wrapper" class="pt-1 text-center hidden">
+            <button type="button" id="btn-supd-more-bl" onclick="toggleMoreSupplierBLs()" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-mono font-bold bg-blue-500/10 hover:bg-blue-500/20 text-blue-300 hover:text-white border border-blue-500/30 transition-all cursor-pointer active:scale-95 shadow-sm">
+              <i data-lucide="chevron-down" id="supd-bl-more-icon" class="w-3.5 h-3.5"></i>
+              <span id="supd-bl-more-text">Xem thêm vận đơn</span>
+            </button>
           </div>
         </div>
 
@@ -3824,27 +3864,20 @@
         </div>
       `).join('');
 
-      // Historical Customs B/L Manifest
-      const blContainer = document.getElementById('cd-bl-container');
-      const blRecords = lead.historical_bl_records || [];
-      if (blRecords.length) {
-        blContainer.innerHTML = blRecords.map(b => `
-          <div class="p-3 rounded-xl bg-blue-950/25 border border-blue-500/25 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
-            <div class="space-y-0.5">
-              <div class="flex flex-wrap items-center gap-2">
-                <span class="font-mono font-bold text-blue-300">${b.bl_number}</span>
-                <span class="text-[10px] font-mono text-slate-400">${b.date}</span>
-                <span class="px-1.5 py-0.2 rounded text-[10px] font-mono bg-blue-500/20 text-blue-300">${b.vessel}</span>
-              </div>
-              <p class="text-slate-200 font-medium">${b.commodity}</p>
-              <p class="text-[11px] text-slate-400 font-mono">Khối lượng: <strong class="text-emerald-400">${b.volume}</strong> | Cảng: ${b.port}</p>
-            </div>
-            <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 self-start sm:self-auto shrink-0">${b.status}</span>
-          </div>
-        `).join('');
-      } else {
-        blContainer.innerHTML = `<div class="p-3 rounded-xl bg-blue-950/20 text-xs text-slate-400 font-mono">Đang đồng bộ dữ liệu vận đơn hải quan.</div>`;
-      }
+      // Historical Customs B/L Manifest & 1-Year Statistics
+      currentLeadBLs = lead.historical_bl_records || [];
+      isLeadBLExpanded = false;
+
+      const blStats = lead.bl_stats_1y || {};
+      const total1y = blStats.total_bl_1y !== undefined ? blStats.total_bl_1y : (currentLeadBLs.length || 0);
+      const avgMonth = blStats.monthly_avg !== undefined ? blStats.monthly_avg : Math.round((total1y / 12) * 10) / 10;
+
+      const cdTotal1yEl = document.getElementById('cd-bl-total-1y');
+      if (cdTotal1yEl) cdTotal1yEl.textContent = `${total1y} Vận Đơn / 1 Năm Qua`;
+      const cdAvgMonthEl = document.getElementById('cd-bl-avg-month');
+      if (cdAvgMonthEl) cdAvgMonthEl.textContent = `TB: ${avgMonth} Vận Đơn / Tháng`;
+
+      renderLeadBLList(currentLeadBLs, isLeadBLExpanded);
 
       // Historical B2B RFQs
       const rfqContainer = document.getElementById('cd-rfq-container');
@@ -4796,27 +4829,20 @@
         <div class="flex items-center gap-2"><strong class="text-slate-400 font-mono text-[11px]">Incoterms:</strong> <span class="text-emerald-400 font-mono font-bold">${incoterms.join(' • ')}</span></div>
       `;
 
-      // Section 3: Customs B/L Manifest History
-      const blContainer = document.getElementById('supd-bl-container');
-      const blRecords = sup.customs_bl_records || [];
-      if (blRecords.length) {
-        blContainer.innerHTML = blRecords.map(b => `
-          <div class="p-3 rounded-xl bg-blue-950/25 border border-blue-500/25 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
-            <div class="space-y-0.5">
-              <div class="flex flex-wrap items-center gap-2">
-                <span class="font-mono font-bold text-blue-300">${b.bl_number}</span>
-                <span class="text-[10px] font-mono text-slate-400">${b.date}</span>
-                <span class="px-1.5 py-0.2 rounded text-[10px] font-mono bg-blue-500/20 text-blue-300">${b.vessel}</span>
-              </div>
-              <p class="text-slate-200 font-medium">${b.volume}</p>
-              <p class="text-[11px] text-slate-400 font-mono">Cảng dỡ hàng: <strong class="text-cyan-300">${b.discharge_port}</strong></p>
-            </div>
-            <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 self-start sm:self-auto shrink-0">${b.status}</span>
-          </div>
-        `).join('');
-      } else {
-        blContainer.innerHTML = `<div class="p-3 rounded-xl bg-blue-950/20 text-xs text-slate-400 font-mono">Chưa có vận đơn khai báo trực tiếp (Giao hàng theo hợp đồng khung).</div>`;
-      }
+      // Section 3: Customs B/L Manifest History & 1-Year Statistics
+      currentSupplierBLs = sup.customs_bl_records || [];
+      isSupplierBLExpanded = false;
+
+      const blStats = sup.bl_stats_1y || {};
+      const total1y = blStats.total_bl_1y !== undefined ? blStats.total_bl_1y : (currentSupplierBLs.length || 0);
+      const avgMonth = blStats.monthly_avg !== undefined ? blStats.monthly_avg : Math.round((total1y / 12) * 10) / 10;
+
+      const supTotal1yEl = document.getElementById('supd-bl-total-1y');
+      if (supTotal1yEl) supTotal1yEl.textContent = `${total1y} Vận Đơn / 1 Năm Qua`;
+      const supAvgMonthEl = document.getElementById('supd-bl-avg-month');
+      if (supAvgMonthEl) supAvgMonthEl.textContent = `TB: ${avgMonth} Vận Đơn / Tháng`;
+
+      renderSupplierBLList(currentSupplierBLs, isSupplierBLExpanded);
 
       // Section 4: Asia Hub & Contact Desk
       const contact = sup.contact || {};
@@ -4844,6 +4870,119 @@
       if (e.target && e.target.id === 'supplierDetailModal') {
         closeSupplierDetailModal();
       }
+    }
+
+    // =============================================================
+    // B/L HISTORY EXPANSION & LOAD MORE CONTROLLERS
+    // =============================================================
+    let currentSupplierBLs = [];
+    let isSupplierBLExpanded = false;
+    let currentLeadBLs = [];
+    let isLeadBLExpanded = false;
+    const INITIAL_BL_LIMIT = 2;
+
+    function renderSupplierBLList(records, isExpanded) {
+      const container = document.getElementById('supd-bl-container');
+      const moreWrapper = document.getElementById('supd-bl-more-wrapper');
+      const moreText = document.getElementById('supd-bl-more-text');
+      const moreIcon = document.getElementById('supd-bl-more-icon');
+
+      if (!container) return;
+
+      if (!records || !records.length) {
+        container.innerHTML = `<div class="p-3 rounded-xl bg-blue-950/20 text-xs text-slate-400 font-mono">Chưa có vận đơn khai báo trực tiếp (Giao hàng theo hợp đồng khung hoặc phân phối đại lý).</div>`;
+        if (moreWrapper) moreWrapper.classList.add('hidden');
+        return;
+      }
+
+      const displayed = isExpanded ? records : records.slice(0, INITIAL_BL_LIMIT);
+
+      container.innerHTML = displayed.map((b, idx) => `
+        <div class="p-3 rounded-xl bg-blue-950/25 border border-blue-500/25 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs transition-all ${idx >= INITIAL_BL_LIMIT ? 'animate-fade-in' : ''}">
+          <div class="space-y-0.5">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="font-mono font-bold text-blue-300">${b.bl_number}</span>
+              <span class="text-[10px] font-mono text-slate-400">📅 ${b.date}</span>
+              <span class="px-1.5 py-0.2 rounded text-[10px] font-mono bg-blue-500/20 text-blue-300">🚢 ${b.vessel}</span>
+            </div>
+            <p class="text-slate-200 font-medium">${b.volume}</p>
+            <p class="text-[11px] text-slate-400 font-mono">Cảng dỡ hàng / Điểm cập: <strong class="text-cyan-300 font-semibold">${b.discharge_port}</strong></p>
+          </div>
+          <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 self-start sm:self-auto shrink-0">${b.status}</span>
+        </div>
+      `).join('');
+
+      if (records.length > INITIAL_BL_LIMIT) {
+        if (moreWrapper) moreWrapper.classList.remove('hidden');
+        if (moreText) {
+          const remaining = records.length - INITIAL_BL_LIMIT;
+          moreText.textContent = isExpanded ? 'Thu gọn bớt danh sách vận đơn' : `Xem thêm vận đơn (còn ${remaining} vận đơn)`;
+        }
+        if (moreIcon) {
+          moreIcon.setAttribute('data-lucide', isExpanded ? 'chevron-up' : 'chevron-down');
+        }
+      } else {
+        if (moreWrapper) moreWrapper.classList.add('hidden');
+      }
+
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function toggleMoreSupplierBLs() {
+      isSupplierBLExpanded = !isSupplierBLExpanded;
+      renderSupplierBLList(currentSupplierBLs, isSupplierBLExpanded);
+    }
+
+    function renderLeadBLList(records, isExpanded) {
+      const container = document.getElementById('cd-bl-container');
+      const moreWrapper = document.getElementById('cd-bl-more-wrapper');
+      const moreText = document.getElementById('cd-bl-more-text');
+      const moreIcon = document.getElementById('cd-bl-more-icon');
+
+      if (!container) return;
+
+      if (!records || !records.length) {
+        container.innerHTML = `<div class="p-3 rounded-xl bg-blue-950/20 text-xs text-slate-400 font-mono">Đang đồng bộ dữ liệu vận đơn hải quan quốc tế.</div>`;
+        if (moreWrapper) moreWrapper.classList.add('hidden');
+        return;
+      }
+
+      const displayed = isExpanded ? records : records.slice(0, INITIAL_BL_LIMIT);
+
+      container.innerHTML = displayed.map((b, idx) => `
+        <div class="p-3 rounded-xl bg-blue-950/25 border border-blue-500/25 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs transition-all ${idx >= INITIAL_BL_LIMIT ? 'animate-fade-in' : ''}">
+          <div class="space-y-0.5">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="font-mono font-bold text-blue-300">${b.bl_number}</span>
+              <span class="text-[10px] font-mono text-slate-400">📅 ${b.date}</span>
+              <span class="px-1.5 py-0.2 rounded text-[10px] font-mono bg-blue-500/20 text-blue-300">🚢 ${b.vessel}</span>
+            </div>
+            <p class="text-slate-200 font-medium">${b.commodity}</p>
+            <p class="text-[11px] text-slate-400 font-mono">Khối lượng: <strong class="text-emerald-400">${b.volume}</strong> | Cảng đến: <strong class="text-cyan-300 font-semibold">${b.port}</strong></p>
+          </div>
+          <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 self-start sm:self-auto shrink-0">${b.status}</span>
+        </div>
+      `).join('');
+
+      if (records.length > INITIAL_BL_LIMIT) {
+        if (moreWrapper) moreWrapper.classList.remove('hidden');
+        if (moreText) {
+          const remaining = records.length - INITIAL_BL_LIMIT;
+          moreText.textContent = isExpanded ? 'Thu gọn bớt danh sách vận đơn' : `Xem thêm vận đơn (còn ${remaining} vận đơn)`;
+        }
+        if (moreIcon) {
+          moreIcon.setAttribute('data-lucide', isExpanded ? 'chevron-up' : 'chevron-down');
+        }
+      } else {
+        if (moreWrapper) moreWrapper.classList.add('hidden');
+      }
+
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function toggleMoreLeadBLs() {
+      isLeadBLExpanded = !isLeadBLExpanded;
+      renderLeadBLList(currentLeadBLs, isLeadBLExpanded);
     }
 
     function triggerTaxAuditFromDetail() {

@@ -36,3 +36,17 @@
   3. Thiết lập Background Worker Daemon quét định kỳ mỗi 60 giây, tự động kích hoạt API `deleteMessage` tiêu hủy các tin nhắn có thời gian lưu trữ từ 86.400 giây (24 giờ / 1 ngày).
   4. Bổ sung lệnh tra cứu điều hành `/autodelete` để theo dõi hàng đợi và thời điểm tiêu hủy kế tiếp.
 * **Trạng thái:** HOÀN TẤT & ĐANG VẬN HÀNH 24/7 (Đã kiểm thử thực tế và xác nhận hoạt động chuẩn xác).
+
+
+---
+
+### [CHỈ THỊ HOÀN TẤT - 2026-10-16 08:53:12] CƠ CHẾ XÓA TIN CHỐNG RÁC ĐA TẦNG & TIÊU HỦY NÚT DUYỆT TỨC THỜI
+* **Chỉ thị từ Chủ tịch:** Phê duyệt phương án xóa tin chống rác đa tầng; đặc biệt tiêu hủy ngay tin nhắn chứa nút bấm phê duyệt sau khi đã phê duyệt/hủy vì nội dung phê duyệt đã đầy đủ chi tiết.
+* **Đơn vị thực thi:** Khối Trading Hải ngoại VPS-01 & Văn phòng Thư ký Tập đoàn.
+* **Chi tiết kỹ thuật hoàn thành:**
+  1. **Tiêu hủy tin chứa nút bấm phê duyệt/hủy:** Khi Chủ tịch nhấn "Phê duyệt" hoặc "Hủy" trên Inline Keyboard, tin nhắn đề xuất (chứa nút) lập tức bị xóa vĩnh viễn (`delete_message_now`). Thông tin kế hoạch được lưu trữ chuẩn mực trong thẻ xác nhận mới.
+  2. **Tiêu hủy tin chờ tiến trình (Loading):** Tin nhắn "⏳ Đang phân tích thị trường..." được lập trình tự động tiêu hủy ngay khi bản Kế hoạch giao dịch được tạo xong.
+  3. **Tự động xóa bong bóng lệnh của người dùng:** Khi Chủ tịch gõ các lệnh ngắn (`/plan`, `/status`, `/reset`, `/autodelete`), lệnh gõ tự hủy sau 3.5 giây để giữ khung chat luôn sạch sẽ.
+  4. **Tự động dọn dẹp tin tra cứu nhanh (`/status`, `/autodelete`):** Tự động xóa sau 3 phút hoặc khi có bản tra cứu mới (đè bản cũ).
+  5. **Bảo tồn thông tin cốt lõi:** Kế hoạch giao dịch thực chiến, lịch tin kinh tế vĩ mô và chỉ đạo của Chủ tịch được bảo lưu đủ 24 giờ.
+* **Trạng thái:** HOÀN TẤT, ĐÃ KIỂM THỬ THÀNH CÔNG VÀ ĐANG VẬN HÀNH 24/7 DƯỚI PM2.

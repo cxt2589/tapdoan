@@ -57,7 +57,7 @@ def run_all_tests():
     time.sleep(0.5)
 
     passed_count = 0
-    total_tests = 44
+    total_tests = 45
 
     try:
         # Test 1: Health Check
@@ -801,7 +801,26 @@ def run_all_tests():
             # 5. Phân hệ Thẩm định không bị đè chữ Sanctions và Quốc gia trên Mobile
             assert 'id="b-sanctions-pill"' in html_text
             assert 'id="b-country-badge"' in html_text
-        print(f"✅ Test 44/44: Động Cơ Cố Định Menu & Hướng Dẫn Vuốt Phải Sticky Top Đa Thiết Bị chuẩn 100%")
+        print(f"✅ Test 44/45: Động Cơ Cố Định Menu & Hướng Dẫn Vuốt Phải Sticky Top Đa Thiết Bị chuẩn 100%")
+        passed_count += 1
+
+        # Test 45: Thanh Tìm Kiếm Mobile Tối Ưu, Gợi Ý Thả Nổi Zero-Displacement & Sanctions Không Xuống Dòng Mới
+        with urllib.request.urlopen(url_html, timeout=5) as html_resp:
+            html_text = html_resp.read().decode('utf-8')
+            # 1. Khung gợi ý thả nổi tuyệt đối, không làm xô dịch giao diện
+            assert 'id="omniHsSuggestionsDropdown"' in html_text
+            assert 'id="omniHsSearchWrapper"' in html_text
+            assert 'handleQuickSearchFocus' in html_text
+            assert 'clearOmniSearchInput' in html_text
+            assert 'selectChapterFromSuggestion' in html_text
+            assert 'min-h-[38px]' in html_text
+            
+            # 2. Sanctions và Thẩm định giữ nguyên hàng ngang không xuống dòng mới
+            assert 'id="b-sanctions-pill"' in html_text
+            assert 'id="s-tax-risk-pill"' in html_text
+            assert 'whitespace-nowrap' in html_text
+            assert 'text-[10px]' in html_text
+        print(f"✅ Test 45/45: Thanh Tìm Kiếm Mobile Tối Ưu, Gợi Ý Thả Nổi Zero-Displacement & Sanctions Cùng Hàng Ngang chuẩn 100%")
         passed_count += 1
 
     finally:

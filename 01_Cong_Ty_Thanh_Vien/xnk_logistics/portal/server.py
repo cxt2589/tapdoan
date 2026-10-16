@@ -39,6 +39,11 @@ except ImportError:
     MARKET_REGIONS = {}
 
 try:
+    import trade_matcher
+except ImportError:
+    trade_matcher = None
+
+try:
     from hs_catalog import (
         get_catalog_by_view_mode,
         search_hs_omni,
@@ -599,6 +604,63 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
             self._send_json(filtered)
             return
 
+        elif path == "/api/matches/metrics":
+            db = load_database()
+            if not trade_matcher:
+                self._send_json({"ok": False, "error": "Trade matcher engine not loaded"}, 500)
+                return
+            metrics = trade_matcher.get_daily_matching_metrics(db)
+            self._send_json({"ok": True, "metrics": metrics})
+            return
+
+        elif path == "/api/matches":
+            db = load_database()
+            if not trade_matcher:
+                self._send_json({"ok": False, "error": "Trade matcher engine not loaded"}, 500)
+                return
+            ind = query.get("industry", [""])[0].strip()
+            tier_filter = query.get("tier", [""])[0].strip().upper()
+            try:
+                min_score = float(query.get("min_score", ["60.0"])[0])
+            except Exception:
+                min_score = 60.0
+            q = query.get("q", [""])[0].strip().lower()
+            try:
+                page = max(1, int(query.get("page", ["1"])[0]))
+            except Exception:
+                page = 1
+            try:
+                page_size = max(1, int(query.get("page_size", ["10"])[0]))
+            except Exception:
+                page_size = 10
+
+            all_matches = trade_matcher.scan_all_matches(db, min_score=min_score, top_n=200, industry_filter=ind if ind and ind != "all" else None)
+
+            filtered = []
+            for m in all_matches:
+                if tier_filter and tier_filter != "ALL" and m.get("tier") != tier_filter:
+                    continue
+                if q:
+                    searchable = f"{m.get('buyer_name','')} {m.get('buyer_country','')} {m.get('supplier_name','')} {m.get('supplier_short_name','')} {m.get('matched_commodity','')} {m.get('matched_hs','')}".lower()
+                    if q not in searchable:
+                        continue
+                filtered.append(m)
+
+            total = len(filtered)
+            start_idx = (page - 1) * page_size
+            end_idx = start_idx + page_size
+            paged = filtered[start_idx:end_idx]
+
+            self._send_json({
+                "ok": True,
+                "total": total,
+                "page": page,
+                "page_size": page_size,
+                "total_pages": max(1, (total + page_size - 1) // page_size),
+                "data": paged
+            })
+            return
+
         elif path == "/api/discovery/bl":
             db = load_database()
             bls = db.get("bill_of_ladings", [])
@@ -915,6 +977,81 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                 "sent_count": alert_res.get("sent_to_chats", 0),
                 "details": alert_res
             })
+            return
+
+        elif path == "/api/matches/analyze":
+            buyer_id = params.get("buyer_id", "").strip()
+            supplier_id = params.get("supplier_id", "").strip()
+
+            db = load_database()
+            leads = db.get("industry_leads", [])
+            suppliers = db.get("suppliers", [])
+
+            buyer = next((b for b in leads if b.get("lead_id") == buyer_id or b.get("company_name","").lower() == buyer_id.lower()), None)
+            supplier = next((s for s in suppliers if s.get("id") == supplier_id or s.get("company_name","").lower() == supplier_id.lower()), None)
+
+            if not buyer:
+                self._send_json({"ok": False, "error": f"Buyer '{buyer_id}' not found"}, 404)
+                return
+            if not supplier:
+                self._send_json({"ok": False, "error": f"Supplier '{supplier_id}' not found"}, 404)
+                return
+
+            if not trade_matcher:
+                self._send_json({"ok": False, "error": "Trade matcher engine not loaded"}, 500)
+                return
+
+            res = trade_matcher.evaluate_deal_match(buyer, supplier)
+            if not res:
+                self._send_json({"ok": False, "error": "Hai bên không có điểm tương đồng mặt hàng để đối soát"}, 400)
+                return
+
+            self._send_json({"ok": True, "match": res})
+            return
+
+        elif path == "/api/matches/notify-telegram":
+            db = load_database()
+            if not trade_matcher:
+                self._send_json({"ok": False, "error": "Trade matcher engine not loaded"}, 500)
+                return
+
+            is_summary = params.get("summary", False)
+            match_id = params.get("match_id", "")
+
+            # Nếu là trigger gửi bản tin tóm tắt
+            if is_summary or not match_id:
+                try:
+                    import morning_trade_matcher_dispatch
+                    sent = morning_trade_matcher_dispatch.run_morning_dispatch()
+                    self._send_json({"ok": True, "sent": sent, "type": "DAILY_SUMMARY"})
+                except Exception as e:
+                    self._send_json({"ok": False, "error": str(e)}, 500)
+                return
+
+            # Nếu là gửi chi tiết 1 deal cụ thể
+            b_id = params.get("buyer_id", "")
+            s_id = params.get("supplier_id", "")
+            buyer = next((b for b in db.get("industry_leads", []) if b.get("lead_id") == b_id), None)
+            supplier = next((s for s in db.get("suppliers", []) if s.get("id") == s_id), None)
+
+            if buyer and supplier:
+                eval_res = trade_matcher.evaluate_deal_match(buyer, supplier)
+                if eval_res:
+                    title = f"⭐ KHỚP LỆNH NGOẠI THƯƠNG: {eval_res['buyer_name']} ⇄ {eval_res['supplier_short_name']}"
+                    details = [
+                        f"Mặt hàng: {eval_res['matched_commodity']} (HS {eval_res['matched_hs']})",
+                        f"Điểm khớp tổng thể: {eval_res['total_score']}/100 ({eval_res['tier_vi']})",
+                        f"Ước tính giá trị thương vụ: ${eval_res['deal_value_usd']:,} USD",
+                        f"Quy cách & HS: {eval_res['dimensions']['d1_hs_and_specs']['score']}đ ({eval_res['dimensions']['d1_hs_and_specs']['desc']})",
+                        f"Chứng chỉ chất lượng: {eval_res['dimensions']['d2_quality_certifications']['score']}đ ({eval_res['dimensions']['d2_quality_certifications']['desc']})",
+                        f"Phương thức thanh toán: {eval_res['dimensions']['d4_payment_terms']['score']}đ ({eval_res['dimensions']['d4_payment_terms']['desc']})",
+                        f"Khuyến nghị: {eval_res['action_recommendation']}"
+                    ]
+                    alert_res = send_telegram_alert_message(title, details, "💎", "Khối XNK tiến hành liên hệ đàm phán hợp đồng nguyên tắc.")
+                    self._send_json({"ok": True, "sent": alert_res.get("ok"), "type": "DEAL_DETAIL"})
+                    return
+
+            self._send_json({"ok": False, "error": "Match data not found"}, 404)
             return
 
         self._send_json({"error": "Endpoint not found"}, 404)

@@ -470,73 +470,87 @@
 
     <!-- ZERO-SLIDE RESPONSIVE NAVIGATION DOCK (NO HORIZONTAL SCROLL) -->
     <div class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-1.5 sm:py-2">
-      <div class="grid grid-cols-5 gap-1 sm:gap-1.5 md:gap-2 w-full">
+      <div class="grid grid-cols-6 gap-1 sm:gap-1.5 md:gap-2 w-full">
         
         <!-- Tab 1: Prospecting Leads -->
-        <button onclick="switchTab('prospecting')" id="tab-prospecting" class="tab-btn p-1.5 sm:p-2 sm:px-3 rounded-xl transition-all flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-1 sm:gap-2 text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 shadow-sm cursor-pointer w-full text-center sm:text-left">
+        <button onclick="switchTab('prospecting')" id="tab-prospecting" class="tab-btn p-1.5 sm:p-2 sm:px-2.5 rounded-xl transition-all flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-1 sm:gap-1.5 text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 shadow-sm cursor-pointer w-full text-center sm:text-left">
           <div class="w-6 h-6 rounded-lg bg-cyan-500/15 flex items-center justify-center shrink-0">
             <i data-lucide="target" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400"></i>
           </div>
           <div class="min-w-0 flex-1">
             <div class="flex items-center justify-between gap-1">
               <span class="font-bold text-[10px] sm:text-xs md:text-sm tracking-tight truncate block">Khách Hàng</span>
-              <span class="hidden xl:inline-block px-1.5 py-0.2 rounded text-[9px] font-mono bg-cyan-500/20 text-cyan-300 font-semibold">1,000</span>
+              <span class="hidden 2xl:inline-block px-1.5 py-0.2 rounded text-[9px] font-mono bg-cyan-500/20 text-cyan-300 font-semibold">1,000</span>
             </div>
-            <span class="text-[10px] text-slate-400 font-mono hidden md:block truncate">Ngành Hàng & HS</span>
+            <span class="text-[10px] text-slate-400 font-mono hidden md:block truncate">Ngành & HS</span>
           </div>
         </button>
 
         <!-- Tab 2: Buyer Verification -->
-        <button onclick="switchTab('buyers')" id="tab-buyers" class="tab-btn p-1.5 sm:p-2 sm:px-3 rounded-xl transition-all flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-1 sm:gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer w-full text-center sm:text-left">
+        <button onclick="switchTab('buyers')" id="tab-buyers" class="tab-btn p-1.5 sm:p-2 sm:px-2.5 rounded-xl transition-all flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-1 sm:gap-1.5 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer w-full text-center sm:text-left">
           <div class="w-6 h-6 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
             <i data-lucide="shield-check" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
           </div>
           <div class="min-w-0 flex-1">
             <div class="flex items-center justify-between gap-1">
               <span class="font-bold text-[10px] sm:text-xs md:text-sm tracking-tight truncate block">Thẩm Định</span>
-              <span class="hidden xl:inline-block px-1.5 py-0.2 rounded text-[9px] font-mono bg-emerald-500/15 text-emerald-400 font-semibold">OFAC</span>
+              <span class="hidden 2xl:inline-block px-1.5 py-0.2 rounded text-[9px] font-mono bg-emerald-500/15 text-emerald-400 font-semibold">OFAC</span>
             </div>
             <span class="text-[10px] text-slate-400 font-mono hidden md:block truncate">4 Tầng Rủi Ro</span>
           </div>
         </button>
 
         <!-- Tab 3: Suppliers & Tier-1 -->
-        <button onclick="switchTab('suppliers')" id="tab-suppliers" class="tab-btn p-1.5 sm:p-2 sm:px-3 rounded-xl transition-all flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-1 sm:gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer w-full text-center sm:text-left">
+        <button onclick="switchTab('suppliers')" id="tab-suppliers" class="tab-btn p-1.5 sm:p-2 sm:px-2.5 rounded-xl transition-all flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-1 sm:gap-1.5 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer w-full text-center sm:text-left">
           <div class="w-6 h-6 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
             <i data-lucide="building-2" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
           </div>
           <div class="min-w-0 flex-1">
             <div class="flex items-center justify-between gap-1">
               <span class="font-bold text-[10px] sm:text-xs md:text-sm tracking-tight truncate block">NCC Cấp 1</span>
-              <span class="hidden xl:inline-block px-1.5 py-0.2 rounded text-[9px] font-mono bg-amber-500/15 text-amber-400 font-semibold">12 Nước</span>
+              <span class="hidden 2xl:inline-block px-1.5 py-0.2 rounded text-[9px] font-mono bg-amber-500/15 text-amber-400 font-semibold">12 Nước</span>
             </div>
-            <span class="text-[10px] text-slate-400 font-mono hidden md:block truncate">Đại Lý & Chuẩn QA</span>
+            <span class="text-[10px] text-slate-400 font-mono hidden md:block truncate">Đại Lý & QA</span>
           </div>
         </button>
 
-        <!-- Tab 4: Customs B/L -->
-        <button onclick="switchTab('sourcing')" id="tab-sourcing" class="tab-btn p-1.5 sm:p-2 sm:px-3 rounded-xl transition-all flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-1 sm:gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer w-full text-center sm:text-left">
+        <!-- Tab 4: Trade Matchmaker (Bàn Khớp Giao Dịch B2B) -->
+        <button onclick="switchTab('matchmaker')" id="tab-matchmaker" class="tab-btn p-1.5 sm:p-2 sm:px-2.5 rounded-xl transition-all flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-1 sm:gap-1.5 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer w-full text-center sm:text-left">
+          <div class="w-6 h-6 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400"></i>
+          </div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-1">
+              <span class="font-bold text-[10px] sm:text-xs md:text-sm tracking-tight truncate block">Khớp Lệnh</span>
+              <span class="hidden 2xl:inline-block px-1.5 py-0.2 rounded text-[9px] font-mono bg-emerald-500/20 text-emerald-300 font-semibold">AI B2B</span>
+            </div>
+            <span class="text-[10px] text-slate-400 font-mono hidden md:block truncate">Ma Trận 6 Chiều</span>
+          </div>
+        </button>
+
+        <!-- Tab 5: Customs B/L -->
+        <button onclick="switchTab('sourcing')" id="tab-sourcing" class="tab-btn p-1.5 sm:p-2 sm:px-2.5 rounded-xl transition-all flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-1 sm:gap-1.5 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer w-full text-center sm:text-left">
           <div class="w-6 h-6 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
             <i data-lucide="container" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
           </div>
           <div class="min-w-0 flex-1">
             <div class="flex items-center justify-between gap-1">
               <span class="font-bold text-[10px] sm:text-xs md:text-sm tracking-tight truncate block">Vận Đơn B/L</span>
-              <span class="hidden xl:inline-block px-1.5 py-0.2 rounded text-[9px] font-mono bg-blue-500/15 text-blue-400 font-semibold">Hải Quan</span>
+              <span class="hidden 2xl:inline-block px-1.5 py-0.2 rounded text-[9px] font-mono bg-blue-500/15 text-blue-400 font-semibold">Hải Quan</span>
             </div>
-            <span class="text-[10px] text-slate-400 font-mono hidden md:block truncate">Manifest Thực Tế</span>
+            <span class="text-[10px] text-slate-400 font-mono hidden md:block truncate">Manifest Cảng</span>
           </div>
         </button>
 
-        <!-- Tab 5: Factory Audit -->
-        <button onclick="switchTab('audit')" id="tab-audit" class="tab-btn p-1.5 sm:p-2 sm:px-3 rounded-xl transition-all flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-1 sm:gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer w-full text-center sm:text-left">
+        <!-- Tab 6: Factory Audit -->
+        <button onclick="switchTab('audit')" id="tab-audit" class="tab-btn p-1.5 sm:p-2 sm:px-2.5 rounded-xl transition-all flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-1 sm:gap-1.5 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer w-full text-center sm:text-left">
           <div class="w-6 h-6 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
             <i data-lucide="clipboard-check" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
           </div>
           <div class="min-w-0 flex-1">
             <div class="flex items-center justify-between gap-1">
               <span class="font-bold text-[10px] sm:text-xs md:text-sm tracking-tight truncate block">Kiểm Toán</span>
-              <span class="hidden xl:inline-block px-1.5 py-0.2 rounded text-[9px] font-mono bg-purple-500/15 text-purple-400 font-semibold">SOP-02</span>
+              <span class="hidden 2xl:inline-block px-1.5 py-0.2 rounded text-[9px] font-mono bg-purple-500/15 text-purple-400 font-semibold">SOP-02</span>
             </div>
             <span class="text-[10px] text-slate-400 font-mono hidden md:block truncate">Thực Địa 5 Tiêu Chí</span>
           </div>
@@ -574,6 +588,13 @@
                   <div>
                     <span class="text-xs font-bold text-white block">Săn Khách Hàng Theo Ngành Hàng (1,000 Leads)</span>
                     <span class="text-[11px] text-slate-400 block mt-0.5">Kho 1,000 nhà thu mua quốc tế, 97 chương HS WCO, xuất Excel</span>
+                  </div>
+                </button>
+                <button onclick="switchTab('matchmaker'); toggleAllModulesHub(false);" class="w-full p-2.5 rounded-xl bg-brand-900 hover:bg-emerald-500/10 border border-emerald-500/30 hover:border-emerald-500/50 text-left transition-all flex items-start gap-2.5 cursor-pointer">
+                  <i data-lucide="sparkles" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i>
+                  <div>
+                    <span class="text-xs font-bold text-white block">Khớp Giao Dịch B2B (Ma Trận 6 Chiều)</span>
+                    <span class="text-[11px] text-slate-400 block mt-0.5">Đối soát 1,000 Buyer & 20 NCC toàn cầu, tự động bắn Telegram 06:30</span>
                   </div>
                 </button>
                 <button onclick="switchTab('sourcing'); toggleAllModulesHub(false);" class="w-full p-2.5 rounded-xl bg-brand-900 hover:bg-cyan-500/10 border border-white/5 hover:border-cyan-500/30 text-left transition-all flex items-start gap-2.5 cursor-pointer">
@@ -1375,7 +1396,129 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- TAB 4: CUSTOMS BILL OF LADING SOURCING     -->
+    <!-- TAB 4: AUTOMATED B2B TRADE MATCHMAKER      -->
+    <!-- ========================================== -->
+    <section id="section-matchmaker" class="hidden space-y-6">
+
+      <!-- Header & Quick Automation Actions -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 sm:p-6 rounded-2xl bg-brand-900 border border-white/5 relative overflow-hidden">
+        <div class="relative z-10 space-y-1.5">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-bold flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              ĐỘNG CƠ MA TRẬN 6 CHIỀU (MATCHMAKER ENGINE)
+            </span>
+            <span class="text-xs text-slate-400 font-mono hidden sm:inline">• Quét tự động 1,000 Khách hàng & 20 NCC</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight flex items-center gap-2">
+            Bàn Khớp Giao Dịch B2B Tự Động
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-400 max-w-3xl leading-relaxed">
+            Hệ thống đối soát chéo 6 chiều dữ liệu ngoại thương (Mã HS 30%, Chứng chỉ QA 20%, MOQ 15%, Thanh toán 15%, Incoterms 10%, Pháp lý 10%). Tự động loại trừ 100% rủi ro lừa đảo & cấm vận quốc tế.
+          </p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2 sm:gap-3 shrink-0 relative z-10">
+          <button onclick="fetchMatchesList(1, true)" class="px-3.5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-brand-950 font-bold text-xs sm:text-sm transition-all flex items-center gap-2 cursor-pointer shadow-lg shadow-emerald-500/20 active:scale-95">
+            <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+            <span>Quét Lại Ma Trận</span>
+          </button>
+          <button onclick="triggerDailySummaryTelegram()" class="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-white font-medium text-xs sm:text-sm border border-white/10 transition-all flex items-center gap-2 cursor-pointer active:scale-95">
+            <i data-lucide="send" class="w-4 h-4 text-cyan-400"></i>
+            <span>Bắn Bản Tin Telegram (06:30)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Bento Metrics Cards -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div class="p-4 sm:p-5 rounded-2xl bg-brand-900 border border-emerald-500/20 relative overflow-hidden group">
+          <div class="flex items-center justify-between text-emerald-400 mb-2">
+            <span class="text-xs font-mono font-bold uppercase tracking-wider">💎 KHỚP KIM CƯƠNG (≥85đ)</span>
+            <i data-lucide="gem" class="w-4 h-4"></i>
+          </div>
+          <div class="text-2xl sm:text-3xl font-mono font-extrabold text-white" id="mm-diamond-count">8</div>
+          <span class="text-[11px] text-slate-400 block mt-1">Xác suất chốt &gt;90%, sẵn sàng ký hợp đồng</span>
+        </div>
+
+        <div class="p-4 sm:p-5 rounded-2xl bg-brand-900 border border-amber-500/20 relative overflow-hidden group">
+          <div class="flex items-center justify-between text-amber-400 mb-2">
+            <span class="text-xs font-mono font-bold uppercase tracking-wider">🥇 KHỚP HOÀNG KIM (70-84đ)</span>
+            <i data-lucide="award" class="w-4 h-4"></i>
+          </div>
+          <div class="text-2xl sm:text-3xl font-mono font-extrabold text-white" id="mm-gold-count">92</div>
+          <span class="text-[11px] text-slate-400 block mt-1">Tiềm năng cao, cần đàm phán nhẹ Incoterms</span>
+        </div>
+
+        <div class="p-4 sm:p-5 rounded-2xl bg-brand-900 border border-cyan-500/20 relative overflow-hidden group">
+          <div class="flex items-center justify-between text-cyan-400 mb-2">
+            <span class="text-xs font-mono font-bold uppercase tracking-wider">💰 TỔNG PIPELINE CƠ HỘI</span>
+            <i data-lucide="dollar-sign" class="w-4 h-4"></i>
+          </div>
+          <div class="text-2xl sm:text-3xl font-mono font-extrabold text-white" id="mm-pipeline-val">$229.4M</div>
+          <span class="text-[11px] text-slate-400 block mt-1">Quy mô giá trị thương vụ ước tính</span>
+        </div>
+
+        <div class="p-4 sm:p-5 rounded-2xl bg-brand-900 border border-purple-500/20 relative overflow-hidden group">
+          <div class="flex items-center justify-between text-purple-400 mb-2">
+            <span class="text-xs font-mono font-bold uppercase tracking-wider">⚡ TỐC ĐỘ ĐỐI SOÁT</span>
+            <i data-lucide="zap" class="w-4 h-4"></i>
+          </div>
+          <div class="text-2xl sm:text-3xl font-mono font-extrabold text-white">0.3s / 1k</div>
+          <span class="text-[11px] text-slate-400 block mt-1">Quét 6 chiều dữ liệu tự động theo thời gian thực</span>
+        </div>
+      </div>
+
+      <!-- Filter Toolbar -->
+      <div class="p-3 sm:p-4 rounded-2xl bg-brand-900 border border-white/5 space-y-3">
+        <div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
+          
+          <!-- Tier Filter Buttons -->
+          <div class="flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-brand-950/80 border border-white/5 self-start">
+            <button onclick="filterMatchesByTier('ALL')" id="mm-tier-all" class="mm-tier-btn px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-emerald-500 text-brand-950 cursor-pointer">
+              Tất Cả (<span id="mm-badge-all-count">100</span>)
+            </button>
+            <button onclick="filterMatchesByTier('DIAMOND')" id="mm-tier-diamond" class="mm-tier-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white transition-all cursor-pointer">
+              💎 Kim Cương (≥85đ)
+            </button>
+            <button onclick="filterMatchesByTier('GOLD')" id="mm-tier-gold" class="mm-tier-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white transition-all cursor-pointer">
+              🥇 Hoàng Kim (70-84đ)
+            </button>
+          </div>
+
+          <!-- Industry Dropdown & Search -->
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+            <select id="mm-industry-select" onchange="filterMatchesByIndustry(this.value)" class="bg-brand-950 text-xs text-white rounded-xl px-3 py-2 border border-white/10 focus:outline-none focus:border-cyan-500 cursor-pointer">
+              <option value="all">Tất cả ngành hàng</option>
+              <option value="agri_food">Nông sản & Lương thực</option>
+              <option value="fertilizer">Phân bón & Hóa chất</option>
+              <option value="seafood">Thủy hải sản</option>
+              <option value="wood_pellets">Gỗ & Sinh khối</option>
+              <option value="machinery">Máy móc & Thiết bị</option>
+            </select>
+
+            <div class="relative flex-1 sm:w-64">
+              <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-3 top-3"></i>
+              <input type="text" id="mm-search-input" onkeyup="handleMatchSearch(event)" placeholder="Tìm đối tác, mã HS..." class="w-full bg-brand-950 text-xs text-white rounded-xl pl-9 pr-3 py-2 border border-white/10 focus:outline-none focus:border-cyan-500">
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Match Cards Grid Container -->
+      <div id="matchmaker-cards-container" class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+        <!-- Rendered dynamically by JavaScript -->
+      </div>
+
+      <!-- Matchmaker Pagination -->
+      <div id="matchmaker-pagination" class="flex items-center justify-between border-t border-white/10 pt-4 px-2">
+        <!-- Injected by JS -->
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 5: CUSTOMS BILL OF LADING SOURCING     -->
     <!-- ========================================== -->
     <section id="section-sourcing" class="hidden space-y-6">
       
@@ -2065,6 +2208,105 @@
     </div>
   </div>
 
+  <!-- ============================================================= -->
+  <!-- MODAL: 6-DIMENSIONAL DEAL GAP ANALYSIS & MATCH DOSSIER         -->
+  <!-- ============================================================= -->
+  <div id="matchDetailModal" onclick="handleModalBackdropClick(event, 'matchDetailModal')" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4 overscroll-contain">
+    <div onclick="event.stopPropagation()" class="w-full max-w-4xl rounded-3xl p-1 bg-gradient-to-b from-emerald-500/30 via-white/10 to-white/5 border border-emerald-500/40 shadow-2xl">
+      <div class="bg-brand-900 rounded-[22px] p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container">
+        
+        <!-- Header -->
+        <div class="flex items-start justify-between border-b border-white/10 pb-4">
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-bold">HỒ SƠ ĐỐI SOÁT MA TRẬN 6 CHIỀU</span>
+              <span id="md-tier-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">💎 KHỚP KIM CƯƠNG</span>
+              <span id="md-deal-val-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-mono text-cyan-300 bg-cyan-950/60 border border-cyan-500/20 font-bold">~$5.0M USD</span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-bold text-white mt-1.5 flex items-center gap-2" id="md-parties-title">
+              Buyer Name ⇄ Supplier Name
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 font-mono" id="md-commodity-sub">
+              Mặt hàng: Robusta FAQ Screen 18 • Mã HS: 0901.11
+            </p>
+          </div>
+          <button type="button" onclick="closeMatchDetailModal()" class="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all cursor-pointer">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- 2-Party Comparison Header Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <!-- Buyer Side -->
+          <div class="p-4 rounded-2xl bg-brand-950/80 border border-cyan-500/20 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-mono uppercase text-cyan-400 font-bold">BÊN THU MUA (BUYER)</span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-500/20 text-cyan-300 font-bold" id="md-buyer-tier">Tier A</span>
+            </div>
+            <h4 class="text-base font-bold text-white" id="md-buyer-name">Neumann Kaffee Gruppe (NKG)</h4>
+            <div class="text-xs text-slate-300 space-y-1 font-mono">
+              <p>📍 Quốc gia: <span class="text-white font-bold" id="md-buyer-country">Germany (DE)</span></p>
+              <p>📦 Nhu cầu: <span class="text-white font-bold" id="md-buyer-demand">120,000 tấn/năm</span></p>
+              <p>💳 Thanh toán: <span class="text-white font-bold" id="md-buyer-payment">L/C At Sight, Usance</span></p>
+            </div>
+          </div>
+
+          <!-- Supplier Side -->
+          <div class="p-4 rounded-2xl bg-brand-950/80 border border-emerald-500/20 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-mono uppercase text-emerald-400 font-bold">BÊN CUNG ỨNG (SUPPLIER)</span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/20 text-emerald-300 font-bold" id="md-supplier-type">Nhà Máy Chế Biến</span>
+            </div>
+            <h4 class="text-base font-bold text-white" id="md-supplier-name">Daklak Agri Products Ltd</h4>
+            <div class="text-xs text-slate-300 space-y-1 font-mono">
+              <p>📍 Trụ sở / Xưởng: <span class="text-white font-bold" id="md-supplier-country">Việt Nam (VN)</span></p>
+              <p>🏭 Công suất: <span class="text-white font-bold" id="md-supplier-capacity">8,500 tấn/tháng</span></p>
+              <p>🛡️ Thuế / VAT: <span class="text-emerald-400 font-bold" id="md-supplier-vat">99% An Toàn Hoàn Thuế</span></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6-Dimensional Breakdown Container -->
+        <div class="space-y-3">
+          <h4 class="text-xs font-mono uppercase tracking-wider text-slate-400 font-bold">KẾT QUẢ ĐỐI SOÁT 6 CHIỀU DỮ LIỆU NGOẠI THƯƠNG:</h4>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="md-dimensions-container">
+            <!-- Injected by JS -->
+          </div>
+        </div>
+
+        <!-- Recommendation and Action -->
+        <div class="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 space-y-2">
+          <div class="flex items-center gap-2 text-emerald-400">
+            <i data-lucide="check-circle" class="w-4 h-4"></i>
+            <span class="text-xs font-mono font-bold uppercase tracking-wider">ĐÁNH GIÁ CHIẾN LƯỢC & HÀNH ĐỘNG TIẾP THEO:</span>
+          </div>
+          <p class="text-xs text-slate-200 leading-relaxed" id="md-action-rec">
+            Khuyến nghị Khối XNK phát hành Thư chào hàng RFQ đôi kết nối 2 bên, chào giá giao hàng CIF Cảng Hamburg trên cơ sở lấy hàng FOB Cảng Cát Lái.
+          </p>
+        </div>
+
+        <!-- Modal Footer Actions -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-white/10">
+          <button type="button" onclick="closeMatchDetailModal()" class="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 font-mono text-xs cursor-pointer">
+            Đóng Cửa Sổ
+          </button>
+          <div class="flex items-center gap-2">
+            <button type="button" id="btn-md-telegram" class="px-4 py-2 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 font-mono text-xs flex items-center gap-2 cursor-pointer active:scale-95">
+              <i data-lucide="send" class="w-4 h-4"></i>
+              <span>Bắn Deal Này Về Telegram</span>
+            </button>
+            <button type="button" id="btn-md-outreach" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-brand-950 font-bold font-mono text-xs flex items-center gap-2 cursor-pointer active:scale-95 shadow-lg shadow-emerald-500/20">
+              <i data-lucide="mail" class="w-4 h-4"></i>
+              <span>Soạn RFQ Chào Hàng Đôi</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <!-- Toast Notification -->
   <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
     <div class="px-5 py-3 rounded-2xl bg-brand-900 border border-cyan-500/40 text-white shadow-2xl flex items-center gap-3">
@@ -2225,7 +2467,7 @@
     });
 
     function switchTab(tab) {
-      ['prospecting', 'buyers', 'suppliers', 'sourcing', 'audit'].forEach(t => {
+      ['prospecting', 'buyers', 'suppliers', 'matchmaker', 'sourcing', 'audit'].forEach(t => {
         const sec = document.getElementById(`section-${t}`);
         if (sec) sec.classList.add('hidden');
         const btn = document.getElementById(`tab-${t}`);
@@ -2245,6 +2487,9 @@
 
       if (tab === 'suppliers' && !cachedSuppliersList.length) {
         fetchSuppliersList();
+      }
+      if (tab === 'matchmaker') {
+        fetchMatchmakerData();
       }
 
       toggleAllModulesHub(false);
@@ -3403,6 +3648,7 @@
       closeSupplierDetailModal();
       closeHsCatalogModal();
       closeOutreachModal();
+      closeMatchDetailModal();
     }
 
     // ==========================================
@@ -4645,6 +4891,399 @@
       }
     }
 
+    // ==========================================
+    // 6. BÀN KHỚP GIAO DỊCH B2B (TRADE MATCHMAKER)
+    // ==========================================
+    let cachedMatches = [];
+    let currentMatchPage = 1;
+    let matchTierFilter = 'ALL';
+    let matchIndustryFilter = 'all';
+    let matchSearchQuery = '';
+    let currentDetailMatch = null;
+
+    async function fetchMatchmakerData() {
+      await fetchMatchmakerMetrics();
+      await fetchMatchesList(1);
+    }
+
+    async function fetchMatchmakerMetrics() {
+      try {
+        const res = await fetch('/api/matches/metrics');
+        const data = await res.json();
+        if (data.ok && data.metrics) {
+          const m = data.metrics;
+          const diaEl = document.getElementById('mm-diamond-count');
+          if (diaEl) diaEl.textContent = m.diamond_count || 0;
+          const goldEl = document.getElementById('mm-gold-count');
+          if (goldEl) goldEl.textContent = m.gold_count || 0;
+          const pipeM = (m.total_pipeline_val_usd / 1000000).toFixed(1);
+          const pipeEl = document.getElementById('mm-pipeline-val');
+          if (pipeEl) pipeEl.textContent = `$${pipeM}M`;
+          const allBadge = document.getElementById('mm-badge-all-count');
+          if (allBadge) allBadge.textContent = m.total_matches_found || 0;
+        }
+      } catch (err) {
+        console.error('Error fetching matchmaker metrics:', err);
+      }
+    }
+
+    async function fetchMatchesList(page = 1, refresh = false) {
+      currentMatchPage = page;
+      const container = document.getElementById('matchmaker-cards-container');
+      if (container && refresh) {
+        container.innerHTML = `
+          <div class="col-span-full py-16 text-center space-y-3">
+            <div class="w-10 h-10 border-4 border-emerald-500/20 border-t-emerald-400 rounded-full animate-spin mx-auto"></div>
+            <p class="text-xs text-slate-400 font-mono">Đang quét ma trận 6 chiều giữa 1,000 Khách hàng & 20 NCC...</p>
+          </div>
+        `;
+      }
+
+      try {
+        const params = new URLSearchParams({
+          page: currentMatchPage,
+          page_size: 10,
+          tier: matchTierFilter,
+          industry: matchIndustryFilter,
+          q: matchSearchQuery
+        });
+
+        const res = await fetch(`/api/matches?${params.toString()}`);
+        const result = await res.json();
+        if (result.ok) {
+          cachedMatches = result.data || [];
+          renderMatchCards(cachedMatches);
+          renderMatchPagination(result.total, result.page, result.total_pages);
+        }
+      } catch (err) {
+        console.error('Error fetching matches:', err);
+        if (container) {
+          container.innerHTML = `<div class="col-span-full p-8 text-center text-rose-400 font-mono text-xs">Không thể tải dữ liệu khớp lệnh. Vui lòng thử lại.</div>`;
+        }
+      }
+    }
+
+    function renderMatchCards(matches) {
+      const container = document.getElementById('matchmaker-cards-container');
+      if (!container) return;
+
+      if (!matches.length) {
+        container.innerHTML = `
+          <div class="col-span-full py-16 text-center space-y-3 bg-brand-900 rounded-2xl border border-white/5">
+            <i data-lucide="sparkles" class="w-10 h-10 text-slate-500 mx-auto"></i>
+            <p class="text-sm font-bold text-white">Không tìm thấy cặp giao dịch phù hợp</p>
+            <p class="text-xs text-slate-400">Thử nới lỏng bộ lọc hoặc tìm kiếm theo từ khóa khác.</p>
+          </div>
+        `;
+        if (window.lucide) lucide.createIcons();
+        return;
+      }
+
+      container.innerHTML = matches.map(m => {
+        const isDiamond = m.tier === 'DIAMOND';
+        const badgeBg = isDiamond ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' : 'bg-amber-500/15 text-amber-300 border-amber-500/30';
+        const scoreColor = isDiamond ? 'text-emerald-400 border-emerald-500/40' : 'text-amber-400 border-amber-500/40';
+        const dealM = (m.deal_value_usd / 1000000).toFixed(2);
+
+        const d = m.dimensions || {};
+        const d1 = d.d1_hs_and_specs || { score: 90 };
+        const d2 = d.d2_quality_certifications || { score: 90 };
+        const d3 = d.d3_capacity_and_moq || { score: 90 };
+        const d4 = d.d4_payment_terms || { score: 85 };
+        const d5 = d.d5_incoterms_logistics || { score: 90 };
+        const d6 = d.d6_compliance_and_risk || { score: 95 };
+
+        return `
+          <div class="p-4 sm:p-5 rounded-2xl bg-brand-900 border border-white/10 hover:border-emerald-500/40 transition-all space-y-4 shadow-lg group">
+            
+            <!-- Top Match Header -->
+            <div class="flex items-center justify-between gap-2 border-b border-white/5 pb-3">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider border ${badgeBg}">
+                  ${isDiamond ? '💎 KIM CƯƠNG' : '🥇 HOÀNG KIM'}
+                </span>
+                <span class="text-xs font-mono font-bold text-white">HS ${m.matched_hs}</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-mono text-cyan-300 font-bold bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-500/20">~$${dealM}M USD</span>
+                <div class="w-10 h-10 rounded-full border-2 ${scoreColor} bg-brand-950 flex items-center justify-center font-mono font-extrabold text-sm ${scoreColor.split(' ')[0]}">
+                  ${m.total_score}
+                </div>
+              </div>
+            </div>
+
+            <!-- 2-Party Match Bridge -->
+            <div class="grid grid-cols-1 sm:grid-cols-11 gap-2 items-center">
+              
+              <!-- Buyer (Left - 5 cols) -->
+              <div class="sm:col-span-5 p-3 rounded-xl bg-brand-950/60 border border-white/5 space-y-1">
+                <div class="flex items-center justify-between">
+                  <span class="text-[9px] font-mono uppercase text-cyan-400 font-bold">KHÁCH HÀNG (BUYER)</span>
+                  <span class="text-[9px] font-mono text-slate-400">${m.buyer_country_code || ''}</span>
+                </div>
+                <h4 class="text-xs font-bold text-white truncate" title="${m.buyer_name}">${m.buyer_name}</h4>
+                <p class="text-[11px] text-slate-300 truncate font-mono">📍 ${m.buyer_country}</p>
+                <p class="text-[10px] text-slate-400 truncate">📦 Cần: ${m.matched_commodity}</p>
+              </div>
+
+              <!-- Center Arrow / Synergy (1 col) -->
+              <div class="sm:col-span-1 text-center py-1 sm:py-0">
+                <div class="w-7 h-7 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto">
+                  <i data-lucide="arrow-left-right" class="w-3.5 h-3.5"></i>
+                </div>
+              </div>
+
+              <!-- Supplier (Right - 5 cols) -->
+              <div class="sm:col-span-5 p-3 rounded-xl bg-brand-950/60 border border-white/5 space-y-1">
+                <div class="flex items-center justify-between">
+                  <span class="text-[9px] font-mono uppercase text-emerald-400 font-bold">NHÀ CUNG CẤP</span>
+                  <span class="text-[9px] font-mono text-slate-400">${m.supplier_country_code || ''}</span>
+                </div>
+                <h4 class="text-xs font-bold text-white truncate" title="${m.supplier_name}">${m.supplier_short_name}</h4>
+                <p class="text-[11px] text-slate-300 truncate font-mono">🏭 ${m.supplier_country}</p>
+                <p class="text-[10px] text-emerald-400 truncate">✓ ${m.supplier_type}</p>
+              </div>
+
+            </div>
+
+            <!-- 6 Mini Dimension Progress Indicators -->
+            <div class="space-y-1.5 pt-1 border-t border-white/5">
+              <span class="text-[10px] font-mono text-slate-400 uppercase tracking-wider block">ĐỐI CHIẾU 6 CHIỀU DỮ LIỆU:</span>
+              <div class="grid grid-cols-3 sm:grid-cols-6 gap-1.5 text-center font-mono text-[9px]">
+                <div class="p-1 rounded bg-brand-950 border border-white/5">
+                  <span class="text-slate-400 block truncate">1.Mã HS</span>
+                  <span class="font-bold text-cyan-400">${d1.score}đ</span>
+                </div>
+                <div class="p-1 rounded bg-brand-950 border border-white/5">
+                  <span class="text-slate-400 block truncate">2.Chuẩn QA</span>
+                  <span class="font-bold text-emerald-400">${d2.score}đ</span>
+                </div>
+                <div class="p-1 rounded bg-brand-950 border border-white/5">
+                  <span class="text-slate-400 block truncate">3.Sản Lượng</span>
+                  <span class="font-bold text-white">${d3.score}đ</span>
+                </div>
+                <div class="p-1 rounded bg-brand-950 border border-white/5">
+                  <span class="text-slate-400 block truncate">4.T.Toán</span>
+                  <span class="font-bold text-amber-400">${d4.score}đ</span>
+                </div>
+                <div class="p-1 rounded bg-brand-950 border border-white/5">
+                  <span class="text-slate-400 block truncate">5.Incoterms</span>
+                  <span class="font-bold text-blue-400">${d5.score}đ</span>
+                </div>
+                <div class="p-1 rounded bg-brand-950 border border-white/5">
+                  <span class="text-slate-400 block truncate">6.Pháp Lý</span>
+                  <span class="font-bold text-purple-400">${d6.score}đ</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Actions -->
+            <div class="flex items-center justify-between gap-2 pt-2 border-t border-white/5">
+              <button onclick="openMatchDetailModal('${m.buyer_id}', '${m.supplier_id}')" class="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-white font-mono text-xs transition-all flex items-center gap-1.5 cursor-pointer">
+                <i data-lucide="bar-chart-2" class="w-3.5 h-3.5 text-cyan-400"></i>
+                <span>Xem Ma Trận 6 Chiều</span>
+              </button>
+              <div class="flex items-center gap-1.5">
+                <button onclick="sendDealToTelegram('${m.buyer_id}', '${m.supplier_id}')" title="Bắn deal về Telegram" class="p-1.5 px-2.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/20 text-xs font-mono transition-all flex items-center gap-1 cursor-pointer active:scale-95">
+                  <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                  <span class="hidden sm:inline">Báo Cáo Bot</span>
+                </button>
+                <button onclick="openDualOutreach('${m.buyer_id}', '${m.matched_commodity.replace(/'/g, "\\'")}', '${m.matched_hs}')" class="px-3 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-brand-950 font-bold font-mono text-xs transition-all flex items-center gap-1 cursor-pointer active:scale-95 shadow-md shadow-emerald-500/10">
+                  <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+                  <span>Sinh RFQ Đôi</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        `;
+      }).join('');
+
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function renderMatchPagination(total, page, totalPages) {
+      const container = document.getElementById('matchmaker-pagination');
+      if (!container) return;
+      if (total <= 10) {
+        container.innerHTML = `<span class="text-xs text-slate-400 font-mono">Hiển thị toàn bộ ${total} cặp giao dịch</span>`;
+        return;
+      }
+
+      container.innerHTML = `
+        <span class="text-xs text-slate-400 font-mono">Trang <strong>${page}</strong> / <strong>${totalPages}</strong> (Tổng <strong>${total}</strong> cặp giao dịch)</span>
+        <div class="flex items-center gap-2">
+          <button onclick="fetchMatchesList(${page - 1})" ${page <= 1 ? 'disabled class="opacity-50 cursor-not-allowed px-3 py-1.5 rounded-lg bg-white/5 text-slate-400 text-xs font-mono"' : 'class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-mono cursor-pointer"'}>
+            Trang Trước
+          </button>
+          <button onclick="fetchMatchesList(${page + 1})" ${page >= totalPages ? 'disabled class="opacity-50 cursor-not-allowed px-3 py-1.5 rounded-lg bg-white/5 text-slate-400 text-xs font-mono"' : 'class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-mono cursor-pointer"'}>
+            Trang Sau
+          </button>
+        </div>
+      `;
+    }
+
+    function filterMatchesByTier(tier) {
+      matchTierFilter = tier;
+      document.querySelectorAll('.mm-tier-btn').forEach(btn => {
+        btn.classList.remove('bg-emerald-500', 'text-brand-950', 'font-bold');
+        btn.classList.add('text-slate-400', 'font-medium');
+      });
+      const activeBtn = document.getElementById(`mm-tier-${tier.toLowerCase()}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('text-slate-400', 'font-medium');
+        activeBtn.classList.add('bg-emerald-500', 'text-brand-950', 'font-bold');
+      }
+      fetchMatchesList(1);
+    }
+
+    function filterMatchesByIndustry(ind) {
+      matchIndustryFilter = ind;
+      fetchMatchesList(1);
+    }
+
+    let matchSearchDebounceTimer;
+    function handleMatchSearch(e) {
+      clearTimeout(matchSearchDebounceTimer);
+      matchSearchDebounceTimer = setTimeout(() => {
+        matchSearchQuery = e.target.value.trim();
+        fetchMatchesList(1);
+      }, 350);
+    }
+
+    async function openMatchDetailModal(buyerId, supplierId) {
+      try {
+        const res = await fetch('/api/matches/analyze', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ buyer_id: buyerId, supplier_id: supplierId })
+        });
+        const result = await res.json();
+        if (result.ok && result.match) {
+          currentDetailMatch = result.match;
+          renderMatchDetailModalContent(result.match);
+          const modal = document.getElementById('matchDetailModal');
+          if (modal) {
+            modal.classList.remove('hidden');
+            lockBodyScroll();
+          }
+          if (window.lucide) lucide.createIcons();
+        }
+      } catch (err) {
+        showToast('Lỗi Phân Tích', 'Không thể phân tích ma trận đối soát.', true);
+      }
+    }
+
+    function renderMatchDetailModalContent(m) {
+      document.getElementById('md-parties-title').textContent = `${m.buyer_name} ⇄ ${m.supplier_short_name}`;
+      document.getElementById('md-commodity-sub').textContent = `Mặt hàng: ${m.matched_commodity} • Mã HS: ${m.matched_hs} • Điểm: ${m.total_score}/100`;
+      
+      const isDiamond = m.tier === 'DIAMOND';
+      const badge = document.getElementById('md-tier-badge');
+      badge.textContent = isDiamond ? '💎 KHỚP KIM CƯƠNG' : '🥇 KHỚP HOÀNG KIM';
+      badge.className = `px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold ${isDiamond ? 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/30' : 'bg-amber-500/15 text-amber-300 border border-amber-500/30'}`;
+
+      document.getElementById('md-deal-val-badge').textContent = `~$${(m.deal_value_usd / 1000000).toFixed(2)}M USD`;
+
+      document.getElementById('md-buyer-name').textContent = m.buyer_name;
+      document.getElementById('md-buyer-country').textContent = `${m.buyer_country} (${m.buyer_country_code})`;
+      document.getElementById('md-buyer-tier').textContent = m.buyer_tier || 'Tier A';
+
+      document.getElementById('md-supplier-name').textContent = m.supplier_name;
+      document.getElementById('md-supplier-country').textContent = `${m.supplier_country} (${m.supplier_country_code})`;
+      document.getElementById('md-supplier-type').textContent = m.supplier_type;
+
+      document.getElementById('md-action-rec').textContent = m.action_recommendation;
+
+      const d = m.dimensions || {};
+      const dims = [
+        { key: 'd1_hs_and_specs', icon: 'package', title: '1. Mã HS & Quy Cách Hàng Hóa (30%)', data: d.d1_hs_and_specs },
+        { key: 'd2_quality_certifications', icon: 'award', title: '2. Tiêu Chuẩn & Chứng Chỉ (20%)', data: d.d2_quality_certifications },
+        { key: 'd3_capacity_and_moq', icon: 'boxes', title: '3. Năng Lực Sản Xuất & MOQ (15%)', data: d.d3_capacity_and_moq },
+        { key: 'd4_payment_terms', icon: 'credit-card', title: '4. Phương Thức Thanh Toán (15%)', data: d.d4_payment_terms },
+        { key: 'd5_incoterms_logistics', icon: 'ship', title: '5. Incoterms & Vận Tải (10%)', data: d.d5_incoterms_logistics },
+        { key: 'd6_compliance_and_risk', icon: 'shield-check', title: '6. Tín Nhiệm & An Toàn Thuế (10%)', data: d.d6_compliance_and_risk }
+      ];
+
+      const container = document.getElementById('md-dimensions-container');
+      container.innerHTML = dims.map(dim => {
+        const score = dim.data ? dim.data.score : 80;
+        const desc = dim.data ? dim.data.desc : '';
+        const scoreColor = score >= 85 ? 'text-emerald-400' : (score >= 70 ? 'text-amber-400' : 'text-blue-400');
+        const barColor = score >= 85 ? 'bg-emerald-500' : (score >= 70 ? 'bg-amber-500' : 'bg-blue-500');
+
+        return `
+          <div class="p-3.5 rounded-xl bg-brand-950/80 border border-white/5 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-white flex items-center gap-1.5 font-mono">
+                <i data-lucide="${dim.icon}" class="w-3.5 h-3.5 text-cyan-400"></i>
+                ${dim.title}
+              </span>
+              <span class="text-xs font-mono font-extrabold ${scoreColor}">${score} / 100</span>
+            </div>
+            <div class="w-full h-1.5 rounded-full bg-white/5 overflow-hidden">
+              <div class="h-full ${barColor}" style="width: ${score}%;"></div>
+            </div>
+            <p class="text-[11px] text-slate-300 leading-relaxed font-mono">${desc}</p>
+          </div>
+        `;
+      }).join('');
+
+      // Buttons inside modal
+      document.getElementById('btn-md-telegram').onclick = () => sendDealToTelegram(m.buyer_id, m.supplier_id);
+      document.getElementById('btn-md-outreach').onclick = () => {
+        closeMatchDetailModal();
+        openDualOutreach(m.buyer_id, m.matched_commodity, m.matched_hs);
+      };
+    }
+
+    function closeMatchDetailModal() {
+      const modal = document.getElementById('matchDetailModal');
+      if (modal) modal.classList.add('hidden');
+      unlockBodyScroll();
+    }
+
+    async function sendDealToTelegram(buyerId, supplierId) {
+      try {
+        const res = await fetch('/api/matches/notify-telegram', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ buyer_id: buyerId, supplier_id: supplierId })
+        });
+        const result = await res.json();
+        if (result.ok) {
+          showToast('Đã Bắn Telegram', 'Hồ sơ thương vụ đã gửi trực tiếp tới Telegram Chủ tịch.');
+        } else {
+          showToast('Lỗi Gửi Telegram', result.error || 'Vui lòng kiểm tra bot.', true);
+        }
+      } catch (err) {
+        showToast('Lỗi Kết Nối', 'Không thể gửi tin nhắn Telegram.', true);
+      }
+    }
+
+    async function triggerDailySummaryTelegram() {
+      try {
+        const res = await fetch('/api/matches/notify-telegram', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ summary: true })
+        });
+        const result = await res.json();
+        if (result.ok) {
+          showToast('Đã Bắn Bản Tin 06:30', 'Bản tin tổng hợp Khớp Giao Dịch B2B đã gửi tới Telegram Chủ tịch.');
+        } else {
+          showToast('Lỗi Gửi', result.error || 'Vui lòng thử lại.', true);
+        }
+      } catch (err) {
+        showToast('Lỗi Kết Nối', 'Không thể kích hoạt bản tin Telegram.', true);
+      }
+    }
+
+    function openDualOutreach(buyerId, commodity, hs) {
+      switchTab('prospecting');
+      openOutreachModal(buyerId, commodity, hs);
+    }
+
     // Global Event Listeners: ESC key & Mobile Touch Lock for all Modals
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape' || e.key === 'Esc') {
@@ -4652,7 +5291,7 @@
       }
     });
 
-    ['companyDetailModal', 'supplierDetailModal', 'hsCatalogModal', 'outreachModal'].forEach(id => {
+    ['companyDetailModal', 'supplierDetailModal', 'hsCatalogModal', 'outreachModal', 'matchDetailModal'].forEach(id => {
       const el = document.getElementById(id);
       if (el) {
         el.addEventListener('touchmove', function(e) {

@@ -56,7 +56,7 @@ def run_all_tests():
     time.sleep(0.5)
 
     passed_count = 0
-    total_tests = 25
+    total_tests = 30
 
     try:
         # Test 1: Health Check
@@ -356,6 +356,71 @@ def run_all_tests():
             assert 'formatCommodityBadges' in html_text
             assert 'supd-commodities-container' in html_text
         print(f"✅ Test 25/25: Popup Dossier Modal NCC, API Chi Tiết (/api/suppliers/detail), Thẩm định định tuyến linh hoạt & Format Hàng hóa sạch 100% không [object Object]")
+        passed_count += 1
+
+        # Test 26: API Thống kê Chỉ số Khớp Lệnh Ngoại Thương (/api/matches/metrics)
+        code, m_res = http_get("/api/matches/metrics")
+        assert code == 200
+        assert m_res["ok"] == True
+        m_metrics = m_res["metrics"]
+        assert m_metrics["total_matches_found"] >= 50
+        assert m_metrics["diamond_count"] >= 5
+        assert m_metrics["total_pipeline_val_usd"] > 100000000
+        print(f"✅ Test 26/30: API Thống kê Chỉ số Khớp Lệnh Ngoại Thương (/api/matches/metrics) chuẩn xác")
+        passed_count += 1
+
+        # Test 27: API Săn Tìm & Lọc Danh Sách Khớp Lệnh Ma Trận 6 Chiều (/api/matches)
+        code, list_res = http_get("/api/matches?page=1&page_size=10&tier=DIAMOND")
+        assert code == 200
+        assert list_res["ok"] == True
+        assert len(list_res["data"]) >= 5
+        assert all(item["tier"] == "DIAMOND" for item in list_res["data"])
+        assert all(item["total_score"] >= 85.0 for item in list_res["data"])
+        print(f"✅ Test 27/30: API Săn Tìm & Lọc Danh Sách Khớp Lệnh Ma Trận 6 Chiều (/api/matches) chuẩn xác")
+        passed_count += 1
+
+        # Test 28: API Đối Soát Chi Tiết Ma Trận 6 Chiều Cặp Giao Dịch (/api/matches/analyze)
+        code, ana_res = http_post("/api/matches/analyze", {
+            "buyer_id": "LEAD-AGRI-001",
+            "supplier_id": "SP-002"
+        })
+        assert code == 200
+        assert ana_res["ok"] == True
+        match_data = ana_res["match"]
+        assert match_data["total_score"] >= 85.0
+        assert "dimensions" in match_data
+        assert len(match_data["dimensions"]) == 6
+        assert "d1_hs_and_specs" in match_data["dimensions"]
+        assert "d2_quality_certifications" in match_data["dimensions"]
+        assert "d3_capacity_and_moq" in match_data["dimensions"]
+        assert "d4_payment_terms" in match_data["dimensions"]
+        assert "d5_incoterms_logistics" in match_data["dimensions"]
+        assert "d6_compliance_and_risk" in match_data["dimensions"]
+        print(f"✅ Test 28/30: API Đối Soát Chi Tiết Ma Trận 6 Chiều Cặp Giao Dịch (/api/matches/analyze) chuẩn xác")
+        passed_count += 1
+
+        # Test 29: Giao Diện Frontend Bàn Khớp Giao Dịch (Dock 6 Cột, section-matchmaker, matchDetailModal)
+        with urllib.request.urlopen(url_html, timeout=5) as html_resp:
+            html_text = html_resp.read().decode('utf-8')
+            assert 'id="section-matchmaker"' in html_text
+            assert 'id="tab-matchmaker"' in html_text
+            assert 'id="matchDetailModal"' in html_text
+            assert 'fetchMatchmakerData' in html_text
+            assert 'mm-diamond-count' in html_text
+            assert 'mm-pipeline-val' in html_text
+            assert 'openMatchDetailModal' in html_text
+        print(f"✅ Test 29/30: Giao Diện Frontend Bàn Khớp Giao Dịch (Dock 6 Cột, section-matchmaker, matchDetailModal) hoàn hảo")
+        passed_count += 1
+
+        # Test 30: Module Tự Động Hóa Bắn Bản Tin Khớp Lệnh 06:30 Sáng Telegram
+        import morning_trade_matcher_dispatch
+        with open(morning_trade_matcher_dispatch.DATA_FILE, "r", encoding="utf-8") as f_db:
+            db_test = json.load(f_db)
+        metrics_test = morning_trade_matcher_dispatch.trade_matcher.get_daily_matching_metrics(db_test)
+        assert metrics_test["total_matches_found"] >= 50
+        assert metrics_test["diamond_count"] >= 5
+        assert os.path.exists(morning_trade_matcher_dispatch.DATA_FILE)
+        print(f"✅ Test 30/30: Module Tự Động Hóa Bắn Bản Tin Khớp Lệnh 06:30 Sáng Telegram sẵn sàng 100%")
         passed_count += 1
 
     finally:

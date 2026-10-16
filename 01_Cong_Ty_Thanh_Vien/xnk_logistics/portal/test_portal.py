@@ -57,7 +57,7 @@ def run_all_tests():
     time.sleep(0.5)
 
     passed_count = 0
-    total_tests = 48
+    total_tests = 49
 
     try:
         # Test 1: Health Check
@@ -928,7 +928,47 @@ def run_all_tests():
             assert 'trade-tag-item' in html_text
             assert 'TIÊU CHÍ & QUY CHUẨN ĐÃ KHỚP HOÀN TOÀN' in html_text
             assert 'ĐIỂM VÊNH QUY CHUẨN CẦN THƯƠNG THẢO' in html_text
-        print(f"✅ Test 48/48: Hiển Thị Nội Dung & Khuyến Nghị Khi Ấn / Rê Chuột Vào Thẻ Tag (Trade Tags Tooltip & Detail Engine) chuẩn 100%")
+        print(f"✅ Test 48/49: Hiển Thị Nội Dung & Khuyến Nghị Khi Ấn / Rê Chuột Vào Thẻ Tag (Trade Tags Tooltip & Detail Engine) chuẩn 100%")
+        passed_count += 1
+
+        # Test 49: Bảng Giá Tham Chiếu Đa Sàn, Bộ Chuẩn Hóa Đơn Vị & Khắc Phục Cuộn Trang Desktop / Mobile / Radar
+        code, prices_res = http_get("/api/prices/benchmarks")
+        assert code == 200
+        assert prices_res["ok"] is True
+        assert "sectors" in prices_res["data"]
+        sectors = prices_res["data"]["sectors"]
+        assert len(sectors) >= 6
+        assert any(s["commodity_id"] == "coffee_robusta" for s in sectors)
+        assert any(s["commodity_id"] == "fertilizer_urea" for s in sectors)
+        assert any(s["commodity_id"] == "rice_5pct" for s in sectors)
+        assert any(s["commodity_id"] == "black_pepper" for s in sectors)
+        assert any(s["commodity_id"] == "seafood_shrimp" for s in sectors)
+        assert any(s["commodity_id"] == "natural_rubber" for s in sectors)
+
+        with urllib.request.urlopen(url_html, timeout=5) as html_resp:
+            html_text = html_resp.read().decode('utf-8')
+            # 1. Bảng giá đa sàn & Arbitrage Modal
+            assert 'id="crossExchangePricesModal"' in html_text
+            assert 'openCrossExchangePricesModal' in html_text
+            assert 'closeCrossExchangePricesModal' in html_text
+            assert 'fetchPriceBenchmarksData' in html_text
+            assert 'calculateUnitConversion' in html_text
+            assert 'crossExchangePricesBtn' in html_text
+            assert 'id="commodityPriceTabsContainer"' in html_text
+            assert 'id="commodity4TierGridContainer"' in html_text
+            assert 'id="unitCalcQuantity"' in html_text
+            assert 'id="unitCalcUnitSelect"' in html_text
+
+            # 2. Khắc phục lỗi cuộn trang Desktop & Mobile
+            assert 'overflow-y: auto' in html_text
+            assert 'overflow-y: visible' in html_text
+            assert 'touch-action: pan-y !important' in html_text
+            assert 'id="allModulesHubBackdrop"' in html_text
+            assert 'id="allModulesHubScrollBody"' in html_text
+            assert 'id="regulatoryRadarScrollBody"' in html_text
+            assert 'max-h-[82vh]' in html_text
+            assert 'modal-scroll-container' in html_text
+        print(f"✅ Test 49/49: Bảng Giá Đa Sàn (6 Mặt Hàng Chiến Lược), Bộ Chuẩn Hóa Đơn Vị & Khắc Phục Cuộn Trang Desktop/Mobile/Radar chuẩn 100%")
         passed_count += 1
 
     finally:

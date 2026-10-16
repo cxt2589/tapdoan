@@ -65,45 +65,52 @@ def run_morning_dispatch():
 
     pipe_millions = round(metrics["total_pipeline_val_usd"] / 1_000_000, 1)
 
-    # Xây dựng nội dung HTML tinh gọn
-    lines = [
-        f"🏛️ <b>TỔNG HÀNH DINH — TÌNH BÁO KHỚP GIAO DỊCH B2B</b>",
-        f"<i>Bản tin thường nhật 06:30 | Ngày {date_str}</i>",
-        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
-        "🎯 <b>TỔNG QUAN KHỚP LỆNH HÔM NAY:</b>",
-        f"• 💎 <b>Khớp Kim Cương (≥85đ):</b> <b>{metrics['diamond_count']} thương vụ</b> <i>(Xác suất chốt &gt;90%)</i>",
-        f"• 🥇 <b>Khớp Hoàng Kim (70-84đ):</b> <b>{metrics['gold_count']} thương vụ</b> <i>(Khả quan)</i>",
-        f"• 🏭 <b>Nhà Cung Cấp Kết Nối:</b> <b>{metrics.get('total_scanned_suppliers', 20)} NCC & Đại Lý Cấp 1</b> <i>(12 Quốc gia)</i>",
-        f"• 💰 <b>Tổng Giá Trị Pipeline:</b> <b>${pipe_millions}M USD</b>",
-        "",
-        "📊 <b>PHÂN BỔ THEO NGÀNH HÀNG MŨI NHỌN:</b>"
-    ]
-
+    # 1. Cơ cấu ngành hàng thu gọn 1 dòng trực quan
+    ind_parts = []
     for ind, count in metrics.get("industry_breakdown", {}).items():
-        icon = "🌾" if "Nông sản" in ind else ("🧪" if "Phân bón" in ind else ("🐟" if "Thủy" in ind else "📦"))
-        lines.append(f"• {icon} {ind}: <b>{count}</b> thương vụ")
+        s_ind = ind.split(" & ")[0].split(" / ")[0]
+        icon = "🌾" if "Nông sản" in ind else ("🧪" if "Phân bón" in ind else ("🐟" if "Thủy" in ind else ("🪵" if "Gỗ" in ind else "⚙️")))
+        ind_parts.append(f"{icon} {s_ind}: <b>{count}</b>")
+    ind_summary = " • ".join(ind_parts) if ind_parts else "Đa ngành ngoại thương"
 
-    lines.append("")
-    lines.append("⭐ <b>TOP 3 THƯƠNG VỤ KIM CƯƠNG NỔI BẬT:</b>")
+    # 2. Xây dựng nội dung HTML phân cấp thị giác tinh gọn, chống rối mắt trên di động
+    lines = [
+        "🏛️ <b>TỔNG HÀNH DINH // BẢN TIN KHỚP GIAO DỊCH 06:30</b>",
+        f"<i>Tình báo Đối soát Ma trận Ngoại thương • {date_str}</i>",
+        "────────────────────────────",
+        "📊 <b>TỔNG QUAN PIPELINE HÔM NAY:</b>",
+        f"• 💎 <b>Khớp Kim Cương (≥85đ):</b> <b>{metrics['diamond_count']}</b> thương vụ <i>(Xác suất chốt &gt;90%)</i>",
+        f"• 🥇 <b>Khớp Hoàng Kim (70-84đ):</b> <b>{metrics['gold_count']}</b> thương vụ",
+        f"• 💰 <b>Tổng giá trị Pipeline:</b> <b>${pipe_millions}M USD</b> <i>({metrics.get('total_scanned_suppliers', 20)} NCC / 12 Nước)</i>",
+        f"• 🌐 <b>Cơ cấu ngành:</b> {ind_summary}",
+        "",
+        "⭐ <b>TOP 3 THƯƠNG VỤ KIM CƯƠNG TRỌNG ĐIỂM:</b>",
+        ""
+    ]
 
     for idx, d in enumerate(metrics.get("top_diamond_deals", [])[:3]):
         b_name = d.get("buyer_name", "")
         b_c = d.get("buyer_country", "")
-        s_name = d.get("supplier_short_name", "")
-        s_full = d.get("supplier_name", "")
+        s_name = d.get("supplier_short_name", "") or d.get("supplier_name", "")
         s_c = d.get("supplier_country", "")
-        s_type = d.get("supplier_type", "")
         item = d.get("matched_commodity", "")
         hs = d.get("matched_hs", "")
         score = d.get("total_score", 0)
         val_m = round(d.get("deal_value_usd", 0) / 1_000_000, 2)
-        lines.append(f"<b>{idx+1}️⃣ {b_name} ({b_c}) ⇄ {s_name} ({s_c})</b>")
-        lines.append(f"   • 🏢 <b>Nhà Cung Cấp:</b> {s_full or s_name} [{s_type} - {s_c}]")
-        lines.append(f"   • 👤 <b>Khách Hàng (Buyer):</b> {b_name} [{b_c}]")
-        lines.append(f"   • 📦 <b>Hàng hóa:</b> {item} (HS {hs}) • 🎯 Điểm: <b>{score}đ</b> • 💰 ~<b>${val_m}M USD</b>")
 
-    lines.append("")
-    lines.append(f"💡 <i>Gợi ý: Nhấn nút bên dưới để mở Bàn Khớp Lệnh trên Portal xem toàn bộ đối chiếu ma trận 6 chiều.</i>")
+        # Lấy 3 tag quy chuẩn trọng tâm, lược bỏ mã HS thô
+        raw_tags = [t.replace('#', '').replace('_', ' ') for t in d.get("matched_tags", []) if not t.startswith('#HS_')]
+        tags_str = " • ".join(raw_tags[:3]) if raw_tags else "Mã HS & Quy cách chuẩn"
+
+        lines.append(f"<b>{idx+1}️⃣ {b_name} ({b_c}) ⇄ {s_name} ({s_c})</b>")
+        lines.append(f"• 📦 Mặt hàng: <b>{item}</b> (Mã HS: {hs})")
+        lines.append(f"• 🎯 Điểm ma trận 6 chiều: <b>{score}/100</b> <i>(Khớp Kim Cương)</i>")
+        lines.append(f"• 💰 Giá trị hợp đồng: ~<b>${val_m}M USD</b>")
+        lines.append(f"• ⚡ Quy chuẩn khớp: <code>{tags_str}</code>")
+        lines.append("")
+
+    lines.append("────────────────────────────")
+    lines.append(f"📌 <i>Chỉ đạo: Mở Bàn Khớp Lệnh trên Portal để đối soát chi tiết ma trận 6 chiều hoặc kích hoạt bộ đôi RFQ hai chiều.</i>")
 
     message_html = "\n".join(lines)
     message_text = re.sub(r"<[^>]+>", "", message_html)

@@ -12,6 +12,7 @@
 | 14/10/2026 | Thẩm định Hợp đồng thuê 10 năm đất Rừng sản xuất (RSX) 2.0 ha với ông H | Luật sư Hợp đồng | 20/10/2026 | 🔄 Đang xử lý |
 | 14/10/2026 | Soạn thảo Thỏa thuận Cổ đông (SHA) bảo vệ 55% quyền biểu quyết của Chủ tịch T | Luật sư M&A / Corporate | 22/10/2026 | 🔄 Đang xử lý |
 | 14/10/2026 | Rà soát điều khoản phạt gấp 3-5 lần nếu chủ đất đơn phương đòi đất trước hạn | Luật sư Tranh tụng & Hợp đồng | 20/10/2026 | 🔄 Đang xử lý |
+| 16/10/2026 | Phối hợp Khối XNK và Công nghệ THD xây dựng Phân hệ Radar Pháp Lý Quốc Tế (Regulatory Radar) & Cảnh báo Chân trời chính sách (EUDR, CBAM, UFLPA, GACC 248/249, FSMA 204, Halal BPJPH) | Luật sư Ngoại thương & Compliance | Thường kỳ | 🟢 ĐÃ TRIỂN KHAI XONG |
 
 ---
 
@@ -20,6 +21,7 @@
 
 * **14/10/2026**: Tiếp nhận bài toán đất rừng sản xuất Ba Hàng Đồi, xác lập cơ chế mô hình pháp nhân kép (Holding Cty Cổ phần + Hợp tác xã liên kết).
 * **15/10/2026**: Kích hoạt hệ thống theo dõi sổ tay thư ký đồng bộ 2 chiều với Tổng Hành Dinh.
+* **16/10/2026 - 17/10/2026**: Phối hợp liên phân hệ cùng Khối XNK và Khối Công nghệ THD hoàn tất khung pháp lý Radar & CSDL chính sách ngoại thương (Regulatory Radar) theo dõi 6 bộ luật quốc tế trọng yếu.
 
 ---
 

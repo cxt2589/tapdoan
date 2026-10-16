@@ -58,6 +58,16 @@ except ImportError:
     WCO_SECTIONS = []
     END_USE_CLUSTERS = {}
 
+try:
+    import hs_products
+except ImportError:
+    hs_products = None
+
+try:
+    import regulatory_radar
+except ImportError:
+    regulatory_radar = None
+
 def load_database():
     try:
         with open(DATA_FILE, "r", encoding="utf-8") as f:
@@ -411,19 +421,84 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
             return
 
         elif path == "/api/hs/search":
-            # Tìm kiếm thông minh tức thì theo từ khóa hoặc mã HS
+            # Tìm kiếm thông minh tức thì theo từ khóa, mã chương HS và sản phẩm cụ thể
             q = query.get("q", [""])[0].strip()
             try:
                 limit = int(query.get("limit", ["15"])[0])
             except Exception:
                 limit = 15
             search_res = search_hs_omni(q, limit) if search_hs_omni else []
+            matching_products = hs_products.search_products_master(q, limit=limit) if hs_products else []
             self._send_json({
                 "status": "SUCCESS",
                 "query": q,
                 "total_matches": len(search_res),
-                "results": search_res
+                "results": search_res,
+                "total_products": len(matching_products),
+                "products": matching_products
             })
+            return
+
+        elif path == "/api/hs/products":
+            # Tra cứu danh mục sản phẩm chi tiết theo mã HS, mã chương hoặc từ khóa
+            q = query.get("q", [""])[0].strip()
+            chapter = query.get("chapter", [""])[0].strip()
+            sector = query.get("sector", [""])[0].strip()
+            try:
+                limit = int(query.get("limit", ["30"])[0])
+            except Exception:
+                limit = 30
+            
+            if chapter and hs_products:
+                prods = hs_products.get_products_by_chapter(chapter)
+            elif sector and hs_products:
+                prods = hs_products.get_products_by_sector(sector)
+            elif q and hs_products:
+                prods = hs_products.search_products_master(q, limit=limit)
+            elif hs_products:
+                prods = hs_products.get_all_products()[:limit]
+            else:
+                prods = []
+
+            self._send_json({
+                "status": "SUCCESS",
+                "total": len(prods),
+                "total_master_count": hs_products.get_products_count() if hs_products else 0,
+                "products": prods
+            })
+            return
+
+        elif path == "/api/regulations/active":
+            # Danh sách các quy định pháp lý và chính sách ngoại thương mới toàn cầu
+            m = query.get("market", [""])[0].strip()
+            hs_q = query.get("hs", [""])[0].strip()
+            risk = query.get("risk", [""])[0].strip()
+            regs = regulatory_radar.get_active_regulations(market=m, hs=hs_q, risk_level=risk) if regulatory_radar else []
+            self._send_json({
+                "status": "SUCCESS",
+                "total": len(regs),
+                "regulations": regs
+            })
+            return
+
+        elif path == "/api/regulations/horizon-calendar":
+            # Lịch dự báo chân trời chính sách (Horizon Scanning Calendar)
+            calendar_events = regulatory_radar.get_horizon_calendar() if regulatory_radar else []
+            self._send_json({
+                "status": "SUCCESS",
+                "total_events": len(calendar_events),
+                "calendar": calendar_events
+            })
+            return
+
+        elif path == "/api/regulations/detail":
+            # Chi tiết hồ sơ quy định pháp lý 360 độ
+            reg_id = query.get("id", [""])[0].strip()
+            reg = regulatory_radar.get_regulation_by_id(reg_id) if regulatory_radar else None
+            if reg:
+                self._send_json({"status": "SUCCESS", "regulation": reg})
+            else:
+                self._send_json({"status": "ERROR", "message": "Regulation not found"}, 404)
             return
 
         elif path == "/api/hs/summary":
@@ -432,6 +507,7 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                 "sections_count": len(WCO_SECTIONS) if WCO_SECTIONS else 21,
                 "chapters_count": len(ALL_97_CHAPTERS) if ALL_97_CHAPTERS else 97,
                 "clusters_count": len(END_USE_CLUSTERS) if END_USE_CLUSTERS else 6,
+                "products_count": hs_products.get_products_count() if hs_products else 0,
                 "sorting_modes": [
                     {"id": "volume", "label": "🔥 Top Kim Ngạch", "desc": "Sắp xếp theo quy mô xuất nhập khẩu & tần suất giao dịch"},
                     {"id": "clusters", "label": "📦 6 Chuỗi Giá Trị", "desc": "Gom nhóm theo mục đích sử dụng công nghiệp trực quan"},
@@ -1284,6 +1360,20 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                 "buyer_rfq": buyer_rfq,
                 "supplier_rfq": supplier_rfq
             })
+            return
+
+        elif path == "/api/regulations/notify-risk-alert":
+            # Gửi thông điệp cảnh báo rủi ro pháp lý & chính sách ngoại thương qua Telegram Bot
+            reg_id = params.get("reg_id", "")
+            dry_run = params.get("dry_run", False) or params.get("test_mode", False)
+            chat_id = params.get("chat_id", None)
+            
+            if not regulatory_radar:
+                self._send_json({"ok": False, "error": "Regulatory radar engine not loaded"}, 500)
+                return
+            
+            res = regulatory_radar.dispatch_telegram_risk_alert(reg_id, chat_id=chat_id, dry_run=dry_run)
+            self._send_json({"ok": res.get("status") == "SUCCESS", "result": res})
             return
 
         self._send_json({"error": "Endpoint not found"}, 404)

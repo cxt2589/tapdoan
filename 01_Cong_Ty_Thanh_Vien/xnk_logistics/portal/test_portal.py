@@ -57,7 +57,7 @@ def run_all_tests():
     time.sleep(0.5)
 
     passed_count = 0
-    total_tests = 45
+    total_tests = 47
 
     try:
         # Test 1: Health Check
@@ -820,7 +820,82 @@ def run_all_tests():
             assert 'id="s-tax-risk-pill"' in html_text
             assert 'whitespace-nowrap' in html_text
             assert 'text-[10px]' in html_text
-        print(f"✅ Test 45/45: Thanh Tìm Kiếm Mobile Tối Ưu, Gợi Ý Thả Nổi Zero-Displacement & Sanctions Cùng Hàng Ngang chuẩn 100%")
+        print(f"✅ Test 45/47: Thanh Tìm Kiếm Mobile Tối Ưu, Gợi Ý Thả Nổi Zero-Displacement & Sanctions Cùng Hàng Ngang chuẩn 100%")
+        passed_count += 1
+
+        # Test 46: Tra Cứu Đầy Đủ Sản Phẩm Thuộc Các Mã Ngành (/api/hs/products & Master Products Catalog)
+        code, prods_res = http_get("/api/hs/products?limit=10")
+        assert code == 200
+        assert prods_res["status"] == "SUCCESS"
+        assert prods_res["total_master_count"] >= 200
+
+        # Tra cứu theo chương 09 (Cà phê)
+        code, ch09_prods = http_get("/api/hs/products?chapter=09")
+        assert code == 200
+        assert ch09_prods["total"] >= 5
+        assert any("0901.11" in p["hs"] for p in ch09_prods["products"])
+
+        # Tra cứu theo từ khóa 'ca phe'
+        code, coffee_res = http_get("/api/hs/products?q=ca+phe")
+        assert code == 200
+        assert coffee_res["total"] >= 3
+
+        # Tra cứu tích hợp omni-search trả về cả Chapters và Products
+        code, omni_both = http_get("/api/hs/search?q=ca+phe")
+        assert code == 200
+        assert omni_both["total_matches"] >= 1
+        assert omni_both["total_products"] >= 3
+        assert any(item["code"] == "09" for item in omni_both["results"])
+        assert any("0901" in p["hs"] for p in omni_both["products"])
+
+        # Kiểm tra frontend tích hợp tra cứu sản phẩm
+        with urllib.request.urlopen(url_html, timeout=5) as html_resp:
+            html_text = html_resp.read().decode('utf-8')
+            assert 'allProductsMasterList' in html_text
+            assert 'selectProductFromSuggestion' in html_text
+            assert 'SẢN PHẨM CỤ THỂ THUỘC MÃ NGÀNH' in html_text
+        print(f"✅ Test 46/47: Tra Cứu Đầy Đủ Sản Phẩm Thuộc Các Mã Ngành (Tổng {prods_res['total_master_count']} sản phẩm, 97 chương HS) chuẩn 100%")
+        passed_count += 1
+
+        # Test 47: Radar Pháp Lý & Giám Sát Chân Trời Chính Sách Ngoại Thương (EUDR, CBAM, UFLPA, GACC)
+        code, regs_res = http_get("/api/regulations/active")
+        assert code == 200
+        assert regs_res["total"] >= 5
+        assert any(r["code"] == "EUDR" for r in regs_res["regulations"])
+        assert any(r["code"] == "CBAM" for r in regs_res["regulations"])
+        assert any(r["code"] == "UFLPA" for r in regs_res["regulations"])
+
+        # Kiểm tra lịch dự báo chân trời chính sách
+        code, cal_res = http_get("/api/regulations/horizon-calendar")
+        assert code == 200
+        assert cal_res["total_events"] >= 5
+
+        # Kiểm tra chi tiết quy định EUDR
+        code, detail_res = http_get("/api/regulations/detail?id=REG-EUDR-2024")
+        assert code == 200
+        assert detail_res["regulation"]["risk_level"] == "CAO"
+        assert "legal_firm_advice" in detail_res["regulation"]
+        assert "logistics_advice" in detail_res["regulation"]
+
+        # Kiểm tra gửi cảnh báo Telegram (chế độ dry_run=True)
+        code, alert_res = http_post("/api/regulations/notify-risk-alert", {
+            "reg_id": "REG-EUDR-2024",
+            "dry_run": True
+        })
+        assert code == 200
+        assert alert_res["ok"] is True
+        assert alert_res["result"]["dry_run"] is True
+
+        # Kiểm tra giao diện Frontend Radar Pháp Lý
+        with urllib.request.urlopen(url_html, timeout=5) as html_resp:
+            html_text = html_resp.read().decode('utf-8')
+            assert 'id="regulatoryRadarModal"' in html_text
+            assert 'openRegulatoryRadarModal' in html_text
+            assert 'closeRegulatoryRadarModal' in html_text
+            assert 'fetchRegulatoryRadarData' in html_text
+            assert 'sendRegulatoryRiskAlertTelegram' in html_text
+            assert 'regulatoryRadarBtn' in html_text
+        print(f"✅ Test 47/47: Radar Pháp Lý & Giám Sát Chân Trời Chính Sách Ngoại Thương (EUDR, CBAM, UFLPA, GACC & Telegram Alert) chuẩn 100%")
         passed_count += 1
 
     finally:

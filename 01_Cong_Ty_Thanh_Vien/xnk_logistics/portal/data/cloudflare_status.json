@@ -1,0 +1,8 @@
+{
+  "status": "ONLINE",
+  "provider": "Cloudflare Tunnel",
+  "public_url": "https://cup-specialist-class-nickname.trycloudflare.com",
+  "local_target": "http://127.0.0.1:8088",
+  "connected_at": "2026-10-16T12:39:20Z",
+  "ssl": "Cloudflare Universal SSL"
+}

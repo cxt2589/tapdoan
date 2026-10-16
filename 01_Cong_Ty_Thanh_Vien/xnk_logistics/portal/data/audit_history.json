@@ -1,0 +1,20 @@
+[
+  {
+    "audit_id": "AUD-20261016085150",
+    "timestamp": "08:51 16/10/2026",
+    "supplier_name": "Công Ty TNHH Nông Sản Thử Nghiệm",
+    "tax_code": "6009988776",
+    "auditor": "Trưởng Ban Kiểm Toán XNK",
+    "scores": {
+      "capacity_actual": 18,
+      "qa_qc_standards": 19,
+      "warehouse_pest_control": 17,
+      "traceability_origin": 19,
+      "labor_ethics_env": 18
+    },
+    "total_score": 91,
+    "tier": "Hạng A (Ưu tiên ký Hợp đồng Khung)",
+    "passed": true,
+    "notes": "Đã hoàn thành kiểm toán thực địa."
+  }
+]

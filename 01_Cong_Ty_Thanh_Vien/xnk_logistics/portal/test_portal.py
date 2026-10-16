@@ -1,0 +1,369 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Bộ Kiểm Thử Tự Động: Trade Intelligence & Verification Portal
+Khối Xuất Nhập Khẩu & Thương Mại Quốc Tế
+Bao gồm phân hệ Săn Tìm Khách Hàng Tiềm Năng Theo Ngành Hàng
+"""
+
+import sys
+import os
+import json
+import time
+import threading
+import urllib.request
+import urllib.parse
+
+# Đảm bảo UTF-8
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
+if hasattr(sys.stderr, 'reconfigure'):
+    sys.stderr.reconfigure(encoding='utf-8')
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, BASE_DIR)
+
+from server import ThreadedHTTPServer, PortalRequestHandler
+
+TEST_PORT = 8089
+
+def start_test_server():
+    server_address = ("127.0.0.1", TEST_PORT)
+    httpd = ThreadedHTTPServer(server_address, PortalRequestHandler)
+    thread = threading.Thread(target=httpd.serve_forever)
+    thread.daemon = True
+    thread.start()
+    return httpd
+
+def http_get(path):
+    url = f"http://127.0.0.1:{TEST_PORT}{path}"
+    with urllib.request.urlopen(url, timeout=5) as resp:
+        return resp.getcode(), json.loads(resp.read().decode('utf-8'))
+
+def http_post(path, data):
+    url = f"http://127.0.0.1:{TEST_PORT}{path}"
+    payload = json.dumps(data).encode('utf-8')
+    req = urllib.request.Request(url, data=payload, headers={'Content-Type': 'application/json'})
+    with urllib.request.urlopen(req, timeout=5) as resp:
+        return resp.getcode(), json.loads(resp.read().decode('utf-8'))
+
+def run_all_tests():
+    print("==================================================================")
+    print("🧪 BẮT ĐẦU KIỂM THỬ TỰ ĐỘNG XNK TRADE INTELLIGENCE PORTAL (PHASE 1)")
+    print("==================================================================")
+
+    httpd = start_test_server()
+    time.sleep(0.5)
+
+    passed_count = 0
+    total_tests = 25
+
+    try:
+        # Test 1: Health Check
+        code, res = http_get("/api/health")
+        assert code == 200 and res["status"] == "ONLINE"
+        assert res["db_stats"]["industries"] >= 5
+        assert res["db_stats"]["industry_leads"] >= 8
+        print(f"✅ Test 1/10: Health check thành công (Uptime: {res['status']}, Industries: {res['db_stats']['industries']}, Leads: {res['db_stats']['industry_leads']})")
+        passed_count += 1
+
+        # Test 2: API Danh mục Ngành Hàng
+        code, ind_list = http_get("/api/industries")
+        assert code == 200 and len(ind_list) >= 5
+        agri = next((i for i in ind_list if i["id"] == "agri_food"), None)
+        assert agri is not None
+        assert len(agri["commodities"]) >= 4
+        print(f"✅ Test 2/10: Lấy danh mục ngành hàng thành công (Tổng ngành: {len(ind_list)}, Nông sản có {len(agri['commodities'])} mặt hàng)")
+        passed_count += 1
+
+        # Test 3: Săn Tìm Khách Hàng Tiềm Năng Ngành Nông Sản
+        code, leads_res = http_get("/api/leads/by-industry?industry=agri_food")
+        assert code == 200
+        assert leads_res["total"] >= 4
+        lead_nkg = next((l for l in leads_res["data"] if "Neumann" in l["company_name"]), None)
+        assert lead_nkg is not None
+        assert lead_nkg["country"] == "Germany"
+        assert lead_nkg["lead_score"] >= 95
+        print(f"✅ Test 3/10: Săn tìm Lead Ngành Nông sản thành công (Tìm thấy {leads_res['total']} Leads; NKG: Điểm {lead_nkg['lead_score']}/100, Nước: {lead_nkg['country']})")
+        passed_count += 1
+
+        # Test 4: Săn Tìm Khách Hàng Theo Mã HS (Ví dụ HS 3102 - Phân bón)
+        code, hs_res = http_get("/api/leads/by-industry?hs=3102")
+        assert code == 200
+        assert hs_res["total"] >= 2
+        print(f"✅ Test 4/10: Săn tìm Lead theo Mã HS 3102 thành công (Tìm thấy {hs_res['total']} nhà thu mua phân bón lớn)")
+        passed_count += 1
+
+        # Test 5: Sinh Thư Chào Hàng Xuất Khẩu B2B Đa Ngôn Ngữ
+        code, outreach_res = http_post("/api/leads/generate-outreach", {
+            "lead_id": "LEAD-AGRI-001",
+            "language": "EN"
+        })
+        assert code == 200
+        assert outreach_res["status"] == "SUCCESS"
+        assert "Neumann Kaffee Gruppe" in outreach_res["outreach"]["body"]
+        assert "Inquiry & Supply Quotation" in outreach_res["outreach"]["subject"]
+        print(f"✅ Test 5/10: Sinh Thư Chào Hàng B2B chuẩn ngoại thương thành công (Ngôn ngữ: EN, Độ dài: {len(outreach_res['outreach']['body'])} ký tự)")
+        passed_count += 1
+
+        # Test 6: Thẩm định Buyer Hạng 1 (Trammo)
+        code, res = http_post("/api/verify/buyer", {"query": "Trammo"})
+        assert code == 200
+        assert res["tier"] == "A"
+        assert res["sanctions_status"] == "CLEAR"
+        assert res["fraud_score"] >= 90
+        print(f"✅ Test 6/10: Thẩm định Buyer Hạng A chuẩn xác (Trammo: {res['fraud_score']}/100, Sanctions: {res['sanctions_status']})")
+        passed_count += 1
+
+        # Test 7: Thẩm định Buyer Lừa Đảo / Scam (EuroAsia)
+        code, res = http_post("/api/verify/buyer", {"query": "EuroAsia"})
+        assert code == 200
+        assert res["tier"] == "C"
+        assert res["is_free_email"] == True
+        assert res["fraud_score"] < 40
+        print(f"✅ Test 7/10: Nhận diện Buyer Lừa Đảo chuẩn xác (EuroAsia: {res['fraud_score']}/100, Tier: {res['tier']}, Free Email: {res['is_free_email']})")
+        passed_count += 1
+
+        # Test 8: Thẩm định Nhà Cung Cấp An Toàn Thuế (Bình Điền)
+        code, res = http_post("/api/verify/supplier", {"tax_code": "0300481234"})
+        assert code == 200
+        assert res["vat_refund_safety_percent"] >= 95
+        assert res["tier"] == "A"
+        print(f"✅ Test 8/10: Bức tường lửa Thuế NCC Hạng A chuẩn xác (Bình Điền: An toàn hoàn thuế {res['vat_refund_safety_percent']}%)")
+        passed_count += 1
+
+        # Test 9: Thẩm định Nhà Cung Cấp Ma / Rủi Ro Cao (Hoàng Long Phát)
+        code, res = http_post("/api/verify/supplier", {"tax_code": "0109988771"})
+        assert code == 200
+        assert res["vat_refund_safety_percent"] <= 20
+        assert "NGUY HIỂM" in res["tax_risk_level"]
+        print(f"✅ Test 9/10: Phát hiện Doanh nghiệp Ma / Hóa đơn khống chuẩn xác (Hoàng Long Phát: An toàn {res['vat_refund_safety_percent']}%, Cảnh báo: {res['tax_risk_level']})")
+        passed_count += 1
+
+        # Test 10: Săn Tìm Vận Đơn Hải Quan (B/L Manifest)
+        code, res = http_get("/api/discovery/bl?hs=3102")
+        assert code == 200
+        assert res["total"] >= 1
+        assert res["data"][0]["hs_code"].startswith("3102")
+        print(f"✅ Test 10/12: Truy vấn Vận đơn Hải quan theo mã HS thành công (Mã HS 3102: Tìm thấy {res['total']} vận đơn)")
+        passed_count += 1
+
+        # Test 11: Phễu Khách Hàng Tiềm Năng (Prospecting Funnel & Stages)
+        code, funnel_res = http_get("/api/leads/by-industry?stage=raw")
+        assert code == 200
+        assert funnel_res["total"] >= 5
+        assert "funnel_stats" in funnel_res
+        assert funnel_res["funnel_stats"]["total"] >= 25
+        assert funnel_res["funnel_stats"]["raw"] >= 5
+        print(f"✅ Test 11/12: Phễu sàng lọc khách hàng thành công (Tổng pool: {funnel_res['funnel_stats']['total']}, Data thô Tầng 1: {funnel_res['funnel_stats']['raw']}, Hạng B: {funnel_res['funnel_stats']['tier_b']}, Hạng A: {funnel_res['funnel_stats']['tier_a']})")
+        passed_count += 1
+
+        # Test 12: Thị Trường Nga (Russia) & Thư Chào Hàng Tiếng Nga (RU)
+        code, ru_res = http_get("/api/leads/by-industry?country=russia")
+        assert code == 200
+        assert ru_res["total"] >= 5
+        lead_orimi = next((l for l in ru_res["data"] if "Orimi" in l["company_name"]), None)
+        assert lead_orimi is not None
+        # Thẩm định tập đoàn Nga Orimi
+        code_verify, verify_orimi = http_post("/api/verify/buyer", {"query": "Orimi Trade"})
+        assert code_verify == 200
+        assert verify_orimi["country"] == "Russia"
+        assert "INN" in verify_orimi["registration_no"]
+        # Sinh thư chào hàng tiếng Nga
+        code_outreach, outreach_ru = http_post("/api/leads/generate-outreach", {
+            "lead_id": "LEAD-AGRI-RU-001",
+            "language": "RU"
+        })
+        assert code_outreach == 200
+        assert outreach_ru["outreach"]["language"] == "RU"
+        assert "Коммерческое предложение" in outreach_ru["outreach"]["subject"]
+        print(f"✅ Test 12/12: Săn tìm & Thẩm định đối tác Nga chuẩn xác (Tìm thấy {ru_res['total']} DN Nga; Orimi Trade INN: {verify_orimi['registration_no']}; Thư tiếng Nga: Đạt chuẩn Form EAV)")
+        passed_count += 1
+
+        # Test 13: Kho 1,000 Leads & 8 Thị Trường Trọng Điểm Toàn Cầu
+        code, reg_res = http_get("/api/regions")
+        assert code == 200
+        assert len(reg_res) >= 8
+        assert "russia_cis" in reg_res and "china_eastasia" in reg_res and "north_america" in reg_res
+        print(f"✅ Test 13/17: Quản trị 8 Thị trường khu vực toàn cầu thành công (Có đủ: Nga/EAEU, TQ/Đông Á, Bắc Mỹ, EU, GCC, Nhật-Hàn, ASEAN, Nam Mỹ/Châu Đại Dương)")
+        passed_count += 1
+
+        # Test 14: Phân Trang Chuẩn 10 Doanh Nghiệp / Trang Trên 1,000 Leads
+        code, p_res = http_get("/api/leads/by-industry?page=1&page_size=10")
+        assert code == 200
+        assert p_res["total"] == 1000
+        assert p_res["page"] == 1
+        assert p_res["page_size"] == 10
+        assert p_res["total_pages"] == 100
+        assert len(p_res["data"]) == 10
+        print(f"✅ Test 14/17: Phân trang chuẩn 10 DN/trang trên tổng 1,000 Leads thành công (Tổng: {p_res['total']}, Tổng trang: {p_res['total_pages']}, Số bản ghi trang 1: {len(p_res['data'])})")
+        passed_count += 1
+
+        # Test 15: Kiểm tra Hai Tín Hiệu: Hoạt Động XNK & Tin Sàn Môi Giới B2B
+        sample_lead = p_res["data"][0]
+        assert "latest_trade_activity" in sample_lead and len(sample_lead["latest_trade_activity"]) > 10
+        assert "broker_rfq_signal" in sample_lead and len(sample_lead["broker_rfq_signal"]) > 10
+        assert "broker_platform" in sample_lead
+        print(f"✅ Test 15/17: Hai luồng tín hiệu XNK & Sàn Môi giới B2B hiển thị đầy đủ (B/L: '{sample_lead['latest_trade_activity'][:45]}...', Sàn: '{sample_lead['broker_platform']}')")
+        passed_count += 1
+
+        # Test 16: Xuất Dữ Liệu Excel / CSV Chuẩn UTF-8 BOM
+        url_csv = f"http://127.0.0.1:{TEST_PORT}/api/leads/export-csv"
+        req_csv = urllib.request.Request(url_csv)
+        with urllib.request.urlopen(req_csv, timeout=5) as csv_resp:
+            assert csv_resp.getcode() == 200
+            content_type = csv_resp.headers.get("Content-Type", "")
+            assert "csv" in content_type
+            raw_bytes = csv_resp.read()
+            # Kiểm tra tiền tố UTF-8 BOM \xef\xbb\xbf
+            assert raw_bytes.startswith(b'\xef\xbb\xbf')
+            csv_text = raw_bytes.decode('utf-8')
+            lines = csv_text.splitlines()
+            assert len(lines) >= 1001  # 1 header + 1000 leads
+            assert "Mã Lead" in lines[0] and "Sàn Môi Giới" in lines[0]
+        print(f"✅ Test 16/17: Xuất danh sách Excel / CSV chuẩn UTF-8 BOM thành công (Tổng {len(lines)-1} dòng dữ liệu, Tiếng Việt không lỗi font)")
+        passed_count += 1
+
+        # Test 17: Làm Mới & Đồng Bộ 1,000 Leads Hàng Ngày (POST /api/leads/refresh-sync)
+        code, sync_res = http_post("/api/leads/refresh-sync", {})
+        assert code == 200
+        assert sync_res["ok"] == True
+        assert sync_res["total_updated"] == 1000
+        print(f"✅ Test 17/17: API Làm mới & Đồng bộ tín hiệu 1,000 Leads hàng ngày thành công (Đã cập nhật: {sync_res['total_updated']} leads)")
+        passed_count += 1
+
+        # Test 18: Danh Mục HS Toàn Diện Theo 4 Chế Độ Xem (Volume, Clusters, Alphabet, WCO)
+        code, cat_vol = http_get("/api/hs/catalog?mode=volume")
+        assert code == 200
+        assert cat_vol["mode"] == "volume"
+        assert len(cat_vol["data"]) == 97
+        assert cat_vol["data"][0]["volume_rank"] == 1
+
+        code, cat_clus = http_get("/api/hs/catalog?mode=clusters")
+        assert code == 200
+        assert cat_clus["mode"] == "clusters"
+        assert len(cat_clus["data"]) >= 6
+
+        code, cat_alpha = http_get("/api/hs/catalog?mode=alphabet")
+        assert code == 200
+        assert cat_alpha["mode"] == "alphabet"
+        assert len(cat_alpha["data"]) >= 15
+
+        code, cat_wco = http_get("/api/hs/catalog?mode=wco")
+        assert code == 200
+        assert cat_wco["mode"] == "wco"
+        assert len(cat_wco["data"]) == 21
+        print(f"✅ Test 18/21: Danh mục HS toàn diện 97 Chương theo 4 Chế độ hiển thị thành công (Volume: 97, Clusters: {len(cat_clus['data'])}, Alphabet: {len(cat_alpha['data'])} vần, WCO: 21 Phần)")
+        passed_count += 1
+
+        # Test 19: Tra Cứu Omni-Search Autocomplete Đa Tiêu Chí
+        code, search_coffee = http_get("/api/hs/search?q=ca+phe")
+        assert code == 200
+        assert search_coffee["total_matches"] >= 1
+        assert any(item["code"] == "09" for item in search_coffee["results"])
+
+        code, search_ch61 = http_get("/api/hs/search?q=61")
+        assert code == 200
+        assert any(item["code"] == "61" for item in search_ch61["results"])
+        print(f"✅ Test 19/21: Tra cứu Omni-Search Autocomplete đa tiêu chí thành công (Khớp từ khóa 'ca phe' -> Chương 09; Khớp mã '61' -> Chương 61 Dệt may)")
+        passed_count += 1
+
+        # Test 20: Tổng Hợp Chuẩn WCO Hải Quan Toàn Cầu (/api/hs/summary)
+        code, summary_res = http_get("/api/hs/summary")
+        assert code == 200
+        assert summary_res["sections_count"] == 21
+        assert summary_res["chapters_count"] == 97
+        assert summary_res["clusters_count"] >= 6
+        assert len(summary_res["sorting_modes"]) == 4
+        print(f"✅ Test 20/21: Tổng hợp danh mục WCO chuẩn xác (21 Phần, 97 Chương, {summary_res['clusters_count']} Cụm chuỗi giá trị, 4 Chế độ tra cứu)")
+        passed_count += 1
+
+        # Test 21: Lọc Leads Theo Chương (Chapter) & Theo Cụm Chuỗi Ngành (Cluster)
+        code, lead_ch61 = http_get("/api/leads/by-industry?chapter=61")
+        assert code == 200
+        assert lead_ch61["total"] >= 1
+        assert any("61" in c.get("hs_code", "") for l in lead_ch61["data"] for c in l.get("commodities_demanded", []))
+
+        code, lead_cluster_tech = http_get("/api/leads/by-industry?cluster=tech_machinery")
+        assert code == 200
+        assert lead_cluster_tech["total"] >= 1
+        print(f"✅ Test 21/23: Lọc kho 1,000 Leads theo Chương HS (Chương 61: {lead_ch61['total']} DN) và theo Cụm ngành (Công nghệ/Cơ khí: {lead_cluster_tech['total']} DN) thành công")
+        passed_count += 1
+
+        # Test 22: Hồ Sơ Tình Báo Chi Tiết Doanh Nghiệp & Lịch Sử Vận Đơn B/L, Sàn B2B (/api/leads/detail)
+        code, detail_res = http_get("/api/leads/detail?id=LEAD-AGRI-001")
+        assert code == 200
+        assert detail_res["ok"] == True
+        lead_det = detail_res["lead"]
+        assert lead_det["company_name"] == "Neumann Kaffee Gruppe (NKG)"
+        assert len(lead_det["historical_bl_records"]) >= 3
+        assert len(lead_det["historical_b2b_rfqs"]) >= 3
+        assert any(b["bl_number"] for b in lead_det["historical_bl_records"])
+        print(f"✅ Test 22/23: Hồ sơ tình báo chi tiết & Lịch sử B/L ({len(lead_det['historical_bl_records'])} vận đơn), Sàn B2B ({len(lead_det['historical_b2b_rfqs'])} RFQ) thành công")
+        passed_count += 1
+
+        # Test 23: Săn Tìm & Lọc Nhà Cung Cấp & Đại Lý Cấp 1 Toàn Cầu (/api/suppliers)
+        code, sups_all = http_get("/api/suppliers")
+        assert code == 200
+        assert len(sups_all) >= 20
+        # Lọc theo loại Tier-1 Master Agent
+        code, sups_tier1 = http_get("/api/suppliers?type=tier1_master_agent")
+        assert code == 200
+        assert len(sups_tier1) >= 6
+        assert all("tier1" in s.get("supplier_type", "") for s in sups_tier1)
+        # Lọc theo nước Thụy Sĩ (ch)
+        code, sups_ch = http_get("/api/suppliers?country=ch")
+        assert code == 200
+        assert len(sups_ch) >= 1
+        assert any("Ameropa" in s.get("company_name", s.get("name", "")) for s in sups_ch)
+        # Lọc theo nước Nga (ru) - Kiểm tra tính chuẩn xác tuyệt đối (không lẫn Singapore / Việt Nam)
+        code, sups_ru = http_get("/api/suppliers?country=ru")
+        assert code == 200
+        assert len(sups_ru) == 2
+        assert all(s.get("country_code") == "RU" for s in sups_ru)
+        assert not any("singapore" in (s.get("country", "")).lower() for s in sups_ru)
+        print(f"✅ Test 23/25: Động cơ Săn tìm NCC & Đại lý Cấp 1 Toàn cầu (Tổng {len(sups_all)} NCC, {len(sups_tier1)} Đại lý Tier-1, Lọc theo Quốc gia chuẩn xác 100% không dính nhầm từ khóa)")
+        passed_count += 1
+
+        # Test 24: Động Cơ Giao Diện Sáng / Tối (Light & Dark Theme Engine)
+        url_html = f"http://127.0.0.1:{TEST_PORT}/"
+        with urllib.request.urlopen(url_html, timeout=5) as html_resp:
+            assert html_resp.getcode() == 200
+            html_text = html_resp.read().decode('utf-8')
+            assert 'id="themeToggleBtn"' in html_text
+            assert 'toggleTheme()' in html_text
+            assert 'COMPREHENSIVE LIGHT THEME ENGINE' in html_text
+            assert "portal_theme" in html_text
+        print(f"✅ Test 24/25: Giao diện Sáng (Light Mode) & Bộ chuyển đổi Theme Sáng/Tối tích hợp hoàn hảo")
+        passed_count += 1
+
+        # Test 25: Popup Hồ Sơ Chi Tiết NCC (Dossier Modal) & Thẩm Định Đa Tầng Cung Ứng
+        code, sup_det = http_get("/api/suppliers/detail?id=SUP-GLB-001")
+        assert code == 200
+        assert sup_det["ok"] == True
+        sup_data = sup_det["supplier"]
+        assert sup_data["company_name"] == "Trammo, Inc."
+        assert len(sup_data["commodities_supplied"]) >= 2
+        assert all(isinstance(c, dict) and "hs_code" in c and "name" in c for c in sup_data["commodities_supplied"])
+        assert len(sup_data["customs_bl_records"]) >= 1
+
+        # Kiểm tra frontend có popup modal và các hàm tác nghiệp
+        with urllib.request.urlopen(url_html, timeout=5) as html_resp:
+            html_text = html_resp.read().decode('utf-8')
+            assert 'id="supplierDetailModal"' in html_text
+            assert 'openSupplierDetailModal' in html_text
+            assert 'inspectSupplier' in html_text
+            assert 'formatCommodityBadges' in html_text
+            assert 'supd-commodities-container' in html_text
+        print(f"✅ Test 25/25: Popup Dossier Modal NCC, API Chi Tiết (/api/suppliers/detail), Thẩm định định tuyến linh hoạt & Format Hàng hóa sạch 100% không [object Object]")
+        passed_count += 1
+
+    finally:
+        httpd.shutdown()
+
+    print("==================================================================")
+    print(f"🎉 KẾT QUẢ: {passed_count}/{total_tests} BÀI KIỂM THỬ ĐẠT CHUẨN 100%!")
+    print("==================================================================")
+
+if __name__ == "__main__":
+    run_all_tests()

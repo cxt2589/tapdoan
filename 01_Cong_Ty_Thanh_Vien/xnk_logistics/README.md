@@ -32,6 +32,7 @@ D:\project antigravity\Project\XNK\
 ├── GEMINI.md                             <-- Chỉ dẫn vận hành AI Agent tại Khối XNK
 ├── SO_TAY_THU_KY.md                      <-- Sổ tay Thư ký theo dõi chỉ thị & đường ống lô hàng
 ├── QUY_TRINH_XUAT_NHAP_KHAU_CHUAN.md     <-- Cẩm nang quy trình 8 bước XNK thực chiến
+├── QUY_TRINH_TIM_KIEM_THAM_DINH_KHACH_HANG_VA_NCC.md <-- Quy trình tìm kiếm, thẩm định Buyer & Supplier
 └── README.md                             <-- Tài liệu giới thiệu Khối XNK
 ```
 

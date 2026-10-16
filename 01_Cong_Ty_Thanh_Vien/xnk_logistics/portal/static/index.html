@@ -1753,7 +1753,7 @@
   <!-- ============================================================= -->
   <!-- MODAL: COMPANY DOSSIER & HISTORICAL TRADE INTELLIGENCE        -->
   <!-- ============================================================= -->
-  <div id="companyDetailModal" onclick="handleModalBackdropClick(event, 'companyDetailModal')" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 overscroll-contain">
+  <div id="companyDetailModal" onclick="handleModalBackdropClick(event, 'companyDetailModal')" class="fixed inset-0 z-[60] bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 overscroll-contain">
     <div onclick="event.stopPropagation()" class="w-full max-w-4xl rounded-3xl p-1 bg-gradient-to-b from-cyan-500/30 via-white/10 to-white/5 border border-cyan-500/40 shadow-2xl">
       <div class="bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-5 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container">
         
@@ -1998,7 +1998,7 @@
   <!-- ============================================================= -->
   <!-- MODAL: COMPANY CONTACTS DOSSIER (ĐẦU MỐI LIÊN LẠC BỔ SUNG)     -->
   <!-- ============================================================= -->
-  <div id="companyContactsModal" onclick="handleModalBackdropClick(event, 'companyContactsModal')" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 overscroll-contain">
+  <div id="companyContactsModal" onclick="handleModalBackdropClick(event, 'companyContactsModal')" class="fixed inset-0 z-[70] bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 overscroll-contain">
     <div onclick="event.stopPropagation()" class="w-full max-w-3xl rounded-3xl p-1 bg-gradient-to-b from-cyan-500/30 via-white/10 to-white/5 border border-cyan-500/40 shadow-2xl">
       <div class="bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-5 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container">
         
@@ -2055,7 +2055,7 @@
   <!-- ============================================================= -->
   <!-- MODAL: SUPPLIER & GLOBAL TIER-1 AGENT DOSSIER DETAIL          -->
   <!-- ============================================================= -->
-  <div id="supplierDetailModal" onclick="handleModalBackdropClick(event, 'supplierDetailModal')" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 overscroll-contain">
+  <div id="supplierDetailModal" onclick="handleModalBackdropClick(event, 'supplierDetailModal')" class="fixed inset-0 z-[60] bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 overscroll-contain">
     <div onclick="event.stopPropagation()" class="w-full max-w-4xl rounded-3xl p-1 bg-gradient-to-b from-cyan-500/30 via-white/10 to-white/5 border border-cyan-500/40 shadow-2xl">
       <div class="bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-5 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container">
         
@@ -2447,6 +2447,129 @@
   </div>
 
   <!-- ============================================================= -->
+  <!-- MODAL: DUAL B2B RFQ (BUYER QUOTATION + SUPPLIER INQUIRY)      -->
+  <!-- ============================================================= -->
+  <div id="dualRfqModal" onclick="handleModalBackdropClick(event, 'dualRfqModal')" class="fixed inset-0 z-[60] bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 overscroll-contain">
+    <div onclick="event.stopPropagation()" class="w-full max-w-4xl rounded-3xl p-1 bg-gradient-to-b from-emerald-500/40 via-white/10 to-white/5 border border-emerald-500/40 shadow-2xl">
+      <div class="bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-5 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container">
+        
+        <!-- Header -->
+        <div class="flex items-start justify-between border-b border-white/10 pb-4">
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-bold">BỘ ĐÔI RFQ & CHÀO HÀNG B2B NGOẠI THƯƠNG</span>
+              <span id="drfq-status-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">Cặp Khớp Kim Cương</span>
+            </div>
+            <h3 class="text-lg sm:text-2xl font-black text-white mt-2 tracking-tight flex flex-wrap items-center gap-2">
+              <span id="drfq-buyer-name" class="text-cyan-400">Buyer</span>
+              <span class="text-slate-400 text-sm sm:text-base font-normal">⇄</span>
+              <span id="drfq-supplier-name" class="text-emerald-400">Supplier</span>
+            </h3>
+            <p class="text-xs text-slate-400 mt-1 font-mono" id="drfq-desc-sub">Đồng bộ 2 luồng: Thư chào bán gửi Khách hàng & Thư hỏi nguồn hàng gửi Nhà cung cấp</p>
+          </div>
+          <button type="button" onclick="closeDualRfqModal()" class="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all cursor-pointer">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- 2 Main Sub-Tabs: Buyer RFQ vs Supplier RFQ -->
+        <div class="grid grid-cols-2 gap-2 p-1.5 rounded-2xl bg-brand-950/80 border border-white/10">
+          <button type="button" id="btn-drfq-tab-buyer" onclick="switchDualRfqTab('buyer')" class="py-2.5 px-3 rounded-xl font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 bg-cyan-500 text-brand-950 shadow-md cursor-pointer">
+            <i data-lucide="mail" class="w-4 h-4"></i>
+            <span class="truncate">1. Thư Chào Hàng Cho Khách Hàng (Buyer)</span>
+          </button>
+          <button type="button" id="btn-drfq-tab-supplier" onclick="switchDualRfqTab('supplier')" class="py-2.5 px-3 rounded-xl font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer">
+            <i data-lucide="factory" class="w-4 h-4"></i>
+            <span class="truncate">2. Thư Hỏi Hàng Gửi Nhà Cung Cấp (Supplier)</span>
+          </button>
+        </div>
+
+        <!-- Panel 1: Buyer RFQ Section -->
+        <div id="drfq-buyer-panel" class="space-y-4">
+          <!-- Language Selector for Buyer -->
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/5 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="text-xs text-slate-400 font-mono">NGÔN NGỮ GỬI KHÁCH:</span>
+              <div class="flex items-center gap-1.5">
+                <button type="button" onclick="changeDualBuyerLanguage('EN')" id="btn-dbuyer-EN" class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-cyan-500 text-brand-950 cursor-pointer">ENGLISH</button>
+                <button type="button" onclick="changeDualBuyerLanguage('CN')" id="btn-dbuyer-CN" class="px-2.5 py-1 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer">中文</button>
+                <button type="button" onclick="changeDualBuyerLanguage('RU')" id="btn-dbuyer-RU" class="px-2.5 py-1 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer">РУССКИЙ</button>
+                <button type="button" onclick="changeDualBuyerLanguage('VN')" id="btn-dbuyer-VN" class="px-2.5 py-1 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer">TIẾNG VIỆT</button>
+              </div>
+            </div>
+            <span class="text-xs font-mono text-cyan-300 bg-cyan-950/60 border border-cyan-500/20 px-2.5 py-0.5 rounded truncate max-w-full" id="drfq-buyer-recipient-badge">Khách hàng: ...</span>
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="block text-xs font-mono uppercase text-slate-400">Tiêu đề Thư Chào Hàng (Subject Line):</label>
+            <div class="flex items-center gap-2">
+              <input type="text" id="drfq-buyer-subject" class="flex-1 px-4 py-2.5 bg-brand-950 border border-white/10 rounded-xl text-xs sm:text-sm text-cyan-400 font-mono focus:border-cyan-400 outline-none">
+              <button type="button" onclick="copyToClipboard('drfq-buyer-subject')" class="px-3.5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 text-xs font-mono cursor-pointer">Copy</button>
+            </div>
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="block text-xs font-mono uppercase text-slate-400">Nội dung Thư Chào Hàng (Official B2B Quotation Body):</label>
+            <div class="relative">
+              <textarea id="drfq-buyer-body" rows="9" class="w-full px-4 py-3 bg-brand-950 border border-white/10 rounded-2xl text-xs sm:text-sm text-slate-200 font-mono leading-relaxed focus:border-cyan-400 outline-none"></textarea>
+              <button type="button" onclick="copyToClipboard('drfq-buyer-body')" class="absolute top-3 right-3 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-mono backdrop-blur-sm border border-white/10 cursor-pointer">Sao Chép Thư</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 2: Supplier RFQ Section -->
+        <div id="drfq-supplier-panel" class="space-y-4 hidden">
+          <!-- Language Selector for Supplier -->
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/5 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="text-xs text-slate-400 font-mono">NGÔN NGỮ GỬI NCC:</span>
+              <div class="flex items-center gap-1.5">
+                <button type="button" onclick="changeDualSupplierLanguage('VN')" id="btn-dsup-VN" class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-emerald-500 text-brand-950 cursor-pointer">TIẾNG VIỆT (Nội địa)</button>
+                <button type="button" onclick="changeDualSupplierLanguage('EN')" id="btn-dsup-EN" class="px-2.5 py-1 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer">ENGLISH (Quốc tế)</button>
+              </div>
+            </div>
+            <span class="text-xs font-mono text-emerald-300 bg-emerald-950/60 border border-emerald-500/20 px-2.5 py-0.5 rounded truncate max-w-full" id="drfq-supplier-recipient-badge">Nhà Cung Cấp: ...</span>
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="block text-xs font-mono uppercase text-slate-400">Tiêu đề Yêu Cầu Báo Giá (Supplier Inquiry Subject):</label>
+            <div class="flex items-center gap-2">
+              <input type="text" id="drfq-supplier-subject" class="flex-1 px-4 py-2.5 bg-brand-950 border border-white/10 rounded-xl text-xs sm:text-sm text-emerald-400 font-mono focus:border-emerald-400 outline-none">
+              <button type="button" onclick="copyToClipboard('drfq-supplier-subject')" class="px-3.5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 text-xs font-mono cursor-pointer">Copy</button>
+            </div>
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="block text-xs font-mono uppercase text-slate-400">Nội dung Yêu Cầu Chào Hàng / Đặt Hàng NCC (Purchase RFQ Body):</label>
+            <div class="relative">
+              <textarea id="drfq-supplier-body" rows="9" class="w-full px-4 py-3 bg-brand-950 border border-white/10 rounded-2xl text-xs sm:text-sm text-slate-200 font-mono leading-relaxed focus:border-emerald-400 outline-none"></textarea>
+              <button type="button" onclick="copyToClipboard('drfq-supplier-body')" class="absolute top-3 right-3 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-mono backdrop-blur-sm border border-white/10 cursor-pointer">Sao Chép Thư</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Actions -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-3 border-t border-white/10">
+          <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
+            <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
+            <span>Đã khóa định dạng bảo mật thông tin & biên lợi nhuận môi giới</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="dispatchDualRfqTelegramAlert()" class="px-4 py-2 rounded-xl text-xs font-bold bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-500/30 transition-all flex items-center justify-center gap-2 cursor-pointer">
+              <i data-lucide="send" class="w-3.5 h-3.5"></i>
+              <span>Bắn Báo Cáo Bộ Đôi RFQ Telegram</span>
+            </button>
+            <button type="button" onclick="closeDualRfqModal()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/10 transition-all cursor-pointer">
+              Đóng (Esc)
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
   <!-- MODAL: 6-DIMENSIONAL DEAL GAP ANALYSIS & MATCH DOSSIER         -->
   <!-- ============================================================= -->
   <div id="matchDetailModal" onclick="handleModalBackdropClick(event, 'matchDetailModal')" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4 overscroll-contain">
@@ -2481,7 +2604,7 @@
               <span class="text-[10px] font-mono uppercase text-cyan-400 font-bold">BÊN THU MUA (BUYER)</span>
               <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-500/20 text-cyan-300 font-bold" id="md-buyer-tier">Tier A</span>
             </div>
-            <h4 class="text-base font-bold text-white" id="md-buyer-name">Neumann Kaffee Gruppe (NKG)</h4>
+            <h4 class="text-base font-bold text-white hover:text-cyan-400 cursor-pointer underline decoration-cyan-500/30 underline-offset-2 transition-colors inline-block" id="md-buyer-name" onclick="openBuyerDetailFromMatch()" title="Nhấn để xem hồ sơ chi tiết khách hàng">Neumann Kaffee Gruppe (NKG)</h4>
             <div class="text-xs text-slate-300 space-y-1 font-mono">
               <p>📍 Quốc gia: <span class="text-white font-bold" id="md-buyer-country">Germany (DE)</span></p>
               <p>📦 Nhu cầu: <span class="text-white font-bold" id="md-buyer-demand">120,000 tấn/năm</span></p>
@@ -2495,7 +2618,7 @@
               <span class="text-[10px] font-mono uppercase text-emerald-400 font-bold">BÊN CUNG ỨNG (SUPPLIER)</span>
               <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/20 text-emerald-300 font-bold" id="md-supplier-type">Nhà Máy Chế Biến</span>
             </div>
-            <h4 class="text-base font-bold text-white" id="md-supplier-name">Daklak Agri Products Ltd</h4>
+            <h4 class="text-base font-bold text-white hover:text-emerald-400 cursor-pointer underline decoration-emerald-500/30 underline-offset-2 transition-colors inline-block" id="md-supplier-name" onclick="openSupplierDetailFromMatch()" title="Nhấn để xem hồ sơ chi tiết nhà cung cấp">Daklak Agri Products Ltd</h4>
             <div class="text-xs text-slate-300 space-y-1 font-mono">
               <p>📍 Trụ sở / Xưởng: <span class="text-white font-bold" id="md-supplier-country">Việt Nam (VN)</span></p>
               <p>🏭 Công suất: <span class="text-white font-bold" id="md-supplier-capacity">8,500 tấn/tháng</span></p>
@@ -2701,6 +2824,19 @@
       // Default samples
       runBuyerSample('Trammo, Inc.');
       runSupplierSample('0300481234');
+
+      // Khôi phục Tab đang hoạt động khi F5 hoặc mở link có hash
+      const hashTab = (window.location.hash || '').replace(/^#/, '').replace(/^tab-/, '');
+      const storedTab = localStorage.getItem('xnk_active_tab');
+      const validTabs = ['prospecting', 'buyers', 'suppliers', 'matchmaker', 'sourcing', 'audit'];
+      const initialTab = validTabs.includes(hashTab) ? hashTab : (validTabs.includes(storedTab) ? storedTab : 'prospecting');
+      switchTab(initialTab);
+    });
+
+    window.addEventListener('hashchange', () => {
+      const h = (window.location.hash || '').replace(/^#/, '').replace(/^tab-/, '');
+      const validTabs = ['prospecting', 'buyers', 'suppliers', 'matchmaker', 'sourcing', 'audit'];
+      if (validTabs.includes(h)) switchTab(h);
     });
 
     function showToast(title, desc, isError = false) {
@@ -2742,7 +2878,17 @@
     });
 
     function switchTab(tab) {
-      ['prospecting', 'buyers', 'suppliers', 'matchmaker', 'sourcing', 'audit'].forEach(t => {
+      const validTabs = ['prospecting', 'buyers', 'suppliers', 'matchmaker', 'sourcing', 'audit'];
+      if (!validTabs.includes(tab)) tab = 'prospecting';
+
+      try {
+        localStorage.setItem('xnk_active_tab', tab);
+        if (window.location.hash !== '#' + tab) {
+          history.replaceState(null, '', '#' + tab);
+        }
+      } catch (e) {}
+
+      validTabs.forEach(t => {
         const sec = document.getElementById(`section-${t}`);
         if (sec) sec.classList.add('hidden');
         const btn = document.getElementById(`tab-${t}`);
@@ -2771,7 +2917,7 @@
       }
 
       toggleAllModulesHub(false);
-      lucide.createIcons();
+      if (window.lucide) lucide.createIcons();
     }
 
     // ==========================================
@@ -3903,7 +4049,7 @@
 
     function unlockBodyScroll() {
       setTimeout(() => {
-        const openModals = document.querySelectorAll('#companyDetailModal:not(.hidden), #supplierDetailModal:not(.hidden), #hsCatalogModal:not(.hidden), #outreachModal:not(.hidden), #matchDetailModal:not(.hidden), #companyContactsModal:not(.hidden)');
+        const openModals = document.querySelectorAll('#companyDetailModal:not(.hidden), #supplierDetailModal:not(.hidden), #hsCatalogModal:not(.hidden), #outreachModal:not(.hidden), #dualRfqModal:not(.hidden), #matchDetailModal:not(.hidden), #companyContactsModal:not(.hidden)');
         if (openModals.length === 0) {
           document.body.classList.remove('modal-open');
           document.documentElement.classList.remove('modal-open');
@@ -3924,6 +4070,7 @@
       else if (modalId === 'supplierDetailModal') closeSupplierDetailModal();
       else if (modalId === 'hsCatalogModal') closeHsCatalogModal();
       else if (modalId === 'outreachModal') closeOutreachModal();
+      else if (modalId === 'dualRfqModal') closeDualRfqModal();
       else if (modalId === 'matchDetailModal') closeMatchDetailModal();
       else if (modalId === 'companyContactsModal') closeCompanyContactsModal();
       else {
@@ -3938,6 +4085,7 @@
       closeSupplierDetailModal();
       closeHsCatalogModal();
       closeOutreachModal();
+      closeDualRfqModal();
       closeMatchDetailModal();
       closeCompanyContactsModal();
     }
@@ -5683,7 +5831,7 @@
                   <span class="text-[9px] font-mono uppercase text-cyan-400 font-bold">KHÁCH HÀNG (BUYER)</span>
                   <span class="text-[9px] font-mono text-slate-400">${m.buyer_country_code || ''}</span>
                 </div>
-                <h4 class="text-xs font-bold text-white truncate" title="${m.buyer_name}">${m.buyer_name}</h4>
+                <h4 class="text-xs font-bold text-white hover:text-cyan-400 cursor-pointer underline decoration-cyan-500/30 underline-offset-2 transition-colors truncate" title="Nhấn để xem hồ sơ chi tiết khách hàng" onclick="openCompanyDetailModal('${m.buyer_id}')">${m.buyer_name}</h4>
                 <p class="text-[11px] text-slate-300 truncate font-mono">📍 ${m.buyer_country}</p>
                 <p class="text-[10px] text-slate-400 truncate">📦 Cần: ${m.matched_commodity}</p>
               </div>
@@ -5701,7 +5849,7 @@
                   <span class="text-[9px] font-mono uppercase text-emerald-400 font-bold">NHÀ CUNG CẤP</span>
                   <span class="text-[9px] font-mono text-slate-400">${m.supplier_country_code || ''}</span>
                 </div>
-                <h4 class="text-xs font-bold text-white truncate" title="${m.supplier_name}">${m.supplier_short_name}</h4>
+                <h4 class="text-xs font-bold text-white hover:text-emerald-400 cursor-pointer underline decoration-emerald-500/30 underline-offset-2 transition-colors truncate" title="Nhấn để xem hồ sơ chi tiết nhà cung cấp" onclick="openSupplierDetailModal('${m.supplier_id}')">${m.supplier_short_name}</h4>
                 <p class="text-[11px] text-slate-300 truncate font-mono">🏭 ${m.supplier_country}</p>
                 <p class="text-[10px] text-emerald-400 truncate">✓ ${m.supplier_type}</p>
               </div>
@@ -5756,7 +5904,7 @@
                   <i data-lucide="send" class="w-3.5 h-3.5"></i>
                   <span class="hidden sm:inline">Báo Cáo Bot</span>
                 </button>
-                <button onclick="openDualOutreach('${m.buyer_id}', '${m.matched_commodity.replace(/'/g, "\\'")}', '${m.matched_hs}')" class="px-3 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-brand-950 font-bold font-mono text-xs transition-all flex items-center gap-1 cursor-pointer active:scale-95 shadow-md shadow-emerald-500/10">
+                <button onclick="openDualOutreach('${m.buyer_id}', '${m.supplier_id}', '${(m.matched_commodity || '').replace(/'/g, "\\'")}', '${m.matched_hs || ''}')" class="px-3 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-brand-950 font-bold font-mono text-xs transition-all flex items-center gap-1 cursor-pointer active:scale-95 shadow-md shadow-emerald-500/10">
                   <i data-lucide="mail" class="w-3.5 h-3.5"></i>
                   <span>Sinh RFQ Đôi</span>
                 </button>
@@ -5933,9 +6081,20 @@
       // Buttons inside modal
       document.getElementById('btn-md-telegram').onclick = () => sendDealToTelegram(m.buyer_id, m.supplier_id);
       document.getElementById('btn-md-outreach').onclick = () => {
-        closeMatchDetailModal();
-        openDualOutreach(m.buyer_id, m.matched_commodity, m.matched_hs);
+        openDualOutreach(m.buyer_id, m.supplier_id, m.matched_commodity, m.matched_hs);
       };
+    }
+
+    function openBuyerDetailFromMatch() {
+      if (currentDetailMatch && currentDetailMatch.buyer_id) {
+        openCompanyDetailModal(currentDetailMatch.buyer_id);
+      }
+    }
+
+    function openSupplierDetailFromMatch() {
+      if (currentDetailMatch && currentDetailMatch.supplier_id) {
+        openSupplierDetailModal(currentDetailMatch.supplier_id);
+      }
     }
 
     function closeMatchDetailModal() {
@@ -5980,9 +6139,169 @@
       }
     }
 
-    function openDualOutreach(buyerId, commodity, hs) {
-      switchTab('prospecting');
-      openOutreachModal(buyerId, commodity, hs);
+    // ==========================================
+    // DUAL RFQ CONTROLLERS (BUYER QUOTATION + SUPPLIER INQUIRY)
+    // ==========================================
+    let currentDualBuyerId = null;
+    let currentDualSupplierId = null;
+    let currentDualCommodity = null;
+    let currentDualHs = null;
+    let currentDualBuyerLang = 'EN';
+    let currentDualSupLang = 'VN';
+    let currentDualActiveTab = 'buyer';
+
+    function switchDualRfqTab(tab) {
+      currentDualActiveTab = tab;
+      const buyerBtn = document.getElementById('btn-drfq-tab-buyer');
+      const supBtn = document.getElementById('btn-drfq-tab-supplier');
+      const buyerPanel = document.getElementById('drfq-buyer-panel');
+      const supPanel = document.getElementById('drfq-supplier-panel');
+
+      if (tab === 'buyer') {
+        if (buyerBtn) buyerBtn.className = 'py-2.5 px-3 rounded-xl font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 bg-cyan-500 text-brand-950 shadow-md cursor-pointer';
+        if (supBtn) supBtn.className = 'py-2.5 px-3 rounded-xl font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer';
+        if (buyerPanel) buyerPanel.classList.remove('hidden');
+        if (supPanel) supPanel.classList.add('hidden');
+      } else {
+        if (supBtn) supBtn.className = 'py-2.5 px-3 rounded-xl font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 bg-emerald-500 text-brand-950 shadow-md cursor-pointer';
+        if (buyerBtn) buyerBtn.className = 'py-2.5 px-3 rounded-xl font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer';
+        if (supPanel) supPanel.classList.remove('hidden');
+        if (buyerPanel) buyerPanel.classList.add('hidden');
+      }
+      if (window.lucide) lucide.createIcons();
+    }
+
+    async function openDualOutreach(buyerId, supplierId, commodity, hs) {
+      lockBodyScroll();
+      currentDualBuyerId = buyerId;
+      currentDualSupplierId = supplierId;
+      currentDualCommodity = commodity;
+      currentDualHs = hs;
+
+      switchDualRfqTab('buyer');
+      const modal = document.getElementById('dualRfqModal');
+      if (modal) modal.classList.remove('hidden');
+      if (window.lucide) lucide.createIcons();
+
+      await fetchAndPopulateDualRfq();
+    }
+
+    async function fetchAndPopulateDualRfq() {
+      try {
+        const res = await fetch('/api/matches/generate-dual-rfq', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            buyer_id: currentDualBuyerId,
+            supplier_id: currentDualSupplierId,
+            buyer_language: currentDualBuyerLang,
+            supplier_language: currentDualSupLang,
+            commodity: currentDualCommodity,
+            hs_code: currentDualHs
+          })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          const bNameEl = document.getElementById('drfq-buyer-name');
+          const sNameEl = document.getElementById('drfq-supplier-name');
+          const bBadge = document.getElementById('drfq-buyer-recipient-badge');
+          const sBadge = document.getElementById('drfq-supplier-recipient-badge');
+
+          if (bNameEl) bNameEl.textContent = data.buyer.name;
+          if (sNameEl) sNameEl.textContent = data.supplier.short_name || data.supplier.name;
+          if (bBadge) bBadge.textContent = `Khách hàng: ${data.buyer.name} (${data.buyer.country})`;
+          if (sBadge) sBadge.textContent = `NCC: ${data.supplier.short_name || data.supplier.name} (${data.supplier.country})`;
+
+          if (data.buyer_rfq) {
+            const bSub = document.getElementById('drfq-buyer-subject');
+            const bBody = document.getElementById('drfq-buyer-body');
+            if (bSub) bSub.value = data.buyer_rfq.subject || '';
+            if (bBody) bBody.value = data.buyer_rfq.body || '';
+          }
+          if (data.supplier_rfq) {
+            const sSub = document.getElementById('drfq-supplier-subject');
+            const sBody = document.getElementById('drfq-supplier-body');
+            if (sSub) sSub.value = data.supplier_rfq.subject || '';
+            if (sBody) sBody.value = data.supplier_rfq.body || '';
+          }
+        }
+      } catch (err) {
+        showToast('Lỗi Khởi Tạo RFQ Đôi', 'Không thể nạp dữ liệu bộ đôi RFQ từ máy chủ.', true);
+      }
+    }
+
+    function closeDualRfqModal() {
+      const modal = document.getElementById('dualRfqModal');
+      if (modal) modal.classList.add('hidden');
+      unlockBodyScroll();
+    }
+
+    function changeDualBuyerLanguage(lang) {
+      currentDualBuyerLang = lang;
+      ['EN', 'CN', 'RU', 'VN'].forEach(l => {
+        const btn = document.getElementById(`btn-dbuyer-${l}`);
+        if (btn) {
+          if (l === lang) {
+            btn.className = 'px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-cyan-500 text-brand-950 cursor-pointer';
+          } else {
+            btn.className = 'px-2.5 py-1 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer';
+          }
+        }
+      });
+      fetchAndPopulateDualRfq();
+    }
+
+    function changeDualSupplierLanguage(lang) {
+      currentDualSupLang = lang;
+      ['VN', 'EN'].forEach(l => {
+        const btn = document.getElementById(`btn-dsup-${l}`);
+        if (btn) {
+          if (l === lang) {
+            btn.className = 'px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-emerald-500 text-brand-950 cursor-pointer';
+          } else {
+            btn.className = 'px-2.5 py-1 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer';
+          }
+        }
+      });
+      fetchAndPopulateDualRfq();
+    }
+
+    async function dispatchDualRfqTelegramAlert() {
+      const bSub = document.getElementById('drfq-buyer-subject').value;
+      const sSub = document.getElementById('drfq-supplier-subject').value;
+      const bName = document.getElementById('drfq-buyer-name').textContent;
+      const sName = document.getElementById('drfq-supplier-name').textContent;
+
+      const payload = {
+        title: `📨 BÁO CÁO BỘ ĐÔI RFQ NGOẠI THƯƠNG: ${bName} ⇄ ${sName}`,
+        details: [
+          `1. Thư Chào Hàng Cho Khách: ${bSub}`,
+          `   • Doanh nghiệp nhận: ${bName}`,
+          `   • Ngôn ngữ: ${currentDualBuyerLang}`,
+          `2. Thư Hỏi Hàng Gửi Nhà Cung Cấp: ${sSub}`,
+          `   • Nhà cung ứng: ${sName}`,
+          `   • Ngôn ngữ: ${currentDualSupLang}`,
+          `Trạng thái: Đã sinh hoàn chỉnh bộ đôi RFQ chuẩn ngoại thương hai đầu.`
+        ],
+        icon: "📨",
+        action: "Khối XNK tiến hành ký số phát hành thư chào và gửi thư hỏi giá chính thức."
+      };
+
+      try {
+        const res = await fetch('/api/telegram/alert', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(payload)
+        });
+        const resData = await res.json();
+        if (resData.status === 'SENT' || (resData.sent_count && resData.sent_count > 0)) {
+          showToast('Đã Báo Cáo Telegram', `Đã chuyển tiếp bộ đôi RFQ ${bName} ⇄ ${sName} về Telegram @tapdoan_bot!`);
+        } else {
+          showToast('Đã Lưu Trữ', `Đã lưu trữ nội dung bộ đôi RFQ thành công.`);
+        }
+      } catch (err) {
+        showToast('Lỗi Kết Nối', 'Không thể kết nối Telegram bot.', true);
+      }
     }
 
     // Global Event Listeners: ESC key & Mobile Touch Lock for all Modals
@@ -5992,7 +6311,7 @@
       }
     });
 
-    ['companyDetailModal', 'supplierDetailModal', 'hsCatalogModal', 'outreachModal', 'matchDetailModal', 'companyContactsModal'].forEach(id => {
+    ['companyDetailModal', 'supplierDetailModal', 'hsCatalogModal', 'outreachModal', 'dualRfqModal', 'matchDetailModal', 'companyContactsModal'].forEach(id => {
       const el = document.getElementById(id);
       if (el) {
         el.addEventListener('touchmove', function(e) {

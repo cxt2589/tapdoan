@@ -73,6 +73,7 @@ def run_morning_dispatch():
         "🎯 <b>TỔNG QUAN KHỚP LỆNH HÔM NAY:</b>",
         f"• 💎 <b>Khớp Kim Cương (≥85đ):</b> <b>{metrics['diamond_count']} thương vụ</b> <i>(Xác suất chốt &gt;90%)</i>",
         f"• 🥇 <b>Khớp Hoàng Kim (70-84đ):</b> <b>{metrics['gold_count']} thương vụ</b> <i>(Khả quan)</i>",
+        f"• 🏭 <b>Nhà Cung Cấp Kết Nối:</b> <b>{metrics.get('total_scanned_suppliers', 20)} NCC & Đại Lý Cấp 1</b> <i>(12 Quốc gia)</i>",
         f"• 💰 <b>Tổng Giá Trị Pipeline:</b> <b>${pipe_millions}M USD</b>",
         "",
         "📊 <b>PHÂN BỔ THEO NGÀNH HÀNG MŨI NHỌN:</b>"
@@ -89,12 +90,17 @@ def run_morning_dispatch():
         b_name = d.get("buyer_name", "")
         b_c = d.get("buyer_country", "")
         s_name = d.get("supplier_short_name", "")
+        s_full = d.get("supplier_name", "")
+        s_c = d.get("supplier_country", "")
+        s_type = d.get("supplier_type", "")
         item = d.get("matched_commodity", "")
         hs = d.get("matched_hs", "")
         score = d.get("total_score", 0)
         val_m = round(d.get("deal_value_usd", 0) / 1_000_000, 2)
-        lines.append(f"<b>{idx+1}️⃣ {b_name} ({b_c}) ⇄ {s_name}</b>")
-        lines.append(f"   ↳ {item} (HS {hs}) • Điểm: <b>{score}đ</b> • ~<b>${val_m}M</b>")
+        lines.append(f"<b>{idx+1}️⃣ {b_name} ({b_c}) ⇄ {s_name} ({s_c})</b>")
+        lines.append(f"   • 🏢 <b>Nhà Cung Cấp:</b> {s_full or s_name} [{s_type} - {s_c}]")
+        lines.append(f"   • 👤 <b>Khách Hàng (Buyer):</b> {b_name} [{b_c}]")
+        lines.append(f"   • 📦 <b>Hàng hóa:</b> {item} (HS {hs}) • 🎯 Điểm: <b>{score}đ</b> • 💰 ~<b>${val_m}M USD</b>")
 
     lines.append("")
     lines.append(f"💡 <i>Gợi ý: Nhấn nút bên dưới để mở Bàn Khớp Lệnh trên Portal xem toàn bộ đối chiếu ma trận 6 chiều.</i>")

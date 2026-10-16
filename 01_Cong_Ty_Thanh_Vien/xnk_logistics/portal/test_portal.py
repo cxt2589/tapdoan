@@ -24,6 +24,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, BASE_DIR)
 
 from server import ThreadedHTTPServer, PortalRequestHandler
+import trade_matcher
 
 TEST_PORT = 8089
 
@@ -56,7 +57,7 @@ def run_all_tests():
     time.sleep(0.5)
 
     passed_count = 0
-    total_tests = 35
+    total_tests = 38
 
     try:
         # Test 1: Health Check
@@ -554,7 +555,70 @@ def run_all_tests():
             assert 'id="cd-gap-suggested-suppliers-list"' in html_text
             assert 'triggerOutreachFromSourcingGap' in html_text
             assert 'Cần NCC:' in html_text
-        print(f"✅ Test 35/35: Đánh Giá Nhu Cầu Mở Rộng Nguồn Cung Địa Lý, Tỷ Lệ Khả Thi Kết Nối & Đề Xuất NCC chuẩn 100%")
+        print(f"✅ Test 35/38: Đánh Giá Nhu Cầu Mở Rộng Nguồn Cung Địa Lý, Tỷ Lệ Khả Thi Kết Nối & Đề Xuất NCC chuẩn 100%")
+        passed_count += 1
+
+        # Test 36: Ghi Rõ Thông Tin Nhà Cung Cấp trong Bản Tin Bot & Telegram Alert
+        import morning_trade_matcher_dispatch
+        metrics_test = trade_matcher.get_daily_matching_metrics(db_test)
+        assert len(metrics_test["top_diamond_deals"]) > 0
+        first_diamond = metrics_test["top_diamond_deals"][0]
+        assert "supplier_name" in first_diamond or "supplier_short_name" in first_diamond
+        assert "supplier_country" in first_diamond
+        
+        # Test gửi deal cụ thể lên Telegram qua API
+        code_tg, res_tg = http_post("/api/matches/notify-telegram", {
+            "buyer_id": first_diamond["buyer_id"],
+            "supplier_id": first_diamond["supplier_id"]
+        })
+        assert code_tg == 200
+        assert res_tg["ok"] == True
+        assert res_tg["type"] == "DEAL_DETAIL"
+
+        print(f"✅ Test 36/38: Bổ Sung Đầy Đủ Thông Tin Nhà Cung Cấp Vào Bản Tin Telegram Bot & Dispatch Khớp Lệnh chuẩn 100%")
+        passed_count += 1
+
+        # Test 37: API Sinh Bộ Đôi RFQ B2B Ngoại Thương & Giao Diện Modal RFQ Đôi
+        code_drfq, res_drfq = http_post("/api/matches/generate-dual-rfq", {
+            "buyer_id": "LEAD-AGRI-001",
+            "supplier_id": "SP-001",
+            "buyer_language": "EN",
+            "supplier_language": "VN",
+            "commodity": "Cà Phê Robusta",
+            "hs_code": "0901.11"
+        })
+        assert code_drfq == 200
+        assert res_drfq["ok"] == True
+        assert "buyer_rfq" in res_drfq and "supplier_rfq" in res_drfq
+        assert res_drfq["buyer_rfq"]["language"] == "EN"
+        assert res_drfq["supplier_rfq"]["language"] == "VN"
+        assert "0901.11" in res_drfq["buyer_rfq"]["subject"]
+        assert "0901.11" in res_drfq["supplier_rfq"]["subject"]
+        assert "YÊU CẦU BÁO GIÁ & ĐẶT HÀNG XUẤT KHẨU" in res_drfq["supplier_rfq"]["subject"]
+
+        with urllib.request.urlopen(url_html, timeout=5) as html_resp:
+            html_text = html_resp.read().decode('utf-8')
+            assert 'id="dualRfqModal"' in html_text
+            assert 'id="drfq-buyer-panel"' in html_text
+            assert 'id="drfq-supplier-panel"' in html_text
+            assert 'openDualOutreach' in html_text
+            assert 'switchDualRfqTab' in html_text
+            assert 'closeDualRfqModal' in html_text
+            assert 'dispatchDualRfqTelegramAlert' in html_text
+        print(f"✅ Test 37/38: Động Cơ Sinh Bộ Đôi RFQ B2B (Buyer Quotation + Supplier Inquiry) & Giao Diện Dual RFQ chuẩn 100%")
+        passed_count += 1
+
+        # Test 38: Nhấn Tên Đối Tác Xem Chi Tiết Dossier & Khôi Phục Tab Khi F5
+        with urllib.request.urlopen(url_html, timeout=5) as html_resp:
+            html_text = html_resp.read().decode('utf-8')
+            assert 'openBuyerDetailFromMatch' in html_text
+            assert 'openSupplierDetailFromMatch' in html_text
+            assert 'onclick="openBuyerDetailFromMatch()"' in html_text
+            assert 'onclick="openSupplierDetailFromMatch()"' in html_text
+            assert 'xnk_active_tab' in html_text
+            assert 'history.replaceState' in html_text
+            assert 'hashchange' in html_text
+        print(f"✅ Test 38/38: Nhấn Xem Hồ Sơ Chi Tiết Khách Hàng / NCC Tại Bàn Khớp Lệnh & Khôi Phục Tab Khi F5 chuẩn 100%")
         passed_count += 1
 
     finally:

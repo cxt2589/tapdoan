@@ -270,6 +270,81 @@ Chúng tôi là đơn vị xuất khẩu trực tiếp từ Việt Nam với vù
 Trân trọng!"""
         }
 
+def generate_b2b_supplier_inquiry_letter(supplier_data, buyer_data, commodity_name=None, hs_code=None, lang="VN"):
+    sup_name = supplier_data.get("company_name", "Valued Supplier")
+    sup_short = supplier_data.get("short_name", sup_name)
+    sup_country = supplier_data.get("country", "Việt Nam")
+    buyer_name = buyer_data.get("company_name", "International Buyer Client")
+    buyer_country = buyer_data.get("country", "Global")
+    
+    comm = commodity_name or (buyer_data.get("commodities_demanded", [{}])[0].get("name") if buyer_data.get("commodities_demanded") else "Hàng hóa ngoại thương")
+    hs = hs_code or (buyer_data.get("commodities_demanded", [{}])[0].get("hs_code") if buyer_data.get("commodities_demanded") else "")
+    
+    certs = ", ".join(supplier_data.get("quality_standards", ["ISO", "HACCP", "Export Grade"]))
+    incoterms_list = supplier_data.get("accepted_incoterms", ["FOB", "CIF", "EXW"])
+    incoterm = ", ".join(incoterms_list) if isinstance(incoterms_list, list) else str(incoterms_list)
+    payments_list = supplier_data.get("accepted_payments", ["L/C At Sight", "T/T"])
+    payments = ", ".join(payments_list) if isinstance(payments_list, list) else str(payments_list)
+
+    if lang == "EN":
+        return {
+            "language": "EN",
+            "subject": f"[PURCHASE INQUIRY & RFQ] Procurement Allocation: {comm} (HS {hs}) for Buyer {buyer_name} ({buyer_country})",
+            "body": f"""Dear Sales & Export Management Team at {sup_name},
+
+Greetings from the International Trade & Sourcing Division of our Holding Group in Vietnam.
+
+We are currently structuring an international supply contract for our buyer client: {buyer_name} ({buyer_country}). Following our bilateral matrix verification, we are pleased to issue this formal Purchase Request for Quotation (RFQ) for:
+
+1. PROCUREMENT SPECIFICATIONS:
+• Commodity: {comm}
+• HS Code Classification: {hs}
+• Quality & Compliance Standards: Certified under {certs}; subject to pre-shipment SGS inspection.
+• Target Allocation Volume: Monthly commercial container lots as per export schedule.
+
+2. COMMERCIAL TERMS & INQUIRY:
+• Preferred Terms: {incoterm} (Loading ports: Cat Lai / Hai Phong / Regional Hub).
+• Settlement Safeguard: Irrevocable L/C at Sight or standard commercial payment terms ({payments}).
+• Documentation Required: Commercial Invoice, Packing List, Certificate of Origin (Form E/EUR.1/CPTPP/Form D), COA.
+
+Please kindly revert with your official Quotation Sheet, current ex-factory availability, and earliest shipment window within 48 business hours.
+
+Warm regards,
+
+Managing Director of International Trade & Logistics
+Headquarters Holding Group — Export Consortium Vietnam
+Desk: xnk@holding-group.vn | Hotline: +84 (0) 90 258 9190"""
+        }
+    else:
+        return {
+            "language": "VN",
+            "subject": f"[YÊU CẦU BÁO GIÁ & ĐẶT HÀNG XUẤT KHẨU] Cung ứng {comm} (Mã HS: {hs}) cho đối tác {buyer_country}",
+            "body": f"""Kính gửi: Ban Giám Đốc / Phòng Kinh Doanh & Xuất Khẩu Quý Công ty ({sup_name}):
+
+Khối Xuất Nhập Khẩu & Thương Mại Quốc Tế Tập Đoàn trân trọng thông báo: Chúng tôi đang thực hiện đơn hàng xuất khẩu lớn kết nối thu mua với đối tác quốc tế: {buyer_name} ({buyer_country}).
+
+Sau khi đối soát tiêu chuẩn kỹ thuật và hồ sơ năng lực của Quý Công ty, chúng tôi trân trọng gửi yêu cầu chào giá (Purchase RFQ) đối với mặt hàng: {comm} (Mã HS: {hs}).
+
+1. THÔNG SỐ ĐƠN HÀNG & TIÊU CHUẨN KỸ THUẬT:
+• Tên hàng hóa: {comm}
+• Phân loại Mã HS: {hs}
+• Tiêu chuẩn chất lượng: Đạt chuẩn xuất khẩu ({certs}), chấp thuận kiểm định độc lập SGS / Vinacontrol tại cảng xuất.
+• Quy cách đóng gói: Tiêu chuẩn đóng hàng xuất khẩu đường biển (Pallet/Bao Jumbo/Container).
+
+2. ĐIỀU KIỆN THƯƠNG MẠI & TIẾN ĐỘ:
+• Điều kiện giao hàng đề nghị: {incoterm} (Cảng xuất: Cát Lái / Hải Phòng / Giao hàng tại xưởng EXW).
+• Phương thức thanh toán: L/C Trả ngay (At Sight) hoặc T/T đặt cọc & thanh toán theo vận đơn B/L ({payments}).
+• Yêu cầu chứng từ: Hóa đơn GTGT hợp pháp 100%, Phiếu phân tích chất lượng (COA), Chứng nhận xuất xứ (C/O).
+
+Đề nghị Quý Công ty gửi Bảng Báo Giá Chính Thức (kèm thời hạn giao hàng dự kiến) về hòm thư: xnk@holding-group.vn trong vòng 24 - 48 giờ làm việc.
+
+Trân trọng hợp tác!
+
+Khối Xuất Nhập Khẩu & Thương Mại Quốc Tế Tập Đoàn
+Hotline Điều Hành Ngoại Thương: +84 (0) 90 258 9190
+Official Desk: xnk@holding-group.vn | www.holding-group.vn"""
+        }
+
 class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
     daemon_threads = True
 
@@ -1109,9 +1184,11 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
 
             is_summary = params.get("summary", False)
             match_id = params.get("match_id", "")
+            b_id = params.get("buyer_id", "")
+            s_id = params.get("supplier_id", "")
 
             # Nếu là trigger gửi bản tin tóm tắt
-            if is_summary or not match_id:
+            if is_summary or (not match_id and not (b_id and s_id)):
                 try:
                     import morning_trade_matcher_dispatch
                     sent = morning_trade_matcher_dispatch.run_morning_dispatch()
@@ -1121,8 +1198,6 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                 return
 
             # Nếu là gửi chi tiết 1 deal cụ thể
-            b_id = params.get("buyer_id", "")
-            s_id = params.get("supplier_id", "")
             buyer = next((b for b in db.get("industry_leads", []) if b.get("lead_id") == b_id), None)
             supplier = next((s for s in db.get("suppliers", []) if s.get("id") == s_id), None)
 
@@ -1131,19 +1206,61 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                 if eval_res:
                     title = f"⭐ KHỚP LỆNH NGOẠI THƯƠNG: {eval_res['buyer_name']} ⇄ {eval_res['supplier_short_name']}"
                     details = [
-                        f"Mặt hàng: {eval_res['matched_commodity']} (HS {eval_res['matched_hs']})",
-                        f"Điểm khớp tổng thể: {eval_res['total_score']}/100 ({eval_res['tier_vi']})",
-                        f"Ước tính giá trị thương vụ: ${eval_res['deal_value_usd']:,} USD",
-                        f"Quy cách & HS: {eval_res['dimensions']['d1_hs_and_specs']['score']}đ ({eval_res['dimensions']['d1_hs_and_specs']['desc']})",
-                        f"Chứng chỉ chất lượng: {eval_res['dimensions']['d2_quality_certifications']['score']}đ ({eval_res['dimensions']['d2_quality_certifications']['desc']})",
-                        f"Phương thức thanh toán: {eval_res['dimensions']['d4_payment_terms']['score']}đ ({eval_res['dimensions']['d4_payment_terms']['desc']})",
-                        f"Khuyến nghị: {eval_res['action_recommendation']}"
+                        f"🏢 Nhà Cung Cấp: {eval_res['supplier_name']} ({eval_res['supplier_country']} - {eval_res['supplier_type']})",
+                        f"👤 Khách Hàng (Buyer): {eval_res['buyer_name']} ({eval_res['buyer_country']} - Tier {eval_res['buyer_tier']})",
+                        f"📦 Mặt hàng khớp: {eval_res['matched_commodity']} (Mã HS: {eval_res['matched_hs']})",
+                        f"🎯 Điểm khớp tổng thể: {eval_res['total_score']}/100 ({eval_res['tier_vi']})",
+                        f"💰 Ước tính giá trị thương vụ: ${eval_res['deal_value_usd']:,} USD",
+                        f"📑 Quy cách & HS: {eval_res['dimensions']['d1_hs_and_specs']['score']}đ ({eval_res['dimensions']['d1_hs_and_specs']['desc']})",
+                        f"🏅 Chứng chỉ chất lượng: {eval_res['dimensions']['d2_quality_certifications']['score']}đ ({eval_res['dimensions']['d2_quality_certifications']['desc']})",
+                        f"💳 Phương thức thanh toán: {eval_res['dimensions']['d4_payment_terms']['score']}đ ({eval_res['dimensions']['d4_payment_terms']['desc']})",
+                        f"📌 Khuyến nghị: {eval_res['action_recommendation']}"
                     ]
                     alert_res = send_telegram_alert_message(title, details, "💎", "Khối XNK tiến hành liên hệ đàm phán hợp đồng nguyên tắc.")
                     self._send_json({"ok": True, "sent": alert_res.get("ok"), "type": "DEAL_DETAIL"})
                     return
 
             self._send_json({"ok": False, "error": "Match data not found"}, 404)
+            return
+
+        elif path == "/api/matches/generate-dual-rfq":
+            db = load_database()
+            b_id = params.get("buyer_id", "")
+            s_id = params.get("supplier_id", "")
+            b_lang = params.get("buyer_language", "EN").upper()
+            s_lang = params.get("supplier_language", "VN").upper()
+            comm = params.get("commodity")
+            hs = params.get("hs_code")
+
+            buyer = next((b for b in db.get("industry_leads", []) if b.get("lead_id") == b_id), None)
+            supplier = next((s for s in db.get("suppliers", []) if s.get("id") == s_id), None)
+
+            if not buyer or not supplier:
+                self._send_json({"ok": False, "error": "Buyer or supplier not found"}, 404)
+                return
+
+            buyer_rfq = generate_b2b_outreach_letter(buyer, b_lang)
+            supplier_rfq = generate_b2b_supplier_inquiry_letter(supplier, buyer, comm, hs, s_lang)
+
+            self._send_json({
+                "ok": True,
+                "status": "SUCCESS",
+                "buyer": {
+                    "id": buyer.get("lead_id"),
+                    "name": buyer.get("company_name"),
+                    "country": buyer.get("country"),
+                    "tier": buyer.get("tier")
+                },
+                "supplier": {
+                    "id": supplier.get("id"),
+                    "name": supplier.get("company_name"),
+                    "short_name": supplier.get("short_name") or supplier.get("company_name"),
+                    "country": supplier.get("country"),
+                    "type": supplier.get("supplier_type_vi") or supplier.get("supplier_type")
+                },
+                "buyer_rfq": buyer_rfq,
+                "supplier_rfq": supplier_rfq
+            })
             return
 
         self._send_json({"error": "Endpoint not found"}, 404)

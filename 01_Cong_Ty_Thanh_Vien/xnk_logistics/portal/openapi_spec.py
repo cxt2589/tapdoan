@@ -730,6 +730,63 @@ def get_openapi_spec(server_url="http://103.228.74.58"):
                     }
                 }
             },
+            "/api/prices/search": {
+                "get": {
+                    "tags": ["Multi-Exchange Price Board"],
+                    "summary": "Tìm kiếm giá sản phẩm theo từng sàn và nguồn định giá cụ thể",
+                    "description": "Gợi ý các mặt hàng gắn liền với tên nguồn (ví dụ Cà phê ICE London, Cà phê Cát Lái, Cà phê Tây Nguyên, Gạo VFA, Gạo TREA Thái Lan...)",
+                    "operationId": "searchPricesBySource",
+                    "parameters": [
+                        {
+                            "name": "q",
+                            "in": "query",
+                            "description": "Từ khóa tìm kiếm sản phẩm hoặc tên sàn",
+                            "schema": {"type": "string"}
+                        },
+                        {
+                            "name": "source_type",
+                            "in": "query",
+                            "description": "Lọc theo loại nguồn (GLOBAL_EXCHANGE, EXPORT_FOB, DOMESTIC_FARM, INDUSTRY_AGENCY)",
+                            "schema": {"type": "string"}
+                        }
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "Danh sách các mặt hàng gắn liền với nguồn chỉ định"
+                        }
+                    }
+                }
+            },
+            "/api/prices/chart": {
+                "get": {
+                    "tags": ["Multi-Exchange Price Board"],
+                    "summary": "Lấy dữ liệu lịch sử giá để vẽ biểu đồ nến / đường cho từng sàn cụ thể",
+                    "operationId": "getPriceChartHistory",
+                    "parameters": [
+                        {
+                            "name": "commodity_id",
+                            "in": "query",
+                            "required": True,
+                            "schema": {"type": "string"}
+                        },
+                        {
+                            "name": "source_id",
+                            "in": "query",
+                            "schema": {"type": "string"}
+                        },
+                        {
+                            "name": "range",
+                            "in": "query",
+                            "schema": {"type": "string", "enum": ["1w", "1m", "6m", "1y"]}
+                        }
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "Chuỗi thời gian lịch sử giá phục vụ vẽ biểu đồ tương tác"
+                        }
+                    }
+                }
+            },
             "/api/telegram/alert": {
                 "post": {
                     "tags": ["Telegram Alerts"],

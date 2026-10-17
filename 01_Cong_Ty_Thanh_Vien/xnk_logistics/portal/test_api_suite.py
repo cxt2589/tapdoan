@@ -200,6 +200,28 @@ def run_suite():
     except Exception as e:
         log_test("Commodity Multi-Exchange Benchmarks (/api/prices/benchmarks)", False, str(e))
 
+    # 17. Multi-Source Commodity Price Search with Labeled Sources
+    try:
+        status, data = http_get("/api/prices/search?q=cafe")
+        ok = status == 200 and data.get("ok") is True and data.get("total_matches", 0) >= 4 and len(data.get("results", [])) >= 4
+        first_result = data.get("results", [])[0] if data.get("results") else {}
+        has_source_tags = "source_id" in first_result and "source_name" in first_result and "source_category" in first_result
+        ok = ok and has_source_tags
+        log_test("Multi-Source Commodity Price Search (/api/prices/search?q=cafe)", ok, f"Matches: {data.get('total_matches')}, Sample source: {first_result.get('source_name')}")
+    except Exception as e:
+        log_test("Multi-Source Commodity Price Search (/api/prices/search?q=cafe)", False, str(e))
+
+    # 18. Historical Price Chart Series
+    try:
+        status, data = http_get("/api/prices/chart?commodity_id=coffee_robusta&source_id=ICE_LONDON&range=1y")
+        ok = status == 200 and data.get("ok") is True and len(data.get("history", [])) == 12 and data.get("range") == "1y"
+        first_pt = data.get("history", [])[0] if data.get("history") else {}
+        has_pt_data = "date" in first_pt and "price_usd_mt" in first_pt
+        ok = ok and has_pt_data
+        log_test("Historical Price Chart Series (/api/prices/chart)", ok, f"Points: {len(data.get('history', []))}, Latest price: ${data.get('current_price_usd_mt')}/MT")
+    except Exception as e:
+        log_test("Historical Price Chart Series (/api/prices/chart)", False, str(e))
+
     print("==================================================================")
     print(f"🎉 TỔNG KẾT: {passed_count}/{total_count} BÀI KIỂM THỬ API THÀNH CÔNG ({(passed_count/total_count*100):.1f}%)")
     print("==================================================================")

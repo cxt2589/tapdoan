@@ -1,56 +1,343 @@
 {
+  "metadata": {
+    "version": "2.0.0",
+    "title": "Bảng Giá Tham Chiếu Đa Sàn & Minh Bạch Nguồn Định Giá Ngoại Thương",
+    "last_updated": "18/10/2026",
+    "sources_count": 28,
+    "commodities_count": 7,
+    "supported_exchanges": [
+      "ICE Futures Europe (London)",
+      "ICE Futures US / Yahoo Finance (New York)",
+      "CME / CBOT Group (Chicago)",
+      "SGX Commodities (Singapore)",
+      "Cảng Cát Lái / Cái Mép (FOB Vietnam)",
+      "Cảng Biển Đen / Baltic (FOB Russia)",
+      "Cảng Vịnh Ả Rập (FOB Arab Gulf)",
+      "Hiệp Hội Lương Thực VN (VFA)",
+      "Hiệp Hội Gạo Thái Lan (TREA)",
+      "Hiệp Hội Hồ Tiêu VN (VPA)",
+      "Hiệp Hội Hồ Tiêu Quốc Tế (IPC)",
+      "Hiệp Hội Chế Biến Thủy Sản (VASEP)",
+      "Sở Giao Dịch Hàng Hóa VN (MXV)",
+      "Thị Trường Spot Tây Nguyên & ĐBSCL"
+    ]
+  },
   "sectors": [
     {
       "commodity_id": "coffee_robusta",
       "commodity_name": "Cà Phê Robusta FAQ S18",
       "hs_code": "0901.11",
-      "sector": "Nông Sản & Thực Phẩm",
+      "sector": "Nông Sản & Đồ Uống",
       "icon": "coffee",
       "primary_unit": "USD/Tấn",
       "benchmarks": [
         {
+          "source_id": "ICE_LONDON",
+          "source_name": "Sàn ICE Futures Europe (London)",
+          "source_category": "GLOBAL_EXCHANGE",
           "exchange_name": "ICE Futures Europe (London)",
           "tier_type": "GLOBAL_BENCHMARK",
           "contract_code": "RC (Robusta)",
           "price_original": "4,785 USD/MT",
           "price_usd_mt": 4785,
           "change_24h": "+1.8%",
+          "change_7d": "+4.2%",
           "currency": "USD",
           "updated_at": "Hôm nay, 16:30 GMT",
-          "note": "Hợp đồng kỳ hạn tháng 11/2026 chuẩn giao dịch thế giới"
+          "note": "Hợp đồng kỳ hạn T11/2026 chuẩn giao dịch thế giới",
+          "history_1y": [
+            {
+              "date": "11/2025",
+              "price_usd_mt": 3650,
+              "open": 3580,
+              "high": 3720,
+              "low": 3550,
+              "close": 3650
+            },
+            {
+              "date": "12/2025",
+              "price_usd_mt": 3820,
+              "open": 3650,
+              "high": 3890,
+              "low": 3640,
+              "close": 3820
+            },
+            {
+              "date": "01/2026",
+              "price_usd_mt": 4050,
+              "open": 3820,
+              "high": 4120,
+              "low": 3800,
+              "close": 4050
+            },
+            {
+              "date": "02/2026",
+              "price_usd_mt": 4180,
+              "open": 4050,
+              "high": 4250,
+              "low": 4010,
+              "close": 4180
+            },
+            {
+              "date": "03/2026",
+              "price_usd_mt": 4350,
+              "open": 4180,
+              "high": 4410,
+              "low": 4150,
+              "close": 4350
+            },
+            {
+              "date": "04/2026",
+              "price_usd_mt": 4490,
+              "open": 4350,
+              "high": 4560,
+              "low": 4300,
+              "close": 4490
+            },
+            {
+              "date": "05/2026",
+              "price_usd_mt": 4420,
+              "open": 4490,
+              "high": 4510,
+              "low": 4380,
+              "close": 4420
+            },
+            {
+              "date": "06/2026",
+              "price_usd_mt": 4560,
+              "open": 4420,
+              "high": 4620,
+              "low": 4400,
+              "close": 4560
+            },
+            {
+              "date": "07/2026",
+              "price_usd_mt": 4680,
+              "open": 4560,
+              "high": 4720,
+              "low": 4530,
+              "close": 4680
+            },
+            {
+              "date": "08/2026",
+              "price_usd_mt": 4610,
+              "open": 4680,
+              "high": 4700,
+              "low": 4580,
+              "close": 4610
+            },
+            {
+              "date": "09/2026",
+              "price_usd_mt": 4710,
+              "open": 4610,
+              "high": 4750,
+              "low": 4590,
+              "close": 4710
+            },
+            {
+              "date": "10/2026",
+              "price_usd_mt": 4785,
+              "open": 4710,
+              "high": 4810,
+              "low": 4680,
+              "close": 4785
+            }
+          ]
         },
         {
+          "source_id": "CAT_LAI_FOB",
+          "source_name": "Cảng Cát Lái / Cái Mép (FOB Vietnam)",
+          "source_category": "EXPORT_FOB",
           "exchange_name": "Cảng Cát Lái / Cái Mép (FOB Vietnam)",
           "tier_type": "EXPORT_FOB",
           "contract_code": "FOB HCM Clean S18",
           "price_original": "4,640 USD/MT",
           "price_usd_mt": 4640,
           "change_24h": "+1.2%",
+          "change_7d": "+3.5%",
           "currency": "USD",
           "updated_at": "Hôm nay, 17:00 ICT",
-          "note": "Hàng đóng container 20ft, bao đay 60kg, độ ẩm max 12.5%"
+          "note": "Hàng đóng container 20ft, bao đay 60kg, độ ẩm max 12.5%",
+          "history_1y": [
+            {
+              "date": "11/2025",
+              "price_usd_mt": 3520
+            },
+            {
+              "date": "12/2025",
+              "price_usd_mt": 3690
+            },
+            {
+              "date": "01/2026",
+              "price_usd_mt": 3910
+            },
+            {
+              "date": "02/2026",
+              "price_usd_mt": 4040
+            },
+            {
+              "date": "03/2026",
+              "price_usd_mt": 4210
+            },
+            {
+              "date": "04/2026",
+              "price_usd_mt": 4350
+            },
+            {
+              "date": "05/2026",
+              "price_usd_mt": 4280
+            },
+            {
+              "date": "06/2026",
+              "price_usd_mt": 4410
+            },
+            {
+              "date": "07/2026",
+              "price_usd_mt": 4530
+            },
+            {
+              "date": "08/2026",
+              "price_usd_mt": 4470
+            },
+            {
+              "date": "09/2026",
+              "price_usd_mt": 4565
+            },
+            {
+              "date": "10/2026",
+              "price_usd_mt": 4640
+            }
+          ]
         },
         {
+          "source_id": "ROTTERDAM_CIF",
+          "source_name": "Kho Cảng Rotterdam / Hamburg (CIF Europe)",
+          "source_category": "DESTINATION_CIF",
           "exchange_name": "Kho Cảng Rotterdam / Hamburg (CIF Europe)",
           "tier_type": "DESTINATION_CIF",
           "contract_code": "CIF NW Europe",
           "price_original": "4,960 USD/MT",
           "price_usd_mt": 4960,
           "change_24h": "+1.5%",
+          "change_7d": "+3.8%",
           "currency": "USD",
           "updated_at": "Hôm nay, 15:45 GMT",
-          "note": "Bao gồm cước tàu biển Á-Âu và bảo hiểm hàng hải ICC-A"
+          "note": "Bao gồm cước tàu biển Á-Âu và bảo hiểm hàng hải ICC-A",
+          "history_1y": [
+            {
+              "date": "11/2025",
+              "price_usd_mt": 3820
+            },
+            {
+              "date": "12/2025",
+              "price_usd_mt": 3990
+            },
+            {
+              "date": "01/2026",
+              "price_usd_mt": 4220
+            },
+            {
+              "date": "02/2026",
+              "price_usd_mt": 4350
+            },
+            {
+              "date": "03/2026",
+              "price_usd_mt": 4530
+            },
+            {
+              "date": "04/2026",
+              "price_usd_mt": 4670
+            },
+            {
+              "date": "05/2026",
+              "price_usd_mt": 4600
+            },
+            {
+              "date": "06/2026",
+              "price_usd_mt": 4740
+            },
+            {
+              "date": "07/2026",
+              "price_usd_mt": 4860
+            },
+            {
+              "date": "08/2026",
+              "price_usd_mt": 4790
+            },
+            {
+              "date": "09/2026",
+              "price_usd_mt": 4885
+            },
+            {
+              "date": "10/2026",
+              "price_usd_mt": 4960
+            }
+          ]
         },
         {
+          "source_id": "TAY_NGUYEN_SPOT",
+          "source_name": "Thị Trường Nội Địa (Đắk Lắk / Gia Lai)",
+          "source_category": "DOMESTIC_FARM",
           "exchange_name": "Thị Trường Nội Địa (Đắk Lắk / Gia Lai)",
           "tier_type": "DOMESTIC_FARM",
           "contract_code": "Farm-gate Tây Nguyên",
           "price_original": "116,500 VNĐ/kg",
           "price_usd_mt": 4580,
           "change_24h": "+0.9%",
+          "change_7d": "+2.1%",
           "currency": "VND",
           "updated_at": "Hôm nay, 14:00 ICT",
-          "note": "Quy đổi theo tỷ giá Vietcombank 25,430 VNĐ/USD"
+          "note": "Quy đổi theo tỷ giá Vietcombank 25,430 VNĐ/USD",
+          "history_1y": [
+            {
+              "date": "11/2025",
+              "price_usd_mt": 3450
+            },
+            {
+              "date": "12/2025",
+              "price_usd_mt": 3610
+            },
+            {
+              "date": "01/2026",
+              "price_usd_mt": 3830
+            },
+            {
+              "date": "02/2026",
+              "price_usd_mt": 3970
+            },
+            {
+              "date": "03/2026",
+              "price_usd_mt": 4140
+            },
+            {
+              "date": "04/2026",
+              "price_usd_mt": 4280
+            },
+            {
+              "date": "05/2026",
+              "price_usd_mt": 4210
+            },
+            {
+              "date": "06/2026",
+              "price_usd_mt": 4340
+            },
+            {
+              "date": "07/2026",
+              "price_usd_mt": 4470
+            },
+            {
+              "date": "08/2026",
+              "price_usd_mt": 4410
+            },
+            {
+              "date": "09/2026",
+              "price_usd_mt": 4505
+            },
+            {
+              "date": "10/2026",
+              "price_usd_mt": 4580
+            }
+          ]
         }
       ],
       "arbitrage_analysis": {
@@ -62,6 +349,153 @@
       }
     },
     {
+      "commodity_id": "coffee_arabica",
+      "commodity_name": "Cà Phê Arabica Chất Lượng Cao",
+      "hs_code": "0901.12",
+      "sector": "Nông Sản & Đồ Uống",
+      "icon": "coffee",
+      "primary_unit": "US Cents/Lbs",
+      "benchmarks": [
+        {
+          "source_id": "YAHOO_FINANCE_KC",
+          "source_name": "Yahoo Finance (Sàn ICE US New York)",
+          "source_category": "GLOBAL_EXCHANGE",
+          "exchange_name": "ICE Futures US (New York)",
+          "tier_type": "GLOBAL_BENCHMARK",
+          "contract_code": "KC=F (Coffee C)",
+          "price_original": "305.50 ¢/lb",
+          "price_usd_mt": 6735,
+          "change_24h": "-0.6%",
+          "change_7d": "+1.1%",
+          "currency": "USD",
+          "updated_at": "Hôm nay, 16:15 EST",
+          "note": "Chuẩn hợp đồng tương lai Coffee C giao dịch tại New York",
+          "history_1y": [
+            {
+              "date": "11/2025",
+              "price_usd_mt": 5200
+            },
+            {
+              "date": "12/2025",
+              "price_usd_mt": 5450
+            },
+            {
+              "date": "01/2026",
+              "price_usd_mt": 5780
+            },
+            {
+              "date": "02/2026",
+              "price_usd_mt": 5920
+            },
+            {
+              "date": "03/2026",
+              "price_usd_mt": 6150
+            },
+            {
+              "date": "04/2026",
+              "price_usd_mt": 6380
+            },
+            {
+              "date": "05/2026",
+              "price_usd_mt": 6290
+            },
+            {
+              "date": "06/2026",
+              "price_usd_mt": 6480
+            },
+            {
+              "date": "07/2026",
+              "price_usd_mt": 6620
+            },
+            {
+              "date": "08/2026",
+              "price_usd_mt": 6550
+            },
+            {
+              "date": "09/2026",
+              "price_usd_mt": 6670
+            },
+            {
+              "date": "10/2026",
+              "price_usd_mt": 6735
+            }
+          ]
+        },
+        {
+          "source_id": "LAM_DONG_ARABICA",
+          "source_name": "Vùng Trồng Cầu Đất (Lâm Đồng / Sơn La)",
+          "source_category": "DOMESTIC_FARM",
+          "exchange_name": "Vùng Trồng Arabica Cầu Đất (Lâm Đồng)",
+          "tier_type": "DOMESTIC_FARM",
+          "contract_code": "Arabica Typica/Catimor S18",
+          "price_original": "152,000 VNĐ/kg",
+          "price_usd_mt": 5980,
+          "change_24h": "+0.5%",
+          "change_7d": "+1.8%",
+          "currency": "VND",
+          "updated_at": "Hôm nay, 14:30 ICT",
+          "note": "Hàng sơ chế ướt (Washed process), độ ẩm 11.5%",
+          "history_1y": [
+            {
+              "date": "11/2025",
+              "price_usd_mt": 4650
+            },
+            {
+              "date": "12/2025",
+              "price_usd_mt": 4890
+            },
+            {
+              "date": "01/2026",
+              "price_usd_mt": 5150
+            },
+            {
+              "date": "02/2026",
+              "price_usd_mt": 5280
+            },
+            {
+              "date": "03/2026",
+              "price_usd_mt": 5490
+            },
+            {
+              "date": "04/2026",
+              "price_usd_mt": 5710
+            },
+            {
+              "date": "05/2026",
+              "price_usd_mt": 5620
+            },
+            {
+              "date": "06/2026",
+              "price_usd_mt": 5780
+            },
+            {
+              "date": "07/2026",
+              "price_usd_mt": 5910
+            },
+            {
+              "date": "08/2026",
+              "price_usd_mt": 5850
+            },
+            {
+              "date": "09/2026",
+              "price_usd_mt": 5930
+            },
+            {
+              "date": "10/2026",
+              "price_usd_mt": 5980
+            }
+          ]
+        }
+      ],
+      "arbitrage_analysis": {
+        "spread_usd": 755,
+        "spread_pct": 12.6,
+        "basis_diff": "-755 USD/MT (Cầu Đất vs ICE NY)",
+        "opportunity_score": 88,
+        "recommendation": "Cơ hội Xuất khẩu Phân khúc Cao cấp: Biên chênh lệch giữa Arabica Cầu Đất và sàn New York là 755 USD/MT (~12.6%), thích hợp cho các hợp đồng đặc sản sang Nhật và Hàn Quốc."
+      }
+    },
+    {
       "commodity_id": "fertilizer_urea",
       "commodity_name": "Phân Bón Urea (Hạt Đục / Granular)",
       "hs_code": "3102.10",
@@ -70,59 +504,264 @@
       "primary_unit": "USD/Tấn",
       "benchmarks": [
         {
+          "source_id": "CME_NOLA",
+          "source_name": "Sàn NOLA / CME Group (New Orleans, Mỹ)",
+          "source_category": "GLOBAL_EXCHANGE",
           "exchange_name": "Sàn NOLA / CME (New Orleans, Mỹ)",
           "tier_type": "GLOBAL_BENCHMARK",
           "contract_code": "Urea Granular NOLA",
           "price_original": "365 USD/sTon",
           "price_usd_mt": 402,
           "change_24h": "+2.4%",
+          "change_7d": "+3.1%",
           "currency": "USD",
           "updated_at": "Hôm nay, 16:00 EST",
-          "note": "Quy đổi từ short ton Mỹ (1 sTon = 0.907185 MT)"
+          "note": "Quy đổi từ short ton Mỹ (1 sTon = 0.907185 MT)",
+          "history_1y": [
+            {
+              "date": "11/2025",
+              "price_usd_mt": 360
+            },
+            {
+              "date": "12/2025",
+              "price_usd_mt": 372
+            },
+            {
+              "date": "01/2026",
+              "price_usd_mt": 385
+            },
+            {
+              "date": "02/2026",
+              "price_usd_mt": 395
+            },
+            {
+              "date": "03/2026",
+              "price_usd_mt": 410
+            },
+            {
+              "date": "04/2026",
+              "price_usd_mt": 418
+            },
+            {
+              "date": "05/2026",
+              "price_usd_mt": 398
+            },
+            {
+              "date": "06/2026",
+              "price_usd_mt": 388
+            },
+            {
+              "date": "07/2026",
+              "price_usd_mt": 392
+            },
+            {
+              "date": "08/2026",
+              "price_usd_mt": 385
+            },
+            {
+              "date": "09/2026",
+              "price_usd_mt": 394
+            },
+            {
+              "date": "10/2026",
+              "price_usd_mt": 402
+            }
+          ]
         },
         {
+          "source_id": "BALTIC_RUSSIA",
+          "source_name": "Cảng Biển Baltic / Biển Đen (FOB Russia)",
+          "source_category": "EXPORT_FOB",
           "exchange_name": "Cảng Biển Baltic / Biển Đen (FOB Russia)",
           "tier_type": "EXPORT_FOB",
           "contract_code": "FOB Baltic Bulk",
           "price_original": "345 USD/MT",
           "price_usd_mt": 345,
           "change_24h": "-0.5%",
+          "change_7d": "+0.2%",
           "currency": "USD",
           "updated_at": "Hôm nay, 15:30 MSK",
-          "note": "Nguồn cung lớn từ PhosAgro, Acron, EuroChem xuất hàng rời"
+          "note": "Nguồn cung lớn từ PhosAgro, Acron, EuroChem xuất hàng rời",
+          "history_1y": [
+            {
+              "date": "11/2025",
+              "price_usd_mt": 310
+            },
+            {
+              "date": "12/2025",
+              "price_usd_mt": 322
+            },
+            {
+              "date": "01/2026",
+              "price_usd_mt": 335
+            },
+            {
+              "date": "02/2026",
+              "price_usd_mt": 342
+            },
+            {
+              "date": "03/2026",
+              "price_usd_mt": 355
+            },
+            {
+              "date": "04/2026",
+              "price_usd_mt": 360
+            },
+            {
+              "date": "05/2026",
+              "price_usd_mt": 340
+            },
+            {
+              "date": "06/2026",
+              "price_usd_mt": 332
+            },
+            {
+              "date": "07/2026",
+              "price_usd_mt": 336
+            },
+            {
+              "date": "08/2026",
+              "price_usd_mt": 330
+            },
+            {
+              "date": "09/2026",
+              "price_usd_mt": 338
+            },
+            {
+              "date": "10/2026",
+              "price_usd_mt": 345
+            }
+          ]
         },
         {
+          "source_id": "ARAB_GULF",
+          "source_name": "Cảng Vịnh Ả Rập (FOB Middle East)",
+          "source_category": "EXPORT_FOB",
           "exchange_name": "Cảng Vịnh Ả Rập (FOB Middle East)",
           "tier_type": "EXPORT_FOB",
           "contract_code": "FOB Arab Gulf",
           "price_original": "372 USD/MT",
           "price_usd_mt": 372,
           "change_24h": "+0.8%",
+          "change_7d": "+1.9%",
           "currency": "USD",
           "updated_at": "Hôm nay, 16:00 GST",
-          "note": "Chuẩn Urea hạt đục chất lượng cao của Sabic, Qafco"
+          "note": "Chuẩn Urea hạt đục chất lượng cao của Sabic, Qafco",
+          "history_1y": [
+            {
+              "date": "11/2025",
+              "price_usd_mt": 335
+            },
+            {
+              "date": "12/2025",
+              "price_usd_mt": 348
+            },
+            {
+              "date": "01/2026",
+              "price_usd_mt": 360
+            },
+            {
+              "date": "02/2026",
+              "price_usd_mt": 368
+            },
+            {
+              "date": "03/2026",
+              "price_usd_mt": 380
+            },
+            {
+              "date": "04/2026",
+              "price_usd_mt": 386
+            },
+            {
+              "date": "05/2026",
+              "price_usd_mt": 365
+            },
+            {
+              "date": "06/2026",
+              "price_usd_mt": 358
+            },
+            {
+              "date": "07/2026",
+              "price_usd_mt": 362
+            },
+            {
+              "date": "08/2026",
+              "price_usd_mt": 355
+            },
+            {
+              "date": "09/2026",
+              "price_usd_mt": 364
+            },
+            {
+              "date": "10/2026",
+              "price_usd_mt": 372
+            }
+          ]
         },
         {
-          "exchange_name": "Cảng Nhập Khẩu Đông Nam Á (CFR SE Asia / VN)",
-          "tier_type": "DESTINATION_CIF",
-          "contract_code": "CFR SE Asia",
-          "price_original": "415 USD/MT",
-          "price_usd_mt": 415,
-          "change_24h": "+1.1%",
-          "currency": "USD",
-          "updated_at": "Hôm nay, 17:30 ICT",
-          "note": "Giao tại Cảng Hải Phòng / Cảng Cát Lái"
-        },
-        {
+          "source_id": "VN_DOMESTIC_FERTILIZER",
+          "source_name": "Giá Nhà Máy Nội Địa (Đạm Phú Mỹ / Cà Mau)",
+          "source_category": "DOMESTIC_FARM",
           "exchange_name": "Giá Nhà Máy Nội Địa (Đạm Phú Mỹ / Cà Mau)",
           "tier_type": "DOMESTIC_FARM",
           "contract_code": "Ex-Factory Giá Sỉ",
           "price_original": "10,800 VNĐ/kg",
           "price_usd_mt": 425,
           "change_24h": "0.0%",
+          "change_7d": "+0.5%",
           "currency": "VND",
           "updated_at": "Hôm nay, 11:00 ICT",
-          "note": "Giá bán buôn đại lý cấp 1 tại kho nhà máy"
+          "note": "Giá bán buôn đại lý cấp 1 tại kho nhà máy",
+          "history_1y": [
+            {
+              "date": "11/2025",
+              "price_usd_mt": 395
+            },
+            {
+              "date": "12/2025",
+              "price_usd_mt": 405
+            },
+            {
+              "date": "01/2026",
+              "price_usd_mt": 415
+            },
+            {
+              "date": "02/2026",
+              "price_usd_mt": 420
+            },
+            {
+              "date": "03/2026",
+              "price_usd_mt": 435
+            },
+            {
+              "date": "04/2026",
+              "price_usd_mt": 440
+            },
+            {
+              "date": "05/2026",
+              "price_usd_mt": 425
+            },
+            {
+              "date": "06/2026",
+              "price_usd_mt": 415
+            },
+            {
+              "date": "07/2026",
+              "price_usd_mt": 418
+            },
+            {
+              "date": "08/2026",
+              "price_usd_mt": 412
+            },
+            {
+              "date": "09/2026",
+              "price_usd_mt": 420
+            },
+            {
+              "date": "10/2026",
+              "price_usd_mt": 425
+            }
+          ]
         }
       ],
       "arbitrage_analysis": {
@@ -142,242 +781,909 @@
       "primary_unit": "USD/Tấn",
       "benchmarks": [
         {
+          "source_id": "VFA_VIETNAM",
+          "source_name": "Hiệp Hội Lương Thực VN (VFA - FOB Cát Lái/Sài Gòn)",
+          "source_category": "INDUSTRY_AGENCY",
           "exchange_name": "Hiệp Hội Lương Thực VN (VFA - FOB HCM)",
           "tier_type": "EXPORT_FOB",
           "contract_code": "VN 5% Broken FOB",
           "price_original": "535 USD/MT",
           "price_usd_mt": 535,
           "change_24h": "-0.6%",
+          "change_7d": "-1.8%",
           "currency": "USD",
           "updated_at": "Hôm nay, 17:00 ICT",
-          "note": "Gạo 5% tấm bao 50kg PP, giao mạn tàu Cảng Sài Gòn"
+          "note": "Gạo 5% tấm bao 50kg PP, giao mạn tàu Cảng Sài Gòn",
+          "history_1y": [
+            {
+              "date": "11/2025",
+              "price_usd_mt": 640
+            },
+            {
+              "date": "12/2025",
+              "price_usd_mt": 625
+            },
+            {
+              "date": "01/2026",
+              "price_usd_mt": 610
+            },
+            {
+              "date": "02/2026",
+              "price_usd_mt": 595
+            },
+            {
+              "date": "03/2026",
+              "price_usd_mt": 580
+            },
+            {
+              "date": "04/2026",
+              "price_usd_mt": 570
+            },
+            {
+              "date": "05/2026",
+              "price_usd_mt": 565
+            },
+            {
+              "date": "06/2026",
+              "price_usd_mt": 555
+            },
+            {
+              "date": "07/2026",
+              "price_usd_mt": 548
+            },
+            {
+              "date": "08/2026",
+              "price_usd_mt": 542
+            },
+            {
+              "date": "09/2026",
+              "price_usd_mt": 538
+            },
+            {
+              "date": "10/2026",
+              "price_usd_mt": 535
+            }
+          ]
         },
         {
+          "source_id": "TREA_THAILAND",
+          "source_name": "Hiệp Hội Gạo Thái Lan (TREA - FOB Bangkok)",
+          "source_category": "INDUSTRY_AGENCY",
           "exchange_name": "Hiệp Hội Gạo Thái Lan (TREA - FOB Bangkok)",
           "tier_type": "EXPORT_FOB",
           "contract_code": "Thai 5% Broken FOB",
           "price_original": "560 USD/MT",
           "price_usd_mt": 560,
           "change_24h": "+0.4%",
+          "change_7d": "-0.5%",
           "currency": "USD",
           "updated_at": "Hôm nay, 16:30 ICT",
-          "note": "Gạo Thái Lan đang cao hơn Việt Nam $25/tấn"
+          "note": "Gạo Thái Lan đang cao hơn Việt Nam $25/tấn",
+          "history_1y": [
+            {
+              "date": "11/2025",
+              "price_usd_mt": 665
+            },
+            {
+              "date": "12/2025",
+              "price_usd_mt": 650
+            },
+            {
+              "date": "01/2026",
+              "price_usd_mt": 635
+            },
+            {
+              "date": "02/2026",
+              "price_usd_mt": 618
+            },
+            {
+              "date": "03/2026",
+              "price_usd_mt": 605
+            },
+            {
+              "date": "04/2026",
+              "price_usd_mt": 595
+            },
+            {
+              "date": "05/2026",
+              "price_usd_mt": 590
+            },
+            {
+              "date": "06/2026",
+              "price_usd_mt": 580
+            },
+            {
+              "date": "07/2026",
+              "price_usd_mt": 572
+            },
+            {
+              "date": "08/2026",
+              "price_usd_mt": 566
+            },
+            {
+              "date": "09/2026",
+              "price_usd_mt": 562
+            },
+            {
+              "date": "10/2026",
+              "price_usd_mt": 560
+            }
+          ]
         },
         {
-          "exchange_name": "Cảng Nhập Khẩu Manila (CIF Philippines)",
-          "tier_type": "DESTINATION_CIF",
-          "contract_code": "CIF Manila Port",
-          "price_original": "585 USD/MT",
-          "price_usd_mt": 585,
-          "change_24h": "+0.2%",
-          "currency": "USD",
-          "updated_at": "Hôm nay, 15:00 PHT",
-          "note": "Thị trường nhập khẩu lớn nhất của gạo Việt Nam"
-        },
-        {
+          "source_id": "CBOT_RICE",
+          "source_name": "Sàn Chicago CME/CBOT (Rough Rice Futures)",
+          "source_category": "GLOBAL_EXCHANGE",
           "exchange_name": "Sàn Chicago CBOT (Rough Rice Futures)",
           "tier_type": "GLOBAL_BENCHMARK",
           "contract_code": "ZR (Rough Rice)",
-          "price_original": "15.40 USD/cwt",
-          "price_usd_mt": 340,
-          "change_24h": "+1.0%",
+          "price_original": "14.85 USD/cwt",
+          "price_usd_mt": 327,
+          "change_24h": "-0.8%",
+          "change_7d": "+1.2%",
           "currency": "USD",
-          "updated_at": "Hôm nay, 14:00 CST",
-          "note": "Lúa chưa xay xát chuẩn giao sau tại Mỹ"
+          "updated_at": "Hôm nay, 16:30 CST",
+          "note": "Lúa gạo thô chưa xay xát (cần cộng thêm chi phí xay xát và hao hụt cám/trấu)",
+          "history_1y": [
+            {
+              "date": "11/2025",
+              "price_usd_mt": 380
+            },
+            {
+              "date": "12/2025",
+              "price_usd_mt": 372
+            },
+            {
+              "date": "01/2026",
+              "price_usd_mt": 365
+            },
+            {
+              "date": "02/2026",
+              "price_usd_mt": 355
+            },
+            {
+              "date": "03/2026",
+              "price_usd_mt": 348
+            },
+            {
+              "date": "04/2026",
+              "price_usd_mt": 342
+            },
+            {
+              "date": "05/2026",
+              "price_usd_mt": 338
+            },
+            {
+              "date": "06/2026",
+              "price_usd_mt": 332
+            },
+            {
+              "date": "07/2026",
+              "price_usd_mt": 329
+            },
+            {
+              "date": "08/2026",
+              "price_usd_mt": 325
+            },
+            {
+              "date": "09/2026",
+              "price_usd_mt": 326
+            },
+            {
+              "date": "10/2026",
+              "price_usd_mt": 327
+            }
+          ]
+        },
+        {
+          "source_id": "MEKONG_RICE_SPOT",
+          "source_name": "Đồng Bằng Sông Cửu Long (An Giang / Đồng Tháp)",
+          "source_category": "DOMESTIC_FARM",
+          "exchange_name": "ĐBSCL (An Giang / Đồng Tháp)",
+          "tier_type": "DOMESTIC_FARM",
+          "contract_code": "Lúa Tươi IR 50404",
+          "price_original": "7,800 VNĐ/kg",
+          "price_usd_mt": 315,
+          "change_24h": "+0.5%",
+          "change_7d": "+1.0%",
+          "currency": "VND",
+          "updated_at": "Hôm nay, 15:00 ICT",
+          "note": "Giá lúa tươi cắt máy tại ruộng An Giang, Kiên Giang",
+          "history_1y": [
+            {
+              "date": "11/2025",
+              "price_usd_mt": 375
+            },
+            {
+              "date": "12/2025",
+              "price_usd_mt": 365
+            },
+            {
+              "date": "01/2026",
+              "price_usd_mt": 352
+            },
+            {
+              "date": "02/2026",
+              "price_usd_mt": 340
+            },
+            {
+              "date": "03/2026",
+              "price_usd_mt": 332
+            },
+            {
+              "date": "04/2026",
+              "price_usd_mt": 328
+            },
+            {
+              "date": "05/2026",
+              "price_usd_mt": 324
+            },
+            {
+              "date": "06/2026",
+              "price_usd_mt": 318
+            },
+            {
+              "date": "07/2026",
+              "price_usd_mt": 315
+            },
+            {
+              "date": "08/2026",
+              "price_usd_mt": 312
+            },
+            {
+              "date": "09/2026",
+              "price_usd_mt": 314
+            },
+            {
+              "date": "10/2026",
+              "price_usd_mt": 315
+            }
+          ]
         }
       ],
       "arbitrage_analysis": {
-        "spread_usd": 50,
-        "spread_pct": 9.3,
-        "basis_diff": "-25 USD/MT (Gạo VN rẻ hơn Gạo Thái Lan)",
-        "opportunity_score": 88,
-        "recommendation": "Lợi Thế Cạnh Tranh Cao: Gạo Việt Nam đang rẻ hơn gạo Thái Lan $25/tấn, đây là thời điểm vàng để ký hợp đồng cung ứng khối lượng lớn cho các nhà nhập khẩu Philippines và Indonesia."
+        "spread_usd": 220,
+        "spread_pct": 69.8,
+        "basis_diff": "-25 USD/MT (VN vs Thái Lan)",
+        "opportunity_score": 90,
+        "recommendation": "Lợi Thế Cạnh Tranh Cao: Gạo 5% tấm của Việt Nam đang cạnh tranh vượt trội so với Thái Lan nhờ chênh lệch $25/tấn, xúc tiến chốt hợp đồng lớn xuất khẩu sang Philippines và Indonesia."
       }
     },
     {
       "commodity_id": "black_pepper",
-      "commodity_name": "Hồ Tiêu Đen FAQ 550g/l",
+      "commodity_name": "Hồ Tiêu Đen FAQ 500g/l",
       "hs_code": "0904.11",
       "sector": "Nông Sản & Gia Vị",
       "icon": "sparkles",
       "primary_unit": "USD/Tấn",
       "benchmarks": [
         {
-          "exchange_name": "Hiệp Hội Hồ Tiêu Quốc Tế (IPC Benchmark)",
-          "tier_type": "GLOBAL_BENCHMARK",
-          "contract_code": "IPC Global Index",
+          "source_id": "VPA_VIETNAM",
+          "source_name": "Hiệp Hội Hồ Tiêu VN (VPA - FOB HCM)",
+          "source_category": "INDUSTRY_AGENCY",
+          "exchange_name": "Hiệp Hội Hồ Tiêu VN (VPA - FOB HCM)",
+          "tier_type": "EXPORT_FOB",
+          "contract_code": "Black Pepper 500g/l FOB",
           "price_original": "6,500 USD/MT",
           "price_usd_mt": 6500,
-          "change_24h": "+2.0%",
-          "currency": "USD",
-          "updated_at": "Hôm nay, 16:00 GMT",
-          "note": "Chỉ số bình quân hồ tiêu đen thế giới"
-        },
-        {
-          "exchange_name": "Cảng Cát Lái (FOB Việt Nam 550g/l)",
-          "tier_type": "EXPORT_FOB",
-          "contract_code": "VN Black Pepper FOB",
-          "price_original": "6,300 USD/MT",
-          "price_usd_mt": 6300,
-          "change_24h": "+1.6%",
+          "change_24h": "+1.5%",
+          "change_7d": "+3.2%",
           "currency": "USD",
           "updated_at": "Hôm nay, 17:00 ICT",
-          "note": "Chuẩn xuất khẩu độ ẩm 13%, tạp chất max 1%"
+          "note": "Tiêu đen loại 500g/l đóng bao 50kg, độ ẩm max 13%",
+          "history_1y": [
+            {
+              "date": "11/2025",
+              "price_usd_mt": 4800
+            },
+            {
+              "date": "12/2025",
+              "price_usd_mt": 5100
+            },
+            {
+              "date": "01/2026",
+              "price_usd_mt": 5350
+            },
+            {
+              "date": "02/2026",
+              "price_usd_mt": 5580
+            },
+            {
+              "date": "03/2026",
+              "price_usd_mt": 5850
+            },
+            {
+              "date": "04/2026",
+              "price_usd_mt": 6100
+            },
+            {
+              "date": "05/2026",
+              "price_usd_mt": 6250
+            },
+            {
+              "date": "06/2026",
+              "price_usd_mt": 6180
+            },
+            {
+              "date": "07/2026",
+              "price_usd_mt": 6320
+            },
+            {
+              "date": "08/2026",
+              "price_usd_mt": 6280
+            },
+            {
+              "date": "09/2026",
+              "price_usd_mt": 6410
+            },
+            {
+              "date": "10/2026",
+              "price_usd_mt": 6500
+            }
+          ]
         },
         {
-          "exchange_name": "Sàn Lampung (FOB Indonesia)",
-          "tier_type": "EXPORT_FOB",
-          "contract_code": "Lampung Black FOB",
-          "price_original": "6,750 USD/MT",
-          "price_usd_mt": 6750,
-          "change_24h": "+0.5%",
+          "source_id": "IPC_PEPPER",
+          "source_name": "Hiệp Hội Hồ Tiêu Quốc Tế (IPC Benchmark)",
+          "source_category": "GLOBAL_EXCHANGE",
+          "exchange_name": "Hiệp Hội Hồ Tiêu Quốc Tế (IPC)",
+          "tier_type": "GLOBAL_BENCHMARK",
+          "contract_code": "IPC Global Price Index",
+          "price_original": "6,700 USD/MT",
+          "price_usd_mt": 6700,
+          "change_24h": "+1.2%",
+          "change_7d": "+2.8%",
           "currency": "USD",
-          "updated_at": "Hôm nay, 15:30 WIB",
-          "note": "Nguồn cung từ Indonesia giá cao hơn do vụ mùa giảm"
+          "updated_at": "Hôm nay, 16:00 WIB",
+          "note": "Chỉ số bình quân tiêu thế giới (Brazil, Việt Nam, Indonesia, Ấn Độ)",
+          "history_1y": [
+            {
+              "date": "11/2025",
+              "price_usd_mt": 5050
+            },
+            {
+              "date": "12/2025",
+              "price_usd_mt": 5320
+            },
+            {
+              "date": "01/2026",
+              "price_usd_mt": 5580
+            },
+            {
+              "date": "02/2026",
+              "price_usd_mt": 5790
+            },
+            {
+              "date": "03/2026",
+              "price_usd_mt": 6050
+            },
+            {
+              "date": "04/2026",
+              "price_usd_mt": 6310
+            },
+            {
+              "date": "05/2026",
+              "price_usd_mt": 6450
+            },
+            {
+              "date": "06/2026",
+              "price_usd_mt": 6380
+            },
+            {
+              "date": "07/2026",
+              "price_usd_mt": 6510
+            },
+            {
+              "date": "08/2026",
+              "price_usd_mt": 6470
+            },
+            {
+              "date": "09/2026",
+              "price_usd_mt": 6610
+            },
+            {
+              "date": "10/2026",
+              "price_usd_mt": 6700
+            }
+          ]
         },
         {
-          "exchange_name": "Thị Trường Tây Nguyên (Gia Lai / Đắk Nông)",
+          "source_id": "CHU_SE_SPOT",
+          "source_name": "Vùng Trồng Chư Sê / Đắk Lắk (Spot Nội Địa)",
+          "source_category": "DOMESTIC_FARM",
+          "exchange_name": "Chư Sê / Đắk Lắk (Spot Nội Địa)",
           "tier_type": "DOMESTIC_FARM",
-          "contract_code": "Farm-gate Hạt Tiêu",
-          "price_original": "152,000 VNĐ/kg",
-          "price_usd_mt": 5977,
-          "change_24h": "+1.3%",
+          "contract_code": "Farm-gate Tây Nguyên",
+          "price_original": "148,000 VNĐ/kg",
+          "price_usd_mt": 5820,
+          "change_24h": "+0.7%",
+          "change_7d": "+1.9%",
           "currency": "VND",
-          "updated_at": "Hôm nay, 11:30 ICT",
-          "note": "Nông dân và đại lý nội địa trữ hàng chờ giá"
+          "updated_at": "Hôm nay, 14:30 ICT",
+          "note": "Giá thu mua đại lý cấp 1 tại Đắk Lắk, Gia Lai, Đắk Nông",
+          "history_1y": [
+            {
+              "date": "11/2025",
+              "price_usd_mt": 4350
+            },
+            {
+              "date": "12/2025",
+              "price_usd_mt": 4620
+            },
+            {
+              "date": "01/2026",
+              "price_usd_mt": 4850
+            },
+            {
+              "date": "02/2026",
+              "price_usd_mt": 5050
+            },
+            {
+              "date": "03/2026",
+              "price_usd_mt": 5290
+            },
+            {
+              "date": "04/2026",
+              "price_usd_mt": 5510
+            },
+            {
+              "date": "05/2026",
+              "price_usd_mt": 5650
+            },
+            {
+              "date": "06/2026",
+              "price_usd_mt": 5580
+            },
+            {
+              "date": "07/2026",
+              "price_usd_mt": 5700
+            },
+            {
+              "date": "08/2026",
+              "price_usd_mt": 5660
+            },
+            {
+              "date": "09/2026",
+              "price_usd_mt": 5760
+            },
+            {
+              "date": "10/2026",
+              "price_usd_mt": 5820
+            }
+          ]
         }
       ],
       "arbitrage_analysis": {
-        "spread_usd": 450,
-        "spread_pct": 7.1,
-        "basis_diff": "-450 USD/MT (Hồ tiêu VN cạnh tranh hơn Indonesia)",
-        "opportunity_score": 90,
-        "recommendation": "Hồ tiêu Việt Nam chiếm ưu thế giá tuyệt đối so với Indonesia ($6,300 vs $6,750). Khuyến nghị đẩy mạnh xuất khẩu sang các thị trường Mỹ, Trung Đông và EU."
+        "spread_usd": 680,
+        "spread_pct": 11.7,
+        "basis_diff": "-200 USD/MT (FOB VN vs IPC)",
+        "opportunity_score": 89,
+        "recommendation": "Thị Trường Tăng Giá Vững Chắc: Tiêu Việt Nam giữ vững vị thế số 1 toàn cầu, chênh lệch giữa giá thu mua và giá xuất FOB đạt 680 USD/MT, đảm bảo biên lợi nhuận ròng >8%."
+      }
+    },
+    {
+      "commodity_id": "natural_rubber",
+      "commodity_name": "Cao Su Tự Nhiên SVR 3L / TSR20",
+      "hs_code": "4001.22",
+      "sector": "Công Nghiệp & Vật Liệu",
+      "icon": "shield",
+      "primary_unit": "USD/Tấn",
+      "benchmarks": [
+        {
+          "source_id": "SGX_SICOM",
+          "source_name": "Sàn Singapore SGX SICOM (TSR20 Futures)",
+          "source_category": "GLOBAL_EXCHANGE",
+          "exchange_name": "Sàn Singapore SGX (SICOM)",
+          "tier_type": "GLOBAL_BENCHMARK",
+          "contract_code": "TSR20 Futures",
+          "price_original": "1,820 USD/MT",
+          "price_usd_mt": 1820,
+          "change_24h": "+0.9%",
+          "change_7d": "+2.5%",
+          "currency": "USD",
+          "updated_at": "Hôm nay, 17:15 SGT",
+          "note": "Chuẩn cao su nguyên liệu lốp xe toàn cầu",
+          "history_1y": [
+            {
+              "date": "11/2025",
+              "price_usd_mt": 1520
+            },
+            {
+              "date": "12/2025",
+              "price_usd_mt": 1560
+            },
+            {
+              "date": "01/2026",
+              "price_usd_mt": 1610
+            },
+            {
+              "date": "02/2026",
+              "price_usd_mt": 1650
+            },
+            {
+              "date": "03/2026",
+              "price_usd_mt": 1720
+            },
+            {
+              "date": "04/2026",
+              "price_usd_mt": 1760
+            },
+            {
+              "date": "05/2026",
+              "price_usd_mt": 1730
+            },
+            {
+              "date": "06/2026",
+              "price_usd_mt": 1750
+            },
+            {
+              "date": "07/2026",
+              "price_usd_mt": 1780
+            },
+            {
+              "date": "08/2026",
+              "price_usd_mt": 1760
+            },
+            {
+              "date": "09/2026",
+              "price_usd_mt": 1795
+            },
+            {
+              "date": "10/2026",
+              "price_usd_mt": 1820
+            }
+          ]
+        },
+        {
+          "source_id": "SVR_CAT_LAI",
+          "source_name": "Cảng Cát Lái (FOB SVR 3L Vietnam)",
+          "source_category": "EXPORT_FOB",
+          "exchange_name": "Cảng Cát Lái (FOB SVR 3L)",
+          "tier_type": "EXPORT_FOB",
+          "contract_code": "SVR 3L Export Clean",
+          "price_original": "1,980 USD/MT",
+          "price_usd_mt": 1980,
+          "change_24h": "+1.1%",
+          "change_7d": "+2.9%",
+          "currency": "USD",
+          "updated_at": "Hôm nay, 16:30 ICT",
+          "note": "Cao su SVR 3L chất lượng cao xuất khẩu thị trường Châu Âu & Nhật Bản",
+          "history_1y": [
+            {
+              "date": "11/2025",
+              "price_usd_mt": 1650
+            },
+            {
+              "date": "12/2025",
+              "price_usd_mt": 1710
+            },
+            {
+              "date": "01/2026",
+              "price_usd_mt": 1760
+            },
+            {
+              "date": "02/2026",
+              "price_usd_mt": 1810
+            },
+            {
+              "date": "03/2026",
+              "price_usd_mt": 1880
+            },
+            {
+              "date": "04/2026",
+              "price_usd_mt": 1920
+            },
+            {
+              "date": "05/2026",
+              "price_usd_mt": 1890
+            },
+            {
+              "date": "06/2026",
+              "price_usd_mt": 1910
+            },
+            {
+              "date": "07/2026",
+              "price_usd_mt": 1940
+            },
+            {
+              "date": "08/2026",
+              "price_usd_mt": 1920
+            },
+            {
+              "date": "09/2026",
+              "price_usd_mt": 1955
+            },
+            {
+              "date": "10/2026",
+              "price_usd_mt": 1980
+            }
+          ]
+        },
+        {
+          "source_id": "BINH_PHUOC_LATEX",
+          "source_name": "Vườn Cao Su Bình Phước / Tây Ninh (Spot Mủ Nước)",
+          "source_category": "DOMESTIC_FARM",
+          "exchange_name": "Bình Phước / Tây Ninh (Spot Mủ)",
+          "tier_type": "DOMESTIC_FARM",
+          "contract_code": "Mủ Cao Su Tươi (Độ TSC 30%)",
+          "price_original": "420 VNĐ/độ TSC",
+          "price_usd_mt": 1650,
+          "change_24h": "+0.5%",
+          "change_7d": "+1.5%",
+          "currency": "VND",
+          "updated_at": "Hôm nay, 13:30 ICT",
+          "note": "Giá thu mua mủ nước nguyên liệu tại nhà máy chế biến",
+          "history_1y": [
+            {
+              "date": "11/2025",
+              "price_usd_mt": 1380
+            },
+            {
+              "date": "12/2025",
+              "price_usd_mt": 1420
+            },
+            {
+              "date": "01/2026",
+              "price_usd_mt": 1470
+            },
+            {
+              "date": "02/2026",
+              "price_usd_mt": 1510
+            },
+            {
+              "date": "03/2026",
+              "price_usd_mt": 1570
+            },
+            {
+              "date": "04/2026",
+              "price_usd_mt": 1600
+            },
+            {
+              "date": "05/2026",
+              "price_usd_mt": 1580
+            },
+            {
+              "date": "06/2026",
+              "price_usd_mt": 1590
+            },
+            {
+              "date": "07/2026",
+              "price_usd_mt": 1620
+            },
+            {
+              "date": "08/2026",
+              "price_usd_mt": 1605
+            },
+            {
+              "date": "09/2026",
+              "price_usd_mt": 1630
+            },
+            {
+              "date": "10/2026",
+              "price_usd_mt": 1650
+            }
+          ]
+        }
+      ],
+      "arbitrage_analysis": {
+        "spread_usd": 330,
+        "spread_pct": 20.0,
+        "basis_diff": "+160 USD/MT (SVR 3L vs SICOM TSR20)",
+        "opportunity_score": 87,
+        "recommendation": "Biên Lợi Nhuận Chế Biến Cao: Cao su SVR 3L chế biến sâu hưởng premium $160/tấn so với TSR20 thông thường, đẩy mạnh thu mua mủ nội địa để xuất khẩu đơn hàng giá cao."
       }
     },
     {
       "commodity_id": "seafood_shrimp",
       "commodity_name": "Tôm Thẻ Chân Trắng Đông Lạnh (Vannamei)",
       "hs_code": "0306.17",
-      "sector": "Thủy Hải Sản",
+      "sector": "Thủy Sản Đông Lạnh",
       "icon": "fish",
-      "primary_unit": "USD/Tấn",
+      "primary_unit": "USD/Kg",
       "benchmarks": [
         {
-          "exchange_name": "Sàn Urner Barry (Mỹ - Benchmark)",
-          "tier_type": "GLOBAL_BENCHMARK",
-          "contract_code": "UB Frozen White Shrimp",
-          "price_original": "4.85 USD/lb",
-          "price_usd_mt": 10692,
-          "change_24h": "+0.8%",
-          "currency": "USD",
-          "updated_at": "Hôm nay, 16:00 EST",
-          "note": "Quy đổi từ pound Mỹ (size 31/40 count/lb)"
-        },
-        {
-          "exchange_name": "Cảng Xuất Khẩu VN (FOB Cát Lái / VASEP)",
+          "source_id": "VASEP_SHRIMP",
+          "source_name": "Hiệp Hội Thủy Sản VN (VASEP - FOB HCM/Cần Thơ)",
+          "source_category": "INDUSTRY_AGENCY",
+          "exchange_name": "Hiệp Hội Thủy Sản VN (VASEP - FOB HCM)",
           "tier_type": "EXPORT_FOB",
-          "contract_code": "FOB HCM Size 31/40",
-          "price_original": "9,600 USD/MT",
-          "price_usd_mt": 9600,
+          "contract_code": "Vannamei Frozen 31/40",
+          "price_original": "8.80 USD/kg",
+          "price_usd_mt": 8800,
           "change_24h": "+0.5%",
+          "change_7d": "+1.6%",
           "currency": "USD",
-          "updated_at": "Hôm nay, 17:00 ICT",
-          "note": "Cấp đông rời IQF, đạt chuẩn HACCP/BRC"
+          "updated_at": "Hôm nay, 16:00 ICT",
+          "note": "Tôm thẻ đông lạnh nguyên con IQF size 31-40 con/kg",
+          "history_1y": [
+            {
+              "date": "11/2025",
+              "price_usd_mt": 7900
+            },
+            {
+              "date": "12/2025",
+              "price_usd_mt": 8100
+            },
+            {
+              "date": "01/2026",
+              "price_usd_mt": 8250
+            },
+            {
+              "date": "02/2026",
+              "price_usd_mt": 8380
+            },
+            {
+              "date": "03/2026",
+              "price_usd_mt": 8500
+            },
+            {
+              "date": "04/2026",
+              "price_usd_mt": 8620
+            },
+            {
+              "date": "05/2026",
+              "price_usd_mt": 8550
+            },
+            {
+              "date": "06/2026",
+              "price_usd_mt": 8680
+            },
+            {
+              "date": "07/2026",
+              "price_usd_mt": 8740
+            },
+            {
+              "date": "08/2026",
+              "price_usd_mt": 8700
+            },
+            {
+              "date": "09/2026",
+              "price_usd_mt": 8750
+            },
+            {
+              "date": "10/2026",
+              "price_usd_mt": 8800
+            }
+          ]
         },
         {
-          "exchange_name": "Cảng Guayaquil (FOB Ecuador)",
-          "tier_type": "EXPORT_FOB",
-          "contract_code": "Ecuador Vannamei FOB",
-          "price_original": "9,250 USD/MT",
-          "price_usd_mt": 9250,
-          "change_24h": "-0.3%",
+          "source_id": "URNER_BARRY_NY",
+          "source_name": "Chợ Đầu Mối Thủy Sản Mỹ (Urner Barry Benchmark)",
+          "source_category": "GLOBAL_EXCHANGE",
+          "exchange_name": "Urner Barry (US Benchmark)",
+          "tier_type": "GLOBAL_BENCHMARK",
+          "contract_code": "White Shrimp 31/40 NY Spot",
+          "price_original": "4.65 USD/lb",
+          "price_usd_mt": 10250,
+          "change_24h": "+0.8%",
+          "change_7d": "+2.0%",
           "currency": "USD",
-          "updated_at": "Hôm nay, 14:00 ECT",
-          "note": "Đối thủ cạnh tranh giá rẻ số 1 thế giới"
+          "updated_at": "Hôm nay, 15:30 EST",
+          "note": "Giá bán buôn tại cảng bờ Đông nước Mỹ (New York / Boston)",
+          "history_1y": [
+            {
+              "date": "11/2025",
+              "price_usd_mt": 9300
+            },
+            {
+              "date": "12/2025",
+              "price_usd_mt": 9520
+            },
+            {
+              "date": "01/2026",
+              "price_usd_mt": 9700
+            },
+            {
+              "date": "02/2026",
+              "price_usd_mt": 9850
+            },
+            {
+              "date": "03/2026",
+              "price_usd_mt": 9980
+            },
+            {
+              "date": "04/2026",
+              "price_usd_mt": 10100
+            },
+            {
+              "date": "05/2026",
+              "price_usd_mt": 10020
+            },
+            {
+              "date": "06/2026",
+              "price_usd_mt": 10150
+            },
+            {
+              "date": "07/2026",
+              "price_usd_mt": 10200
+            },
+            {
+              "date": "08/2026",
+              "price_usd_mt": 10180
+            },
+            {
+              "date": "09/2026",
+              "price_usd_mt": 10210
+            },
+            {
+              "date": "10/2026",
+              "price_usd_mt": 10250
+            }
+          ]
         },
         {
-          "exchange_name": "Vùng Nuôi Đồng Bằng Sông Cửu Long",
+          "source_id": "CAMAU_SHRIMP",
+          "source_name": "Đầm Nuôi Cà Mau / Bạc Liêu (Spot Tôm Sống)",
+          "source_category": "DOMESTIC_FARM",
+          "exchange_name": "Cà Mau / Bạc Liêu (Spot Đầm)",
           "tier_type": "DOMESTIC_FARM",
-          "contract_code": "Ao nuôi Cà Mau / Bạc Liêu",
-          "price_original": "135,000 VNĐ/kg",
-          "price_usd_mt": 5308,
+          "contract_code": "Tôm Thẻ Sống Oxy (Size 30)",
+          "price_original": "165,000 VNĐ/kg",
+          "price_usd_mt": 6490,
           "change_24h": "0.0%",
+          "change_7d": "+1.2%",
           "currency": "VND",
-          "updated_at": "Hôm nay, 10:00 ICT",
-          "note": "Tôm nguyên liệu tươi sống size 30 con/kg"
+          "updated_at": "Hôm nay, 14:00 ICT",
+          "note": "Giá thương lái thu mua tại đầm nuôi sinh thái Bạc Liêu, Cà Mau",
+          "history_1y": [
+            {
+              "date": "11/2025",
+              "price_usd_mt": 5800
+            },
+            {
+              "date": "12/2025",
+              "price_usd_mt": 5950
+            },
+            {
+              "date": "01/2026",
+              "price_usd_mt": 6100
+            },
+            {
+              "date": "02/2026",
+              "price_usd_mt": 6200
+            },
+            {
+              "date": "03/2026",
+              "price_usd_mt": 6300
+            },
+            {
+              "date": "04/2026",
+              "price_usd_mt": 6400
+            },
+            {
+              "date": "05/2026",
+              "price_usd_mt": 6350
+            },
+            {
+              "date": "06/2026",
+              "price_usd_mt": 6420
+            },
+            {
+              "date": "07/2026",
+              "price_usd_mt": 6450
+            },
+            {
+              "date": "08/2026",
+              "price_usd_mt": 6420
+            },
+            {
+              "date": "09/2026",
+              "price_usd_mt": 6470
+            },
+            {
+              "date": "10/2026",
+              "price_usd_mt": 6490
+            }
+          ]
         }
       ],
       "arbitrage_analysis": {
-        "spread_usd": 1092,
-        "spread_pct": 11.4,
-        "basis_diff": "+350 USD/MT (Giá VN cao hơn Ecuador do chuẩn chế biến sâu)",
-        "opportunity_score": 85,
-        "recommendation": "Tập trung chào hàng các dòng chế biến sâu (tẩm bột, luộc sẵn, sushi) vào thị trường Nhật và EU để tránh đối đầu trực diện về giá hàng thô với Ecuador."
-      }
-    },
-    {
-      "commodity_id": "natural_rubber",
-      "commodity_name": "Cao Su Thiên Nhiên SVR 10",
-      "hs_code": "4001.22",
-      "sector": "Cao Su & Công Nghiệp",
-      "icon": "layers",
-      "primary_unit": "USD/Tấn",
-      "benchmarks": [
-        {
-          "exchange_name": "Sàn SGX SICOM (Singapore Commodity)",
-          "tier_type": "GLOBAL_BENCHMARK",
-          "contract_code": "TSR20 Futures",
-          "price_original": "1,940 USD/MT",
-          "price_usd_mt": 1940,
-          "change_24h": "+1.5%",
-          "currency": "USD",
-          "updated_at": "Hôm nay, 17:00 SGT",
-          "note": "Chuẩn giá tham chiếu ngành lốp xe ô tô toàn cầu"
-        },
-        {
-          "exchange_name": "Sàn TOCOM / OSE (Tokyo, Nhật Bản)",
-          "tier_type": "GLOBAL_BENCHMARK",
-          "contract_code": "RSS3 Tokyo Futures",
-          "price_original": "320 JPY/kg",
-          "price_usd_mt": 2133,
-          "change_24h": "+2.1%",
-          "currency": "JPY",
-          "updated_at": "Hôm nay, 16:30 JST",
-          "note": "Cao su tờ xông khói RSS3 quy đổi sang USD/MT"
-        },
-        {
-          "exchange_name": "Cảng Xuất Khẩu VN (FOB Cát Lái - SVR 10)",
-          "tier_type": "EXPORT_FOB",
-          "contract_code": "VN SVR 10 FOB",
-          "price_original": "1,880 USD/MT",
-          "price_usd_mt": 1880,
-          "change_24h": "+1.2%",
-          "currency": "USD",
-          "updated_at": "Hôm nay, 17:30 ICT",
-          "note": "Hàng bọc màng PE 35kg/khối đóng pallet gỗ"
-        },
-        {
-          "exchange_name": "Vườn Cây Bình Phước / Tây Ninh",
-          "tier_type": "DOMESTIC_FARM",
-          "contract_code": "Mủ Cao Su Nước (Độ TSC)",
-          "price_original": "415 VNĐ/độ TSC",
-          "price_usd_mt": 1630,
-          "change_24h": "+1.0%",
-          "currency": "VND",
-          "updated_at": "Hôm nay, 09:00 ICT",
-          "note": "Thu mua trực tiếp từ nông hộ và nông trường"
-        }
-      ],
-      "arbitrage_analysis": {
-        "spread_usd": 60,
-        "spread_pct": 3.2,
-        "basis_diff": "-60 USD/MT (FOB VN vs SGX SICOM)",
-        "opportunity_score": 86,
-        "recommendation": "Giá cao su thế giới đang trong chu kỳ tăng mạnh do nguồn cung Đông Nam Á hạn chế bởi thời tiết. Thời điểm thích hợp ký hợp đồng xuất khẩu kỳ hạn cho đối tác Trung Quốc và Ấn Độ."
+        "spread_usd": 2310,
+        "spread_pct": 35.6,
+        "basis_diff": "-1,450 USD/MT (FOB VN vs Urner Barry US)",
+        "opportunity_score": 94,
+        "recommendation": "Biên Lợi Nhuận Chuỗi Cung Ứng Lớn: Chênh lệch giữa giá đầm nuôi và giá xuất khẩu đạt 2,310 USD/tấn, tiếp tục tập trung xuất khẩu container lạnh 40ft sang thị trường Bắc Mỹ."
       }
     }
-  ],
-  "total_sectors": 6,
-  "updated_at": "2026-10-16T17:00:00Z"
+  ]
 }

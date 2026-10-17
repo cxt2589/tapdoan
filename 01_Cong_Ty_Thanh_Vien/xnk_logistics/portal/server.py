@@ -407,7 +407,7 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                 "status": "OPERATIONAL",
                 "docs_url": "/api/docs",
                 "openapi_url": "/api/openapi.json",
-                "endpoints_count": 38,
+                "endpoints_count": 40,
                 "categories": [
                     "Leads & Prospecting",
                     "Due Diligence & Verification",
@@ -1039,6 +1039,140 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                     self._send_json({"ok": False, "error": str(e)}, 500)
             else:
                 self._send_json({"ok": False, "error": "Prices file not found"}, 404)
+            return
+
+        elif path == "/api/prices/search":
+            # Tìm kiếm thông minh đa nguồn, gắn nhãn từng sàn và nguồn định giá
+            q = query.get("q", [""])[0].strip().lower()
+            source_filter = query.get("source_type", [""])[0].strip().upper()
+            prices_file = os.path.join(BASE_DIR, "data", "multi_exchange_commodity_prices.json")
+            results = []
+            if os.path.exists(prices_file):
+                try:
+                    with open(prices_file, "r", encoding="utf-8") as f:
+                        p_data = json.load(f)
+                    
+                    for sec in p_data.get("sectors", []):
+                        comm_name = sec.get("commodity_name", "")
+                        hs_code = sec.get("hs_code", "")
+                        comm_id = sec.get("commodity_id", "")
+                        sector_name = sec.get("sector", "")
+                        
+                        for b in sec.get("benchmarks", []):
+                            s_cat = b.get("source_category", b.get("tier_type", ""))
+                            if source_filter and source_filter != "ALL" and s_cat != source_filter:
+                                continue
+                            
+                            src_name = b.get("source_name", b.get("exchange_name", ""))
+                            ex_name = b.get("exchange_name", "")
+                            c_code = b.get("contract_code", "")
+                            
+                            search_corpus = f"{comm_id} {comm_name} {hs_code} {src_name} {ex_name} {c_code} {sector_name}".lower()
+                            search_corpus_clean = search_corpus.replace("à","a").replace("á","a").replace("ạ","a").replace("ả","a").replace("ã","a").replace("â","a").replace("ầ","a").replace("ấ","a").replace("ậ","a").replace("ẩ","a").replace("ẫ","a").replace("è","e").replace("é","e").replace("ẹ","e").replace("ẻ","e").replace("ẽ","e").replace("ê","e").replace("ề","e").replace("ế","e").replace("ệ","e").replace("ể","e").replace("ễ","e").replace("ò","o").replace("ó","o").replace("ọ","o").replace("ỏ","o").replace("õ","o").replace("ô","o").replace("ồ","o").replace("ố","o").replace("ộ","o").replace("ổ","o").replace("ỗ","o").replace("ơ","o").replace("ờ","o").replace("ớ","o").replace("ợ","o").replace("ở","o").replace("ỡ","o").replace("ù","u").replace("ú","u").replace("ụ","u").replace("ủ","u").replace("ũ","u").replace("ư","u").replace("ừ","u").replace("ứ","u").replace("ự","u").replace("ử","u").replace("ữ","u").replace("ì","i").replace("í","i").replace("ị","i").replace("ỉ","i").replace("ĩ","i").replace("đ","d")
+                            q_clean = q.replace("à","a").replace("á","a").replace("ạ","a").replace("ả","a").replace("ã","a").replace("â","a").replace("ầ","a").replace("ấ","a").replace("ậ","a").replace("ẩ","a").replace("ẫ","a").replace("è","e").replace("é","e").replace("ẹ","e").replace("ẻ","e").replace("ẽ","e").replace("ê","e").replace("ề","e").replace("ế","e").replace("ệ","e").replace("ể","e").replace("ễ","e").replace("ò","o").replace("ó","o").replace("ọ","o").replace("ỏ","o").replace("õ","o").replace("ô","o").replace("ồ","o").replace("ố","o").replace("ộ","o").replace("ổ","o").replace("ỗ","o").replace("ơ","o").replace("ờ","o").replace("ớ","o").replace("ợ","o").replace("ở","o").replace("ỡ","o").replace("ù","u").replace("ú","u").replace("ụ","u").replace("ủ","u").replace("ũ","u").replace("ư","u").replace("ừ","u").replace("ứ","u").replace("ự","u").replace("ử","u").replace("ữ","u").replace("ì","i").replace("í","i").replace("ị","i").replace("ỉ","i").replace("ĩ","i").replace("đ","d")
+
+                            # Xử lý đồng nghĩa ngoại thương
+                            search_tokens = [q, q_clean]
+                            if "cafe" in q_clean or "coffee" in q_clean or "ca phe" in q_clean:
+                                search_tokens.extend(["cafe", "coffee", "ca phe", "robusta", "arabica"])
+                            if "gao" in q_clean or "rice" in q_clean or "lua" in q_clean:
+                                search_tokens.extend(["gao", "rice", "lua", "tam"])
+                            if "phan" in q_clean or "urea" in q_clean or "dam" in q_clean:
+                                search_tokens.extend(["phan", "urea", "dam", "fertilizer"])
+                            if "tieu" in q_clean or "pepper" in q_clean:
+                                search_tokens.extend(["tieu", "pepper"])
+                            if "cao su" in q_clean or "rubber" in q_clean:
+                                search_tokens.extend(["cao su", "rubber", "latex", "svr"])
+                            if "tom" in q_clean or "shrimp" in q_clean or "seafood" in q_clean:
+                                search_tokens.extend(["tom", "shrimp", "seafood", "thuy san"])
+
+                            is_matched = not q or any(t in search_corpus or t in search_corpus_clean for t in search_tokens if t)
+
+                            if is_matched:
+                                results.append({
+                                    "commodity_id": comm_id,
+                                    "commodity_name": comm_name,
+                                    "hs_code": hs_code,
+                                    "sector": sector_name,
+                                    "source_id": b.get("source_id", b.get("tier_type", "")),
+                                    "source_name": src_name,
+                                    "source_category": s_cat,
+                                    "exchange_name": ex_name,
+                                    "contract_code": c_code,
+                                    "price_original": b.get("price_original"),
+                                    "price_usd_mt": b.get("price_usd_mt"),
+                                    "change_24h": b.get("change_24h", "0.0%"),
+                                    "change_7d": b.get("change_7d", "0.0%"),
+                                    "currency": b.get("currency", "USD"),
+                                    "updated_at": b.get("updated_at", ""),
+                                    "note": b.get("note", ""),
+                                    "has_chart_history": bool(b.get("history_1y"))
+                                })
+                except Exception as e:
+                    self._send_json({"ok": False, "error": str(e)}, 500)
+                    return
+            
+            self._send_json({
+                "ok": True,
+                "query": q,
+                "source_filter": source_filter or "ALL",
+                "total_matches": len(results),
+                "results": results
+            })
+            return
+
+        elif path == "/api/prices/chart":
+            # Cung cấp dữ liệu lịch sử nến / biểu đồ đường theo từng nguồn sàn cụ thể
+            comm_id = query.get("commodity_id", ["coffee_robusta"])[0].strip()
+            src_id = query.get("source_id", [""])[0].strip()
+            time_range = query.get("range", ["1y"])[0].strip().lower()
+            
+            prices_file = os.path.join(BASE_DIR, "data", "multi_exchange_commodity_prices.json")
+            if not os.path.exists(prices_file):
+                self._send_json({"ok": False, "error": "Prices file not found"}, 404)
+                return
+            
+            try:
+                with open(prices_file, "r", encoding="utf-8") as f:
+                    p_data = json.load(f)
+                
+                matched_sec = next((s for s in p_data.get("sectors", []) if s.get("commodity_id") == comm_id), None)
+                if not matched_sec:
+                    self._send_json({"ok": False, "error": f"Commodity '{comm_id}' not found"}, 404)
+                    return
+                
+                matched_bench = None
+                if src_id:
+                    matched_bench = next((b for b in matched_sec.get("benchmarks", []) if b.get("source_id") == src_id or b.get("tier_type") == src_id), None)
+                if not matched_bench and matched_sec.get("benchmarks"):
+                    matched_bench = matched_sec["benchmarks"][0]
+                
+                raw_history = matched_bench.get("history_1y", []) if matched_bench else []
+                if time_range == "1m":
+                    history = raw_history[-2:] if len(raw_history) >= 2 else raw_history
+                elif time_range == "6m":
+                    history = raw_history[-6:] if len(raw_history) >= 6 else raw_history
+                else:
+                    history = raw_history
+                
+                self._send_json({
+                    "ok": True,
+                    "commodity_id": comm_id,
+                    "commodity_name": matched_sec.get("commodity_name"),
+                    "hs_code": matched_sec.get("hs_code"),
+                    "source_id": matched_bench.get("source_id", "") if matched_bench else "",
+                    "source_name": matched_bench.get("source_name", matched_bench.get("exchange_name", "")) if matched_bench else "",
+                    "source_category": matched_bench.get("source_category", "") if matched_bench else "",
+                    "contract_code": matched_bench.get("contract_code", "") if matched_bench else "",
+                    "current_price_usd_mt": matched_bench.get("price_usd_mt") if matched_bench else 0,
+                    "price_original": matched_bench.get("price_original") if matched_bench else "",
+                    "change_24h": matched_bench.get("change_24h") if matched_bench else "0.0%",
+                    "change_7d": matched_bench.get("change_7d") if matched_bench else "0.0%",
+                    "range": time_range,
+                    "history": history
+                })
+            except Exception as e:
+                self._send_json({"ok": False, "error": str(e)}, 500)
             return
 
         elif path == "/" or path == "/index.html":

@@ -3636,7 +3636,32 @@
           </button>
         </div>
 
-        <!-- 6 Commodity Selection Pills -->
+        <!-- Multi-Source Omni-Search Bar & Source Filter Chips -->
+        <div class="relative space-y-2">
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+            <div class="relative flex-1">
+              <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+              <input type="text" id="priceMultiSourceSearchInput" oninput="handlePriceMultiSourceSearch(this.value)" placeholder="🔍 Tìm mặt hàng hoặc sàn (vd: Cà phê ICE, Arabica Yahoo, Gạo VFA, Cát Lái, NOLA CME...)" class="w-full pl-10 pr-9 py-2.5 rounded-xl text-xs font-mono bg-brand-950 border border-white/10 text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500">
+              <button type="button" id="clearPriceSearchBtn" onclick="clearPriceMultiSourceSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white cursor-pointer">
+                <i data-lucide="x" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+            <div class="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1 sm:pb-0" id="priceSourceCategoryPills">
+              <button type="button" onclick="filterPriceBySourceCategory('ALL')" id="filter-src-ALL" class="px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-cyan-500 text-brand-950 border border-cyan-400 cursor-pointer">Tất Cả Sàn</button>
+              <button type="button" onclick="filterPriceBySourceCategory('GLOBAL_EXCHANGE')" id="filter-src-GLOBAL_EXCHANGE" class="px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-brand-950 text-slate-300 hover:text-white border border-white/10 cursor-pointer">🌐 Sàn Quốc Tế</button>
+              <button type="button" onclick="filterPriceBySourceCategory('EXPORT_FOB')" id="filter-src-EXPORT_FOB" class="px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-brand-950 text-slate-300 hover:text-white border border-white/10 cursor-pointer">🚢 Cảng FOB VN</button>
+              <button type="button" onclick="filterPriceBySourceCategory('DOMESTIC_FARM')" id="filter-src-DOMESTIC_FARM" class="px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-brand-950 text-slate-300 hover:text-white border border-white/10 cursor-pointer">🌾 Cửa Vườn Spot</button>
+              <button type="button" onclick="filterPriceBySourceCategory('INDUSTRY_AGENCY')" id="filter-src-INDUSTRY_AGENCY" class="px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-brand-950 text-slate-300 hover:text-white border border-white/10 cursor-pointer">🏛️ Hiệp Hội</button>
+            </div>
+          </div>
+
+          <!-- Autocomplete Floating Dropdown Menu -->
+          <div id="priceSearchAutocompleteDropdown" class="hidden absolute left-0 right-0 top-full mt-1.5 z-30 max-h-64 overflow-y-auto rounded-2xl bg-brand-950/95 border border-cyan-500/40 shadow-2xl backdrop-blur-xl p-2 space-y-1">
+            <!-- Injected dynamically via JS: each item shows commodity_name + source_name badge -->
+          </div>
+        </div>
+
+        <!-- 7 Commodity Selection Pills -->
         <div>
           <span class="text-[11px] font-mono uppercase text-slate-400 font-bold block mb-2">CHỌN MẶT HÀNG CHIẾN LƯỢC:</span>
           <div class="flex items-center gap-2 overflow-x-auto scrollbar-none pb-1" id="commodityPriceTabsContainer">
@@ -3647,6 +3672,78 @@
         <!-- Active Commodity Title & Spread Badge -->
         <div id="activeCommodityHeaderBanner" class="p-4 rounded-2xl bg-brand-950/80 border border-white/5 flex flex-col md:flex-row md:items-center justify-between gap-3">
           <!-- Injected via JS -->
+        </div>
+
+        <!-- Interactive Multi-Source Price Chart Card -->
+        <div class="p-4 sm:p-5 rounded-2xl bg-brand-950/90 border border-emerald-500/30 space-y-3.5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 border-b border-white/10 pb-3">
+            <div>
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/30" id="chartSourceBadge">Sàn ICE London</span>
+                <h4 class="text-sm font-bold text-white flex items-center gap-2" id="chartTitle">Biểu Đồ Lịch Sử Giá 12 Tháng</h4>
+                <span class="text-xs font-mono text-cyan-300" id="chartContractCode">RC Futures</span>
+              </div>
+              <p class="text-[11px] text-slate-400 mt-0.5" id="chartSubtitle">Dữ liệu nến / giá chốt phiên lịch sử chuẩn hóa theo USD/Tấn</p>
+            </div>
+
+            <div class="flex items-center gap-2 flex-wrap">
+              <!-- Time Range Filters -->
+              <div class="flex items-center gap-1 bg-brand-900 border border-white/10 p-0.5 rounded-xl text-[10px] font-mono">
+                <button type="button" onclick="changeChartRange('1m')" id="btn-chart-range-1m" class="px-2 py-1 rounded-lg hover:bg-white/5 text-slate-400 cursor-pointer">1 Tháng</button>
+                <button type="button" onclick="changeChartRange('6m')" id="btn-chart-range-6m" class="px-2 py-1 rounded-lg hover:bg-white/5 text-slate-400 cursor-pointer">6 Tháng</button>
+                <button type="button" onclick="changeChartRange('1y')" id="btn-chart-range-1y" class="px-2 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30 cursor-pointer">12 Tháng</button>
+              </div>
+              <!-- Price Volatility Badge -->
+              <div class="px-2.5 py-1 rounded-xl bg-brand-900 border border-white/10 text-right">
+                <span class="text-[9px] font-mono text-slate-400 block">Biến động 7D</span>
+                <span class="text-xs font-mono font-bold text-emerald-400" id="chart7dChange">+4.2%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- HTML5 Canvas Responsive Chart Container -->
+          <div class="relative w-full h-56 sm:h-64 bg-brand-900/50 rounded-xl border border-white/5 p-2 overflow-hidden flex flex-col justify-between">
+            <canvas id="commodityPriceCanvas" class="w-full h-full block cursor-crosshair"></canvas>
+            <div id="chartTooltip" class="hidden absolute pointer-events-none px-2.5 py-1.5 rounded-lg bg-brand-950/95 border border-cyan-400/50 text-[11px] font-mono text-white shadow-xl z-20"></div>
+          </div>
+
+          <div class="flex items-center justify-between text-[10px] font-mono text-slate-400 px-1">
+            <div class="flex items-center gap-3">
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-400 inline-block"></span> Đường Giá Đóng Cửa (USD/MT)</span>
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-0.5 bg-cyan-400/60 inline-block border-b border-dashed"></span> Vùng Biến Động Sàn</span>
+            </div>
+            <span class="text-slate-500 hidden sm:inline">Chạm / Rê chuột trên biểu đồ để xem mốc giá chi tiết</span>
+          </div>
+        </div>
+
+        <!-- Multi-Source Price & Volatility Matrix Table -->
+        <div class="p-4 rounded-2xl bg-brand-950/80 border border-white/5 space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <i data-lucide="layers" class="w-4 h-4 text-cyan-400"></i>
+              <h4 class="text-xs font-mono font-bold uppercase text-white">BẢNG THEO DÕI ĐA NGUỒN & BIẾN ĐỘNG GIÁ CHI TIẾT:</h4>
+            </div>
+            <span class="text-[10px] font-mono text-slate-400">Bấm "Xem Biểu Đồ" để vẽ riêng từng sàn</span>
+          </div>
+          
+          <div class="overflow-x-auto scrollbar-none rounded-xl border border-white/5">
+            <table class="w-full text-left text-xs font-mono">
+              <thead class="bg-brand-900/90 text-slate-400 text-[10px] uppercase border-b border-white/10">
+                <tr>
+                  <th class="py-2.5 px-3">Nguồn Tham Chiếu / Sàn</th>
+                  <th class="py-2.5 px-3">Mã Hợp Đồng</th>
+                  <th class="py-2.5 px-3">Giá Gốc Niêm Yết</th>
+                  <th class="py-2.5 px-3">Quy Đổi USD/MT</th>
+                  <th class="py-2.5 px-3">Biến Động 24h</th>
+                  <th class="py-2.5 px-3">Biến Động 7D</th>
+                  <th class="py-2.5 px-3 text-right">Biểu Đồ Sàn</th>
+                </tr>
+              </thead>
+              <tbody id="multiSourcePriceTableBody" class="divide-y divide-white/5">
+                <!-- Rendered via JS -->
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <!-- 4-Tier Comparative Price Grid -->
@@ -9083,10 +9180,16 @@
 
     // ==========================================
     // MULTI-EXCHANGE COMMODITY PRICES & ARBITRAGE RADAR
-    // (BẢNG GIÁ ĐA SÀN & RADAR CHÊNH LỆCH GIÁ ARBITRAGE)
+    // (BẢNG GIÁ ĐA SÀN, MINH BẠCH NGUỒN & BIỂU ĐỒ NẾN LỊCH SỬ)
     // ==========================================
     let cachedCommodityPricesData = null;
     let currentSelectedCommodityId = 'coffee_robusta';
+    let currentChartSourceId = 'ICE_LONDON';
+    let currentChartRange = '1y';
+    let currentSourceCategoryFilter = 'ALL';
+    let priceSearchDebounceTimer = null;
+    let currentChartPoints = [];
+    let currentChartMetadata = {};
 
     async function openCrossExchangePricesModal(defaultCommodityId) {
       const modal = document.getElementById('crossExchangePricesModal');
@@ -9099,6 +9202,7 @@
       if (defaultCommodityId) {
         currentSelectedCommodityId = defaultCommodityId;
       }
+      setupChartInteraction();
       await fetchPriceBenchmarksData();
       if (window.lucide) lucide.createIcons();
     }
@@ -9155,12 +9259,485 @@
       const commodity = cachedCommodityPricesData.sectors.find(s => s.commodity_id === commodityId) || cachedCommodityPricesData.sectors[0];
       if (!commodity) return;
 
+      // Ensure currentChartSourceId belongs to current commodity
+      const benchmarkExists = commodity.benchmarks && commodity.benchmarks.some(b => b.source_id === currentChartSourceId);
+      if (!benchmarkExists && commodity.benchmarks && commodity.benchmarks.length > 0) {
+        currentChartSourceId = commodity.benchmarks[0].source_id;
+      }
+
       renderCommodityTabs();
       renderActiveCommodityBanner(commodity);
+      renderMultiSourceTable(commodity);
       render4TierPriceGrid(commodity);
       renderArbitrageCard(commodity);
       calculateUnitConversion();
+      updateChartForCurrentCommodityAndSource();
       if (window.lucide) lucide.createIcons();
+    }
+
+    function selectCommodityPriceAndSource(commodityId, sourceId) {
+      currentSelectedCommodityId = commodityId;
+      currentChartSourceId = sourceId;
+      selectCommodityPrice(commodityId);
+      const chartCard = document.getElementById('commodityPriceCanvas');
+      if (chartCard) {
+        chartCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    function getCategoryBadgeMeta(cat) {
+      switch (cat) {
+        case 'GLOBAL_EXCHANGE':
+          return { label: '🌐 Sàn Thế Giới', class: 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40' };
+        case 'EXPORT_FOB':
+          return { label: '🚢 Cảng FOB VN', class: 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' };
+        case 'DESTINATION_CIF':
+          return { label: '⚓ Cảng Đích CIF', class: 'bg-purple-500/20 text-purple-300 border border-purple-500/40' };
+        case 'DOMESTIC_FARM':
+          return { label: '🌾 Cửa Vườn Spot', class: 'bg-amber-500/20 text-amber-300 border border-amber-500/40' };
+        case 'INDUSTRY_AGENCY':
+          return { label: '🏛️ Hiệp Hội Ngành', class: 'bg-blue-500/20 text-blue-300 border border-blue-500/40' };
+        default:
+          return { label: cat || 'Nguồn Sàn', class: 'bg-white/10 text-slate-300 border border-white/10' };
+      }
+    }
+
+    function getChangeColorClass(changeStr) {
+      if (!changeStr) return 'text-slate-400';
+      if (changeStr.startsWith('+')) return 'text-emerald-400 font-bold';
+      if (changeStr.startsWith('-')) return 'text-rose-400 font-bold';
+      return 'text-slate-400 font-bold';
+    }
+
+    function renderMultiSourceTable(commodity) {
+      const tbody = document.getElementById('multiSourcePriceTableBody');
+      if (!tbody || !commodity || !commodity.benchmarks) return;
+
+      let benchmarks = commodity.benchmarks;
+      if (currentSourceCategoryFilter !== 'ALL') {
+        benchmarks = benchmarks.filter(b => b.source_category === currentSourceCategoryFilter || b.tier_type === currentSourceCategoryFilter);
+      }
+
+      if (benchmarks.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" class="py-4 text-center text-xs font-mono text-slate-400">
+              Không có sàn hoặc nguồn nào thuộc bộ lọc đã chọn cho mặt hàng này.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = benchmarks.map(b => {
+        const isCurrentChart = (b.source_id === currentChartSourceId);
+        const catBadge = getCategoryBadgeMeta(b.source_category);
+        const rowHighlightClass = isCurrentChart 
+          ? "bg-emerald-500/10 border-l-4 border-l-emerald-400" 
+          : "hover:bg-white/[0.03]";
+
+        const chartButton = isCurrentChart
+          ? `<button type="button" class="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold text-[10px] flex items-center gap-1 ml-auto cursor-default shadow-sm shadow-emerald-500/20">
+               <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+               <span>Đang Xem</span>
+             </button>`
+          : `<button type="button" onclick="selectCommodityPriceAndSource('${commodity.commodity_id}', '${b.source_id}')" 
+                     class="px-2.5 py-1 rounded-lg bg-brand-900 hover:bg-cyan-500/20 text-slate-300 hover:text-cyan-300 border border-white/10 hover:border-cyan-500/40 text-[10px] font-bold flex items-center gap-1 ml-auto transition-all cursor-pointer">
+               <span>📈 Xem Biểu Đồ</span>
+             </button>`;
+
+        return `
+          <tr class="transition-colors ${rowHighlightClass}">
+            <td class="py-2.5 px-3">
+              <div class="flex items-center gap-2">
+                <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold shrink-0 ${catBadge.class}">${catBadge.label}</span>
+                <div>
+                  <div class="font-bold text-white text-xs">${b.source_name || b.exchange_name}</div>
+                  <div class="text-[10px] text-slate-400">${b.note || b.exchange_name}</div>
+                </div>
+              </div>
+            </td>
+            <td class="py-2.5 px-3 font-mono font-bold text-cyan-300">${b.contract_code}</td>
+            <td class="py-2.5 px-3 font-mono font-extrabold text-white">${b.price_original}</td>
+            <td class="py-2.5 px-3 font-mono font-bold text-emerald-400">$${Number(b.price_usd_mt).toLocaleString()}/MT</td>
+            <td class="py-2.5 px-3 font-mono ${getChangeColorClass(b.change_24h)}">${b.change_24h}</td>
+            <td class="py-2.5 px-3 font-mono ${getChangeColorClass(b.change_7d)}">${b.change_7d}</td>
+            <td class="py-2.5 px-3 text-right">${chartButton}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function filterPriceBySourceCategory(cat) {
+      currentSourceCategoryFilter = cat;
+      const categories = ['ALL', 'GLOBAL_EXCHANGE', 'EXPORT_FOB', 'DOMESTIC_FARM', 'INDUSTRY_AGENCY'];
+      categories.forEach(c => {
+        const btn = document.getElementById(`filter-src-${c}`);
+        if (!btn) return;
+        if (c === cat) {
+          btn.className = "px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-cyan-500 text-brand-950 border border-cyan-400 cursor-pointer shadow-md shadow-cyan-500/20";
+        } else {
+          btn.className = "px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-brand-950 text-slate-300 hover:text-white border border-white/10 cursor-pointer";
+        }
+      });
+      if (cachedCommodityPricesData && cachedCommodityPricesData.sectors) {
+        const commodity = cachedCommodityPricesData.sectors.find(s => s.commodity_id === currentSelectedCommodityId);
+        if (commodity) {
+          renderMultiSourceTable(commodity);
+        }
+      }
+    }
+
+    function handlePriceMultiSourceSearch(val) {
+      const clearBtn = document.getElementById('clearPriceSearchBtn');
+      const dropdown = document.getElementById('priceSearchAutocompleteDropdown');
+      if (!val || !val.trim()) {
+        if (clearBtn) clearBtn.classList.add('hidden');
+        if (dropdown) {
+          dropdown.classList.add('hidden');
+          dropdown.innerHTML = '';
+        }
+        return;
+      }
+      if (clearBtn) clearBtn.classList.remove('hidden');
+
+      if (priceSearchDebounceTimer) clearTimeout(priceSearchDebounceTimer);
+      priceSearchDebounceTimer = setTimeout(async () => {
+        try {
+          const res = await fetch(`/api/prices/search?q=${encodeURIComponent(val.trim())}&source_filter=${encodeURIComponent(currentSourceCategoryFilter)}`);
+          const data = await res.json();
+          renderPriceSearchResultsDropdown(data.results || [], val.trim());
+        } catch (err) {
+          console.error("Lỗi tìm kiếm giá đa sàn:", err);
+        }
+      }, 200);
+    }
+
+    function clearPriceMultiSourceSearch() {
+      const input = document.getElementById('priceMultiSourceSearchInput');
+      const clearBtn = document.getElementById('clearPriceSearchBtn');
+      const dropdown = document.getElementById('priceSearchAutocompleteDropdown');
+      if (input) input.value = '';
+      if (clearBtn) clearBtn.classList.add('hidden');
+      if (dropdown) {
+        dropdown.classList.add('hidden');
+        dropdown.innerHTML = '';
+      }
+    }
+
+    function renderPriceSearchResultsDropdown(results, query) {
+      const dropdown = document.getElementById('priceSearchAutocompleteDropdown');
+      if (!dropdown) return;
+
+      if (!results || results.length === 0) {
+        dropdown.innerHTML = `
+          <div class="p-3 text-center text-xs font-mono text-slate-400">
+            Không tìm thấy sàn giao dịch hoặc mặt hàng nào khớp với <span class="text-cyan-300 font-bold">"${query}"</span>
+          </div>
+        `;
+        dropdown.classList.remove('hidden');
+        return;
+      }
+
+      dropdown.innerHTML = `
+        <div class="px-2 py-1 text-[10px] font-mono uppercase text-slate-400 border-b border-white/5 flex items-center justify-between">
+          <span>Gợi Ý Tìm Kiếm Theo Sàn (${results.length} kết quả):</span>
+          <span class="text-cyan-400 font-bold">Chọn để mở biểu đồ & bảng giá</span>
+        </div>
+        <div class="space-y-1 pt-1 max-h-56 overflow-y-auto">
+          ${results.map(item => {
+            const catBadge = getCategoryBadgeMeta(item.source_category);
+            return `
+              <div onclick="selectFromSearchResult('${item.commodity_id}', '${item.source_id}')" 
+                   class="p-2.5 rounded-xl hover:bg-white/10 transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-2 border border-transparent hover:border-cyan-500/30">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-7 h-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center font-mono font-bold text-xs text-white shrink-0">
+                    ${item.hs_code ? item.hs_code.split('.')[0] : 'HS'}
+                  </div>
+                  <div>
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                      <span class="font-bold text-white text-xs">${item.commodity_name}</span>
+                      <span class="px-1.5 py-0.2 rounded text-[9px] font-mono font-bold ${catBadge.class}">${item.source_name}</span>
+                    </div>
+                    <div class="text-[10px] font-mono text-slate-400 flex items-center gap-2 mt-0.5">
+                      <span>Mã: <strong class="text-cyan-300">${item.contract_code}</strong></span>
+                      <span>•</span>
+                      <span>Sàn: ${item.exchange_name}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-right shrink-0 flex sm:flex-col items-center sm:items-end justify-between sm:justify-center">
+                  <span class="text-xs font-bold font-mono text-white">${item.price_original}</span>
+                  <div class="flex items-center gap-1 text-[10px] font-mono">
+                    <span class="text-cyan-300 font-bold">$${Number(item.price_usd_mt).toLocaleString()}/MT</span>
+                    <span class="${getChangeColorClass(item.change_24h)}">(${item.change_24h})</span>
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+      dropdown.classList.remove('hidden');
+    }
+
+    function selectFromSearchResult(commodityId, sourceId) {
+      clearPriceMultiSourceSearch();
+      selectCommodityPriceAndSource(commodityId, sourceId);
+    }
+
+    function changeChartRange(range) {
+      currentChartRange = range;
+      const ranges = ['1m', '6m', '1y'];
+      ranges.forEach(r => {
+        const btn = document.getElementById(`btn-chart-range-${r}`);
+        if (!btn) return;
+        if (r === range) {
+          btn.className = "px-2 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30 cursor-pointer shadow-sm";
+        } else {
+          btn.className = "px-2 py-1 rounded-lg hover:bg-white/5 text-slate-400 border border-transparent cursor-pointer";
+        }
+      });
+      updateChartForCurrentCommodityAndSource();
+    }
+
+    async function updateChartForCurrentCommodityAndSource() {
+      try {
+        const res = await fetch(`/api/prices/chart?commodity_id=${encodeURIComponent(currentSelectedCommodityId)}&source_id=${encodeURIComponent(currentChartSourceId)}&range=${encodeURIComponent(currentChartRange)}`);
+        const data = await res.json();
+        if (data && data.ok) {
+          currentChartPoints = data.history || [];
+          currentChartMetadata = data;
+          
+          const badgeEl = document.getElementById('chartSourceBadge');
+          const titleEl = document.getElementById('chartTitle');
+          const contractEl = document.getElementById('chartContractCode');
+          const change7dEl = document.getElementById('chart7dChange');
+          const subtitleEl = document.getElementById('chartSubtitle');
+
+          if (badgeEl) badgeEl.textContent = data.source_name || data.source_id;
+          if (titleEl) titleEl.textContent = `Biểu Đồ Lịch Sử Giá (${data.range.toUpperCase()}) - ${data.commodity_name}`;
+          if (contractEl) contractEl.textContent = `${data.contract_code} • ${data.price_original}`;
+          if (change7dEl) {
+            change7dEl.textContent = data.change_7d || 'N/A';
+            change7dEl.className = `text-xs font-mono font-bold ${getChangeColorClass(data.change_7d)}`;
+          }
+          if (subtitleEl) {
+            subtitleEl.textContent = `Nguồn: ${data.source_name} | Giá tham chiếu chuẩn hóa: $${Number(data.current_price_usd_mt).toLocaleString()}/MT`;
+          }
+
+          drawCommodityPriceChart();
+        }
+      } catch (err) {
+        console.error("Lỗi cập nhật biểu đồ giá:", err);
+      }
+    }
+
+    function drawCommodityPriceChart(hoverIndex = -1) {
+      const canvas = document.getElementById('commodityPriceCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      const container = canvas.parentElement;
+      const width = container.clientWidth || 600;
+      const height = container.clientHeight || 240;
+      const dpr = window.devicePixelRatio || 1;
+
+      if (canvas.width !== width * dpr || canvas.height !== height * dpr) {
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+      }
+      ctx.resetTransform();
+      ctx.scale(dpr, dpr);
+      ctx.clearRect(0, 0, width, height);
+
+      const points = currentChartPoints;
+      if (!points || points.length === 0) {
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '12px monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('Đang nạp dữ liệu nến sàn...', width / 2, height / 2);
+        return;
+      }
+
+      const paddingLeft = 55;
+      const paddingRight = 25;
+      const paddingTop = 25;
+      const paddingBottom = 28;
+      const plotW = width - paddingLeft - paddingRight;
+      const plotH = height - paddingTop - paddingBottom;
+
+      const prices = points.map(p => Number(p.price_usd_mt || p.close || p.price || 0));
+      let minP = Math.min(...prices);
+      let maxP = Math.max(...prices);
+      if (minP === maxP) {
+        minP = minP * 0.95;
+        maxP = maxP * 1.05;
+      }
+      const rangeP = maxP - minP;
+      const yMin = Math.max(0, Math.floor(minP - rangeP * 0.08));
+      const yMax = Math.ceil(maxP + rangeP * 0.08);
+
+      // 1. Grid lines & Y labels
+      const gridSteps = 4;
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
+      ctx.fillStyle = '#64748b';
+      ctx.font = '10px monospace';
+      ctx.textAlign = 'right';
+
+      for (let i = 0; i <= gridSteps; i++) {
+        const val = yMin + ((yMax - yMin) / gridSteps) * i;
+        const y = paddingTop + plotH - (i / gridSteps) * plotH;
+        
+        ctx.beginPath();
+        ctx.moveTo(paddingLeft, y);
+        ctx.lineTo(width - paddingRight, y);
+        ctx.stroke();
+
+        ctx.fillText(`$${Math.round(val).toLocaleString()}`, paddingLeft - 8, y + 3);
+      }
+
+      // 2. Coords
+      const coords = points.map((p, idx) => {
+        const x = paddingLeft + (idx / Math.max(1, points.length - 1)) * plotW;
+        const val = Number(p.price_usd_mt || p.close || p.price || 0);
+        const y = paddingTop + plotH - ((val - yMin) / (yMax - yMin)) * plotH;
+        return { x, y, price: val, date: p.date, raw: p };
+      });
+
+      // 3. X Labels
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#94a3b8';
+      const stepX = Math.max(1, Math.floor(coords.length / 6));
+      coords.forEach((c, idx) => {
+        if (idx % stepX === 0 || idx === coords.length - 1) {
+          ctx.fillText(c.date, c.x, height - 8);
+        }
+      });
+
+      // 4. Fill Gradient
+      const fillGradient = ctx.createLinearGradient(0, paddingTop, 0, paddingTop + plotH);
+      fillGradient.addColorStop(0, 'rgba(16, 185, 129, 0.32)');
+      fillGradient.addColorStop(0.7, 'rgba(6, 182, 212, 0.12)');
+      fillGradient.addColorStop(1, 'rgba(6, 182, 212, 0.0)');
+
+      ctx.beginPath();
+      ctx.moveTo(coords[0].x, paddingTop + plotH);
+      ctx.lineTo(coords[0].x, coords[0].y);
+      for (let i = 1; i < coords.length; i++) {
+        ctx.lineTo(coords[i].x, coords[i].y);
+      }
+      ctx.lineTo(coords[coords.length - 1].x, paddingTop + plotH);
+      ctx.closePath();
+      ctx.fillStyle = fillGradient;
+      ctx.fill();
+
+      // 5. Line Stroke
+      ctx.beginPath();
+      ctx.moveTo(coords[0].x, coords[0].y);
+      for (let i = 1; i < coords.length; i++) {
+        ctx.lineTo(coords[i].x, coords[i].y);
+      }
+      ctx.strokeStyle = '#10b981';
+      ctx.lineWidth = 2.5;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+
+      // 6. Data Points
+      coords.forEach((c, idx) => {
+        const isHovered = (idx === hoverIndex);
+        ctx.beginPath();
+        ctx.arc(c.x, c.y, isHovered ? 6 : 3.5, 0, Math.PI * 2);
+        ctx.fillStyle = isHovered ? '#34d399' : '#10b981';
+        ctx.fill();
+        ctx.lineWidth = isHovered ? 2.5 : 1.5;
+        ctx.strokeStyle = '#ffffff';
+        ctx.stroke();
+
+        if (isHovered) {
+          ctx.save();
+          ctx.setLineDash([4, 4]);
+          ctx.strokeStyle = 'rgba(52, 211, 153, 0.6)';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(c.x, paddingTop);
+          ctx.lineTo(c.x, paddingTop + plotH);
+          ctx.stroke();
+          ctx.restore();
+        }
+      });
+
+      canvas._chartCoords = coords;
+    }
+
+    function setupChartInteraction() {
+      const canvas = document.getElementById('commodityPriceCanvas');
+      const tooltip = document.getElementById('chartTooltip');
+      if (!canvas || !tooltip || canvas._hasListener) return;
+      canvas._hasListener = true;
+
+      function handleMove(e) {
+        if (!canvas._chartCoords || canvas._chartCoords.length === 0) return;
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        const mouseX = clientX - rect.left;
+
+        let nearestIdx = 0;
+        let minDist = 999999;
+        canvas._chartCoords.forEach((c, idx) => {
+          const dist = Math.abs(c.x - mouseX);
+          if (dist < minDist) {
+            minDist = dist;
+            nearestIdx = idx;
+          }
+        });
+
+        const p = canvas._chartCoords[nearestIdx];
+        if (p) {
+          drawCommodityPriceChart(nearestIdx);
+
+          tooltip.innerHTML = `
+            <div class="text-[10px] text-slate-400 font-bold uppercase">${p.date}</div>
+            <div class="text-xs font-extrabold text-emerald-300 font-mono">$${p.price.toLocaleString()} USD/MT</div>
+            <div class="text-[9px] text-cyan-300 font-mono">${currentChartMetadata.contract_code || ''}</div>
+          `;
+          tooltip.classList.remove('hidden');
+
+          const tooltipX = Math.min(rect.width - 130, Math.max(10, p.x - 55));
+          const tooltipY = Math.max(10, p.y - 58);
+          tooltip.style.left = `${tooltipX}px`;
+          tooltip.style.top = `${tooltipY}px`;
+        }
+      }
+
+      function handleLeave() {
+        tooltip.classList.add('hidden');
+        drawCommodityPriceChart(-1);
+      }
+
+      canvas.addEventListener('mousemove', handleMove);
+      canvas.addEventListener('mouseleave', handleLeave);
+      canvas.addEventListener('touchmove', handleMove, { passive: true });
+      canvas.addEventListener('touchend', handleLeave);
+      window.addEventListener('resize', () => {
+        const modal = document.getElementById('crossExchangePricesModal');
+        if (modal && !modal.classList.contains('hidden')) {
+          drawCommodityPriceChart();
+        }
+      });
+
+      document.addEventListener('click', (e) => {
+        const dropdown = document.getElementById('priceSearchAutocompleteDropdown');
+        if (dropdown && !dropdown.classList.contains('hidden')) {
+          if (!e.target.closest('#priceMultiSourceSearchInput') && !e.target.closest('#priceSearchAutocompleteDropdown')) {
+            dropdown.classList.add('hidden');
+          }
+        }
+      });
     }
 
     function renderActiveCommodityBanner(commodity) {

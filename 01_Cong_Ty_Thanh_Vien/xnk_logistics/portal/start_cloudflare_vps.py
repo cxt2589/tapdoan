@@ -67,8 +67,8 @@ def main():
         print(f"❌ Không tìm thấy binary cloudflared tại: {CLOUDFLARED_BIN}")
         sys.exit(1)
 
-    cmd = [CLOUDFLARED_BIN, "tunnel", "--url", "http://127.0.0.1:8088"]
-    print("🚀 Đang khởi tạo kết nối Cloudflare Tunnel...")
+    cmd = [CLOUDFLARED_BIN, "tunnel", "--protocol", "http2", "--url", "http://127.0.0.1:8088"]
+    print("🚀 Đang khởi tạo kết nối Cloudflare Tunnel (HTTP/2 Mode)...")
 
     proc = subprocess.Popen(
         cmd,

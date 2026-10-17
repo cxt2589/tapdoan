@@ -73,6 +73,17 @@ try:
 except ImportError:
     trade_tags_dict = None
 
+try:
+    import openapi_spec
+except ImportError:
+    openapi_spec = None
+
+try:
+    import commodity_calculator
+except ImportError:
+    commodity_calculator = None
+
+
 def load_database():
     try:
         with open(DATA_FILE, "r", encoding="utf-8") as f:
@@ -388,7 +399,59 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
         path = url_parts.path
         query = urllib.parse.parse_qs(url_parts.query)
 
-        if path == "/api/health":
+        if path in ["/api", "/api/v1"]:
+            self._send_json({
+                "ok": True,
+                "platform": "Trade Intelligence & Verification Platform API Suite",
+                "version": "1.0.0",
+                "status": "OPERATIONAL",
+                "docs_url": "/api/docs",
+                "openapi_url": "/api/openapi.json",
+                "endpoints_count": 38,
+                "categories": [
+                    "Leads & Prospecting",
+                    "Due Diligence & Verification",
+                    "Suppliers & Counterparties",
+                    "Trade Matchmaker & Dual RFQ",
+                    "Customs & Bill of Lading",
+                    "Factory Audit (SOP-XNK-02)",
+                    "HS Catalog & Strategic Products",
+                    "Regulatory Radar & Policy Horizon",
+                    "Trade Tags & Terminology Dictionary",
+                    "Multi-Exchange Price Board & Arbitrage",
+                    "Telegram Alerting Engine",
+                    "System Health & Platform Metadata"
+                ]
+            })
+            return
+
+        elif path in ["/api/openapi.json", "/openapi.json"]:
+            try:
+                import openapi_spec
+                host = self.headers.get("Host", "103.228.74.58")
+                server_url = f"http://{host}"
+                spec = openapi_spec.get_openapi_spec(server_url)
+            except Exception as e:
+                spec = {"openapi": "3.1.0", "info": {"title": "API", "version": "1.0.0"}, "error": str(e)}
+            self._send_json(spec)
+            return
+
+        elif path in ["/api/docs", "/docs"]:
+            try:
+                import openapi_spec
+                html = openapi_spec.get_swagger_ui_html("/api/openapi.json")
+            except Exception as e:
+                html = f"<h1>API Documentation</h1><p>Error loading docs: {e}</p>"
+            html_bytes = html.encode('utf-8')
+            self.send_response(200)
+            self.send_header("Content-Type", "text/html; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Content-Length", str(len(html_bytes)))
+            self.end_headers()
+            self.wfile.write(html_bytes)
+            return
+
+        elif path == "/api/health":
             db = load_database()
             self._send_json({
                 "status": "ONLINE",
@@ -1247,14 +1310,28 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
             return
 
         elif path == "/api/telegram/alert":
-            title = params.get("title", "Cảnh báo từ Cổng Thẩm Định XNK")
+            title = params.get("title", "Cảnh Báo Điều Hành XNK")
             details = params.get("details", ["Thực hiện kiểm tra đối soát rủi ro ngoại thương."])
-            icon = params.get("icon", "🚨")
-            action = params.get("action", "Giám đốc XNK rà soát ngay lập tức.")
+            if isinstance(details, str):
+                details = [details]
+            icon = params.get("icon") or params.get("status_icon", "🚨")
+            action = params.get("action") or params.get("action_required", "Giám đốc XNK rà soát ngay lập tức.")
             chat_id = params.get("chat_id")
+            dry_run = params.get("dry_run", False) or params.get("test_mode", False)
 
-            alert_res = send_telegram_alert_message(title, details, icon, action, target_chat_id=chat_id)
+            if dry_run:
+                self._send_json({
+                    "ok": True,
+                    "dry_run": True,
+                    "status": "DRY_RUN_SUCCESS",
+                    "title": title,
+                    "message_length": len(title) + sum(len(d) for d in details)
+                })
+                return
+
+            alert_res = send_telegram_alert_message(title, details, status_icon=icon, action_required=action, target_chat_id=chat_id)
             self._send_json({
+                "ok": bool(alert_res.get("ok")),
                 "status": "SENT" if alert_res.get("ok") else "FAILED",
                 "sent_count": alert_res.get("sent_to_chats", 0),
                 "details": alert_res
@@ -1400,6 +1477,36 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
             
             res = regulatory_radar.dispatch_telegram_risk_alert(reg_id, chat_id=chat_id, dry_run=dry_run)
             self._send_json({"ok": res.get("status") == "SUCCESS", "result": res})
+            return
+
+        elif path == "/api/prices/convert":
+            val = params.get("value", 1.0)
+            from_u = params.get("from_unit", "mt")
+            to_u = params.get("to_unit", "mt")
+            price = params.get("price_usd")
+            rate = params.get("exchange_rate_vnd", 25450.0)
+            
+            if not commodity_calculator:
+                self._send_json({"ok": False, "error": "Commodity calculator not loaded"}, 500)
+                return
+            
+            conv_res = commodity_calculator.convert_units_and_currency(val, from_u, to_u, price, rate)
+            self._send_json(conv_res)
+            return
+
+        elif path == "/api/prices/arbitrage":
+            comm_id = params.get("commodity_id") or params.get("commodity", "")
+            buy_tier = params.get("buy_tier", "DOMESTIC_FARM")
+            sell_tier = params.get("sell_tier", "DESTINATION_CIF")
+            freight = params.get("estimated_freight_usd", 80.0)
+            
+            if not commodity_calculator:
+                self._send_json({"ok": False, "error": "Commodity calculator not loaded"}, 500)
+                return
+            
+            arb_res = commodity_calculator.calculate_arbitrage_spread(comm_id, buy_tier, sell_tier, freight)
+            status_code = 200 if arb_res.get("ok") else 400
+            self._send_json(arb_res, status_code)
             return
 
         self._send_json({"error": "Endpoint not found"}, 404)

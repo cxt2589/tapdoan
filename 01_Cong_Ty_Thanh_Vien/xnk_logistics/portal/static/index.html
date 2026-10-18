@@ -805,7 +805,7 @@
 
     <!-- HORIZONTALLY SCROLLABLE NAVIGATION BAR ON MOBILE / GRID ON DESKTOP -->
     <div class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-1.5 sm:py-2">
-      <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto scrollbar-none sm:grid sm:grid-cols-6 w-full py-0.5" id="mainTabScrollContainer">
+      <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto scrollbar-none sm:grid sm:grid-cols-7 w-full py-0.5" id="mainTabScrollContainer">
         
         <!-- Tab 1: Prospecting Leads -->
         <button onclick="switchTab('prospecting')" id="tab-prospecting" class="tab-btn shrink-0 sm:shrink px-3 py-1.5 sm:p-2 sm:px-2.5 rounded-xl transition-all flex items-center justify-start gap-1.5 sm:gap-2 text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 shadow-sm cursor-pointer whitespace-nowrap text-left">
@@ -888,6 +888,20 @@
               <span class="px-1.5 py-0.2 rounded text-[9px] font-mono bg-purple-500/15 text-purple-400 font-semibold">SOP-02</span>
             </div>
             <span class="text-[10px] text-slate-400 font-mono hidden md:block truncate">Thực Địa 5 Tiêu Chí</span>
+          </div>
+        </button>
+
+        <!-- Tab 7: Multi-Exchange Commodity Prices & Charts (Bảng Giá & Biểu Đồ Đa Sàn) -->
+        <button onclick="switchTab('prices')" id="tab-prices" class="tab-btn shrink-0 sm:shrink px-3 py-1.5 sm:p-2 sm:px-2.5 rounded-xl transition-all flex items-center justify-start gap-1.5 sm:gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap text-left">
+          <div class="w-6 h-6 rounded-lg bg-emerald-500/15 flex items-center justify-center shrink-0">
+            <i data-lucide="trending-up" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400"></i>
+          </div>
+          <div class="min-w-0">
+            <div class="flex items-center gap-1">
+              <span class="font-bold text-xs sm:text-xs md:text-sm tracking-tight text-white">Giá Đa Sàn</span>
+              <span class="px-1.5 py-0.2 rounded text-[9px] font-mono bg-emerald-500/20 text-emerald-300 font-semibold">28 Sàn</span>
+            </div>
+            <span class="text-[10px] text-slate-400 font-mono hidden md:block truncate">Biểu Đồ & Nguồn</span>
           </div>
         </button>
 
@@ -1043,6 +1057,28 @@
     <!-- ============================================================= -->
     <section id="section-prospecting" class="space-y-4 sm:space-y-6 w-full max-w-full">
       
+      <!-- Quick Access Banner to Multi-Exchange Commodity Prices & Charts -->
+      <div onclick="switchTab('prices')" class="rounded-2xl p-3 sm:p-4 bg-gradient-to-r from-emerald-500/20 via-cyan-500/15 to-brand-900 border border-emerald-500/40 hover:border-emerald-400 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-lg shadow-emerald-500/10 cursor-pointer transition-all hover:scale-[1.005]">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shrink-0">
+            <i data-lucide="trending-up" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono font-bold uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 animate-pulse">⚡ TÍNH NĂNG MỚI ĐÃ SẴN SÀNG</span>
+              <h3 class="text-xs sm:text-sm font-bold text-white">Bảng Giá Đa Sàn, Minh Bạch Nguồn & Biểu Đồ Nến Lịch Sử 28 Nguồn</h3>
+            </div>
+            <p class="text-[11px] text-slate-300 mt-0.5">Tìm kiếm gắn nhãn sàn (Yahoo Finance, ICE London, CME, Cát Lái FOB, VFA...), theo dõi biến động 24h/7D & biểu đồ tương tác 12 tháng.</p>
+          </div>
+        </div>
+        <div class="shrink-0 flex items-center gap-2">
+          <span class="px-3.5 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-brand-950 font-bold font-mono text-xs flex items-center gap-1.5 shadow-md shadow-emerald-500/20">
+            <span>Mở Bảng Giá & Biểu Đồ</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </span>
+        </div>
+      </div>
+
       <!-- Executive Banner -->
       <div class="rounded-3xl p-1 bg-gradient-to-b from-cyan-500/20 via-white/5 to-white/[0.02] border border-cyan-500/30 shadow-2xl w-full max-w-full overflow-hidden">
         <div class="bg-brand-900 rounded-[22px] p-4 sm:p-8 space-y-4 sm:space-y-6 w-full max-w-full overflow-hidden">
@@ -2097,6 +2133,216 @@
         </div>
       </div>
 
+    <!-- ============================================================= -->
+    <!-- TAB 7: COMMODITY MULTI-SOURCE PRICES & INTERACTIVE CHARTS     -->
+    <!-- (BẢNG GIÁ ĐA SÀN, MINH BẠCH NGUỒN GỐC & BIỂU ĐỒ NẾN LỊCH SỬ)  -->
+    <!-- ============================================================= -->
+    <section id="section-prices" class="hidden space-y-6 w-full max-w-full">
+      <div class="rounded-3xl p-1 bg-gradient-to-b from-emerald-500/30 via-cyan-500/15 to-white/5 border border-emerald-500/30 shadow-2xl overflow-hidden">
+        <div id="crossExchangePricesScrollBody" class="bg-brand-900 rounded-[22px] p-4 sm:p-7 space-y-6">
+          
+          <!-- Header Banner -->
+          <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 border-b border-white/10 pb-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-2xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
+                <i data-lucide="trending-up" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <div class="flex items-center gap-2 flex-wrap">
+                  <h3 class="font-bold text-white text-base sm:text-lg">📈 BẢNG GIÁ THAM CHIẾU ĐA SÀN & RADAR CHÊNH LỆCH GIÁ (ARBITRAGE)</h3>
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">28 Sàn & Nguồn</span>
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">4 Tầng Định Giá</span>
+                </div>
+                <p class="text-xs text-slate-400 mt-0.5">
+                  Đối soát 4 tầng giá thực tế: <span class="text-cyan-300 font-semibold">Sàn Thế Giới</span> ➔ <span class="text-emerald-300 font-semibold">FOB Cát Lái</span> ➔ <span class="text-purple-300 font-semibold">CIF Cảng Đích</span> ➔ <span class="text-amber-300 font-semibold">Cửa Vườn Nội Địa</span>. Tỷ giá VCB: 25,430 VNĐ/USD.
+                </p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 self-start sm:self-auto shrink-0">
+              <button type="button" onclick="fetchPriceBenchmarksData()" class="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 font-mono text-xs flex items-center gap-1.5 transition-all cursor-pointer">
+                <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-cyan-400"></i>
+                <span>Làm Mới Giá</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Multi-Source Omni-Search Bar & Source Filter Chips -->
+          <div class="relative space-y-2">
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+              <div class="relative flex-1">
+                <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                <input type="text" id="priceMultiSourceSearchInput" oninput="handlePriceMultiSourceSearch(this.value)" placeholder="🔍 Tìm mặt hàng hoặc sàn (vd: Cà phê ICE, Arabica Yahoo, Gạo VFA, Cát Lái, NOLA CME...)" class="w-full pl-10 pr-9 py-2.5 rounded-xl text-xs font-mono bg-brand-950 border border-white/10 text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500">
+                <button type="button" id="clearPriceSearchBtn" onclick="clearPriceMultiSourceSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white cursor-pointer">
+                  <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+              <div class="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1 sm:pb-0" id="priceSourceCategoryPills">
+                <button type="button" onclick="filterPriceBySourceCategory('ALL')" id="filter-src-ALL" class="px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-cyan-500 text-brand-950 border border-cyan-400 cursor-pointer">Tất Cả Sàn</button>
+                <button type="button" onclick="filterPriceBySourceCategory('GLOBAL_EXCHANGE')" id="filter-src-GLOBAL_EXCHANGE" class="px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-brand-950 text-slate-300 hover:text-white border border-white/10 cursor-pointer">🌐 Sàn Quốc Tế</button>
+                <button type="button" onclick="filterPriceBySourceCategory('EXPORT_FOB')" id="filter-src-EXPORT_FOB" class="px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-brand-950 text-slate-300 hover:text-white border border-white/10 cursor-pointer">🚢 Cảng FOB VN</button>
+                <button type="button" onclick="filterPriceBySourceCategory('DOMESTIC_FARM')" id="filter-src-DOMESTIC_FARM" class="px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-brand-950 text-slate-300 hover:text-white border border-white/10 cursor-pointer">🌾 Cửa Vườn Spot</button>
+                <button type="button" onclick="filterPriceBySourceCategory('INDUSTRY_AGENCY')" id="filter-src-INDUSTRY_AGENCY" class="px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-brand-950 text-slate-300 hover:text-white border border-white/10 cursor-pointer">🏛️ Hiệp Hội</button>
+              </div>
+            </div>
+
+            <!-- Autocomplete Floating Dropdown Menu -->
+            <div id="priceSearchAutocompleteDropdown" class="hidden absolute left-0 right-0 top-full mt-1.5 z-30 max-h-64 overflow-y-auto rounded-2xl bg-brand-950/95 border border-cyan-500/40 shadow-2xl backdrop-blur-xl p-2 space-y-1">
+              <!-- Injected dynamically via JS: each item shows commodity_name + source_name badge -->
+            </div>
+          </div>
+
+          <!-- 7 Commodity Selection Pills -->
+          <div>
+            <span class="text-[11px] font-mono uppercase text-slate-400 font-bold block mb-2">CHỌN MẶT HÀNG CHIẾN LƯỢC:</span>
+            <div class="flex items-center gap-2 overflow-x-auto scrollbar-none pb-1" id="commodityPriceTabsContainer">
+              <!-- Injected via JS -->
+            </div>
+          </div>
+
+          <!-- Active Commodity Title & Spread Badge -->
+          <div id="activeCommodityHeaderBanner" class="p-4 rounded-2xl bg-brand-950/80 border border-white/5 flex flex-col md:flex-row md:items-center justify-between gap-3">
+            <!-- Injected via JS -->
+          </div>
+
+          <!-- Interactive Multi-Source Price Chart Card -->
+          <div class="p-4 sm:p-5 rounded-2xl bg-brand-950/90 border border-emerald-500/30 space-y-3.5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 border-b border-white/10 pb-3">
+              <div>
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/30" id="chartSourceBadge">Sàn ICE London</span>
+                  <h4 class="text-sm font-bold text-white flex items-center gap-2" id="chartTitle">Biểu Đồ Lịch Sử Giá 12 Tháng</h4>
+                  <span class="text-xs font-mono text-cyan-300" id="chartContractCode">RC Futures</span>
+                </div>
+                <p class="text-[11px] text-slate-400 mt-0.5" id="chartSubtitle">Dữ liệu nến / giá chốt phiên lịch sử chuẩn hóa theo USD/Tấn</p>
+              </div>
+
+              <div class="flex items-center gap-2 flex-wrap">
+                <!-- Time Range Filters -->
+                <div class="flex items-center gap-1 bg-brand-900 border border-white/10 p-0.5 rounded-xl text-[10px] font-mono">
+                  <button type="button" onclick="changeChartRange('1m')" id="btn-chart-range-1m" class="px-2 py-1 rounded-lg hover:bg-white/5 text-slate-400 cursor-pointer">1 Tháng</button>
+                  <button type="button" onclick="changeChartRange('6m')" id="btn-chart-range-6m" class="px-2 py-1 rounded-lg hover:bg-white/5 text-slate-400 cursor-pointer">6 Tháng</button>
+                  <button type="button" onclick="changeChartRange('1y')" id="btn-chart-range-1y" class="px-2 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30 cursor-pointer">12 Tháng</button>
+                </div>
+                <!-- Price Volatility Badge -->
+                <div class="px-2.5 py-1 rounded-xl bg-brand-900 border border-white/10 text-right">
+                  <span class="text-[9px] font-mono text-slate-400 block">Biến động 7D</span>
+                  <span class="text-xs font-mono font-bold text-emerald-400" id="chart7dChange">+4.2%</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- HTML5 Canvas Responsive Chart Container -->
+            <div class="relative w-full h-56 sm:h-64 bg-brand-900/50 rounded-xl border border-white/5 p-2 overflow-hidden flex flex-col justify-between">
+              <canvas id="commodityPriceCanvas" class="w-full h-full block cursor-crosshair"></canvas>
+              <div id="chartTooltip" class="hidden absolute pointer-events-none px-2.5 py-1.5 rounded-lg bg-brand-950/95 border border-cyan-400/50 text-[11px] font-mono text-white shadow-xl z-20"></div>
+            </div>
+
+            <div class="flex items-center justify-between text-[10px] font-mono text-slate-400 px-1">
+              <div class="flex items-center gap-3">
+                <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-400 inline-block"></span> Đường Giá Đóng Cửa (USD/MT)</span>
+                <span class="flex items-center gap-1.5"><span class="w-2.5 h-0.5 bg-cyan-400/60 inline-block border-b border-dashed"></span> Vùng Biến Động Sàn</span>
+              </div>
+              <span class="text-slate-500 hidden sm:inline">Chạm / Rê chuột trên biểu đồ để xem mốc giá chi tiết</span>
+            </div>
+          </div>
+
+          <!-- Multi-Source Price & Volatility Matrix Table -->
+          <div class="p-4 rounded-2xl bg-brand-950/80 border border-white/5 space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <i data-lucide="layers" class="w-4 h-4 text-cyan-400"></i>
+                <h4 class="text-xs font-mono font-bold uppercase text-white">BẢNG THEO DÕI ĐA NGUỒN & BIẾN ĐỘNG GIÁ CHI TIẾT:</h4>
+              </div>
+              <span class="text-[10px] font-mono text-slate-400">Bấm "Xem Biểu Đồ" để vẽ riêng từng sàn</span>
+            </div>
+            
+            <div class="overflow-x-auto scrollbar-none rounded-xl border border-white/5">
+              <table class="w-full text-left text-xs font-mono">
+                <thead class="bg-brand-900/90 text-slate-400 text-[10px] uppercase border-b border-white/10">
+                  <tr>
+                    <th class="py-2.5 px-3">Nguồn Tham Chiếu / Sàn</th>
+                    <th class="py-2.5 px-3">Mã Hợp Đồng</th>
+                    <th class="py-2.5 px-3">Giá Gốc Niêm Yết</th>
+                    <th class="py-2.5 px-3">Quy Đổi USD/MT</th>
+                    <th class="py-2.5 px-3">Biến Động 24h</th>
+                    <th class="py-2.5 px-3">Biến Động 7D</th>
+                    <th class="py-2.5 px-3 text-right">Biểu Đồ Sàn</th>
+                  </tr>
+                </thead>
+                <tbody id="multiSourcePriceTableBody" class="divide-y divide-white/5">
+                  <!-- Rendered via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- 4-Tier Comparative Price Grid -->
+          <div>
+            <span class="text-[11px] font-mono uppercase text-slate-400 font-bold block mb-2">BẢNG ĐỐI SOÁT 4 TẦNG GIÁ THỰC TẾ:</span>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3" id="commodity4TierGridContainer">
+              <!-- Injected via JS -->
+            </div>
+          </div>
+
+          <!-- Arbitrage Radar & Recommendation Box -->
+          <div class="p-4 rounded-2xl bg-gradient-to-r from-emerald-500/15 via-cyan-500/10 to-brand-950 border border-emerald-500/30 space-y-3" id="commodityArbitrageAnalysisCard">
+            <!-- Injected via JS -->
+          </div>
+
+          <!-- Universal Unit Normalizer Calculator -->
+          <div class="p-4 rounded-2xl bg-brand-950/90 border border-cyan-500/30 space-y-4">
+            <div class="flex items-center justify-between border-b border-white/5 pb-2">
+              <div class="flex items-center gap-2">
+                <i data-lucide="calculator" class="w-4 h-4 text-cyan-400"></i>
+                <h4 class="text-xs font-bold text-white uppercase tracking-wider font-mono">BỘ CHUẨN HÓA ĐƠN VỊ ĐO LƯỜNG QUỐC TẾ (UNIVERSAL UNIT NORMALIZER)</h4>
+              </div>
+              <span class="text-[10px] font-mono text-cyan-300">Tự động quy đổi tức thì</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-end">
+              <!-- Quantity Input -->
+              <div class="md:col-span-4 space-y-1">
+                <label class="text-[10px] font-mono text-slate-400 block">Số Lượng Hàng Thực Tế:</label>
+                <input type="number" id="unitCalcQuantity" value="100" min="1" step="any" oninput="calculateUnitConversion()" class="w-full px-3 py-2 rounded-xl text-xs font-mono font-bold bg-brand-900 border border-white/10 text-white focus:outline-none focus:border-cyan-500">
+              </div>
+
+              <!-- Unit Dropdown -->
+              <div class="md:col-span-5 space-y-1">
+                <label class="text-[10px] font-mono text-slate-400 block">Đơn Vị Đo Lường Hợp Đồng / Bao Bì:</label>
+                <select id="unitCalcUnitSelect" onchange="calculateUnitConversion()" class="w-full px-3 py-2 rounded-xl text-xs font-mono font-bold bg-brand-900 border border-white/10 text-white focus:outline-none focus:border-cyan-500">
+                  <option value="mt">Tấn (Metric Ton / MT - 1,000 kg)</option>
+                  <option value="bag_60kg">Bao đay tiêu chuẩn (60 kg / bao)</option>
+                  <option value="lbs">Pounds / Cân Anh (lbs - 0.453592 kg)</option>
+                  <option value="cwt">Hundredweight Mỹ (Cwt - 45.3592 kg)</option>
+                  <option value="carton_10kg">Thùng Carton lạnh xuất khẩu (10 kg / thùng)</option>
+                  <option value="cntr_20ft">Container 20ft khô (Tiêu chuẩn ~19.2 Tấn)</option>
+                  <option value="cntr_40ft">Container 40ft khô/lạnh (Tiêu chuẩn ~27 Tấn)</option>
+                </select>
+              </div>
+
+              <!-- Reset / Recalculate Button -->
+              <div class="md:col-span-3">
+                <button type="button" onclick="calculateUnitConversion()" class="w-full py-2 px-3 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 text-xs font-mono font-bold flex items-center justify-center gap-1.5 cursor-pointer">
+                  <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                  <span>Quy Đổi Lại</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Conversion Output Summary 4 Bento Wells -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5 pt-2" id="unitCalcOutputsContainer">
+              <!-- Metric Tons, Total FOB USD, Total CIF USD, Domestic VND -->
+            </div>
+          </div>
+
+          <!-- Footer Note -->
+          <div class="flex items-center justify-between border-t border-white/10 pt-4 text-[11px] text-slate-400 font-mono">
+            <p>Nguồn dữ liệu đối soát: ICE Futures, CME Group, SGX Commodities, MXV, Cảng Cát Lái, Vietcombank FX.</p>
+            <span class="text-emerald-400 font-bold">Trạng Thái: Trực Tuyến 24/7</span>
+          </div>
+
+        </div>
+      </div>
     </section>
 
   </main>
@@ -3607,217 +3853,9 @@
   </div>
 
   <!-- ========================================================================= -->
-  <!-- MODAL: BẢNG GIÁ THAM CHIẾU ĐA SÀN & RADAR CHÊNH LỆCH GIÁ (ARBITRAGE)    -->
+  <!-- MODAL STUB: BẢNG GIÁ THAM CHIẾU ĐA SÀN (CHUYỂN HƯỚNG SANG TAB SECTION-PRICES)-->
   <!-- ========================================================================= -->
-  <div id="crossExchangePricesModal" onclick="handleModalBackdropClick(event, 'crossExchangePricesModal')"
-    class="fixed inset-0 z-[80] bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 overscroll-contain">
-    <div onclick="event.stopPropagation()" class="w-full max-w-5xl rounded-3xl overflow-hidden p-1 bg-gradient-to-b from-emerald-500/40 via-cyan-500/20 to-white/5 border border-emerald-500/40 shadow-2xl">
-      <div id="crossExchangePricesScrollBody" class="bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-6 max-h-[88vh] overflow-y-auto overscroll-contain modal-scroll-container" style="touch-action: pan-y !important; -webkit-overflow-scrolling: touch !important;">
-        
-        <!-- Header -->
-        <div class="flex items-start justify-between gap-4 border-b border-white/10 pb-4">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-2xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-              <i data-lucide="trending-up" class="w-5 h-5"></i>
-            </div>
-            <div>
-              <div class="flex items-center gap-2 flex-wrap">
-                <h3 class="font-bold text-white text-base sm:text-lg">📈 BẢNG GIÁ THAM CHIẾU ĐA SÀN & RADAR CHÊNH LỆCH GIÁ (ARBITRAGE)</h3>
-                <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Cross-Exchange Radar</span>
-                <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">4 Tầng Bóc Tách</span>
-              </div>
-              <p class="text-xs text-slate-400 mt-0.5">
-                Đối soát 4 tầng giá thực tế: <span class="text-cyan-300 font-semibold">Sàn Thế Giới</span> ➔ <span class="text-emerald-300 font-semibold">FOB Cát Lái</span> ➔ <span class="text-purple-300 font-semibold">CIF Cảng Đích</span> ➔ <span class="text-amber-300 font-semibold">Cửa Vườn Nội Địa</span>. Tỷ giá VCB: 25,430 VNĐ/USD.
-              </p>
-            </div>
-          </div>
-          <button onclick="closeCrossExchangePricesModal()" class="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all cursor-pointer">
-            <i data-lucide="x" class="w-5 h-5"></i>
-          </button>
-        </div>
-
-        <!-- Multi-Source Omni-Search Bar & Source Filter Chips -->
-        <div class="relative space-y-2">
-          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-            <div class="relative flex-1">
-              <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
-              <input type="text" id="priceMultiSourceSearchInput" oninput="handlePriceMultiSourceSearch(this.value)" placeholder="🔍 Tìm mặt hàng hoặc sàn (vd: Cà phê ICE, Arabica Yahoo, Gạo VFA, Cát Lái, NOLA CME...)" class="w-full pl-10 pr-9 py-2.5 rounded-xl text-xs font-mono bg-brand-950 border border-white/10 text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500">
-              <button type="button" id="clearPriceSearchBtn" onclick="clearPriceMultiSourceSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white cursor-pointer">
-                <i data-lucide="x" class="w-3.5 h-3.5"></i>
-              </button>
-            </div>
-            <div class="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1 sm:pb-0" id="priceSourceCategoryPills">
-              <button type="button" onclick="filterPriceBySourceCategory('ALL')" id="filter-src-ALL" class="px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-cyan-500 text-brand-950 border border-cyan-400 cursor-pointer">Tất Cả Sàn</button>
-              <button type="button" onclick="filterPriceBySourceCategory('GLOBAL_EXCHANGE')" id="filter-src-GLOBAL_EXCHANGE" class="px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-brand-950 text-slate-300 hover:text-white border border-white/10 cursor-pointer">🌐 Sàn Quốc Tế</button>
-              <button type="button" onclick="filterPriceBySourceCategory('EXPORT_FOB')" id="filter-src-EXPORT_FOB" class="px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-brand-950 text-slate-300 hover:text-white border border-white/10 cursor-pointer">🚢 Cảng FOB VN</button>
-              <button type="button" onclick="filterPriceBySourceCategory('DOMESTIC_FARM')" id="filter-src-DOMESTIC_FARM" class="px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-brand-950 text-slate-300 hover:text-white border border-white/10 cursor-pointer">🌾 Cửa Vườn Spot</button>
-              <button type="button" onclick="filterPriceBySourceCategory('INDUSTRY_AGENCY')" id="filter-src-INDUSTRY_AGENCY" class="px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-brand-950 text-slate-300 hover:text-white border border-white/10 cursor-pointer">🏛️ Hiệp Hội</button>
-            </div>
-          </div>
-
-          <!-- Autocomplete Floating Dropdown Menu -->
-          <div id="priceSearchAutocompleteDropdown" class="hidden absolute left-0 right-0 top-full mt-1.5 z-30 max-h-64 overflow-y-auto rounded-2xl bg-brand-950/95 border border-cyan-500/40 shadow-2xl backdrop-blur-xl p-2 space-y-1">
-            <!-- Injected dynamically via JS: each item shows commodity_name + source_name badge -->
-          </div>
-        </div>
-
-        <!-- 7 Commodity Selection Pills -->
-        <div>
-          <span class="text-[11px] font-mono uppercase text-slate-400 font-bold block mb-2">CHỌN MẶT HÀNG CHIẾN LƯỢC:</span>
-          <div class="flex items-center gap-2 overflow-x-auto scrollbar-none pb-1" id="commodityPriceTabsContainer">
-            <!-- Dynamically populated or rendered -->
-          </div>
-        </div>
-
-        <!-- Active Commodity Title & Spread Badge -->
-        <div id="activeCommodityHeaderBanner" class="p-4 rounded-2xl bg-brand-950/80 border border-white/5 flex flex-col md:flex-row md:items-center justify-between gap-3">
-          <!-- Injected via JS -->
-        </div>
-
-        <!-- Interactive Multi-Source Price Chart Card -->
-        <div class="p-4 sm:p-5 rounded-2xl bg-brand-950/90 border border-emerald-500/30 space-y-3.5">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 border-b border-white/10 pb-3">
-            <div>
-              <div class="flex items-center gap-2 flex-wrap">
-                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/30" id="chartSourceBadge">Sàn ICE London</span>
-                <h4 class="text-sm font-bold text-white flex items-center gap-2" id="chartTitle">Biểu Đồ Lịch Sử Giá 12 Tháng</h4>
-                <span class="text-xs font-mono text-cyan-300" id="chartContractCode">RC Futures</span>
-              </div>
-              <p class="text-[11px] text-slate-400 mt-0.5" id="chartSubtitle">Dữ liệu nến / giá chốt phiên lịch sử chuẩn hóa theo USD/Tấn</p>
-            </div>
-
-            <div class="flex items-center gap-2 flex-wrap">
-              <!-- Time Range Filters -->
-              <div class="flex items-center gap-1 bg-brand-900 border border-white/10 p-0.5 rounded-xl text-[10px] font-mono">
-                <button type="button" onclick="changeChartRange('1m')" id="btn-chart-range-1m" class="px-2 py-1 rounded-lg hover:bg-white/5 text-slate-400 cursor-pointer">1 Tháng</button>
-                <button type="button" onclick="changeChartRange('6m')" id="btn-chart-range-6m" class="px-2 py-1 rounded-lg hover:bg-white/5 text-slate-400 cursor-pointer">6 Tháng</button>
-                <button type="button" onclick="changeChartRange('1y')" id="btn-chart-range-1y" class="px-2 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30 cursor-pointer">12 Tháng</button>
-              </div>
-              <!-- Price Volatility Badge -->
-              <div class="px-2.5 py-1 rounded-xl bg-brand-900 border border-white/10 text-right">
-                <span class="text-[9px] font-mono text-slate-400 block">Biến động 7D</span>
-                <span class="text-xs font-mono font-bold text-emerald-400" id="chart7dChange">+4.2%</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- HTML5 Canvas Responsive Chart Container -->
-          <div class="relative w-full h-56 sm:h-64 bg-brand-900/50 rounded-xl border border-white/5 p-2 overflow-hidden flex flex-col justify-between">
-            <canvas id="commodityPriceCanvas" class="w-full h-full block cursor-crosshair"></canvas>
-            <div id="chartTooltip" class="hidden absolute pointer-events-none px-2.5 py-1.5 rounded-lg bg-brand-950/95 border border-cyan-400/50 text-[11px] font-mono text-white shadow-xl z-20"></div>
-          </div>
-
-          <div class="flex items-center justify-between text-[10px] font-mono text-slate-400 px-1">
-            <div class="flex items-center gap-3">
-              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-400 inline-block"></span> Đường Giá Đóng Cửa (USD/MT)</span>
-              <span class="flex items-center gap-1.5"><span class="w-2.5 h-0.5 bg-cyan-400/60 inline-block border-b border-dashed"></span> Vùng Biến Động Sàn</span>
-            </div>
-            <span class="text-slate-500 hidden sm:inline">Chạm / Rê chuột trên biểu đồ để xem mốc giá chi tiết</span>
-          </div>
-        </div>
-
-        <!-- Multi-Source Price & Volatility Matrix Table -->
-        <div class="p-4 rounded-2xl bg-brand-950/80 border border-white/5 space-y-3">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
-              <i data-lucide="layers" class="w-4 h-4 text-cyan-400"></i>
-              <h4 class="text-xs font-mono font-bold uppercase text-white">BẢNG THEO DÕI ĐA NGUỒN & BIẾN ĐỘNG GIÁ CHI TIẾT:</h4>
-            </div>
-            <span class="text-[10px] font-mono text-slate-400">Bấm "Xem Biểu Đồ" để vẽ riêng từng sàn</span>
-          </div>
-          
-          <div class="overflow-x-auto scrollbar-none rounded-xl border border-white/5">
-            <table class="w-full text-left text-xs font-mono">
-              <thead class="bg-brand-900/90 text-slate-400 text-[10px] uppercase border-b border-white/10">
-                <tr>
-                  <th class="py-2.5 px-3">Nguồn Tham Chiếu / Sàn</th>
-                  <th class="py-2.5 px-3">Mã Hợp Đồng</th>
-                  <th class="py-2.5 px-3">Giá Gốc Niêm Yết</th>
-                  <th class="py-2.5 px-3">Quy Đổi USD/MT</th>
-                  <th class="py-2.5 px-3">Biến Động 24h</th>
-                  <th class="py-2.5 px-3">Biến Động 7D</th>
-                  <th class="py-2.5 px-3 text-right">Biểu Đồ Sàn</th>
-                </tr>
-              </thead>
-              <tbody id="multiSourcePriceTableBody" class="divide-y divide-white/5">
-                <!-- Rendered via JS -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- 4-Tier Comparative Price Grid -->
-        <div>
-          <span class="text-[11px] font-mono uppercase text-slate-400 font-bold block mb-2">BẢNG ĐỐI SOÁT 4 TẦNG GIÁ THỰC TẾ:</span>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3" id="commodity4TierGridContainer">
-            <!-- Injected via JS -->
-          </div>
-        </div>
-
-        <!-- Arbitrage Radar & Recommendation Box -->
-        <div class="p-4 rounded-2xl bg-gradient-to-r from-emerald-500/15 via-cyan-500/10 to-brand-950 border border-emerald-500/30 space-y-3" id="commodityArbitrageAnalysisCard">
-          <!-- Injected via JS -->
-        </div>
-
-        <!-- Universal Unit Normalizer (Bộ Chuẩn Hóa Đơn Vị Đo Lường Quốc Tế) Calculator -->
-        <div class="p-4 rounded-2xl bg-brand-950/90 border border-cyan-500/30 space-y-4">
-          <div class="flex items-center justify-between border-b border-white/5 pb-2">
-            <div class="flex items-center gap-2">
-              <i data-lucide="calculator" class="w-4 h-4 text-cyan-400"></i>
-              <h4 class="text-xs font-bold text-white uppercase tracking-wider font-mono">BỘ CHUẨN HÓA ĐƠN VỊ ĐO LƯỜNG QUỐC TẾ (UNIVERSAL UNIT NORMALIZER)</h4>
-            </div>
-            <span class="text-[10px] font-mono text-cyan-300">Tự động quy đổi tức thì</span>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-end">
-            <!-- Quantity Input -->
-            <div class="md:col-span-4 space-y-1">
-              <label class="text-[10px] font-mono text-slate-400 block">Số Lượng Hàng Thực Tế:</label>
-              <input type="number" id="unitCalcQuantity" value="100" min="1" step="any" oninput="calculateUnitConversion()" class="w-full px-3 py-2 rounded-xl text-xs font-mono font-bold bg-brand-900 border border-white/10 text-white focus:outline-none focus:border-cyan-500">
-            </div>
-
-            <!-- Unit Dropdown -->
-            <div class="md:col-span-5 space-y-1">
-              <label class="text-[10px] font-mono text-slate-400 block">Đơn Vị Đo Lường Hợp Đồng / Bao Bì:</label>
-              <select id="unitCalcUnitSelect" onchange="calculateUnitConversion()" class="w-full px-3 py-2 rounded-xl text-xs font-mono font-bold bg-brand-900 border border-white/10 text-white focus:outline-none focus:border-cyan-500">
-                <option value="mt">Tấn (Metric Ton / MT - 1,000 kg)</option>
-                <option value="bag_60kg">Bao đay tiêu chuẩn (60 kg / bao)</option>
-                <option value="lbs">Pounds / Cân Anh (lbs - 0.453592 kg)</option>
-                <option value="cwt">Hundredweight Mỹ (Cwt - 45.3592 kg)</option>
-                <option value="carton_10kg">Thùng Carton lạnh xuất khẩu (10 kg / thùng)</option>
-                <option value="cntr_20ft">Container 20ft khô (Tiêu chuẩn ~19.2 Tấn)</option>
-                <option value="cntr_40ft">Container 40ft khô/lạnh (Tiêu chuẩn ~27 Tấn)</option>
-              </select>
-            </div>
-
-            <!-- Reset / Recalculate Button -->
-            <div class="md:col-span-3">
-              <button type="button" onclick="calculateUnitConversion()" class="w-full py-2 px-3 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 text-xs font-mono font-bold flex items-center justify-center gap-1.5 cursor-pointer">
-                <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
-                <span>Quy Đổi Lại</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Conversion Output Summary 4 Bento Wells -->
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5 pt-2" id="unitCalcOutputsContainer">
-            <!-- Metric Tons, Total FOB USD, Total CIF USD, Domestic VND -->
-          </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="flex items-center justify-between border-t border-white/10 pt-4">
-          <p class="text-[11px] text-slate-400 font-mono">
-            Nguồn tham chiếu: ICE Futures, CME Group, SGX Commodities, MXV, Cảng Cát Lái, Vietcombank FX.
-          </p>
-          <button onclick="closeCrossExchangePricesModal()" class="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 font-mono text-xs cursor-pointer">
-            Đóng Cửa Sổ
-          </button>
-        </div>
-
-      </div>
-    </div>
-  </div>
+  <div id="crossExchangePricesModal" class="hidden"></div>
 
   <!-- Toast Notification -->
   <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
@@ -3942,14 +3980,14 @@
       // Khôi phục Tab đang hoạt động khi F5 hoặc mở link có hash
       const hashTab = (window.location.hash || '').replace(/^#/, '').replace(/^tab-/, '');
       const storedTab = localStorage.getItem('xnk_active_tab');
-      const validTabs = ['prospecting', 'buyers', 'suppliers', 'matchmaker', 'sourcing', 'audit'];
+      const validTabs = ['prospecting', 'buyers', 'suppliers', 'matchmaker', 'sourcing', 'audit', 'prices'];
       const initialTab = validTabs.includes(hashTab) ? hashTab : (validTabs.includes(storedTab) ? storedTab : 'prospecting');
       switchTab(initialTab);
     });
 
     window.addEventListener('hashchange', () => {
       const h = (window.location.hash || '').replace(/^#/, '').replace(/^tab-/, '');
-      const validTabs = ['prospecting', 'buyers', 'suppliers', 'matchmaker', 'sourcing', 'audit'];
+      const validTabs = ['prospecting', 'buyers', 'suppliers', 'matchmaker', 'sourcing', 'audit', 'prices'];
       if (validTabs.includes(h)) switchTab(h);
     });
 
@@ -4010,7 +4048,7 @@
     });
 
     function switchTab(tab) {
-      const validTabs = ['prospecting', 'buyers', 'suppliers', 'matchmaker', 'sourcing', 'audit'];
+      const validTabs = ['prospecting', 'buyers', 'suppliers', 'matchmaker', 'sourcing', 'audit', 'prices'];
       if (!validTabs.includes(tab)) tab = 'prospecting';
 
       try {
@@ -4025,7 +4063,7 @@
         if (sec) sec.classList.add('hidden');
         const btn = document.getElementById(`tab-${t}`);
         if (btn) {
-          btn.classList.remove('text-cyan-400', 'bg-cyan-500/10', 'border-cyan-500/20', 'text-white', 'border-white/10');
+          btn.classList.remove('text-cyan-400', 'bg-cyan-500/10', 'border-cyan-500/20', 'text-white', 'border-white/10', 'text-emerald-400', 'bg-emerald-500/10', 'border-emerald-500/30');
           btn.classList.add('text-slate-400', 'border-transparent');
         }
       });
@@ -4035,7 +4073,11 @@
       const activeBtn = document.getElementById(`tab-${tab}`);
       if (activeBtn) {
         activeBtn.classList.remove('text-slate-400', 'border-transparent');
-        activeBtn.classList.add('text-cyan-400', 'bg-cyan-500/10', 'border-cyan-500/20');
+        if (tab === 'prices') {
+          activeBtn.classList.add('text-emerald-400', 'bg-emerald-500/10', 'border-emerald-500/30');
+        } else {
+          activeBtn.classList.add('text-cyan-400', 'bg-cyan-500/10', 'border-cyan-500/20');
+        }
         try {
           activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
         } catch (e) {}
@@ -4046,6 +4088,12 @@
       }
       if (tab === 'matchmaker') {
         fetchMatchmakerData();
+      }
+      if (tab === 'prices') {
+        fetchPriceBenchmarksData();
+        setupChartInteraction();
+        requestAnimationFrame(() => drawCommodityPriceChart());
+        setTimeout(() => drawCommodityPriceChart(), 100);
       }
 
       const swipeGuideWrap = document.getElementById('tableSwipeGuidanceWrapper');
@@ -9192,15 +9240,16 @@
     let currentChartMetadata = {};
 
     async function openCrossExchangePricesModal(defaultCommodityId) {
-      const modal = document.getElementById('crossExchangePricesModal');
-      if (!modal) return;
-      lockBodyScroll('crossExchangePricesModal');
-      resetModalScroll('crossExchangePricesModal');
-      modal.classList.remove('hidden');
-      resetModalScroll('crossExchangePricesModal');
-      requestAnimationFrame(() => resetModalScroll('crossExchangePricesModal'));
       if (defaultCommodityId) {
         currentSelectedCommodityId = defaultCommodityId;
+      }
+      switchTab('prices');
+      if (defaultCommodityId && typeof selectCommodityPrice === 'function') {
+        selectCommodityPrice(defaultCommodityId);
+      }
+      const sec = document.getElementById('section-prices');
+      if (sec) {
+        try { sec.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e) {}
       }
       setupChartInteraction();
       await fetchPriceBenchmarksData();
@@ -9209,8 +9258,7 @@
 
     function closeCrossExchangePricesModal() {
       const modal = document.getElementById('crossExchangePricesModal');
-      if (!modal) return;
-      modal.classList.add('hidden');
+      if (modal) modal.classList.add('hidden');
       resetModalScroll('crossExchangePricesModal');
       unlockBodyScroll();
     }
@@ -9724,8 +9772,8 @@
       canvas.addEventListener('touchmove', handleMove, { passive: true });
       canvas.addEventListener('touchend', handleLeave);
       window.addEventListener('resize', () => {
-        const modal = document.getElementById('crossExchangePricesModal');
-        if (modal && !modal.classList.contains('hidden')) {
+        const sec = document.getElementById('section-prices');
+        if (sec && !sec.classList.contains('hidden')) {
           drawCommodityPriceChart();
         }
       });

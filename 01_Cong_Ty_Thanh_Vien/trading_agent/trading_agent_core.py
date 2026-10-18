@@ -11,6 +11,15 @@ import urllib.request
 import requests
 from tradingview_ta import TA_Handler, Interval
 
+try:
+    from auto_delete import record_for_auto_delete, delete_message_now, DEFAULT_TTL
+except ImportError:
+    DEFAULT_TTL = 86400
+    def record_for_auto_delete(chat_id, message_id, ttl_seconds=86400, timestamp=None):
+        pass
+    def delete_message_now(bot_token, chat_id, message_id):
+        pass
+
 CONFIG_FILE = "/opt/trading_agent/config.json"
 TRADES_FILE = "/opt/trading_agent/paper_trades.json"
 CALENDAR_CACHE = "/opt/trading_agent/economic_calendar.json"
@@ -23,6 +32,7 @@ DEFAULT_CONFIG = {
     "exchange": "OANDA",
     "screener": "cfd",
     "auto_approve_timeout_sec": 300,
+    "auto_delete_ttl_seconds": 86400,
     "entry_check_interval_sec": 60,
     "monitor_interval_sec": 60,
     "news_lockout": False,
@@ -61,12 +71,13 @@ def save_trade(trade):
     with open(TRADES_FILE, "w", encoding="utf-8") as f:
         json.dump(trades, f, ensure_ascii=False, indent=2)
 
-def send_telegram(text, reply_markup=None):
+def send_telegram(text, reply_markup=None, ttl_seconds=DEFAULT_TTL):
     cfg = load_config()
     token = cfg.get("bot_token")
     chat_ids = cfg.get("chat_ids", [])
     if not token:
-        return
+        return None
+    last_mid = None
     for cid in chat_ids:
         url = f"https://api.telegram.org/bot{token}/sendMessage"
         payload = {
@@ -81,9 +92,17 @@ def send_telegram(text, reply_markup=None):
             res = r.json()
             if not res.get("ok"):
                 payload.pop("parse_mode", None)
-                requests.post(url, json=payload, timeout=10)
+                r2 = requests.post(url, json=payload, timeout=10)
+                res = r2.json()
+            if res and res.get("ok"):
+                mid = res.get("result", {}).get("message_id")
+                if mid:
+                    last_mid = mid
+                    if ttl_seconds is not None:
+                        record_for_auto_delete(cid, mid, ttl_seconds=ttl_seconds)
         except Exception as e:
             print(f"[!] Error sending telegram to {cid}: {e}")
+    return last_mid
 
 
 # ==========================================
@@ -220,25 +239,26 @@ def generate_morning_plan():
     ema20 = data["ema20"]
     ema50 = data["ema50"]
 
-    # Quantitative Decision Engine
+    # Quantitative Decision Engine with SL Safety Buffer (+3.0 USD)
+    SL_BUFFER = 3.0
     if ema20 >= ema50 and rsi < 70:
         action = "BUY"
         entry = round(price - 1.5, 2)
-        sl = round(entry - 12.0, 2)
-        tp = round(entry + 20.0, 2)
-        thesis = "EMA20 nằm trên EMA50, RSI duy trì ổn định, ưu tiên vị thế Mua theo xu hướng."
+        sl = round(entry - (12.0 + SL_BUFFER), 2)
+        tp = round(entry + 22.0, 2)
+        thesis = "EMA20 nằm trên EMA50, RSI duy trì ổn định, ưu tiên vị thế Mua theo xu hướng (kèm đệm an toàn SL +3.0 USD chống quét râu)."
     elif ema20 < ema50 and rsi > 30:
         action = "SELL"
         entry = round(price + 1.5, 2)
-        sl = round(entry + 12.0, 2)
-        tp = round(entry - 20.0, 2)
-        thesis = "EMA20 cắt xuống dưới EMA50, áp lực bán chi phối, ưu tiên vị thế Bán theo đà."
+        sl = round(entry + (12.0 + SL_BUFFER), 2)
+        tp = round(entry - 22.0, 2)
+        thesis = "EMA20 cắt xuống dưới EMA50, áp lực bán chi phối, ưu tiên vị thế Bán theo đà (kèm đệm an toàn SL +3.0 USD chống quét râu)."
     else:
         action = "BUY" if rsi < 50 else "SELL"
         entry = round(price, 2)
-        sl = round(entry - 10.0 if action == "BUY" else entry + 10.0, 2)
-        tp = round(entry + 18.0 if action == "BUY" else entry - 18.0, 2)
-        thesis = "Thị trường giằng co, mở vị thế thăm dò theo dao động khung ngắn hạn."
+        sl = round(entry - (10.0 + SL_BUFFER) if action == "BUY" else entry + (10.0 + SL_BUFFER), 2)
+        tp = round(entry + 20.0 if action == "BUY" else entry - 20.0, 2)
+        thesis = "Thị trường giằng co, mở vị thế thăm dò theo dao động khung ngắn hạn (kèm đệm an toàn SL +3.0 USD chống quét râu)."
 
     # Check today's high impact news
     high_news = get_today_high_impact_news(high_only=True)
@@ -290,7 +310,11 @@ def generate_morning_plan():
         f"━━━━━━━━━━━━━━━━━━\n"
         f"⏰ <b>Quy chế tự hành:</b> Nếu Chủ tịch không bấm nút trong <b>5 phút</b>, hệ thống sẽ <b>TỰ ĐỘNG PHÊ DUYỆT</b> để tiến hành quét lệnh!"
     )
-    send_telegram(msg, reply_markup=markup)
+    sent_mid = send_telegram(msg, reply_markup=markup)
+    if sent_mid:
+        plan["proposal_msg_id"] = sent_mid
+        cfg["active_plan"] = plan
+        save_config(cfg)
 
     def approval_timer(p_id):
         time.sleep(cfg.get("auto_approve_timeout_sec", 300))
@@ -302,6 +326,14 @@ def generate_morning_plan():
             current_p["is_auto_approved"] = True
             c["active_plan"] = current_p
             save_config(c)
+            # Xóa tin nhắn có nút phê duyệt cũ theo chỉ đạo chống rác
+            old_mid = current_p.get("proposal_msg_id")
+            if old_mid and c.get("bot_token"):
+                for cid in c.get("chat_ids", []):
+                    try:
+                        delete_message_now(c.get("bot_token"), cid, old_mid)
+                    except Exception:
+                        pass
             send_telegram(
                 f"⚡ <b>[HẾT 5 PHÚT — TỰ ĐỘNG PHÊ DUYỆT]</b>\n"
                 f"Kế hoạch <code>{p_id}</code> ({current_p['action']} XAU/USD tại {current_p['entry']:.2f}) đã được <b>TỰ ĐỘNG DUYỆT</b> theo ủy quyền.\n"
@@ -343,6 +375,17 @@ def check_entry_loop():
                         fill_price = max(cur, entry)
 
                     if hit:
+                        planned_risk = abs(plan["entry"] - plan["sl"])
+                        planned_reward = abs(plan["tp"] - plan["entry"])
+
+                        # Dynamic SL Slippage Recalculation: Chống lỗi trượt giá bó hẹp khoảng cách SL
+                        if action == "BUY":
+                            actual_sl = round(fill_price - planned_risk, 2)
+                            actual_tp = round(fill_price + planned_reward, 2)
+                        else:
+                            actual_sl = round(fill_price + planned_risk, 2)
+                            actual_tp = round(fill_price - planned_reward, 2)
+
                         new_trade = {
                             "trade_id": f"TR-{int(time.time())}",
                             "plan_id": plan["id"],
@@ -350,12 +393,13 @@ def check_entry_loop():
                             "action": action,
                             "entry_price": fill_price,
                             "planned_entry": entry,
-                            "sl": plan["sl"],
-                            "tp": plan["tp"],
+                            "sl": actual_sl,
+                            "tp": actual_tp,
                             "opened_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                             "status": "OPEN",
                             "min_price_seen": min(cur, candle_low),
-                            "max_price_seen": max(cur, candle_high)
+                            "max_price_seen": max(cur, candle_high),
+                            "breakeven_triggered": False
                         }
                         cfg["active_trade"] = new_trade
                         plan["status"] = "EXECUTED"
@@ -367,11 +411,11 @@ def check_entry_loop():
                             f"━━━━━━━━━━━━━━━━━━\n"
                             f"Lệnh: <b>{action} XAU/USD</b>\n"
                             f"📍 <b>Giá khớp thực tế:</b> <code>{fill_price:.2f}</code>\n"
-                            f"🛑 <b>Stop Loss:</b> <code>{plan['sl']:.2f}</code>\n"
-                            f"🎯 <b>Take Profit:</b> <code>{plan['tp']:.2f}</code>\n"
+                            f"🛑 <b>Stop Loss (động):</b> <code>{actual_sl:.2f}</code> (khoảng cách {planned_risk:.2f} USD)\n"
+                            f"🎯 <b>Take Profit (động):</b> <code>{actual_tp:.2f}</code>\n"
                             f"⏰ <b>Thời điểm khớp:</b> {new_trade['opened_at']}\n"
                             f"━━━━━━━━━━━━━━━━━━\n"
-                            f"🛡️ <i>Hệ thống tự động giám sát SL/TP ngầm (chỉ báo khi cán đích).</i>"
+                            f"🛡️ <i>Tự động kích hoạt Auto-Breakeven dời SL về hòa vốn khi lãi từ +10.0 USD/oz.</i>"
                         )
         except Exception as e:
             print(f"[!] Error in check_entry_loop: {e}")
@@ -395,6 +439,28 @@ def monitor_active_trade_loop():
 
                     trade["min_price_seen"] = min(trade.get("min_price_seen", cur), candle_low)
                     trade["max_price_seen"] = max(trade.get("max_price_seen", cur), candle_high)
+
+                    # TÍNH TOÁN PNL THẢ NỔI VÀ KÍCH HOẠT AUTO-BREAKEVEN (+10.0 USD)
+                    cur_pnl = round((cur - entry) if action == "BUY" else (entry - cur), 2)
+                    trade["pnl_points"] = cur_pnl
+
+                    BREAKEVEN_TRIGGER_PTS = 10.0
+                    if not trade.get("breakeven_triggered") and cur_pnl >= BREAKEVEN_TRIGGER_PTS:
+                        trade["breakeven_triggered"] = True
+                        be_sl = round(entry + 0.5 if action == "BUY" else entry - 0.5, 2)
+                        old_sl = trade["sl"]
+                        trade["sl"] = be_sl
+                        cfg["active_trade"] = trade
+                        save_config(cfg)
+
+                        send_telegram(
+                            f"🛡️ <b>[KHÓA LÃI TỰ ĐỘNG — AUTO-BREAKEVEN]</b>\n"
+                            f"━━━━━━━━━━━━━━━━━━\n"
+                            f"Lệnh: <b>{action} XAU/USD</b>\n"
+                            f"💰 <b>Lợi nhuận thả nổi:</b> <code>+{cur_pnl:.2f} USD/oz</code> (đã vượt ngưỡng an toàn +{BREAKEVEN_TRIGGER_PTS:.1f} USD)!\n"
+                            f"🛑 <b>Hành động:</b> Đã tự động dời SL từ <code>{old_sl:.2f}</code> về vùng Hòa Vốn <code>{be_sl:.2f}</code>.\n"
+                            f"🛡️ <i>Vị thế đã được bảo toàn vốn 100% rủi ro (Risk-Free Trade)!</i>"
+                        )
 
                     is_sl_hit = False
                     is_tp_hit = False
@@ -535,32 +601,33 @@ def execute_post_news_5m(event):
     box_high = baseline["box_high"]
     box_low = baseline["box_low"]
 
-    # Quantitative Decision on M5 reaction vs Pre-News Box
+    # Quantitative Decision on M5 reaction vs Pre-News Box with SL Buffer (+3.0 USD)
     m5_range = max(abs(m5_high - m5_low), 4.0)
+    SL_BUFFER = 3.0
     
     if m5_close > box_high:
         # Bullish Breakout
         action = "BUY"
         entry = round(m5_close - (0.35 * m5_range), 2) # Pullback entry
-        sl = round(m5_low - 2.0, 2)
-        risk = max(abs(entry - sl), 6.0)
+        sl = round(m5_low - 2.0 - SL_BUFFER, 2)
+        risk = max(abs(entry - sl), 8.0)
         tp = round(entry + (1.8 * risk), 2)
-        thesis = f"Nến M5 bứt phá mạnh qua đỉnh trước tin ({box_high:.2f}). Dòng tiền mua thâu tóm thị trường. Đón Mua tại nhịp hồi kỹ thuật."
+        thesis = f"Nến M5 bứt phá mạnh qua đỉnh trước tin ({box_high:.2f}). Dòng tiền mua thâu tóm thị trường. Đón Mua tại nhịp hồi kỹ thuật (kèm đệm an toàn SL +3.0 USD)."
     elif m5_close < box_low:
         # Bearish Breakdown
         action = "SELL"
         entry = round(m5_close + (0.35 * m5_range), 2) # Pullback entry
-        sl = round(m5_high + 2.0, 2)
-        risk = max(abs(sl - entry), 6.0)
+        sl = round(m5_high + 2.0 + SL_BUFFER, 2)
+        risk = max(abs(sl - entry), 8.0)
         tp = round(entry - (1.8 * risk), 2)
-        thesis = f"Nến M5 đạp thủng đáy tích lũy trước tin ({box_low:.2f}). Áp lực bán tháo áp đảo. Đón Bán tại nhịp hồi kỹ thuật."
+        thesis = f"Nến M5 đạp thủng đáy tích lũy trước tin ({box_low:.2f}). Áp lực bán tháo áp đảo. Đón Bán tại nhịp hồi kỹ thuật (kèm đệm an toàn SL +3.0 USD)."
     else:
         # Inside Box / Neutral
         action = "BUY" if m5_close >= m5_open else "SELL"
         entry = round(cur_price, 2)
-        sl = round(entry - 10.0 if action == "BUY" else entry + 10.0, 2)
+        sl = round(entry - (10.0 + SL_BUFFER) if action == "BUY" else entry + (10.0 + SL_BUFFER), 2)
         tp = round(entry + 18.0 if action == "BUY" else entry - 18.0, 2)
-        thesis = f"Thị trường giằng co trong hộp trước tin ({box_low:.2f} — {box_high:.2f}). Khuyến nghị mở vị thế thăm dò khối lượng nhỏ."
+        thesis = f"Thị trường giằng co trong hộp trước tin ({box_low:.2f} — {box_high:.2f}). Mở vị thế thăm dò kèm đệm an toàn SL +3.0 USD."
 
     plan_id = f"PLAN-NEWS-{int(time.time())}"
     plan = {
@@ -606,7 +673,11 @@ def execute_post_news_5m(event):
         f"━━━━━━━━━━━━━━━━━━\n"
         f"Chủ tịch vui lòng phê duyệt để Bàn Giao Dịch tiến hành khớp lệnh!"
     )
-    send_telegram(msg, reply_markup=markup)
+    sent_mid = send_telegram(msg, reply_markup=markup)
+    if sent_mid:
+        plan["proposal_msg_id"] = sent_mid
+        cfg["active_plan"] = plan
+        save_config(cfg)
 
 # ==========================================
 # MASTER SCHEDULER THREAD

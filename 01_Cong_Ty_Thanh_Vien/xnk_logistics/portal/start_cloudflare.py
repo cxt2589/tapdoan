@@ -18,8 +18,10 @@ if hasattr(sys.stdout, 'reconfigure'):
 if hasattr(sys.stderr, 'reconfigure'):
     sys.stderr.reconfigure(encoding='utf-8')
 
+import shutil
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-CLOUDFLARED_BIN = os.path.join(BASE_DIR, "cloudflared.exe")
+CLOUDFLARED_BIN = shutil.which("cloudflared") or os.path.join(BASE_DIR, "cloudflared.exe") or "/usr/local/bin/cloudflared"
 STATUS_FILE = os.path.join(BASE_DIR, "data", "cloudflare_status.json")
 URL_FILE = os.path.join(BASE_DIR, "cloudflare_url.txt")
 

@@ -50,3 +50,15 @@
   4. **Tự động dọn dẹp tin tra cứu nhanh (`/status`, `/autodelete`):** Tự động xóa sau 3 phút hoặc khi có bản tra cứu mới (đè bản cũ).
   5. **Bảo tồn thông tin cốt lõi:** Kế hoạch giao dịch thực chiến, lịch tin kinh tế vĩ mô và chỉ đạo của Chủ tịch được bảo lưu đủ 24 giờ.
 * **Trạng thái:** HOÀN TẤT, ĐÃ KIỂM THỬ THÀNH CÔNG VÀ ĐANG VẬN HÀNH 24/7 DƯỚI PM2.
+
+---
+
+### [CHỈ THỊ HOÀN TẤT - 2026-10-18 11:35:00] NÂNG CẤP KỶ LUẬT TRADING AGENT (ĐỆM SL BUFFER +3.0 USD, AUTO-BREAKEVEN & DYNAMIC SL)
+* **Chỉ thị từ Chủ tịch:** Đánh giá độ quét SL và hoàn thiện phương án nâng cấp kỷ luật lệnh (nới đệm SL, khóa lãi tự động và khắc phục lỗi trượt giá), đồng bộ lên GitHub.
+* **Đơn vị thực thi:** Khối Trading Hải ngoại VPS-01 & Văn phòng Thư ký Tập đoàn.
+* **Chi tiết kỹ thuật hoàn thành:**
+  1. **Nới đệm Stop Loss an toàn (+3.0 USD/oz):** Bổ sung hằng số `SL_BUFFER = 3.0` vào cả chiến lược đầu ngày (`generate_morning_plan`) và chiến lược hậu tin tức M5 (`execute_post_news_5m`), nới khoảng cách SL ngoài đỉnh/đáy cục bộ để triệt tiêu hiện tượng quét râu nến (Stop-hunt).
+  2. **Khóa lãi tự động (Auto-Breakeven at 1.0R / +10.0 USD):** Tích hợp bộ giám sát thả nổi trong `monitor_active_trade_loop`; khi lệnh có lãi từ `+10.0 USD/oz`, hệ thống tự động tịnh tiến SL về điểm Hòa vốn (`entry + 0.5 USD` đối với Mua, `entry - 0.5 USD` đối với Bán) và phát thông báo bảo vệ vốn lên Telegram.
+  3. **Tái tính toán SL động chống trượt giá (Dynamic SL Slippage Recalculation):** Trong `check_entry_loop`, khi điểm khớp thực tế bị lệch so với kế hoạch, hệ thống tự động tái lập SL và TP theo khoảng cách R cố định từ giá khớp thực tế, triệt tiêu hoàn toàn lỗi SL bị bó sát entry chỉ 0.03 USD.
+* **Trạng thái:** HOÀN TẤT, ĐÃ KHỞI ĐỘNG LẠI TIẾN TRÌNH TRÊN VPS VÀ ĐỒNG BỘ 100% LÊN GITHUB.
+

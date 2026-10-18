@@ -17,10 +17,15 @@ from trading_agent_core import (
     load_config, save_config, generate_morning_plan, 
     generate_weekly_report, get_market_data, get_today_news
 )
+from auto_delete import (
+    record_for_auto_delete, delete_message_now, delete_message_after,
+    start_auto_delete_worker, get_queue_stats, DEFAULT_TTL
+)
 
 CONFIG_FILE = "/opt/trading_agent/config.json"
+last_status_mid = None
 
-def send_msg(chat_id, text, reply_markup=None, parse_mode="HTML"):
+def send_msg(chat_id, text, reply_markup=None, parse_mode="HTML", ttl_seconds=DEFAULT_TTL):
     cfg = load_config()
     token = cfg.get("bot_token")
     url = f"https://api.telegram.org/bot{token}/sendMessage"
@@ -40,6 +45,10 @@ def send_msg(chat_id, text, reply_markup=None, parse_mode="HTML"):
             payload.pop("parse_mode", None)
             r = requests.post(url, json=payload, timeout=15)
             res = r.json()
+        if res and res.get("ok"):
+            mid = res.get("result", {}).get("message_id")
+            if mid and ttl_seconds is not None:
+                record_for_auto_delete(chat_id, mid, ttl_seconds=ttl_seconds)
         return res
     except Exception as e:
         print(f"[!] Error sending msg: {e}")
@@ -123,14 +132,14 @@ def markdown_to_telegram_html(text):
 
     return text
 
-def send_long_msg(chat_id, text):
+def send_long_msg(chat_id, text, ttl_seconds=DEFAULT_TTL):
     if not text:
         return
     # Convert standard Markdown from AI into valid Telegram HTML
     formatted_html = markdown_to_telegram_html(text)
     max_len = 4000
     if len(formatted_html) <= max_len:
-        send_msg(chat_id, formatted_html)
+        send_msg(chat_id, formatted_html, ttl_seconds=ttl_seconds)
         return
     # Chunk cleanly by paragraphs
     paragraphs = formatted_html.split("\n\n")
@@ -140,11 +149,11 @@ def send_long_msg(chat_id, text):
             current_chunk += (p + "\n\n")
         else:
             if current_chunk:
-                send_msg(chat_id, current_chunk.strip())
+                send_msg(chat_id, current_chunk.strip(), ttl_seconds=ttl_seconds)
                 time.sleep(0.5)
             current_chunk = p + "\n\n"
     if current_chunk:
-        send_msg(chat_id, current_chunk.strip())
+        send_msg(chat_id, current_chunk.strip(), ttl_seconds=ttl_seconds)
 
 
 def answer_callback(cb_id, text):
@@ -186,7 +195,8 @@ EXECUTIVE_SYSTEM_PREFIX = (
     "5. XƯNG HÔ CHUẨN MỰC: Mở đầu bằng 'Báo cáo Chủ tịch:' hoặc 'Kính thưa Chủ tịch,'. Kết thúc bằng 'Kính trình Chủ tịch chỉ đạo.' hoặc ngắn gọn.\n"
     "6. TINH GỌN, TRỰC DIỆN (EXECUTIVE COMPACT): Trình bày ngắn gọn, súc tích, tối ưu hoàn hảo cho màn hình điện thoại Telegram. Không lạm dụng trích dẫn lồng nhau, không dùng divider rườm rà.\n"
     "7. KHI TRIỆU TẬP HOẶC ĐIỂM DANH CÁC CÔNG TY CON: Mỗi đơn vị trình bày đúng 1 đến 2 dòng gồm Tên đơn vị, Người phụ trách, và Trọng tâm công việc cốt lõi. Tuyệt đối không chèn link hay tên file sổ tay.\n"
-    "8. ĐI THẲNG VÀO NỘI DUNG: Trả lời đúng trọng tâm yêu cầu của Chủ tịch, nêu rõ số liệu, tiến độ, quyết sách hoặc đề xuất cần phê duyệt.\n\n"
+    "8. ĐI THẲNG VÀO NỘI DUNG: Trả lời đúng trọng tâm yêu cầu của Chủ tịch, nêu rõ số liệu, tiến độ, quyết sách hoặc đề xuất cần phê duyệt.\n"
+    "9. CƠ CHẾ TỰ ĐỘNG XÓA TIN NHẮN 24H: Hệ thống đã kích hoạt cơ chế tự hủy tin nhắn sau 24 giờ (1 ngày) 24/7 để bảo vệ an toàn dữ liệu tuyệt đối cho Chủ tịch. Nếu Chủ tịch hỏi về chế độ tự động xóa tin nhắn, hãy khẳng định cơ chế này đã được cài đặt và vận hành ổn định.\n\n"
     "NỘI DUNG YÊU CẦU CỦA CHỦ TỊCH:\n"
 )
 
@@ -279,7 +289,17 @@ def telegram_poller():
                     if "message" in item:
                         msg = item["message"]
                         chat_id = msg["chat"]["id"]
+                        msg_id = msg.get("message_id")
                         text = msg.get("text", "").strip()
+
+                        # Auto-record incoming message for auto-deletion
+                        if msg_id:
+                            if text.startswith("/"):
+                                # Ephemeral command bubble: auto-delete user's command prompt after 3.5s
+                                delete_message_after(token, chat_id, msg_id, delay_seconds=3.5)
+                            else:
+                                # Executive directive / natural chat: preserve for 24 hours
+                                record_for_auto_delete(chat_id, msg_id, ttl_seconds=DEFAULT_TTL)
 
                         # Auto-register chat_id
                         c = load_config()
@@ -296,32 +316,43 @@ def telegram_poller():
                                 f"🏛️ <b>Kính chào Chủ tịch Tập đoàn!</b>\n\n"
                                 f"Tôi là <b>Văn phòng Thư ký Tập đoàn</b>, vận hành bởi <b>Antigravity AI (Gemini 3.8 Flash High)</b>.\n\n"
                                 f"✨ <b>CHẾ ĐỘ ĐIỀU HÀNH CẤP CAO ĐÃ SẴN SÀNG:</b>\n"
-
                                 f"Chủ tịch có thể chỉ đạo, giao việc hoặc hỏi han tự nhiên trực tiếp trên tin nhắn này.\n\n"
                                 f"📌 <i>Tra cứu nhanh:</i>\n"
                                 f"• <code>/news</code> — Lịch tin kinh tế USD hôm nay (Giờ VN)\n"
                                 f"• <code>/plan</code> — Lập kế hoạch giao dịch XAU/USD\n"
                                 f"• <code>/status</code> — Trạng thái thị trường & lệnh\n"
+                                f"• <code>/autodelete</code> — Trạng thái tự động xóa tin nhắn (24h & tức thời)\n"
                                 f"• <code>/reset</code> — Bắt đầu phiên điều hành mới"
                             )
                             send_msg(chat_id, reply)
 
                         elif text == "/reset" or text == "/new":
                             use_continue_session = False
-                            send_msg(chat_id, "🔄 <b>Đã làm mới phiên hội thoại!</b> Phiên điều hành tiếp theo sẽ bắt đầu với ngữ cảnh mới.")
+                            r_res = send_msg(chat_id, "🔄 <b>Đã làm mới phiên hội thoại!</b> Phiên điều hành tiếp theo sẽ bắt đầu với ngữ cảnh mới.", ttl_seconds=10)
+                            if r_res and r_res.get("ok"):
+                                r_mid = r_res.get("result", {}).get("message_id")
+                                delete_message_after(token, chat_id, r_mid, delay_seconds=6.0)
 
                         elif text == "/plan":
-                            send_msg(chat_id, "⏳ <i>Đang phân tích thị trường XAU/USD (OANDA) từ TradingView và lập kế hoạch...</i>")
-                            def run_plan_async(cid):
+                            load_res = send_msg(chat_id, "⏳ <i>Đang phân tích thị trường XAU/USD (OANDA) từ TradingView và lập kế hoạch...</i>", ttl_seconds=60)
+                            loading_mid = load_res.get("result", {}).get("message_id") if load_res else None
+                            
+                            def run_plan_async(cid, l_mid):
                                 hb = TypingHeartbeat(cid)
                                 hb.start()
                                 try:
                                     generate_morning_plan()
                                 finally:
                                     hb.stop()
-                            threading.Thread(target=run_plan_async, args=(chat_id,), daemon=True).start()
+                                    if l_mid:
+                                        delete_message_now(token, cid, l_mid)
+                            threading.Thread(target=run_plan_async, args=(chat_id, loading_mid), daemon=True).start()
 
                         elif text == "/status":
+                            global last_status_mid
+                            if last_status_mid:
+                                delete_message_now(token, chat_id, last_status_mid)
+
                             data = get_market_data()
                             c = load_config()
                             plan = c.get("active_plan")
@@ -340,7 +371,10 @@ def telegram_poller():
                                 f"⚙️ <b>Hạ tầng:</b> VPS-01 (Ubuntu 24.04 LTS | PM2 24/7)\n"
                                 f"━━━━━━━━━━━━━━━━━━"
                             )
-                            send_msg(chat_id, status_msg)
+                            s_res = send_msg(chat_id, status_msg, ttl_seconds=180)
+                            if s_res and s_res.get("ok"):
+                                last_status_mid = s_res.get("result", {}).get("message_id")
+                                delete_message_after(token, chat_id, last_status_mid, delay_seconds=180.0)
 
                         elif text == "/news":
                             today_news = get_today_news(high_only=False)
@@ -368,6 +402,37 @@ def telegram_poller():
                                 finally:
                                     hb.stop()
                             threading.Thread(target=run_weekly_async, args=(chat_id,), daemon=True).start()
+
+                        elif text == "/autodelete" or text == "/xoa" or text == "/timer":
+                            cfg = load_config()
+                            ttl = cfg.get("auto_delete_ttl_seconds", DEFAULT_TTL)
+                            stats = get_queue_stats(default_ttl=ttl)
+                            total_q = stats.get("total", 0)
+                            oldest_min = stats.get("oldest_age", 0) // 60
+                            next_del_min = (stats.get("next_deletion_in") or 0) // 60
+                            ttl_hours = ttl // 3600
+                            
+                            del_status = (
+                                "🗑️ <b>[CƠ CHẾ TỰ ĐỘNG XÓA TIN NHẮN (AUTO-DELETE)]</b>\n"
+                                "━━━━━━━━━━━━━━━━━━\n"
+                                f"⏱️ <b>Thời gian lưu trữ:</b> <code>{ttl_hours} giờ (1 ngày)</code>\n"
+                                "🛡️ <b>Trạng thái:</b> <code>KÍCH HOẠT 24/7 (Đa Tầng)</code>\n"
+                                f"📬 <b>Số tin trong hàng đợi:</b> <code>{total_q} tin nhắn</code>\n"
+                                f"⏳ <b>Tin cũ nhất:</b> <code>{oldest_min} phút trước</code>\n"
+                                f"🧹 <b>Lần quét xóa kế tiếp:</b> <code>sau {next_del_min} phút</code>\n"
+                                "━━━━━━━━━━━━━━━━━━\n"
+                                "⚡ <b>Cơ chế xóa rác tức thời:</b>\n"
+                                "• Tin có nút duyệt: Xóa ngay lập tức khi phê duyệt/hủy\n"
+                                "• Tin chờ tiến trình: Xóa ngay khi có kết quả\n"
+                                "• Lệnh gõ (/plan, /status): Tự xóa sau 3.5s\n"
+                                "• Trạng thái tức thời: Tự xóa sau 3 phút\n"
+                                "━━━━━━━━━━━━━━━━━━\n"
+                                "📌 <i>Khung chat của Chủ tịch luôn duy trì trạng thái tinh tươm, chuẩn mực và bảo mật tuyệt đối.</i>"
+                            )
+                            ad_res = send_msg(chat_id, del_status, ttl_seconds=90)
+                            if ad_res and ad_res.get("ok"):
+                                ad_mid = ad_res.get("result", {}).get("message_id")
+                                delete_message_after(token, chat_id, ad_mid, delay_seconds=90.0)
 
                         # ANY OTHER MESSAGE -> NATURAL CHAT DIRECTLY WITH ANTIGRAVITY AI!
                         else:
@@ -409,7 +474,8 @@ def telegram_poller():
                                 save_config(c)
                                 
                                 answer_callback(cb_id, "✅ Đã phê duyệt kế hoạch thành công!")
-                                edit_msg_reply_markup(chat_id, msg_id, reply_markup=None)
+                                # XÓA NGAY TIN NHẮN CÓ NÚT PHÊ DUYỆT THEO CHỈ ĐẠO CỦA CHỦ TỊCH
+                                delete_message_now(token, chat_id, msg_id)
 
                                 confirm_msg = (
                                     f"✅ <b>[XÁC NHẬN PHÊ DUYỆT THÀNH CÔNG]</b>\n"
@@ -433,8 +499,12 @@ def telegram_poller():
                                 c["active_plan"] = None
                                 save_config(c)
                                 answer_callback(cb_id, "❌ Đã hủy kế hoạch!")
-                                edit_msg_reply_markup(chat_id, msg_id, reply_markup=None)
-                                send_msg(chat_id, f"❌ <b>Chủ tịch đã HỦY</b> kế hoạch <code>{plan_id}</code>. Hệ thống sẽ không vào lệnh.")
+                                # XÓA NGAY TIN NHẮN CÓ NÚT HỦY THEO CHỈ ĐẠO
+                                delete_message_now(token, chat_id, msg_id)
+                                cancel_res = send_msg(chat_id, f"❌ <b>Chủ tịch đã HỦY</b> kế hoạch <code>{plan_id}</code>. Hệ thống sẽ không vào lệnh.", ttl_seconds=15)
+                                if cancel_res and cancel_res.get("ok"):
+                                    c_mid = cancel_res.get("result", {}).get("message_id")
+                                    delete_message_after(token, chat_id, c_mid, delay_seconds=15.0)
                             else:
                                 answer_callback(cb_id, "Kế hoạch không còn hiệu lực!")
 
@@ -443,4 +513,7 @@ def telegram_poller():
             time.sleep(3)
 
 if __name__ == "__main__":
+    cfg = load_config()
+    ttl = cfg.get("auto_delete_ttl_seconds", DEFAULT_TTL)
+    start_auto_delete_worker(cfg.get("bot_token"), check_interval=60, ttl_seconds=ttl)
     telegram_poller()

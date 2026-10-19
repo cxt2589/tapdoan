@@ -125,6 +125,32 @@
       border-color: #cbd5e1 !important;
       color: #0f172a !important;
     }
+    .chart-range-select {
+      cursor: pointer;
+      outline: none;
+    }
+    html.dark .chart-range-select {
+      background-color: #0b1528 !important;
+      border-color: rgba(255, 255, 255, 0.15) !important;
+      color: #e2e8f0 !important;
+    }
+    html.dark .chart-range-select option {
+      background-color: #060b14 !important;
+      color: #e2e8f0 !important;
+    }
+    html:not(.dark) .chart-range-select {
+      background-color: #ffffff !important;
+      border-color: #cbd5e1 !important;
+      color: #0f172a !important;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+    html:not(.dark) .chart-range-select:hover {
+      border-color: #2563eb !important;
+    }
+    html:not(.dark) .chart-range-select option {
+      background-color: #ffffff !important;
+      color: #0f172a !important;
+    }
     /* Sửa triệt để lỗi màu chữ trắng trên nền sáng cho nút active */
     html:not(.dark) .btn-active-range,
     html:not(.dark) .country-pill-btn.active,
@@ -302,18 +328,32 @@
               <p class="text-[11px] text-slate-400 mt-0.5" id="chartSubtitle">Dữ liệu nến / giá chốt phiên lịch sử chuẩn hóa theo USD/Tấn</p>
             </div>
 
-            <div class="flex items-center gap-2 flex-wrap">
-              <!-- Time Range Filters -->
-              <div class="flex items-center gap-1 bg-brand-900 border border-white/10 p-0.5 rounded-xl text-[10px] font-mono" id="chartRangeContainer">
-                <button type="button" onclick="changeChartRange('1m')" id="btn-chart-range-1m" class="chart-range-btn px-2 py-1 rounded-lg text-slate-400 cursor-pointer">1 Tháng</button>
-                <button type="button" onclick="changeChartRange('3m')" id="btn-chart-range-3m" class="chart-range-btn px-2 py-1 rounded-lg text-slate-400 cursor-pointer">3 Tháng</button>
-                <button type="button" onclick="changeChartRange('6m')" id="btn-chart-range-6m" class="chart-range-btn px-2 py-1 rounded-lg text-slate-400 cursor-pointer">6 Tháng</button>
-                <button type="button" onclick="changeChartRange('1y')" id="btn-chart-range-1y" class="chart-range-btn px-2 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30 cursor-pointer btn-active-range">1 Năm</button>
-                <button type="button" onclick="changeChartRange('2y')" id="btn-chart-range-2y" class="chart-range-btn px-2 py-1 rounded-lg text-slate-400 cursor-pointer">2 Năm</button>
-                <button type="button" onclick="changeChartRange('3y')" id="btn-chart-range-3y" class="chart-range-btn px-2 py-1 rounded-lg text-slate-400 cursor-pointer">3 Năm</button>
+            <div class="flex items-center gap-2 flex-wrap sm:flex-nowrap">
+              <!-- Time Range Dropdown Selector -->
+              <div class="relative inline-flex items-center" id="chartRangeContainer">
+                <label for="chartRangeSelect" class="sr-only">Khung thời gian biểu đồ</label>
+                <div class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-slate-400">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                  </svg>
+                </div>
+                <select id="chartRangeSelect" onchange="changeChartRange(this.value)" 
+                        class="chart-range-select appearance-none bg-brand-900 border border-white/10 hover:border-cyan-400/50 text-slate-200 text-xs font-mono font-semibold rounded-xl pl-8 pr-7 py-1.5 cursor-pointer focus:outline-none focus:ring-1 focus:ring-cyan-400 transition-all shadow-sm">
+                  <option value="1m">1 Tháng (30 ngày)</option>
+                  <option value="3m">3 Tháng (12 tuần)</option>
+                  <option value="6m">6 Tháng</option>
+                  <option value="1y" selected>1 Năm (12 tháng)</option>
+                  <option value="2y">2 Năm (24 tháng)</option>
+                  <option value="3y">3 Năm (36 tháng)</option>
+                </select>
+                <div class="absolute inset-y-0 right-0 pr-2 flex items-center pointer-events-none text-slate-400">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                  </svg>
+                </div>
               </div>
               <!-- Price Volatility Badge -->
-              <div class="px-2.5 py-1 rounded-xl bg-brand-900 border border-white/10 text-right">
+              <div class="px-2.5 py-1 rounded-xl bg-brand-900 border border-white/10 text-right shrink-0">
                 <span class="text-[9px] font-mono text-slate-400 block">Biến động 7D</span>
                 <span class="text-xs font-mono font-bold text-emerald-400" id="chart7dChange">+4.2%</span>
               </div>
@@ -815,21 +855,10 @@
 
     function changeChartRange(range) {
       currentChartRange = range;
-      const ranges = ['1m', '3m', '6m', '1y', '2y', '3y'];
-      const isDark = document.documentElement.classList.contains('dark');
-      ranges.forEach(r => {
-        const btn = document.getElementById(`btn-chart-range-${r}`);
-        if (!btn) return;
-        if (r === range) {
-          btn.className = isDark
-            ? "chart-range-btn px-2 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30 cursor-pointer shadow-sm btn-active-range"
-            : "chart-range-btn px-2 py-1 rounded-lg bg-blue-600 text-white font-bold border border-blue-600 cursor-pointer shadow-sm btn-active-range";
-        } else {
-          btn.className = isDark
-            ? "chart-range-btn px-2 py-1 rounded-lg hover:bg-white/5 text-slate-400 border border-transparent cursor-pointer btn-inactive-range"
-            : "chart-range-btn px-2 py-1 rounded-lg hover:bg-slate-200 text-slate-700 border border-transparent cursor-pointer btn-inactive-range";
-        }
-      });
+      const selectEl = document.getElementById('chartRangeSelect');
+      if (selectEl && selectEl.value !== range) {
+        selectEl.value = range;
+      }
       updateChartForCurrentCommodityAndSource();
     }
 

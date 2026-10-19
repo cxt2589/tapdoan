@@ -88,6 +88,11 @@ try:
 except ImportError:
     country_top_products = None
 
+try:
+    import commodity_prices_catalog
+except ImportError:
+    commodity_prices_catalog = None
+
 def generate_chart_history_series(base_price, time_range="1y", existing_history=None, commodity_id=None, metrics=None):
     """
     Tạo chuỗi dữ liệu nến/giá lịch sử cho biểu đồ theo các khung thời gian:
@@ -1289,6 +1294,47 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
             results = []
             seen_hs = set()
 
+            q_clean = q.replace("à","a").replace("á","a").replace("ạ","a").replace("ả","a").replace("ã","a").replace("â","a").replace("ầ","a").replace("ấ","a").replace("ậ","a").replace("ẩ","a").replace("ẫ","a").replace("è","e").replace("é","e").replace("ẹ","e").replace("ẻ","e").replace("ẽ","e").replace("ê","e").replace("ề","e").replace("ế","e").replace("ệ","e").replace("ể","e").replace("ễ","e").replace("ò","o").replace("ó","o").replace("ọ","o").replace("ỏ","o").replace("õ","o").replace("ô","o").replace("ồ","o").replace("ố","o").replace("ộ","o").replace("ổ","o").replace("ỗ","o").replace("ơ","o").replace("ờ","o").replace("ớ","o").replace("ợ","o").replace("ở","o").replace("ỡ","o").replace("ù","u").replace("ú","u").replace("ụ","u").replace("ủ","u").replace("ũ","u").replace("ư","u").replace("ừ","u").replace("ứ","u").replace("ự","u").replace("ử","u").replace("ữ","u").replace("ì","i").replace("í","i").replace("ị","i").replace("ỉ","i").replace("ĩ","i").replace("đ","d")
+            
+            # Xử lý đồng nghĩa ngoại thương toàn diện (tránh trùng lặp từ tố ngắn như 'ore' trong 'Singapore')
+            search_tokens = [q, q_clean]
+            if "cafe" in q_clean or "coffee" in q_clean or "ca phe" in q_clean:
+                search_tokens.extend(["cafe", "coffee", "ca phe", "robusta", "arabica"])
+            if "gao" in q_clean or "rice" in q_clean or "lua" in q_clean:
+                search_tokens.extend(["gao", "rice", "lua", "1006"])
+            if "phan" in q_clean or "urea" in q_clean or "dam" in q_clean or "kali" in q_clean or "dap" in q_clean:
+                search_tokens.extend(["phan bon", "urea", "phan dam", "phan kali", "dap", "npk", "fertilizer", "3102", "3104", "3105"])
+            if "tieu" in q_clean or "pepper" in q_clean:
+                search_tokens.extend(["ho tieu", "pepper", "0904"])
+            if "cao su" in q_clean or "rubber" in q_clean:
+                search_tokens.extend(["cao su", "rubber", "latex", "svr", "4001"])
+            if "tom" in q_clean or "shrimp" in q_clean or "seafood" in q_clean or "ca tra" in q_clean:
+                search_tokens.extend(["tom", "shrimp", "seafood", "thuy san", "ca tra", "pangasius", "0306", "0304"])
+            if "sat" in q_clean or "quang" in q_clean or "iron" in q_clean or "ore" in q_clean:
+                search_tokens.extend(["quang sat", "quặng sắt", "iron ore", "quang", "quặng", "2601"])
+            if "than" in q_clean or "coal" in q_clean:
+                search_tokens.extend(["than da", "coal", "2701", "ici 4", "newcastle"])
+            if "thep" in q_clean or "steel" in q_clean or "hrc" in q_clean or "rebar" in q_clean:
+                search_tokens.extend(["thep", "steel", "hrc", "rebar", "7208", "7214"])
+            if "dau nanh" in q_clean or "dau tuong" in q_clean or "soybean" in q_clean:
+                search_tokens.extend(["dau nanh", "dau tuong", "soybean", "1201"])
+            elif "dau co" in q_clean or "cpo" in q_clean or "palm" in q_clean or "olein" in q_clean:
+                search_tokens.extend(["dau co", "cpo", "palm oil", "palm olein", "1511"])
+            elif "dau" == q_clean:
+                search_tokens.extend(["dau co", "dau nanh", "1511", "1201"])
+            if "dong" in q_clean and "hop dong" not in q_clean and "dong hop" not in q_clean:
+                search_tokens.extend(["dong cathode", "copper", "7403", "lme copper"])
+            if "dieu" in q_clean or "cashew" in q_clean:
+                search_tokens.extend(["hat dieu", "cashew", "w320", "0801"])
+            if "sau rieng" in q_clean or "durian" in q_clean:
+                search_tokens.extend(["sau rieng", "durian", "0810"])
+            if "ngo" in q_clean or "corn" in q_clean or "bap" in q_clean:
+                search_tokens.extend(["ngo", "corn", "1005"])
+            if "mi" in q_clean or "wheat" in q_clean:
+                search_tokens.extend(["lua mi", "wheat", "1001"])
+            if "duong" in q_clean or "sugar" in q_clean:
+                search_tokens.extend(["duong", "sugar", "1701"])
+
             if os.path.exists(prices_file):
                 try:
                     with open(prices_file, "r", encoding="utf-8") as f:
@@ -1311,23 +1357,7 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                             
                             search_corpus = f"{comm_id} {comm_name} {hs_code} {src_name} {ex_name} {c_code} {sector_name}".lower()
                             search_corpus_clean = search_corpus.replace("à","a").replace("á","a").replace("ạ","a").replace("ả","a").replace("ã","a").replace("â","a").replace("ầ","a").replace("ấ","a").replace("ậ","a").replace("ẩ","a").replace("ẫ","a").replace("è","e").replace("é","e").replace("ẹ","e").replace("ẻ","e").replace("ẽ","e").replace("ê","e").replace("ề","e").replace("ế","e").replace("ệ","e").replace("ể","e").replace("ễ","e").replace("ò","o").replace("ó","o").replace("ọ","o").replace("ỏ","o").replace("õ","o").replace("ô","o").replace("ồ","o").replace("ố","o").replace("ộ","o").replace("ổ","o").replace("ỗ","o").replace("ơ","o").replace("ờ","o").replace("ớ","o").replace("ợ","o").replace("ở","o").replace("ỡ","o").replace("ù","u").replace("ú","u").replace("ụ","u").replace("ủ","u").replace("ũ","u").replace("ư","u").replace("ừ","u").replace("ứ","u").replace("ự","u").replace("ử","u").replace("ữ","u").replace("ì","i").replace("í","i").replace("ị","i").replace("ỉ","i").replace("ĩ","i").replace("đ","d")
-                            q_clean = q.replace("à","a").replace("á","a").replace("ạ","a").replace("ả","a").replace("ã","a").replace("â","a").replace("ầ","a").replace("ấ","a").replace("ậ","a").replace("ẩ","a").replace("ẫ","a").replace("è","e").replace("é","e").replace("ẹ","e").replace("ẻ","e").replace("ẽ","e").replace("ê","e").replace("ề","e").replace("ế","e").replace("ệ","e").replace("ể","e").replace("ễ","e").replace("ò","o").replace("ó","o").replace("ọ","o").replace("ỏ","o").replace("õ","o").replace("ô","o").replace("ồ","o").replace("ố","o").replace("ộ","o").replace("ổ","o").replace("ỗ","o").replace("ơ","o").replace("ờ","o").replace("ớ","o").replace("ợ","o").replace("ở","o").replace("ỡ","o").replace("ù","u").replace("ú","u").replace("ụ","u").replace("ủ","u").replace("ũ","u").replace("ư","u").replace("ừ","u").replace("ứ","u").replace("ự","u").replace("ử","u").replace("ữ","u").replace("ì","i").replace("í","i").replace("ị","i").replace("ỉ","i").replace("ĩ","i").replace("đ","d")
-
-                            # Xử lý đồng nghĩa ngoại thương
-                            search_tokens = [q, q_clean]
-                            if "cafe" in q_clean or "coffee" in q_clean or "ca phe" in q_clean:
-                                search_tokens.extend(["cafe", "coffee", "ca phe", "robusta", "arabica"])
-                            if "gao" in q_clean or "rice" in q_clean or "lua" in q_clean:
-                                search_tokens.extend(["gao", "rice", "lua", "tam"])
-                            if "phan" in q_clean or "urea" in q_clean or "dam" in q_clean:
-                                search_tokens.extend(["phan", "urea", "dam", "fertilizer"])
-                            if "tieu" in q_clean or "pepper" in q_clean:
-                                search_tokens.extend(["tieu", "pepper"])
-                            if "cao su" in q_clean or "rubber" in q_clean:
-                                search_tokens.extend(["cao su", "rubber", "latex", "svr"])
-                            if "tom" in q_clean or "shrimp" in q_clean or "seafood" in q_clean:
-                                search_tokens.extend(["tom", "shrimp", "seafood", "thuy san"])
-
+                            
                             is_matched = not q or any(t in search_corpus or t in search_corpus_clean for t in search_tokens if t)
 
                             if is_matched:
@@ -1409,27 +1439,23 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                     if source_filter and source_filter != "ALL" and s_cat != source_filter:
                         continue
                     
-                    # Tra cứu giá thực tế theo danh bạ HS cụ thể
-                    hs_key = p.get("hs", "")
-                    specific_prices = {
-                        "0810.90": 3850, "0804.50": 1450, "0810.80": 1250, "0801.32": 6850,
-                        "0902.40": 2850, "0904.11": 6800, "0901.11": 4785, "0901.12": 5480,
-                        "1006.30": 585, "1005.90": 178, "1001.99": 225, "1108.14": 480,
-                        "1201.90": 435, "1511.10": 965, "1701.14": 485, "2701.12": 92,
-                        "3102.10": 365, "3104.20": 295, "4001.22": 2420, "5201.00": 1820,
-                        "7208.39": 580
-                    }
-                    if hs_key in specific_prices:
-                        est_p = specific_prices[hs_key]
+                    # Tra cứu giá thực tế & sàn giao dịch từ Catalog chuẩn hóa
+                    if commodity_prices_catalog and hasattr(commodity_prices_catalog, "resolve_commodity_pricing"):
+                        c_info = commodity_prices_catalog.resolve_commodity_pricing(p, p.get("hs"), p.get("chapter_code"))
                     else:
-                        ch_code = p.get("chapter_code", "01")
-                        base_est_map = {
-                            "01": 2850, "02": 4200, "03": 5800, "04": 3400, "07": 950,
-                            "08": 1650, "09": 4785, "10": 585, "24": 6500, "27": 680,
-                            "31": 385, "40": 2450, "44": 420, "52": 2100, "61": 8500,
-                            "72": 615, "84": 12500, "85": 18500
+                        c_info = {
+                            "price_usd_mt": p.get("price_usd_mt", 1200),
+                            "price_original": p.get("price_original", f"~{p.get('price_usd_mt', 1200):,} USD/MT"),
+                            "benchmark_ref": p.get("benchmark_ref", b_ref),
+                            "benchmark_symbol": p.get("benchmark_symbol", b_sym),
+                            "change_24h": p.get("change_24h", "+0.5%"),
+                            "change_7d": p.get("change_7d", "+1.8%")
                         }
-                        est_p = base_est_map.get(ch_code, 1950)
+
+                    est_p = c_info["price_usd_mt"]
+                    p_orig = c_info["price_original"]
+                    b_ref = c_info["benchmark_ref"]
+                    b_sym = c_info["benchmark_symbol"]
                     
                     results.append({
                         "commodity_id": f"hs_{clean_p_hs}",
@@ -1441,10 +1467,10 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                         "source_category": s_cat,
                         "exchange_name": b_ref,
                         "contract_code": b_sym,
-                        "price_original": f"~{est_p:,} USD/MT ({p.get('unit', 'MT')})",
+                        "price_original": p_orig,
                         "price_usd_mt": est_p,
-                        "change_24h": "+0.5%",
-                        "change_7d": "+1.8%",
+                        "change_24h": c_info.get("change_24h", "+0.5%"),
+                        "change_7d": c_info.get("change_7d", "+1.8%"),
                         "currency": "USD",
                         "updated_at": "19/10/2026",
                         "note": p.get("trade_spec", ""),
@@ -1562,37 +1588,33 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                 clean_id = comm_id.replace("hs_", "").replace("_", ".")
                 matched_p = next((p for p in hs_products.ALL_PRODUCTS_MASTER if p.get("hs") == clean_id or p.get("hs", "").replace(".", "") == clean_id.replace(".", "") or comm_id in p.get("hs", "") or comm_id in p.get("name_vi", "").lower()), None)
                 if matched_p:
-                    hs_key = matched_p.get("hs", "")
-                    specific_prices = {
-                        "0810.90": 3850, "0804.50": 1450, "0810.80": 1250, "0801.32": 6850,
-                        "0902.40": 2850, "0904.11": 6800, "0901.11": 4785, "0901.12": 5480,
-                        "1006.30": 585, "1005.90": 178, "1001.99": 225, "1108.14": 480,
-                        "1201.90": 435, "1511.10": 965, "1701.14": 485, "2701.12": 92,
-                        "3102.10": 365, "3104.20": 295, "4001.22": 2420, "5201.00": 1820,
-                        "7208.39": 580
-                    }
-                    if hs_key in specific_prices:
-                        base_p = specific_prices[hs_key]
-                    else:
-                        ch_code = matched_p.get("chapter_code", "01")
-                        base_est_map = {
-                            "01": 2850, "02": 4200, "03": 5800, "04": 3400, "07": 950,
-                            "08": 1650, "09": 4785, "10": 585, "24": 6500, "27": 680,
-                            "31": 385, "40": 2450, "44": 420, "52": 2100, "61": 8500,
-                            "72": 615, "84": 12500, "85": 18500
+                    if commodity_prices_catalog and hasattr(commodity_prices_catalog, "resolve_commodity_pricing"):
+                        c_info = commodity_prices_catalog.resolve_commodity_pricing(matched_p, matched_p.get("hs"), matched_p.get("chapter_code"))
+                        base_p = c_info["price_usd_mt"]
+                        p_orig = c_info["price_original"]
+                        b_ref = c_info["benchmark_ref"]
+                        b_sym = c_info["benchmark_symbol"]
+                        metrics = {
+                            "change_24h": c_info.get("change_24h", "0.0%"),
+                            "change_7d": c_info.get("change_7d", "0.0%"),
+                            "change_1m": c_info.get("change_1m", "0.0%"),
+                            "change_6m": c_info.get("change_6m", "0.0%"),
+                            "change_1y": c_info.get("change_1y", "0.0%")
                         }
-                        base_p = base_est_map.get(ch_code, 1950)
+                    else:
+                        base_p = matched_p.get("price_usd_mt", 1200)
+                        p_orig = f"~{base_p:,} USD/MT"
+                        b_ref = matched_p.get("benchmark_ref", "Sàn Quốc Tế & FOB Hải Quan")
+                        b_sym = matched_p.get("benchmark_symbol", matched_p.get("hs"))
+                        metrics = {
+                            "change_24h": "+0.5%",
+                            "change_7d": "+1.8%",
+                            "change_1m": "+3.5%",
+                            "change_6m": "+8.2%",
+                            "change_1y": "+14.5%"
+                        }
 
-                    metrics = {
-                        "change_24h": "+0.5%",
-                        "change_7d": "+1.8%",
-                        "change_1m": "+3.5%",
-                        "change_6m": "+8.2%",
-                        "change_1y": "+14.5%"
-                    }
                     history = generate_chart_history_series(base_p, time_range, commodity_id=clean_id, metrics=metrics)
-                    b_ref = matched_p.get("benchmark_ref", "Sàn Quốc Tế & FOB Hải Quan")
-                    b_sym = matched_p.get("benchmark_symbol", matched_p.get("hs"))
                     
                     self._send_json({
                         "ok": True,
@@ -1601,12 +1623,12 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                         "hs_code": matched_p.get("hs"),
                         "source_id": b_sym,
                         "source_name": b_ref,
-                        "source_category": "FOB",
+                        "source_category": "GLOBAL_BENCHMARK",
                         "contract_code": b_sym,
                         "current_price_usd_mt": base_p,
-                        "price_original": f"~{base_p:,} USD/MT",
-                        "change_24h": "+0.5%",
-                        "change_7d": "+1.8%",
+                        "price_original": p_orig,
+                        "change_24h": metrics.get("change_24h", "0.0%"),
+                        "change_7d": metrics.get("change_7d", "0.0%"),
                         "range": time_range,
                         "history": history
                     })

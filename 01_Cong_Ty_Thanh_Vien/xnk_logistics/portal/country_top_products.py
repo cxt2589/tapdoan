@@ -10,6 +10,28 @@ Sắp xếp công bằng theo quy mô thị trường & kim ngạch xuất khẩ
 """
 
 COUNTRY_TOP_PRODUCTS = [
+    # --- AUSTRALIA (AU) ---
+    {
+        "id": "au-iron-ore",
+        "commodity_id": "iron_ore",
+        "product_name": "Quặng Sắt 62% Fe (Iron Ore SGX CFR Qingdao)",
+        "country": "Australia",
+        "country_code": "AU",
+        "flag": "🇦🇺",
+        "hs_code": "2601.11",
+        "market_scale": "890 Triệu Tấn / $98 Tỷ USD",
+        "revenue_usd_billion": 98.0,
+        "metric_rank": "Top 1 Thế Giới",
+        "price_usd_mt": 91,
+        "price_original": "91.50 USD/dmt (62% Fe CFR Qingdao)",
+        "exchange_name": "Sàn SGX Singapore & Dalian Commodity Exchange",
+        "change_24h": "-0.8%",
+        "change_7d": "-1.5%",
+        "change_1m": "-3.8%",
+        "change_6m": "-12.4%",
+        "change_1y": "-22.8%",
+        "category": "minerals"
+    },
     # --- BRAZIL (BR) ---
     {
         "id": "br-soybean",

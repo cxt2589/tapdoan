@@ -477,6 +477,7 @@
                 <label for="countryFilterSelect" class="text-[11px] font-mono font-bold text-slate-400 whitespace-nowrap">Quốc Gia:</label>
                 <select id="countryFilterSelect" onchange="filterCountryTopTable(this.value)" class="country-filter-select px-2.5 py-1.5 rounded-lg text-xs font-semibold border cursor-pointer">
                   <option value="ALL">🌐 Tất Cả Quốc Gia</option>
+                  <option value="AU">🇦🇺 Australia (Úc)</option>
                   <option value="VN">🇻🇳 Việt Nam</option>
                   <option value="BR">🇧🇷 Brazil</option>
                   <option value="ID">🇮🇩 Indonesia</option>
@@ -789,6 +790,33 @@
         }
       }
 
+      if (!commodity && window._lastSearchResults && window._lastSearchResults.length > 0) {
+        const sitem = window._lastSearchResults.find(r => 
+          r.commodity_id === commodityId || 
+          r.hs_code === commodityId ||
+          (r.hs_code && commodityId.includes(r.hs_code.replace('.', '')))
+        );
+        if (sitem) {
+          commodity = buildSectorFromCountryProduct({
+            id: sitem.commodity_id,
+            commodity_id: sitem.commodity_id,
+            product_name: sitem.commodity_name,
+            hs_code: sitem.hs_code,
+            price_usd_mt: sitem.price_usd_mt,
+            price_original: sitem.price_original,
+            exchange_name: sitem.exchange_name || sitem.source_name,
+            flag: '🌐',
+            country: 'Thương Mại Quốc Tế',
+            country_code: 'INTL',
+            change_24h: sitem.change_24h,
+            change_7d: sitem.change_7d,
+            metric_rank: 'Hàng Hóa WCO',
+            market_scale: sitem.sector || 'Thị Trường Toàn Cầu'
+          });
+          cachedCommodityPricesData.sectors.push(commodity);
+        }
+      }
+
       if (!commodity) {
         updateChartForCurrentCommodityAndSource();
         return;
@@ -966,6 +994,7 @@
     }
 
     function renderPriceSearchResultsDropdown(results, query) {
+      window._lastSearchResults = results || [];
       const dropdown = document.getElementById('priceSearchAutocompleteDropdown');
       if (!dropdown) return;
 

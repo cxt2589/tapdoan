@@ -1302,8 +1302,12 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                 search_tokens.extend(["cafe", "coffee", "ca phe", "robusta", "arabica"])
             if "gao" in q_clean or "rice" in q_clean or "lua" in q_clean:
                 search_tokens.extend(["gao", "rice", "lua", "1006"])
-            if "phan" in q_clean or "urea" in q_clean or "dam" in q_clean or "kali" in q_clean or "dap" in q_clean:
+            if "dam go" in q_clean or "woodchip" in q_clean or "go keo" in q_clean or "vien nen" in q_clean:
+                search_tokens.extend(["dam go", "woodchips", "acacia", "vien nen", "wood pellets", "4401"])
+            elif "phan" in q_clean or "urea" in q_clean or "phan dam" in q_clean or "dam phu my" in q_clean or "dam ca mau" in q_clean or "kali" in q_clean or "dap" in q_clean:
                 search_tokens.extend(["phan bon", "urea", "phan dam", "phan kali", "dap", "npk", "fertilizer", "3102", "3104", "3105"])
+            elif "dam" == q_clean or ("dam" in q_clean and "go" not in q_clean and "wood" not in q_clean):
+                search_tokens.extend(["phan bon", "urea", "phan dam", "3102"])
             if "tieu" in q_clean or "pepper" in q_clean:
                 search_tokens.extend(["ho tieu", "pepper", "0904"])
             if "cao su" in q_clean or "rubber" in q_clean:

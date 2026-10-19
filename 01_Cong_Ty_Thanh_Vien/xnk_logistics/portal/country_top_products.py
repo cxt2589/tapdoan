@@ -32,7 +32,7 @@ COUNTRY_TOP_PRODUCTS = [
     },
     {
         "id": "vn-rice-st25",
-        "commodity_id": "rice_white_5pct",
+        "commodity_id": "rice_st25",
         "product_name": "Gạo Trắng Xuất Khẩu 5% Tấm & Gạo ST25",
         "country": "Việt Nam",
         "country_code": "VN",
@@ -92,7 +92,7 @@ COUNTRY_TOP_PRODUCTS = [
     },
     {
         "id": "vn-cashew-w320",
-        "commodity_id": "cashew_nuts",
+        "commodity_id": "cashew_w320",
         "product_name": "Hạt Điều Nhân Xuất Khẩu Loại W320 Bình Phước",
         "country": "Việt Nam",
         "country_code": "VN",
@@ -154,7 +154,7 @@ COUNTRY_TOP_PRODUCTS = [
     # --- BRAZIL (BR) ---
     {
         "id": "br-coffee-arabica",
-        "commodity_id": "coffee_robusta",
+        "commodity_id": "coffee_arabica",
         "product_name": "Cà Phê Arabica Santos (Brazil NY 2)",
         "country": "Brazil",
         "country_code": "BR",
@@ -174,7 +174,7 @@ COUNTRY_TOP_PRODUCTS = [
     },
     {
         "id": "br-soybean",
-        "commodity_id": "coffee_robusta",
+        "commodity_id": "soybean",
         "product_name": "Đậu Nành Hạt Xuất Khẩu (Paranaguá FOB)",
         "country": "Brazil",
         "country_code": "BR",
@@ -194,7 +194,7 @@ COUNTRY_TOP_PRODUCTS = [
     },
     {
         "id": "br-raw-sugar",
-        "commodity_id": "coffee_robusta",
+        "commodity_id": "raw_sugar",
         "product_name": "Đường Thô Hạng 11 (Sugar No. 11 Santos)",
         "country": "Brazil",
         "country_code": "BR",
@@ -216,7 +216,7 @@ COUNTRY_TOP_PRODUCTS = [
     # --- INDONESIA (ID) ---
     {
         "id": "id-cpo-palm-oil",
-        "commodity_id": "coffee_robusta",
+        "commodity_id": "cpo_palm_oil",
         "product_name": "Dầu Cọ Thô CPO (Crude Palm Oil Belawan)",
         "country": "Indonesia",
         "country_code": "ID",
@@ -236,7 +236,7 @@ COUNTRY_TOP_PRODUCTS = [
     },
     {
         "id": "id-thermal-coal",
-        "commodity_id": "fertilizer_urea",
+        "commodity_id": "thermal_coal",
         "product_name": "Than Đá Nhiệt Điện (Thermal Coal ICI 4)",
         "country": "Indonesia",
         "country_code": "ID",
@@ -258,7 +258,7 @@ COUNTRY_TOP_PRODUCTS = [
     # --- HOA KỲ (US) ---
     {
         "id": "us-corn-cbot",
-        "commodity_id": "fertilizer_urea",
+        "commodity_id": "corn_cbot",
         "product_name": "Ngô Bắp Vàng Hạng 2 (Corn No. 2 Yellow)",
         "country": "Hoa Kỳ",
         "country_code": "US",
@@ -278,7 +278,7 @@ COUNTRY_TOP_PRODUCTS = [
     },
     {
         "id": "us-wheat-srw",
-        "commodity_id": "rice_white_5pct",
+        "commodity_id": "wheat_srw",
         "product_name": "Lúa Mì Mùa Đông Đỏ Mềm (SRW Wheat CBOT)",
         "country": "Hoa Kỳ",
         "country_code": "US",
@@ -300,7 +300,7 @@ COUNTRY_TOP_PRODUCTS = [
     # --- NGA (RU) ---
     {
         "id": "ru-wheat-milling",
-        "commodity_id": "rice_white_5pct",
+        "commodity_id": "ru_wheat",
         "product_name": "Lúa Mì Thực Phẩm 12.5% Protein (Black Sea FOB)",
         "country": "Nga",
         "country_code": "RU",
@@ -320,7 +320,7 @@ COUNTRY_TOP_PRODUCTS = [
     },
     {
         "id": "ru-potash-fertilizer",
-        "commodity_id": "fertilizer_urea",
+        "commodity_id": "potash_fertilizer",
         "product_name": "Phân Bón Kali MOP (Muriate of Potash Uralkali)",
         "country": "Nga",
         "country_code": "RU",
@@ -342,7 +342,7 @@ COUNTRY_TOP_PRODUCTS = [
     # --- ẤN ĐỘ (IN) ---
     {
         "id": "in-basmati-rice",
-        "commodity_id": "rice_white_5pct",
+        "commodity_id": "basmati_rice",
         "product_name": "Gạo Thơm Hạt Dài Basmati 1121 Pusa",
         "country": "Ấn Độ",
         "country_code": "IN",
@@ -362,7 +362,7 @@ COUNTRY_TOP_PRODUCTS = [
     },
     {
         "id": "in-cotton-shankar",
-        "commodity_id": "natural_rubber",
+        "commodity_id": "cotton_shankar",
         "product_name": "Bông Xơ Tự Nhiên Shankar-6 (Cotton Gujarat)",
         "country": "Ấn Độ",
         "country_code": "IN",
@@ -384,7 +384,7 @@ COUNTRY_TOP_PRODUCTS = [
     # --- THÁI LAN (TH) ---
     {
         "id": "th-jasmine-rice",
-        "commodity_id": "rice_white_5pct",
+        "commodity_id": "jasmine_rice",
         "product_name": "Gạo Thơm Jasmine Hom Mali 100% Grade A",
         "country": "Thái Lan",
         "country_code": "TH",
@@ -404,7 +404,7 @@ COUNTRY_TOP_PRODUCTS = [
     },
     {
         "id": "th-rss1-rubber",
-        "commodity_id": "natural_rubber",
+        "commodity_id": "rubber_rss1",
         "product_name": "Cao Su Hun Khói Tờ RSS 1 & RSS 3 (FOB Songkhla)",
         "country": "Thái Lan",
         "country_code": "TH",
@@ -434,3 +434,18 @@ def get_country_top_products(country_code=None, category=None):
         cat_low = category.lower().strip()
         results = [p for p in results if p.get("category") == cat_low]
     return results
+
+def get_country_product_by_id_or_code(key):
+    """Tìm sản phẩm theo id, commodity_id, hs_code hoặc từ khóa liên quan"""
+    if not key:
+        return None
+    k_clean = str(key).strip().lower()
+    for p in COUNTRY_TOP_PRODUCTS:
+        if p.get("id", "").lower() == k_clean:
+            return p
+        if p.get("commodity_id", "").lower() == k_clean:
+            return p
+        hs = p.get("hs_code", "").lower()
+        if hs == k_clean or hs.replace(".", "") == k_clean.replace(".", ""):
+            return p
+    return None

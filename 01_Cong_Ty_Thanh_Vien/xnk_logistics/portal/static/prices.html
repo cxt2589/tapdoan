@@ -618,8 +618,11 @@
     function selectCommodityPrice(commodityId) {
       if (!cachedCommodityPricesData || !cachedCommodityPricesData.sectors) return;
       currentSelectedCommodityId = commodityId;
-      const commodity = cachedCommodityPricesData.sectors.find(s => s.commodity_id === commodityId) || cachedCommodityPricesData.sectors[0];
-      if (!commodity) return;
+      const commodity = cachedCommodityPricesData.sectors.find(s => s.commodity_id === commodityId);
+      if (!commodity) {
+        updateChartForCurrentCommodityAndSource();
+        return;
+      }
 
       // Ensure currentChartSourceId belongs to current commodity
       const benchmarkExists = commodity.benchmarks && commodity.benchmarks.some(b => b.source_id === currentChartSourceId);
@@ -639,8 +642,18 @@
 
     function selectCommodityPriceAndSource(commodityId, sourceId) {
       currentSelectedCommodityId = commodityId;
-      currentChartSourceId = sourceId;
-      selectCommodityPrice(commodityId);
+      currentChartSourceId = sourceId || '';
+      
+      const isBenchmark = cachedCommodityPricesData && cachedCommodityPricesData.sectors
+        ? cachedCommodityPricesData.sectors.some(s => s.commodity_id === commodityId)
+        : false;
+
+      if (isBenchmark) {
+        selectCommodityPrice(commodityId);
+      } else {
+        updateChartForCurrentCommodityAndSource();
+      }
+
       const chartCard = document.getElementById('commodityPriceCanvas');
       if (chartCard) {
         chartCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -1404,10 +1417,10 @@
             <td class="py-3 px-2 text-center font-bold ${getChangeColorClass(p.change_1y)}">${p.change_1y}</td>
             <td class="py-3 px-3 text-right">
               <div class="flex items-center justify-end gap-1.5">
-                <button type="button" onclick="inspectCountryProductInChart('${p.commodity_id}', '${p.product_name.replace(/'/g, "\\'")}', '${p.hs_code}', ${p.price_usd_mt})" class="px-2 py-1 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/30 text-[10px] font-bold flex items-center gap-1 cursor-pointer transition-all active:scale-95" title="Soi Biểu Đồ Giá">
+                <button type="button" onclick="inspectCountryProductInChart('${p.id}', '${p.product_name.replace(/'/g, "\\'")}', '${p.hs_code}', ${p.price_usd_mt})" class="px-2 py-1 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/30 text-[10px] font-bold flex items-center gap-1 cursor-pointer transition-all active:scale-95" title="Soi Biểu Đồ Giá">
                   <span>📈 Soi Biểu Đồ</span>
                 </button>
-                <button type="button" onclick="openQuickMatchmakerModal('${p.commodity_id}', '${p.product_name.replace(/'/g, "\\'")}', '${p.hs_code}')" class="px-2 py-1 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold flex items-center gap-1 cursor-pointer transition-all active:scale-95" title="Khớp Lệnh B2B">
+                <button type="button" onclick="openQuickMatchmakerModal('${p.id}', '${p.product_name.replace(/'/g, "\\'")}', '${p.hs_code}')" class="px-2 py-1 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold flex items-center gap-1 cursor-pointer transition-all active:scale-95" title="Khớp Lệnh B2B">
                   <span>⚡ Khớp Lệnh</span>
                 </button>
               </div>
@@ -1420,7 +1433,13 @@
 
     function inspectCountryProductInChart(commId, prodName, hsCode, priceUsd) {
       currentSelectedCommodityId = commId;
-      currentChartSourceId = '';
+      currentChartSourceId = commId;
+
+      const bannerName = document.getElementById('activeCommodityName');
+      if (bannerName) bannerName.textContent = prodName;
+      const bannerPrice = document.getElementById('activeCommodityPrice');
+      if (bannerPrice && priceUsd) bannerPrice.textContent = `$${Number(priceUsd).toLocaleString()}/MT`;
+
       const chartEl = document.getElementById('chartCanvasContainer');
       if (chartEl) {
         chartEl.scrollIntoView({ behavior: 'smooth', block: 'center' });

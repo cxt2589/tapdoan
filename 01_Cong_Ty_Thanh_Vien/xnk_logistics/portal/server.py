@@ -1263,6 +1263,44 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                     self._send_json({"ok": False, "error": str(e)}, 500)
                     return
 
+            # Mở rộng tìm kiếm sang 20 mặt hàng top quốc gia (Country Top Products)
+            if country_top_products and hasattr(country_top_products, "COUNTRY_TOP_PRODUCTS"):
+                for p in country_top_products.COUNTRY_TOP_PRODUCTS:
+                    p_hs = p.get("hs_code", "").replace(".", "")
+                    if p_hs in seen_hs:
+                        continue
+                    
+                    p_name = p.get("product_name", "")
+                    p_country = p.get("country", "")
+                    p_ex = p.get("exchange_name", "")
+                    p_id = p.get("id", "")
+                    p_cid = p.get("commodity_id", "")
+                    
+                    p_corpus = f"{p_id} {p_cid} {p_name} {p_country} {p.get('hs_code')} {p_ex}".lower()
+                    p_corpus_clean = p_corpus.replace("à","a").replace("á","a").replace("ạ","a").replace("ả","a").replace("ã","a").replace("â","a").replace("ầ","a").replace("ấ","a").replace("ậ","a").replace("ẩ","a").replace("ẫ","a").replace("è","e").replace("é","e").replace("ẹ","e").replace("ẻ","e").replace("ẽ","e").replace("ê","e").replace("ề","e").replace("ế","e").replace("ệ","e").replace("ể","e").replace("ễ","e").replace("ò","o").replace("ó","o").replace("ọ","o").replace("ỏ","o").replace("õ","o").replace("ô","o").replace("ồ","o").replace("ố","o").replace("ộ","o").replace("ổ","o").replace("ỗ","o").replace("ơ","o").replace("ờ","o").replace("ớ","o").replace("ợ","o").replace("ở","o").replace("ỡ","o").replace("ù","u").replace("ú","u").replace("ụ","u").replace("ủ","u").replace("ũ","u").replace("ư","u").replace("ừ","u").replace("ứ","u").replace("ự","u").replace("ử","u").replace("ữ","u").replace("ì","i").replace("í","i").replace("ị","i").replace("ỉ","i").replace("ĩ","i").replace("đ","d")
+                    
+                    if not q or any(t in p_corpus or t in p_corpus_clean for t in search_tokens if t):
+                        seen_hs.add(p_hs)
+                        results.append({
+                            "commodity_id": p_id,
+                            "commodity_name": f"{p.get('flag', '')} {p_name}",
+                            "hs_code": p.get("hs_code"),
+                            "sector": f"Top Hàng Đầu {p_country}",
+                            "source_id": p_id,
+                            "source_name": p_ex,
+                            "source_category": "GLOBAL_EXCHANGE",
+                            "exchange_name": p_ex,
+                            "contract_code": f"{p.get('country_code')} • {p.get('hs_code')}",
+                            "price_original": p.get("price_original"),
+                            "price_usd_mt": p.get("price_usd_mt"),
+                            "change_24h": p.get("change_24h", "0.0%"),
+                            "change_7d": p.get("change_7d", "0.0%"),
+                            "currency": "USD",
+                            "updated_at": "19/10/2026",
+                            "note": f"{p.get('metric_rank', '')} • {p.get('market_scale', '')}",
+                            "has_chart_history": True
+                        })
+
             # Mở rộng tìm kiếm sang toàn bộ 213 sản phẩm / 97 chương HS nếu có từ khóa hoặc tìm tổng hợp
             if hs_products and hasattr(hs_products, "search_products_master"):
                 extra_matches = hs_products.search_products_master(q, limit=30 if q else 15)
@@ -1279,15 +1317,27 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                     if source_filter and source_filter != "ALL" and s_cat != source_filter:
                         continue
                     
-                    # Giá ước tính tham chiếu theo chương và ngành
-                    ch_code = p.get("chapter_code", "01")
-                    base_est_map = {
-                        "01": 2850, "02": 4200, "03": 5800, "04": 3400, "07": 950,
-                        "08": 1650, "09": 4785, "10": 585, "24": 6500, "27": 680,
-                        "31": 385, "40": 2450, "44": 420, "52": 2100, "61": 8500,
-                        "72": 615, "84": 12500, "85": 18500
+                    # Tra cứu giá thực tế theo danh bạ HS cụ thể
+                    hs_key = p.get("hs", "")
+                    specific_prices = {
+                        "0810.90": 3850, "0804.50": 1450, "0810.80": 1250, "0801.32": 6850,
+                        "0902.40": 2850, "0904.11": 6800, "0901.11": 4785, "0901.12": 5480,
+                        "1006.30": 585, "1005.90": 178, "1001.99": 225, "1108.14": 480,
+                        "1201.90": 435, "1511.10": 965, "1701.14": 485, "2701.12": 92,
+                        "3102.10": 365, "3104.20": 295, "4001.22": 2420, "5201.00": 1820,
+                        "7208.39": 580
                     }
-                    est_p = base_est_map.get(ch_code, 1950)
+                    if hs_key in specific_prices:
+                        est_p = specific_prices[hs_key]
+                    else:
+                        ch_code = p.get("chapter_code", "01")
+                        base_est_map = {
+                            "01": 2850, "02": 4200, "03": 5800, "04": 3400, "07": 950,
+                            "08": 1650, "09": 4785, "10": 585, "24": 6500, "27": 680,
+                            "31": 385, "40": 2450, "44": 420, "52": 2100, "61": 8500,
+                            "72": 615, "84": 12500, "85": 18500
+                        }
+                        est_p = base_est_map.get(ch_code, 1950)
                     
                     results.append({
                         "commodity_id": f"hs_{clean_p_hs}",
@@ -1320,10 +1370,48 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
 
         elif path == "/api/prices/chart":
             # Cung cấp dữ liệu lịch sử nến / biểu đồ đường: 1M (30 ngày liên tục theo ngày), 3M, 6M, 1Y, 2Y, 3Y
-            comm_id = query.get("commodity_id", ["coffee_robusta"])[0].strip()
+            comm_id = query.get("commodity_id", query.get("symbol", ["coffee_robusta"]))[0].strip()
             src_id = query.get("source_id", [""])[0].strip()
             time_range = query.get("range", ["1y"])[0].strip().lower()
-            
+
+            # 1. Tra cứu trực tiếp từ Country Top Products
+            if country_top_products and hasattr(country_top_products, "get_country_product_by_id_or_code"):
+                ctry_prod = country_top_products.get_country_product_by_id_or_code(comm_id)
+                if ctry_prod:
+                    base_p = ctry_prod.get("price_usd_mt", 2000)
+                    history = generate_chart_history_series(base_p, time_range)
+                    self._send_json({
+                        "ok": True,
+                        "commodity_id": ctry_prod.get("id"),
+                        "commodity_name": ctry_prod.get("product_name"),
+                        "hs_code": ctry_prod.get("hs_code"),
+                        "source_id": ctry_prod.get("id"),
+                        "source_name": ctry_prod.get("exchange_name"),
+                        "source_category": ctry_prod.get("category", "GLOBAL_EXCHANGE"),
+                        "contract_code": f"{ctry_prod.get('country_code')} • {ctry_prod.get('hs_code')}",
+                        "current_price_usd_mt": base_p,
+                        "price_original": ctry_prod.get("price_original", f"{base_p:,} USD/MT"),
+                        "change_24h": ctry_prod.get("change_24h", "0.0%"),
+                        "change_7d": ctry_prod.get("change_7d", "0.0%"),
+                        "range": time_range,
+                        "history": history
+                    })
+                    return
+
+            # 2. Tra cứu từ Multi-Exchange Commodity Prices (7 mặt hàng chiến lược)
+            alias_map = {
+                "rice_white_5pct": "rice_5pct",
+                "rice_st25": "rice_5pct",
+                "vn-rice-st25": "rice_5pct",
+                "vn-coffee-robusta": "coffee_robusta",
+                "br-coffee-arabica": "coffee_arabica",
+                "vn-black-pepper": "black_pepper",
+                "vn-natural-rubber": "natural_rubber",
+                "vn-urea-fertilizer": "fertilizer_urea",
+                "vn-shrimp-seafood": "seafood_shrimp"
+            }
+            resolved_comm_id = alias_map.get(comm_id, comm_id)
+
             prices_file = os.path.join(BASE_DIR, "data", "multi_exchange_commodity_prices.json")
             matched_sec = None
             matched_bench = None
@@ -1332,7 +1420,7 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                 try:
                     with open(prices_file, "r", encoding="utf-8") as f:
                         p_data = json.load(f)
-                    matched_sec = next((s for s in p_data.get("sectors", []) if s.get("commodity_id") == comm_id or s.get("hs_code") == comm_id), None)
+                    matched_sec = next((s for s in p_data.get("sectors", []) if s.get("commodity_id") == resolved_comm_id or s.get("hs_code") == resolved_comm_id), None)
                     if matched_sec:
                         if src_id:
                             matched_bench = next((b for b in matched_sec.get("benchmarks", []) if b.get("source_id") == src_id or b.get("tier_type") == src_id), None)
@@ -1364,19 +1452,32 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                 })
                 return
 
-            # Nếu không thuộc 7 mặt hàng mặc định, tra cứu từ danh bạ 213 sản phẩm / 97 chương HS
+            # 3. Tra cứu từ danh bạ 213 sản phẩm / 97 chương HS
             if hs_products and hasattr(hs_products, "ALL_PRODUCTS_MASTER"):
                 clean_id = comm_id.replace("hs_", "").replace("_", ".")
                 matched_p = next((p for p in hs_products.ALL_PRODUCTS_MASTER if p.get("hs") == clean_id or p.get("hs", "").replace(".", "") == clean_id.replace(".", "") or comm_id in p.get("hs", "") or comm_id in p.get("name_vi", "").lower()), None)
                 if matched_p:
-                    ch_code = matched_p.get("chapter_code", "01")
-                    base_est_map = {
-                        "01": 2850, "02": 4200, "03": 5800, "04": 3400, "07": 950,
-                        "08": 1650, "09": 4785, "10": 585, "24": 6500, "27": 680,
-                        "31": 385, "40": 2450, "44": 420, "52": 2100, "61": 8500,
-                        "72": 615, "84": 12500, "85": 18500
+                    hs_key = matched_p.get("hs", "")
+                    specific_prices = {
+                        "0810.90": 3850, "0804.50": 1450, "0810.80": 1250, "0801.32": 6850,
+                        "0902.40": 2850, "0904.11": 6800, "0901.11": 4785, "0901.12": 5480,
+                        "1006.30": 585, "1005.90": 178, "1001.99": 225, "1108.14": 480,
+                        "1201.90": 435, "1511.10": 965, "1701.14": 485, "2701.12": 92,
+                        "3102.10": 365, "3104.20": 295, "4001.22": 2420, "5201.00": 1820,
+                        "7208.39": 580
                     }
-                    base_p = base_est_map.get(ch_code, 1950)
+                    if hs_key in specific_prices:
+                        base_p = specific_prices[hs_key]
+                    else:
+                        ch_code = matched_p.get("chapter_code", "01")
+                        base_est_map = {
+                            "01": 2850, "02": 4200, "03": 5800, "04": 3400, "07": 950,
+                            "08": 1650, "09": 4785, "10": 585, "24": 6500, "27": 680,
+                            "31": 385, "40": 2450, "44": 420, "52": 2100, "61": 8500,
+                            "72": 615, "84": 12500, "85": 18500
+                        }
+                        base_p = base_est_map.get(ch_code, 1950)
+
                     history = generate_chart_history_series(base_p, time_range)
                     b_ref = matched_p.get("benchmark_ref", "Sàn Quốc Tế & FOB Hải Quan")
                     b_sym = matched_p.get("benchmark_symbol", matched_p.get("hs"))

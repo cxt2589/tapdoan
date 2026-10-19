@@ -849,101 +849,101 @@
 
     <!-- HORIZONTALLY SCROLLABLE NAVIGATION BAR ON MOBILE / GRID ON DESKTOP -->
     <div class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-1.5 sm:py-2">
-      <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto scrollbar-none sm:grid sm:grid-cols-7 w-full py-0.5" id="mainTabScrollContainer">
+      <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto scrollbar-none xl:grid xl:grid-cols-7 w-full py-0.5" id="mainTabScrollContainer">
         
         <!-- Tab 1: Prospecting Leads -->
-        <button onclick="switchTab('prospecting')" id="tab-prospecting" class="tab-btn shrink-0 sm:shrink px-3 py-1.5 sm:p-2 sm:px-2.5 rounded-xl transition-all flex items-center justify-start gap-1.5 sm:gap-2 text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 shadow-sm cursor-pointer whitespace-nowrap text-left">
+        <button onclick="switchTab('prospecting')" id="tab-prospecting" class="tab-btn shrink-0 xl:shrink px-2.5 py-1.5 sm:py-2 sm:px-2 xl:px-2.5 rounded-xl transition-all flex items-center justify-start gap-1.5 sm:gap-1.5 xl:gap-2 text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 shadow-sm cursor-pointer whitespace-nowrap text-left overflow-hidden">
           <div class="w-6 h-6 rounded-lg bg-cyan-500/15 flex items-center justify-center shrink-0">
             <i data-lucide="target" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400"></i>
           </div>
-          <div class="min-w-0">
-            <div class="flex items-center gap-1">
-              <span class="font-bold text-xs sm:text-xs md:text-sm tracking-tight">Khách Hàng</span>
-              <span class="px-1.5 py-0.2 rounded text-[9px] font-mono bg-cyan-500/20 text-cyan-300 font-semibold">1,000</span>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center gap-1 min-w-0">
+              <span class="font-bold text-xs xl:text-xs 2xl:text-sm tracking-tight truncate">Khách Hàng</span>
+              <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono bg-cyan-500/20 text-cyan-300 font-semibold shrink-0">1,000</span>
             </div>
             <span class="text-[10px] text-slate-400 font-mono hidden md:block truncate">Ngành & HS</span>
           </div>
         </button>
 
         <!-- Tab 2: Buyer Verification -->
-        <button onclick="switchTab('buyers')" id="tab-buyers" class="tab-btn shrink-0 sm:shrink px-3 py-1.5 sm:p-2 sm:px-2.5 rounded-xl transition-all flex items-center justify-start gap-1.5 sm:gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap text-left">
+        <button onclick="switchTab('buyers')" id="tab-buyers" class="tab-btn shrink-0 xl:shrink px-2.5 py-1.5 sm:py-2 sm:px-2 xl:px-2.5 rounded-xl transition-all flex items-center justify-start gap-1.5 sm:gap-1.5 xl:gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap text-left overflow-hidden">
           <div class="w-6 h-6 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
             <i data-lucide="shield-check" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
           </div>
-          <div class="min-w-0">
-            <div class="flex items-center gap-1">
-              <span class="font-bold text-xs sm:text-xs md:text-sm tracking-tight">Thẩm Định</span>
-              <span class="px-1.5 py-0.2 rounded text-[9px] font-mono bg-emerald-500/15 text-emerald-400 font-semibold">OFAC</span>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center gap-1 min-w-0">
+              <span class="font-bold text-xs xl:text-xs 2xl:text-sm tracking-tight truncate">Thẩm Định</span>
+              <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono bg-emerald-500/15 text-emerald-400 font-semibold shrink-0">OFAC</span>
             </div>
             <span class="text-[10px] text-slate-400 font-mono hidden md:block truncate">4 Tầng Rủi Ro</span>
           </div>
         </button>
 
         <!-- Tab 3: Suppliers & Tier-1 -->
-        <button onclick="switchTab('suppliers')" id="tab-suppliers" class="tab-btn shrink-0 sm:shrink px-3 py-1.5 sm:p-2 sm:px-2.5 rounded-xl transition-all flex items-center justify-start gap-1.5 sm:gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap text-left">
+        <button onclick="switchTab('suppliers')" id="tab-suppliers" class="tab-btn shrink-0 xl:shrink px-2.5 py-1.5 sm:py-2 sm:px-2 xl:px-2.5 rounded-xl transition-all flex items-center justify-start gap-1.5 sm:gap-1.5 xl:gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap text-left overflow-hidden">
           <div class="w-6 h-6 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
             <i data-lucide="building-2" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
           </div>
-          <div class="min-w-0">
-            <div class="flex items-center gap-1">
-              <span class="font-bold text-xs sm:text-xs md:text-sm tracking-tight">NCC Cấp 1</span>
-              <span class="px-1.5 py-0.2 rounded text-[9px] font-mono bg-amber-500/15 text-amber-400 font-semibold">12 Nước</span>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center gap-1 min-w-0">
+              <span class="font-bold text-xs xl:text-xs 2xl:text-sm tracking-tight truncate">NCC Cấp 1</span>
+              <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono bg-amber-500/15 text-amber-400 font-semibold shrink-0">12 Nước</span>
             </div>
             <span class="text-[10px] text-slate-400 font-mono hidden md:block truncate">Đại Lý & QA</span>
           </div>
         </button>
 
         <!-- Tab 4: Trade Matchmaker (Bàn Khớp Giao Dịch B2B) -->
-        <button onclick="switchTab('matchmaker')" id="tab-matchmaker" class="tab-btn shrink-0 sm:shrink px-3 py-1.5 sm:p-2 sm:px-2.5 rounded-xl transition-all flex items-center justify-start gap-1.5 sm:gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap text-left">
+        <button onclick="switchTab('matchmaker')" id="tab-matchmaker" class="tab-btn shrink-0 xl:shrink px-2.5 py-1.5 sm:py-2 sm:px-2 xl:px-2.5 rounded-xl transition-all flex items-center justify-start gap-1.5 sm:gap-1.5 xl:gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap text-left overflow-hidden">
           <div class="w-6 h-6 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
             <i data-lucide="sparkles" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400"></i>
           </div>
-          <div class="min-w-0">
-            <div class="flex items-center gap-1">
-              <span class="font-bold text-xs sm:text-xs md:text-sm tracking-tight">Khớp Lệnh</span>
-              <span class="px-1.5 py-0.2 rounded text-[9px] font-mono bg-emerald-500/20 text-emerald-300 font-semibold">AI B2B</span>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center gap-1 min-w-0">
+              <span class="font-bold text-xs xl:text-xs 2xl:text-sm tracking-tight truncate">Khớp Lệnh</span>
+              <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono bg-emerald-500/20 text-emerald-300 font-semibold shrink-0">AI B2B</span>
             </div>
             <span class="text-[10px] text-slate-400 font-mono hidden md:block truncate">Ma Trận 6 Chiều</span>
           </div>
         </button>
 
         <!-- Tab 5: Customs B/L -->
-        <button onclick="switchTab('sourcing')" id="tab-sourcing" class="tab-btn shrink-0 sm:shrink px-3 py-1.5 sm:p-2 sm:px-2.5 rounded-xl transition-all flex items-center justify-start gap-1.5 sm:gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap text-left">
+        <button onclick="switchTab('sourcing')" id="tab-sourcing" class="tab-btn shrink-0 xl:shrink px-2.5 py-1.5 sm:py-2 sm:px-2 xl:px-2.5 rounded-xl transition-all flex items-center justify-start gap-1.5 sm:gap-1.5 xl:gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap text-left overflow-hidden">
           <div class="w-6 h-6 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
             <i data-lucide="container" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
           </div>
-          <div class="min-w-0">
-            <div class="flex items-center gap-1">
-              <span class="font-bold text-xs sm:text-xs md:text-sm tracking-tight">Vận Đơn B/L</span>
-              <span class="px-1.5 py-0.2 rounded text-[9px] font-mono bg-blue-500/15 text-blue-400 font-semibold">Hải Quan</span>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center gap-1 min-w-0">
+              <span class="font-bold text-xs xl:text-xs 2xl:text-sm tracking-tight truncate">Vận Đơn B/L</span>
+              <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono bg-blue-500/15 text-blue-400 font-semibold shrink-0">Hải Quan</span>
             </div>
             <span class="text-[10px] text-slate-400 font-mono hidden md:block truncate">Manifest Cảng</span>
           </div>
         </button>
 
         <!-- Tab 6: Factory Audit -->
-        <button onclick="switchTab('audit')" id="tab-audit" class="tab-btn shrink-0 sm:shrink px-3 py-1.5 sm:p-2 sm:px-2.5 rounded-xl transition-all flex items-center justify-start gap-1.5 sm:gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap text-left">
+        <button onclick="switchTab('audit')" id="tab-audit" class="tab-btn shrink-0 xl:shrink px-2.5 py-1.5 sm:py-2 sm:px-2 xl:px-2.5 rounded-xl transition-all flex items-center justify-start gap-1.5 sm:gap-1.5 xl:gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap text-left overflow-hidden">
           <div class="w-6 h-6 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
             <i data-lucide="clipboard-check" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
           </div>
-          <div class="min-w-0">
-            <div class="flex items-center gap-1">
-              <span class="font-bold text-xs sm:text-xs md:text-sm tracking-tight">Kiểm Toán</span>
-              <span class="px-1.5 py-0.2 rounded text-[9px] font-mono bg-purple-500/15 text-purple-400 font-semibold">SOP-02</span>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center gap-1 min-w-0">
+              <span class="font-bold text-xs xl:text-xs 2xl:text-sm tracking-tight truncate">Kiểm Toán</span>
+              <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono bg-purple-500/15 text-purple-400 font-semibold shrink-0">SOP-02</span>
             </div>
             <span class="text-[10px] text-slate-400 font-mono hidden md:block truncate">Thực Địa 5 Tiêu Chí</span>
           </div>
         </button>
 
         <!-- Tab 7: Multi-Exchange Commodity Prices & Charts (Bảng Giá & Biểu Đồ Đa Sàn) -->
-        <button onclick="window.location.href='/prices'" id="tab-prices" class="tab-btn shrink-0 sm:shrink px-3 py-1.5 sm:p-2 sm:px-2.5 rounded-xl transition-all flex items-center justify-start gap-1.5 sm:gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap text-left">
+        <button onclick="window.location.href='/prices'" id="tab-prices" class="tab-btn shrink-0 xl:shrink px-2.5 py-1.5 sm:py-2 sm:px-2 xl:px-2.5 rounded-xl transition-all flex items-center justify-start gap-1.5 sm:gap-1.5 xl:gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap text-left overflow-hidden">
           <div class="w-6 h-6 rounded-lg bg-emerald-500/15 flex items-center justify-center shrink-0">
             <i data-lucide="trending-up" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400"></i>
           </div>
-          <div class="min-w-0">
-            <div class="flex items-center gap-1">
-              <span class="font-bold text-xs sm:text-xs md:text-sm tracking-tight text-white">Giá Đa Sàn</span>
-              <span class="px-1.5 py-0.2 rounded text-[9px] font-mono bg-emerald-500/20 text-emerald-300 font-semibold">28 Sàn</span>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center gap-1 min-w-0">
+              <span class="font-bold text-xs xl:text-xs 2xl:text-sm tracking-tight truncate text-white">Giá Đa Sàn</span>
+              <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono bg-emerald-500/20 text-emerald-300 font-semibold shrink-0">28 Sàn</span>
             </div>
             <span class="text-[10px] text-slate-400 font-mono hidden md:block truncate">Biểu Đồ & Nguồn</span>
           </div>

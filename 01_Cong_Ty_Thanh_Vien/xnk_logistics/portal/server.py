@@ -1175,13 +1175,14 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
         elif path == "/api/prices/country-top":
             country = query.get("country", ["ALL"])[0].strip()
             category = query.get("category", ["ALL"])[0].strip()
-            sort_by = query.get("sort_by", ["default"])[0].strip()
+            sort_by = query.get("sort_by", ["revenue_desc"])[0].strip()
             if country_top_products:
-                items = country_top_products.get_country_top_products(country, category)
+                items = country_top_products.get_country_top_products(country, category, sort_by=sort_by)
                 self._send_json({
                     "ok": True,
                     "country": country,
                     "category": category,
+                    "sort_by": sort_by,
                     "total": len(items),
                     "products": items
                 })

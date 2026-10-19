@@ -151,6 +151,38 @@
       background-color: #ffffff !important;
       color: #0f172a !important;
     }
+    .country-filter-select {
+      cursor: pointer;
+      outline: none;
+      transition: all 0.15s ease;
+    }
+    html.dark .country-filter-select {
+      background-color: #0b1528 !important;
+      border-color: rgba(255, 255, 255, 0.15) !important;
+      color: #e2e8f0 !important;
+    }
+    html.dark .country-filter-select:hover,
+    html.dark .country-filter-select:focus {
+      border-color: #3b82f6 !important;
+    }
+    html.dark .country-filter-select option {
+      background-color: #060b14 !important;
+      color: #e2e8f0 !important;
+    }
+    html:not(.dark) .country-filter-select {
+      background-color: #ffffff !important;
+      border-color: #cbd5e1 !important;
+      color: #0f172a !important;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+    html:not(.dark) .country-filter-select:hover,
+    html:not(.dark) .country-filter-select:focus {
+      border-color: #2563eb !important;
+    }
+    html:not(.dark) .country-filter-select option {
+      background-color: #ffffff !important;
+      color: #0f172a !important;
+    }
     /* Sửa triệt để lỗi màu chữ trắng trên nền sáng cho nút active */
     html:not(.dark) .btn-active-range,
     html:not(.dark) .country-pill-btn.active,
@@ -437,32 +469,53 @@
             </div>
           </div>
 
-          <!-- Country Filter Tabs -->
-          <div class="space-y-2">
-            <div class="flex items-center justify-between text-[11px] font-mono text-slate-400">
-              <span class="font-bold">Lọc theo Quốc Gia Xuất Khẩu Trọng Điểm:</span>
-              <span class="text-[10px] text-slate-500">Bấm quốc gia để đối soát danh mục</span>
-            </div>
-            <div class="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-xs" id="countryFilterBar">
-              <button type="button" onclick="filterCountryTopTable('ALL')" id="ctry-btn-ALL" class="country-pill-btn active px-3 py-1.5 rounded-xl text-xs font-bold border cursor-pointer">Tất Cả</button>
-              <button type="button" onclick="filterCountryTopTable('VN')" id="ctry-btn-VN" class="country-pill-btn px-3 py-1.5 rounded-xl text-xs font-semibold border cursor-pointer">🇻🇳 Việt Nam</button>
-              <button type="button" onclick="filterCountryTopTable('BR')" id="ctry-btn-BR" class="country-pill-btn px-3 py-1.5 rounded-xl text-xs font-semibold border cursor-pointer">🇧🇷 Brazil</button>
-              <button type="button" onclick="filterCountryTopTable('ID')" id="ctry-btn-ID" class="country-pill-btn px-3 py-1.5 rounded-xl text-xs font-semibold border cursor-pointer">🇮🇩 Indonesia</button>
-              <button type="button" onclick="filterCountryTopTable('US')" id="ctry-btn-US" class="country-pill-btn px-3 py-1.5 rounded-xl text-xs font-semibold border cursor-pointer">🇺🇸 Hoa Kỳ</button>
-              <button type="button" onclick="filterCountryTopTable('RU')" id="ctry-btn-RU" class="country-pill-btn px-3 py-1.5 rounded-xl text-xs font-semibold border cursor-pointer">🇷🇺 Nga</button>
-              <button type="button" onclick="filterCountryTopTable('IN')" id="ctry-btn-IN" class="country-pill-btn px-3 py-1.5 rounded-xl text-xs font-semibold border cursor-pointer">🇮🇳 Ấn Độ</button>
-              <button type="button" onclick="filterCountryTopTable('TH')" id="ctry-btn-TH" class="country-pill-btn px-3 py-1.5 rounded-xl text-xs font-semibold border cursor-pointer">🇹🇭 Thái Lan</button>
-            </div>
-          </div>
+          <!-- Compact Dropdown Filter Toolbar (Dropbox) -->
+          <div class="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-white/5 border border-white/10">
+            <div class="flex flex-wrap items-center gap-3">
+              <!-- Dropdown Quốc Gia -->
+              <div class="flex items-center gap-1.5">
+                <label for="countryFilterSelect" class="text-[11px] font-mono font-bold text-slate-400 whitespace-nowrap">Quốc Gia:</label>
+                <select id="countryFilterSelect" onchange="filterCountryTopTable(this.value)" class="country-filter-select px-2.5 py-1.5 rounded-lg text-xs font-semibold border cursor-pointer">
+                  <option value="ALL">🌐 Tất Cả Quốc Gia</option>
+                  <option value="VN">🇻🇳 Việt Nam</option>
+                  <option value="BR">🇧🇷 Brazil</option>
+                  <option value="ID">🇮🇩 Indonesia</option>
+                  <option value="US">🇺🇸 Hoa Kỳ</option>
+                  <option value="RU">🇷🇺 Nga</option>
+                  <option value="IN">🇮🇳 Ấn Độ</option>
+                  <option value="TH">🇹🇭 Thái Lan</option>
+                </select>
+              </div>
 
-          <!-- Category Filter Bar -->
-          <div class="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-[11px] font-mono" id="categoryFilterBar">
-            <button type="button" onclick="filterCategoryTopTable('ALL')" id="cat-btn-ALL" class="category-pill-btn active px-2.5 py-1 rounded-lg text-[11px] font-semibold border cursor-pointer">Tất Cả Ngành</button>
-            <button type="button" onclick="filterCategoryTopTable('agri_food')" id="cat-btn-agri_food" class="category-pill-btn px-2.5 py-1 rounded-lg text-[11px] font-semibold border cursor-pointer">Nông - Thủy Sản</button>
-            <button type="button" onclick="filterCategoryTopTable('industrial')" id="cat-btn-industrial" class="category-pill-btn px-2.5 py-1 rounded-lg text-[11px] font-semibold border cursor-pointer">Khoáng Sản & Công Nghiệp</button>
-            <button type="button" onclick="filterCategoryTopTable('fertilizer')" id="cat-btn-fertilizer" class="category-pill-btn px-2.5 py-1 rounded-lg text-[11px] font-semibold border cursor-pointer">Phân Bón & Hóa Chất</button>
-            <button type="button" onclick="filterCategoryTopTable('energy')" id="cat-btn-energy" class="category-pill-btn px-2.5 py-1 rounded-lg text-[11px] font-semibold border cursor-pointer">Năng Lượng</button>
-            <button type="button" onclick="filterCategoryTopTable('textiles')" id="cat-btn-textiles" class="category-pill-btn px-2.5 py-1 rounded-lg text-[11px] font-semibold border cursor-pointer">Dệt May & Bông Sợi</button>
+              <!-- Dropdown Ngành Hàng -->
+              <div class="flex items-center gap-1.5">
+                <label for="categoryFilterSelect" class="text-[11px] font-mono font-bold text-slate-400 whitespace-nowrap">Ngành Hàng:</label>
+                <select id="categoryFilterSelect" onchange="filterCategoryTopTable(this.value)" class="country-filter-select px-2.5 py-1.5 rounded-lg text-xs font-semibold border cursor-pointer">
+                  <option value="ALL">📦 Tất Cả Ngành</option>
+                  <option value="agri_food">🌾 Nông - Thủy Sản</option>
+                  <option value="industrial">⛏️ Khoáng Sản & Công Nghiệp</option>
+                  <option value="fertilizer">🧪 Phân Bón & Hóa Chất</option>
+                  <option value="energy">⚡ Năng Lượng & Than Đá</option>
+                  <option value="textiles">🧵 Dệt May & Bông Sợi</option>
+                </select>
+              </div>
+
+              <!-- Dropdown Thứ Tự Sắp Xếp -->
+              <div class="flex items-center gap-1.5">
+                <label for="sortFilterSelect" class="text-[11px] font-mono font-bold text-slate-400 whitespace-nowrap">Sắp Xếp:</label>
+                <select id="sortFilterSelect" onchange="sortCountryTopTable(this.value)" class="country-filter-select px-2.5 py-1.5 rounded-lg text-xs font-semibold border cursor-pointer">
+                  <option value="revenue_desc">💎 Quy Mô / Doanh Thu (Lớn nhất)</option>
+                  <option value="price_desc">💰 Giá Tham Chiếu (Cao nhất)</option>
+                  <option value="price_asc">💵 Giá Tham Chiếu (Thấp nhất)</option>
+                  <option value="change_1y_desc">📈 Tăng Trưởng 1 Năm (Cao nhất)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="text-[11px] font-mono text-slate-400 flex items-center gap-1.5">
+              <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span>Xếp hạng thực chứng theo Quy mô Toàn cầu</span>
+            </div>
           </div>
 
           <!-- Table Container with clean horizontal scrolling -->
@@ -1322,11 +1375,12 @@
     // ========================================================
     let currentCountryFilter = 'ALL';
     let currentCategoryFilter = 'ALL';
+    let currentSortFilter = 'revenue_desc';
     let cachedCountryTopProducts = [];
 
     async function fetchCountryTopProducts() {
       try {
-        const res = await fetch(`/api/prices/country-top?country=${encodeURIComponent(currentCountryFilter)}&category=${encodeURIComponent(currentCategoryFilter)}`);
+        const res = await fetch(`/api/prices/country-top?country=${encodeURIComponent(currentCountryFilter)}&category=${encodeURIComponent(currentCategoryFilter)}&sort_by=${encodeURIComponent(currentSortFilter)}`);
         const data = await res.json();
         if (data && data.ok) {
           cachedCountryTopProducts = data.products || [];
@@ -1341,31 +1395,22 @@
 
     function filterCountryTopTable(countryCode) {
       currentCountryFilter = countryCode;
-      const countries = ['ALL', 'VN', 'BR', 'ID', 'US', 'RU', 'IN', 'TH'];
-      countries.forEach(c => {
-        const btn = document.getElementById(`ctry-btn-${c}`);
-        if (!btn) return;
-        if (c === countryCode) {
-          btn.classList.add('active');
-        } else {
-          btn.classList.remove('active');
-        }
-      });
+      const select = document.getElementById('countryFilterSelect');
+      if (select && select.value !== countryCode) select.value = countryCode;
       fetchCountryTopProducts();
     }
 
     function filterCategoryTopTable(category) {
       currentCategoryFilter = category;
-      const categories = ['ALL', 'agri_food', 'industrial', 'fertilizer', 'energy', 'textiles'];
-      categories.forEach(c => {
-        const btn = document.getElementById(`cat-btn-${c}`);
-        if (!btn) return;
-        if (c === category) {
-          btn.classList.add('active');
-        } else {
-          btn.classList.remove('active');
-        }
-      });
+      const select = document.getElementById('categoryFilterSelect');
+      if (select && select.value !== category) select.value = category;
+      fetchCountryTopProducts();
+    }
+
+    function sortCountryTopTable(sortOrder) {
+      currentSortFilter = sortOrder;
+      const select = document.getElementById('sortFilterSelect');
+      if (select && select.value !== sortOrder) select.value = sortOrder;
       fetchCountryTopProducts();
     }
 

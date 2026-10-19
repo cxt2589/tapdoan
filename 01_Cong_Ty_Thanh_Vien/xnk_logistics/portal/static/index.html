@@ -24,7 +24,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600;1,700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -59,6 +59,35 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
+    /* ========================================================================= */
+    /* 🔤 TYPOGRAPHY ENGINE (THỬ NGHIỆM PLUS JAKARTA SANS THEO THIẾT KẾ 9H03)   */
+    /* Thống nhất font chữ thể chế, chuẩn xác dấu thanh tiếng Việt & số liệu    */
+    /* ========================================================================= */
+    html, body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    button, input, select, textarea, optgroup, option {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+    }
+
+    h1, h2, h3, h4, h5, h6, .font-heading {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+      letter-spacing: -0.02em;
+    }
+
+    code, kbd, samp, pre, .font-mono, [class*="font-mono"] {
+      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+      font-feature-settings: "tnum" 1, "cv01" 1;
+    }
+
+    table, [id^="p-"], .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+
     /* Custom Scrollbars */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: #070C1B; }
@@ -3308,7 +3337,7 @@
 
   <!-- Printable Executive Dossier Modal (Offscreen/Hidden until Print) -->
   <div id="printableDossier" class="hidden">
-    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; padding: 24px 30px; color: #0f172a; max-width: 800px; margin: 0 auto; background: #ffffff;">
+    <div style="font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 24px 30px; color: #0f172a; max-width: 800px; margin: 0 auto; background: #ffffff;">
       
       <!-- Top Official Letterhead -->
       <div style="border-bottom: 2px solid #0f172a; padding-bottom: 12px; margin-bottom: 18px; display: flex; justify-content: space-between; align-items: flex-start;">

@@ -2076,8 +2076,51 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
             comm = params.get("commodity")
             hs = params.get("hs_code")
 
-            buyer = next((b for b in db.get("industry_leads", []) if b.get("lead_id") == b_id), None)
-            supplier = next((s for s in db.get("suppliers", []) if s.get("id") == s_id), None)
+            buyer = None
+            if b_id:
+                buyer = next((b for b in db.get("industry_leads", []) if b.get("lead_id") == b_id or b.get("company_name") == b_id), None)
+            if not buyer and (comm or hs):
+                comm_term = (comm or "").lower()
+                hs_term = (hs or "").strip()
+                for b in db.get("industry_leads", []):
+                    demands = b.get("commodities_demanded", [])
+                    matched = False
+                    for d in demands:
+                        if isinstance(d, dict):
+                            d_name = d.get("name", "").lower()
+                            d_hs = d.get("hs_code", "")
+                            if (comm_term and (comm_term in d_name or d_name in comm_term)) or (hs_term and hs_term in d_hs):
+                                matched = True
+                                break
+                        elif isinstance(d, str):
+                            if comm_term and (comm_term in d.lower() or d.lower() in comm_term):
+                                matched = True
+                                break
+                    if matched:
+                        buyer = b
+                        break
+            if not buyer and db.get("industry_leads"):
+                buyer = db.get("industry_leads")[0]
+
+            supplier = None
+            if s_id:
+                supplier = next((s for s in db.get("suppliers", []) if s.get("id") == s_id or s.get("company_name") == s_id or s.get("short_name") == s_id), None)
+            if not supplier and (comm or hs):
+                comm_term = (comm or "").lower()
+                for s in db.get("suppliers", []):
+                    supp_prods = s.get("commodities_supplied", [])
+                    main_prod = s.get("main_products", "").lower()
+                    matched = False
+                    for p in supp_prods:
+                        p_name = p.get("name", "").lower() if isinstance(p, dict) else str(p).lower()
+                        if comm_term and (comm_term in p_name or p_name in comm_term):
+                            matched = True
+                            break
+                    if matched or (comm_term and (comm_term in main_prod or main_prod in comm_term)):
+                        supplier = s
+                        break
+            if not supplier and db.get("suppliers"):
+                supplier = db.get("suppliers")[0]
 
             if not buyer or not supplier:
                 self._send_json({"ok": False, "error": "Buyer or supplier not found"}, 404)

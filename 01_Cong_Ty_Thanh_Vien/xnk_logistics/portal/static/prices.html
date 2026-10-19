@@ -643,6 +643,104 @@
       }
     }
 
+    function buildSectorFromCountryProduct(p) {
+      if (!p) return null;
+      const priceMt = Number(p.price_usd_mt || 1000);
+      const flag = p.flag || '🌐';
+      const country = p.country || '';
+      const countryCode = p.country_code || 'VN';
+      const hs = p.hs_code || '';
+      const pId = p.id;
+      const pName = p.product_name || '';
+
+      const benchmarks = [
+        {
+          source_id: `${pId}_global`,
+          source_name: p.exchange_name || 'Sàn Quốc Tế',
+          source_category: 'GLOBAL_EXCHANGE',
+          exchange_name: p.exchange_name || 'Sàn Quốc Tế',
+          tier_type: 'GLOBAL_BENCHMARK',
+          contract_code: `${countryCode} • ${hs}`,
+          price_original: p.price_original || `$${priceMt.toLocaleString()}/MT`,
+          price_usd_mt: priceMt,
+          change_24h: p.change_24h || '0.0%',
+          change_7d: p.change_7d || '0.0%',
+          change_1m: p.change_1m || '0.0%',
+          change_6m: p.change_6m || '0.0%',
+          change_1y: p.change_1y || '0.0%',
+          currency: 'USD',
+          updated_at: '19/10/2026',
+          note: `Mặt hàng ${p.metric_rank || 'chiến lược'}: ${p.market_scale || ''}`
+        },
+        {
+          source_id: `${pId}_fob`,
+          source_name: `FOB Cảng Xuất (${country})`,
+          source_category: 'EXPORT_FOB',
+          exchange_name: `FOB Cảng ${country}`,
+          tier_type: 'EXPORT_FOB',
+          contract_code: `FOB-${countryCode}-${hs.replace(/\./g, '')}`,
+          price_original: `$${Math.round(priceMt * 0.985).toLocaleString()}/MT`,
+          price_usd_mt: Math.round(priceMt * 0.985),
+          change_24h: p.change_24h || '0.0%',
+          change_7d: p.change_7d || '0.0%',
+          currency: 'USD',
+          updated_at: '19/10/2026',
+          note: `Giao nhận mạn tàu cảng xuất khẩu trọng điểm ${country}`
+        },
+        {
+          source_id: `${pId}_cif`,
+          source_name: 'CIF Cảng Đích Quốc Tế',
+          source_category: 'DESTINATION_CIF',
+          exchange_name: 'CIF Cảng Đích',
+          tier_type: 'DESTINATION_CIF',
+          contract_code: `CIF-${countryCode}-${hs.replace(/\./g, '')}`,
+          price_original: `$${Math.round(priceMt * 1.06).toLocaleString()}/MT`,
+          price_usd_mt: Math.round(priceMt * 1.06),
+          change_24h: p.change_24h || '0.0%',
+          change_7d: p.change_7d || '0.0%',
+          currency: 'USD',
+          updated_at: '19/10/2026',
+          note: 'Bao gồm cước container đường biển quốc tế & bảo hiểm hàng hải'
+        },
+        {
+          source_id: `${pId}_domestic`,
+          source_name: `Nội Địa / Cửa Vườn / Mỏ ({country})`,
+          source_category: 'DOMESTIC_FARM',
+          exchange_name: `Giá Nội Địa ${country}`,
+          tier_type: 'DOMESTIC_FARM',
+          contract_code: `DOM-${countryCode}-${hs.replace(/\./g, '')}`,
+          price_original: `$${Math.round(priceMt * 0.92).toLocaleString()}/MT`,
+          price_usd_mt: Math.round(priceMt * 0.92),
+          change_24h: p.change_24h || '0.0%',
+          change_7d: p.change_7d || '0.0%',
+          currency: 'USD',
+          updated_at: '19/10/2026',
+          note: `Giá thu mua tại vùng sản xuất tập trung ${country}`
+        }
+      ];
+
+      return {
+        commodity_id: pId,
+        id: pId,
+        commodity_name: pName,
+        hs_code: hs,
+        country: country,
+        country_code: countryCode,
+        flag: flag,
+        sector: 'Nông Sản & Khoáng Sản Xuất Khẩu',
+        icon: flag,
+        primary_unit: 'USD/MT',
+        benchmarks: benchmarks,
+        arbitrage_analysis: {
+          spread_usd: Math.round(priceMt * 0.075),
+          spread_pct: 7.5,
+          basis_diff: `+${Math.round(priceMt * 0.015)} USD/MT so với sàn`,
+          opportunity_score: 88,
+          recommendation: `Mặt hàng ${p.metric_rank || 'chiến lược'} của ${country} (${p.market_scale || ''}). Cơ hội giao dịch Arbitrage khả thi cao.`
+        }
+      };
+    }
+
     function renderCommodityTabs() {
       const container = document.getElementById('commodityPriceTabsContainer');
       if (!container || !cachedCommodityPricesData || !cachedCommodityPricesData.sectors) return;
@@ -650,7 +748,7 @@
       const sectors = cachedCommodityPricesData.sectors;
       const isDark = document.documentElement.classList.contains('dark');
       container.innerHTML = sectors.map(sec => {
-        const isActive = sec.commodity_id === currentSelectedCommodityId;
+        const isActive = (sec.commodity_id === currentSelectedCommodityId || sec.id === currentSelectedCommodityId || sec.alt_commodity_id === currentSelectedCommodityId);
         const activeClass = isActive 
           ? (isDark 
               ? "bg-emerald-500 text-brand-950 font-bold border-emerald-400 shadow-md shadow-emerald-500/20" 
@@ -661,7 +759,7 @@
         return `
           <button type="button" onclick="selectCommodityPrice('${sec.commodity_id}')" 
                   class="px-3 py-1.5 rounded-xl text-xs font-mono shrink-0 border transition-all flex items-center gap-1.5 cursor-pointer ${activeClass}">
-            <span>${sec.commodity_name.split(' ')[0]}</span>
+            <span>${sec.icon || '📦'} ${sec.commodity_name.split(' ')[0]}</span>
             <span class="text-[10px] opacity-80">(${sec.hs_code})</span>
           </button>
         `;
@@ -671,7 +769,26 @@
     function selectCommodityPrice(commodityId) {
       if (!cachedCommodityPricesData || !cachedCommodityPricesData.sectors) return;
       currentSelectedCommodityId = commodityId;
-      const commodity = cachedCommodityPricesData.sectors.find(s => s.commodity_id === commodityId);
+      
+      let commodity = cachedCommodityPricesData.sectors.find(s => 
+        s.commodity_id === commodityId || 
+        s.id === commodityId || 
+        s.alt_commodity_id === commodityId ||
+        (s.hs_code && s.hs_code === commodityId)
+      );
+
+      if (!commodity && cachedCountryTopProducts && cachedCountryTopProducts.length > 0) {
+        const cprod = cachedCountryTopProducts.find(p => 
+          p.id === commodityId || 
+          p.commodity_id === commodityId || 
+          p.hs_code === commodityId
+        );
+        if (cprod) {
+          commodity = buildSectorFromCountryProduct(cprod);
+          cachedCommodityPricesData.sectors.push(commodity);
+        }
+      }
+
       if (!commodity) {
         updateChartForCurrentCommodityAndSource();
         return;
@@ -696,18 +813,8 @@
     function selectCommodityPriceAndSource(commodityId, sourceId) {
       currentSelectedCommodityId = commodityId;
       currentChartSourceId = sourceId || '';
-      
-      const isBenchmark = cachedCommodityPricesData && cachedCommodityPricesData.sectors
-        ? cachedCommodityPricesData.sectors.some(s => s.commodity_id === commodityId)
-        : false;
-
-      if (isBenchmark) {
-        selectCommodityPrice(commodityId);
-      } else {
-        updateChartForCurrentCommodityAndSource();
-      }
-
-      const chartCard = document.getElementById('commodityPriceCanvas');
+      selectCommodityPrice(commodityId);
+      const chartCard = document.getElementById('commodityArbitrageAnalysisCard') || document.getElementById('commodityPriceCanvas');
       if (chartCard) {
         chartCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }
@@ -1047,16 +1154,32 @@
         }
       });
 
-      // 4. Fill Gradient
+      // 4. Fill Gradient & Dynamic Trend (Bullish / Bearish)
+      const firstPrice = coords[0].price;
+      const lastPrice = coords[coords.length - 1].price;
+      const isBull = lastPrice >= firstPrice;
+
       const fillGradient = ctx.createLinearGradient(0, paddingTop, 0, paddingTop + plotH);
-      if (isDark) {
-        fillGradient.addColorStop(0, 'rgba(16, 185, 129, 0.32)');
-        fillGradient.addColorStop(0.7, 'rgba(6, 182, 212, 0.12)');
-        fillGradient.addColorStop(1, 'rgba(6, 182, 212, 0.0)');
+      if (isBull) {
+        if (isDark) {
+          fillGradient.addColorStop(0, 'rgba(16, 185, 129, 0.32)');
+          fillGradient.addColorStop(0.7, 'rgba(6, 182, 212, 0.10)');
+          fillGradient.addColorStop(1, 'rgba(6, 182, 212, 0.0)');
+        } else {
+          fillGradient.addColorStop(0, 'rgba(5, 150, 105, 0.22)');
+          fillGradient.addColorStop(0.7, 'rgba(14, 165, 233, 0.06)');
+          fillGradient.addColorStop(1, 'rgba(14, 165, 233, 0.0)');
+        }
       } else {
-        fillGradient.addColorStop(0, 'rgba(37, 99, 235, 0.22)');
-        fillGradient.addColorStop(0.7, 'rgba(14, 165, 233, 0.06)');
-        fillGradient.addColorStop(1, 'rgba(14, 165, 233, 0.0)');
+        if (isDark) {
+          fillGradient.addColorStop(0, 'rgba(244, 63, 94, 0.32)');
+          fillGradient.addColorStop(0.7, 'rgba(225, 29, 72, 0.10)');
+          fillGradient.addColorStop(1, 'rgba(225, 29, 72, 0.0)');
+        } else {
+          fillGradient.addColorStop(0, 'rgba(225, 29, 72, 0.22)');
+          fillGradient.addColorStop(0.7, 'rgba(244, 63, 94, 0.06)');
+          fillGradient.addColorStop(1, 'rgba(244, 63, 94, 0.0)');
+        }
       }
 
       ctx.beginPath();
@@ -1076,18 +1199,25 @@
       for (let i = 1; i < coords.length; i++) {
         ctx.lineTo(coords[i].x, coords[i].y);
       }
-      ctx.strokeStyle = isDark ? '#10b981' : '#2563eb';
+      ctx.strokeStyle = isBull 
+        ? (isDark ? '#10b981' : '#059669') 
+        : (isDark ? '#f43f5e' : '#e11d48');
       ctx.lineWidth = 2.5;
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
       ctx.stroke();
 
       // 6. Data Points
+      const pointColor = isBull 
+        ? (isDark ? '#10b981' : '#059669') 
+        : (isDark ? '#f43f5e' : '#e11d48');
+      const hoverColor = isBull ? '#34d399' : '#fb7185';
+
       coords.forEach((c, idx) => {
         const isHovered = (idx === hoverIndex);
         ctx.beginPath();
         ctx.arc(c.x, c.y, isHovered ? 6 : 3.5, 0, Math.PI * 2);
-        ctx.fillStyle = isHovered ? '#34d399' : '#10b981';
+        ctx.fillStyle = isHovered ? hoverColor : pointColor;
         ctx.fill();
         ctx.lineWidth = isHovered ? 2.5 : 1.5;
         ctx.strokeStyle = '#ffffff';
@@ -1096,7 +1226,7 @@
         if (isHovered) {
           ctx.save();
           ctx.setLineDash([4, 4]);
-          ctx.strokeStyle = 'rgba(52, 211, 153, 0.6)';
+          ctx.strokeStyle = isBull ? 'rgba(52, 211, 153, 0.6)' : 'rgba(251, 113, 133, 0.6)';
           ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.moveTo(c.x, paddingTop);
@@ -1477,19 +1607,11 @@
     }
 
     function inspectCountryProductInChart(commId, prodName, hsCode, priceUsd) {
-      currentSelectedCommodityId = commId;
-      currentChartSourceId = commId;
-
-      const bannerName = document.getElementById('activeCommodityName');
-      if (bannerName) bannerName.textContent = prodName;
-      const bannerPrice = document.getElementById('activeCommodityPrice');
-      if (bannerPrice && priceUsd) bannerPrice.textContent = `$${Number(priceUsd).toLocaleString()}/MT`;
-
-      const chartEl = document.getElementById('chartCanvasContainer');
+      selectCommodityPrice(commId);
+      const chartEl = document.getElementById('commodityArbitrageAnalysisCard') || document.getElementById('chartCanvasContainer');
       if (chartEl) {
         chartEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
-      updateChartForCurrentCommodityAndSource();
     }
 
     // ========================================================

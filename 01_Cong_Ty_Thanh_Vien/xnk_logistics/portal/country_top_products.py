@@ -481,3 +481,103 @@ def get_country_product_by_id_or_code(key):
         if hs == k_clean or hs.replace(".", "") == k_clean.replace(".", ""):
             return p
     return None
+
+def build_sector_for_product(p):
+    """Chuyển đổi một sản phẩm trong COUNTRY_TOP_PRODUCTS thành định dạng Sector hoàn chỉnh 4 tầng giá (Tier-4)"""
+    if not p:
+        return None
+    price_mt = p.get("price_usd_mt", 1000)
+    flag = p.get("flag", "🌐")
+    country = p.get("country", "")
+    country_code = p.get("country_code", "VN")
+    hs = p.get("hs_code", "")
+    p_id = p.get("id")
+    p_name = p.get("product_name", "")
+    
+    benchmarks = [
+        {
+            "source_id": f"{p_id}_global",
+            "source_name": p.get("exchange_name", "Sàn Quốc Tế"),
+            "source_category": "GLOBAL_EXCHANGE",
+            "exchange_name": p.get("exchange_name", "Sàn Quốc Tế"),
+            "tier_type": "GLOBAL_BENCHMARK",
+            "contract_code": f"{country_code} • {hs}",
+            "price_original": p.get("price_original", f"{price_mt:,} USD/MT"),
+            "price_usd_mt": price_mt,
+            "change_24h": p.get("change_24h", "0.0%"),
+            "change_7d": p.get("change_7d", "0.0%"),
+            "change_1m": p.get("change_1m", "0.0%"),
+            "change_6m": p.get("change_6m", "0.0%"),
+            "change_1y": p.get("change_1y", "0.0%"),
+            "currency": "USD",
+            "updated_at": "19/10/2026",
+            "note": f"Mặt hàng {p.get('metric_rank', 'chiến lược')}: {p.get('market_scale', '')}"
+        },
+        {
+            "source_id": f"{p_id}_fob",
+            "source_name": f"FOB Cảng Xuất ({country})",
+            "source_category": "EXPORT_FOB",
+            "exchange_name": f"FOB Cảng {country}",
+            "tier_type": "EXPORT_FOB",
+            "contract_code": f"FOB-{country_code}-{hs.replace('.', '')}",
+            "price_original": f"{round(price_mt * 0.985):,} USD/MT",
+            "price_usd_mt": round(price_mt * 0.985),
+            "change_24h": p.get("change_24h", "0.0%"),
+            "change_7d": p.get("change_7d", "0.0%"),
+            "currency": "USD",
+            "updated_at": "19/10/2026",
+            "note": f"Giao nhận mạn tàu cảng xuất khẩu trọng điểm {country}"
+        },
+        {
+            "source_id": f"{p_id}_cif",
+            "source_name": "CIF Cảng Đích Quốc Tế",
+            "source_category": "DESTINATION_CIF",
+            "exchange_name": "CIF Cảng Đích",
+            "tier_type": "DESTINATION_CIF",
+            "contract_code": f"CIF-{country_code}-{hs.replace('.', '')}",
+            "price_original": f"{round(price_mt * 1.06):,} USD/MT",
+            "price_usd_mt": round(price_mt * 1.06),
+            "change_24h": p.get("change_24h", "0.0%"),
+            "change_7d": p.get("change_7d", "0.0%"),
+            "currency": "USD",
+            "updated_at": "19/10/2026",
+            "note": "Bao gồm cước container đường biển quốc tế & bảo hiểm hàng hải"
+        },
+        {
+            "source_id": f"{p_id}_domestic",
+            "source_name": f"Nội Địa / Cửa Vườn / Mỏ ({country})",
+            "source_category": "DOMESTIC_FARM",
+            "exchange_name": f"Giá Nội Địa {country}",
+            "tier_type": "DOMESTIC_FARM",
+            "contract_code": f"DOM-{country_code}-{hs.replace('.', '')}",
+            "price_original": f"{round(price_mt * 0.92):,} USD/MT",
+            "price_usd_mt": round(price_mt * 0.92),
+            "change_24h": p.get("change_24h", "0.0%"),
+            "change_7d": p.get("change_7d", "0.0%"),
+            "currency": "USD",
+            "updated_at": "19/10/2026",
+            "note": f"Giá thu mua tại vùng sản xuất tập trung {country}"
+        }
+    ]
+    
+    spread = round(price_mt * 0.075)
+    return {
+        "commodity_id": p_id,
+        "alt_commodity_id": p.get("commodity_id"),
+        "commodity_name": p_name,
+        "hs_code": hs,
+        "country": country,
+        "country_code": country_code,
+        "flag": flag,
+        "sector": "Nông Sản & Khoáng Sản Xuất Khẩu",
+        "icon": flag,
+        "primary_unit": "USD/MT",
+        "benchmarks": benchmarks,
+        "arbitrage_analysis": {
+            "spread_usd": spread,
+            "spread_pct": 7.5,
+            "basis_diff": f"+{round(price_mt * 0.015)} USD/MT so với sàn",
+            "opportunity_score": 88,
+            "recommendation": f"Mặt hàng {p.get('metric_rank', 'chiến lược')} của {country} ({p.get('market_scale', '')}). Cơ hội giao dịch Arbitrage khả thi cao."
+        }
+    }

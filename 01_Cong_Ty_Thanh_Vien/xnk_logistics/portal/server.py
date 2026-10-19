@@ -88,13 +88,13 @@ try:
 except ImportError:
     country_top_products = None
 
-def generate_chart_history_series(base_price, time_range="1y", existing_history=None):
+def generate_chart_history_series(base_price, time_range="1y", existing_history=None, commodity_id=None, metrics=None):
     """
     Tạo chuỗi dữ liệu nến/giá lịch sử cho biểu đồ theo các khung thời gian:
-    - '1m': 30 điểm theo từng ngày liên tục (20/09 -> 19/10), có dao động thực tế theo ngày kết thúc đúng tại base_price.
-    - '3m': 13 điểm theo tuần.
-    - '6m': 6 tháng gần nhất.
-    - '1y': 12 tháng gần nhất (sử dụng existing_history nếu có).
+    - '1m': 30 điểm theo từng ngày liên tục (20/09 -> 19/10), phản ánh sát biến động 1 tháng (change_1m, change_7d, change_24h).
+    - '3m': 12 điểm theo tuần.
+    - '6m': 6 tháng gần nhất (05/2026 -> 10/2026), phản ánh nhịp tăng giảm 6 tháng.
+    - '1y': 12 tháng gần nhất (11/2025 -> 10/2026), phản ánh thực tế chu kỳ tăng/giảm 1 năm (change_1y, change_6m, change_1m).
     - '2y': 24 tháng (2 năm lịch sử).
     - '3y': 36 tháng (3 năm lịch sử).
     """
@@ -105,114 +105,189 @@ def generate_chart_history_series(base_price, time_range="1y", existing_history=
     except Exception:
         base_p = 1000.0
 
+    def parse_pct_metric(val, default=0.0):
+        if val is None:
+            return default
+        try:
+            return float(str(val).replace("%", "").replace("+", "").strip())
+        except Exception:
+            return default
+
+    seed = sum(ord(c) for c in str(commodity_id or "comm")) % 97
+
+    p1y_pct = parse_pct_metric(metrics.get("change_1y") if metrics else None, 15.0)
+    p6m_pct = parse_pct_metric(metrics.get("change_6m") if metrics else None, p1y_pct * 0.55)
+    p1m_pct = parse_pct_metric(metrics.get("change_1m") if metrics else None, p6m_pct * 0.3)
+    p7d_pct = parse_pct_metric(metrics.get("change_7d") if metrics else None, p1m_pct * 0.4)
+    p24h_pct = parse_pct_metric(metrics.get("change_24h") if metrics else None, p7d_pct * 0.2)
+
     if time_range == "1m":
-        # 30 ngày liên tục kết thúc vào ngày 19/10
-        points = []
-        start_ratio = 0.962
-        dates = []
-        for d in range(20, 31):
-            dates.append(f"{d:02d}/09")
-        for d in range(1, 20):
-            dates.append(f"{d:02d}/10")
-            
-        n = len(dates)
+        start_p = base_p / (1.0 + p1m_pct / 100.0) if (1.0 + p1m_pct / 100.0) > 0.05 else base_p * 0.95
+        d23_p = base_p / (1.0 + p7d_pct / 100.0) if (1.0 + p7d_pct / 100.0) > 0.05 else base_p * 0.98
+        d29_p = base_p / (1.0 + p24h_pct / 100.0) if (1.0 + p24h_pct / 100.0) > 0.05 else base_p * 0.99
+        
+        dates = [f"{d:02d}/09" for d in range(20, 31)] + [f"{d:02d}/10" for d in range(1, 20)]
+        pts = []
         for i, dt in enumerate(dates):
-            if i == n - 1:
-                p_val = round(base_p, 1)
+            if i == 29:
+                val = base_p
+            elif i < 22:
+                prog = i / 22.0
+                wave = (math.sin((i + seed) * 1.5) * 0.007 + math.cos((i * 2 + seed) * 0.9) * 0.005) * base_p
+                val = start_p + (d23_p - start_p) * prog + wave
             else:
-                progress = (i + 1) / n
-                wave = math.sin(i * 0.7) * 0.012 + math.cos(i * 1.3) * 0.008
-                p_val = round(base_p * (start_ratio + (1.0 - start_ratio) * progress + wave), 1)
+                prog = (i - 22) / 7.0
+                wave = (math.cos((i + seed) * 1.8) * 0.005) * base_p
+                val = d23_p + (d29_p - d23_p) * prog + wave
             
-            delta = round(p_val * 0.008, 1)
-            points.append({
+            p_val = round(max(1.0, val), 1)
+            spread = round(p_val * 0.007, 1)
+            pts.append({
                 "date": dt,
                 "price_usd_mt": p_val,
-                "open": round(p_val - delta * 0.5, 1),
-                "high": round(p_val + delta, 1),
-                "low": round(p_val - delta, 1),
+                "open": round(p_val - spread * 0.3 * math.sin(i + seed), 1),
+                "high": round(p_val + spread * 0.8, 1),
+                "low": round(p_val - spread * 0.8, 1),
                 "close": p_val
             })
-        return points
+        return pts
 
     elif time_range == "3m":
-        points = []
-        start_ratio = 0.92
+        p3m_pct = (p6m_pct + p1m_pct) / 2.0
+        start_p = base_p / (1.0 + p3m_pct / 100.0) if (1.0 + p3m_pct / 100.0) > 0.05 else base_p * 0.9
+        w8_p = base_p / (1.0 + p1m_pct / 100.0) if (1.0 + p1m_pct / 100.0) > 0.05 else base_p * 0.96
+        
+        pts = []
         n = 12
         for i in range(n):
-            progress = (i + 1) / n
-            wave = math.sin(i * 0.6) * 0.02
-            p_val = round(base_p * (start_ratio + (1.0 - start_ratio) * progress + wave), 1) if i < n - 1 else round(base_p, 1)
-            points.append({
+            if i == n - 1:
+                val = base_p
+            elif i < 8:
+                prog = i / 8.0
+                wave = math.sin((i + seed) * 1.2) * 0.012 * base_p
+                val = start_p + (w8_p - start_p) * prog + wave
+            else:
+                prog = (i - 8) / 3.0
+                wave = math.cos((i + seed) * 1.4) * 0.008 * base_p
+                val = w8_p + (base_p - w8_p) * prog + wave
+            
+            p_val = round(max(1.0, val), 1)
+            spread = round(p_val * 0.012, 1)
+            pts.append({
                 "date": f"T.{i+1:02d} (T8-T10)",
                 "price_usd_mt": p_val,
                 "open": p_val,
-                "high": round(p_val * 1.015, 1),
-                "low": round(p_val * 0.985, 1),
+                "high": round(p_val + spread, 1),
+                "low": round(p_val - spread, 1),
                 "close": p_val
             })
-        return points
+        return pts
 
     elif time_range == "6m":
-        if existing_history and len(existing_history) >= 6:
-            return existing_history[-6:]
+        m1_p = base_p / (1.0 + p6m_pct / 100.0) if (1.0 + p6m_pct / 100.0) > 0.05 else base_p * 0.88
+        m5_p = base_p / (1.0 + p1m_pct / 100.0) if (1.0 + p1m_pct / 100.0) > 0.05 else base_p * 0.96
         months = ["05/2026", "06/2026", "07/2026", "08/2026", "09/2026", "10/2026"]
-        start_r = 0.88
-        points = []
+        pts = []
         for i, m in enumerate(months):
-            prog = (i + 1) / len(months)
-            p_val = round(base_p * (start_r + (1.0 - start_r) * prog), 1) if i < len(months) - 1 else round(base_p, 1)
-            points.append({"date": m, "price_usd_mt": p_val, "open": p_val, "high": round(p_val * 1.02, 1), "low": round(p_val * 0.98, 1), "close": p_val})
-        return points
+            if i == 5:
+                val = base_p
+            elif i < 4:
+                prog = i / 4.0
+                wave = math.sin((i + seed) * 1.1) * 0.015 * base_p
+                val = m1_p + (m5_p - m1_p) * prog + wave
+            else:
+                val = m5_p + (base_p - m5_p) * 0.5
+            
+            p_val = round(max(1.0, val), 1)
+            spread = round(p_val * 0.015, 1)
+            pts.append({
+                "date": m,
+                "price_usd_mt": p_val,
+                "open": p_val,
+                "high": round(p_val + spread, 1),
+                "low": round(p_val - spread, 1),
+                "close": p_val
+            })
+        return pts
 
     elif time_range in ["1y", "12m"]:
-        if existing_history and len(existing_history) >= 12:
-            return existing_history
-        elif existing_history and len(existing_history) > 0:
-            return existing_history
+        m1_p = base_p / (1.0 + p1y_pct / 100.0) if (1.0 + p1y_pct / 100.0) > 0.05 else base_p * 0.8
+        m6_p = base_p / (1.0 + p6m_pct / 100.0) if (1.0 + p6m_pct / 100.0) > 0.05 else base_p * 0.9
+        m11_p = base_p / (1.0 + p1m_pct / 100.0) if (1.0 + p1m_pct / 100.0) > 0.05 else base_p * 0.97
         months = ["11/2025", "12/2025", "01/2026", "02/2026", "03/2026", "04/2026", "05/2026", "06/2026", "07/2026", "08/2026", "09/2026", "10/2026"]
-        points = []
-        start_r = 0.78
+        pts = []
         for i, m in enumerate(months):
-            prog = (i + 1) / len(months)
-            wave = math.sin(i * 0.5) * 0.03
-            p_val = round(base_p * (start_r + (1.0 - start_r) * prog + wave), 1) if i < len(months) - 1 else round(base_p, 1)
-            points.append({"date": m, "price_usd_mt": p_val, "open": p_val, "high": round(p_val * 1.02, 1), "low": round(p_val * 0.98, 1), "close": p_val})
-        return points
+            if i == 11:
+                val = base_p
+            elif i < 5:
+                prog = i / 5.0
+                wave = math.sin((i + seed) * 1.2) * 0.018 * base_p
+                val = m1_p + (m6_p - m1_p) * prog + wave
+            elif i < 10:
+                prog = (i - 5) / 5.0
+                wave = math.cos((i + seed) * 1.3) * 0.016 * base_p
+                val = m6_p + (m11_p - m6_p) * prog + wave
+            else:
+                val = m11_p
+            
+            p_val = round(max(1.0, val), 1)
+            spread = round(p_val * 0.018, 1)
+            pts.append({
+                "date": m,
+                "price_usd_mt": p_val,
+                "open": p_val,
+                "high": round(p_val + spread, 1),
+                "low": round(p_val - spread, 1),
+                "close": p_val
+            })
+        return pts
 
     elif time_range in ["2y", "24m"]:
-        points = []
+        # 24 tháng: 12 tháng trước (11/2024 -> 10/2025) và 12 tháng hiện tại
         m_2024_2025 = ["11/2024", "12/2024", "01/2025", "02/2025", "03/2025", "04/2025", "05/2025", "06/2025", "07/2025", "08/2025", "09/2025", "10/2025"]
-        p_prev_year = base_p * 0.72
+        m1_p = base_p / (1.0 + p1y_pct / 100.0) if (1.0 + p1y_pct / 100.0) > 0.05 else base_p * 0.8
+        
+        if p1y_pct >= 0:
+            p_2y_ago = m1_p * 0.85
+        else:
+            p_2y_ago = m1_p * 1.25
+
+        pts = []
         for i, m in enumerate(m_2024_2025):
             prog = (i + 1) / len(m_2024_2025)
-            wave = math.sin(i * 0.4) * 0.04
-            p_val = round(p_prev_year * (0.85 + 0.15 * prog + wave), 1)
-            points.append({"date": m, "price_usd_mt": p_val, "open": p_val, "high": round(p_val * 1.02, 1), "low": round(p_val * 0.98, 1), "close": p_val})
+            wave = math.sin((i + seed) * 0.8) * 0.025 * base_p
+            val = p_2y_ago + (m1_p - p_2y_ago) * prog + wave
+            p_val = round(max(1.0, val), 1)
+            pts.append({"date": m, "price_usd_mt": p_val, "open": p_val, "high": round(p_val * 1.02, 1), "low": round(p_val * 0.98, 1), "close": p_val})
         
-        if existing_history and len(existing_history) >= 12:
-            points.extend(existing_history)
-        else:
-            recent_12 = generate_chart_history_series(base_p, "1y")
-            points.extend(recent_12)
-        return points
+        recent_12 = generate_chart_history_series(base_p, "1y", commodity_id=commodity_id, metrics=metrics)
+        pts.extend(recent_12)
+        return pts
 
     elif time_range in ["3y", "36m"]:
-        points = []
         m_2023_2024 = ["11/2023", "12/2023", "01/2024", "02/2024", "03/2024", "04/2024", "05/2024", "06/2024", "07/2024", "08/2024", "09/2024", "10/2024"]
-        p_3y_ago = base_p * 0.58
+        m1_p = base_p / (1.0 + p1y_pct / 100.0) if (1.0 + p1y_pct / 100.0) > 0.05 else base_p * 0.8
+        if p1y_pct >= 0:
+            p_3y_ago = m1_p * 0.72
+            p_2y_target = m1_p * 0.85
+        else:
+            p_3y_ago = m1_p * 1.45
+            p_2y_target = m1_p * 1.25
+            
+        pts = []
         for i, m in enumerate(m_2023_2024):
             prog = (i + 1) / len(m_2023_2024)
-            wave = math.cos(i * 0.5) * 0.03
-            p_val = round(p_3y_ago * (0.90 + 0.15 * prog + wave), 1)
-            points.append({"date": m, "price_usd_mt": p_val, "open": p_val, "high": round(p_val * 1.02, 1), "low": round(p_val * 0.98, 1), "close": p_val})
+            wave = math.cos((i + seed) * 0.9) * 0.03 * base_p
+            val = p_3y_ago + (p_2y_target - p_3y_ago) * prog + wave
+            p_val = round(max(1.0, val), 1)
+            pts.append({"date": m, "price_usd_mt": p_val, "open": p_val, "high": round(p_val * 1.02, 1), "low": round(p_val * 0.98, 1), "close": p_val})
         
-        points_2y = generate_chart_history_series(base_p, "2y", existing_history)
-        points.extend(points_2y)
-        return points
+        pts_2y = generate_chart_history_series(base_p, "2y", commodity_id=commodity_id, metrics=metrics)
+        pts.extend(pts_2y)
+        return pts
 
     else:
-        return existing_history or generate_chart_history_series(base_p, "1y")
+        return generate_chart_history_series(base_p, "1y", commodity_id=commodity_id, metrics=metrics)
 
 
 def load_database():
@@ -1165,6 +1240,22 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                 try:
                     with open(prices_file, "r", encoding="utf-8") as f:
                         p_data = json.load(f)
+                    
+                    # Tích hợp toàn diện 20 sản phẩm Top Quốc Gia vào danh mục Sectors
+                    if country_top_products and hasattr(country_top_products, "COUNTRY_TOP_PRODUCTS"):
+                        existing_sec_ids = {s.get("commodity_id") for s in p_data.get("sectors", [])}
+                        existing_sec_ids.update({s.get("alt_commodity_id") for s in p_data.get("sectors", []) if s.get("alt_commodity_id")})
+                        
+                        for p in country_top_products.COUNTRY_TOP_PRODUCTS:
+                            pid = p.get("id")
+                            p_cid = p.get("commodity_id")
+                            if pid not in existing_sec_ids and p_cid not in existing_sec_ids:
+                                new_sec = country_top_products.build_sector_for_product(p)
+                                if new_sec:
+                                    p_data["sectors"].append(new_sec)
+                                    existing_sec_ids.add(pid)
+                                    existing_sec_ids.add(p_cid)
+                    
                     self._send_json({"ok": True, "data": p_data})
                 except Exception as e:
                     self._send_json({"ok": False, "error": str(e)}, 500)
@@ -1380,7 +1471,14 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                 ctry_prod = country_top_products.get_country_product_by_id_or_code(comm_id)
                 if ctry_prod:
                     base_p = ctry_prod.get("price_usd_mt", 2000)
-                    history = generate_chart_history_series(base_p, time_range)
+                    metrics = {
+                        "change_24h": ctry_prod.get("change_24h"),
+                        "change_7d": ctry_prod.get("change_7d"),
+                        "change_1m": ctry_prod.get("change_1m"),
+                        "change_6m": ctry_prod.get("change_6m"),
+                        "change_1y": ctry_prod.get("change_1y")
+                    }
+                    history = generate_chart_history_series(base_p, time_range, commodity_id=ctry_prod.get("id"), metrics=metrics)
                     self._send_json({
                         "ok": True,
                         "commodity_id": ctry_prod.get("id"),
@@ -1431,9 +1529,15 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                     pass
 
             if matched_sec and matched_bench:
-                raw_history = matched_bench.get("history_1y", [])
                 base_p = matched_bench.get("price_usd_mt", 3000)
-                history = generate_chart_history_series(base_p, time_range, raw_history)
+                metrics = {
+                    "change_24h": matched_bench.get("change_24h"),
+                    "change_7d": matched_bench.get("change_7d"),
+                    "change_1m": matched_bench.get("change_1m"),
+                    "change_6m": matched_bench.get("change_6m"),
+                    "change_1y": matched_bench.get("change_1y")
+                }
+                history = generate_chart_history_series(base_p, time_range, commodity_id=comm_id, metrics=metrics)
                 
                 self._send_json({
                     "ok": True,
@@ -1479,7 +1583,14 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                         }
                         base_p = base_est_map.get(ch_code, 1950)
 
-                    history = generate_chart_history_series(base_p, time_range)
+                    metrics = {
+                        "change_24h": "+0.5%",
+                        "change_7d": "+1.8%",
+                        "change_1m": "+3.5%",
+                        "change_6m": "+8.2%",
+                        "change_1y": "+14.5%"
+                    }
+                    history = generate_chart_history_series(base_p, time_range, commodity_id=clean_id, metrics=metrics)
                     b_ref = matched_p.get("benchmark_ref", "Sàn Quốc Tế & FOB Hải Quan")
                     b_sym = matched_p.get("benchmark_symbol", matched_p.get("hs"))
                     

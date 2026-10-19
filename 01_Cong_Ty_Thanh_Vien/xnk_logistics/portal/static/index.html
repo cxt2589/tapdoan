@@ -821,7 +821,6 @@
           <i data-lucide="trending-up" class="w-3.5 h-3.5 text-emerald-400"></i>
           <span class="hidden md:inline">Giá Đa Sàn</span>
           <span class="md:hidden">Giá Sàn</span>
-          <span class="px-1 py-0.2 rounded text-[9px] font-mono bg-emerald-500/20 text-emerald-300 font-bold hidden sm:inline">6 Sàn</span>
         </button>
 
         <!-- API Documentation Button (Tài Liệu API / Swagger) -->
@@ -829,7 +828,6 @@
           <i data-lucide="code-2" class="w-3.5 h-3.5 text-purple-400"></i>
           <span class="hidden md:inline">Tài Liệu API</span>
           <span class="md:hidden">API</span>
-          <span class="px-1 py-0.2 rounded text-[9px] font-mono bg-purple-500/20 text-purple-300 font-bold hidden sm:inline">v1.0</span>
         </a>
 
         <!-- Theme Toggle Button (Sáng / Tối) -->
@@ -852,131 +850,56 @@
       <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto scrollbar-none xl:grid xl:grid-cols-7 w-full py-0.5" id="mainTabScrollContainer">
         
         <!-- Tab 1: Prospecting Leads -->
-        <button onclick="switchTab('prospecting')" id="tab-prospecting" class="tab-btn shrink-0 xl:shrink px-2.5 py-1.5 sm:py-2 sm:px-2 xl:px-2.5 rounded-xl transition-all flex items-center justify-start gap-1.5 sm:gap-1.5 xl:gap-2 text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 shadow-sm cursor-pointer whitespace-nowrap text-left overflow-hidden">
-          <div class="w-6 h-6 rounded-lg bg-cyan-500/15 flex items-center justify-center shrink-0">
-            <i data-lucide="target" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400"></i>
-          </div>
-          <div class="min-w-0 flex-1">
-            <div class="flex items-center gap-1 min-w-0">
-              <span class="font-bold text-xs xl:text-xs 2xl:text-sm tracking-tight truncate">Khách Hàng</span>
-              <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono bg-cyan-500/20 text-cyan-300 font-semibold shrink-0">1,000</span>
-            </div>
-            <span class="text-[10px] text-slate-400 font-mono hidden md:block truncate">Ngành & HS</span>
-          </div>
+        <button onclick="switchTab('prospecting')" id="tab-prospecting" class="tab-btn shrink-0 xl:shrink px-3.5 py-2 sm:px-3 sm:py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 shadow-sm cursor-pointer whitespace-nowrap">
+          <i data-lucide="target" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+          <span class="font-bold text-xs md:text-sm tracking-tight">Khách Hàng</span>
         </button>
 
         <!-- Tab 2: Buyer Verification -->
-        <button onclick="switchTab('buyers')" id="tab-buyers" class="tab-btn shrink-0 xl:shrink px-2.5 py-1.5 sm:py-2 sm:px-2 xl:px-2.5 rounded-xl transition-all flex items-center justify-start gap-1.5 sm:gap-1.5 xl:gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap text-left overflow-hidden">
-          <div class="w-6 h-6 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
-            <i data-lucide="shield-check" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
-          </div>
-          <div class="min-w-0 flex-1">
-            <div class="flex items-center gap-1 min-w-0">
-              <span class="font-bold text-xs xl:text-xs 2xl:text-sm tracking-tight truncate">Thẩm Định</span>
-              <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono bg-emerald-500/15 text-emerald-400 font-semibold shrink-0">OFAC</span>
-            </div>
-            <span class="text-[10px] text-slate-400 font-mono hidden md:block truncate">4 Tầng Rủi Ro</span>
-          </div>
+        <button onclick="switchTab('buyers')" id="tab-buyers" class="tab-btn shrink-0 xl:shrink px-3.5 py-2 sm:px-3 sm:py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap">
+          <i data-lucide="shield-check" class="w-4 h-4 shrink-0"></i>
+          <span class="font-bold text-xs md:text-sm tracking-tight">Thẩm Định</span>
         </button>
 
         <!-- Tab 3: Suppliers & Tier-1 -->
-        <button onclick="switchTab('suppliers')" id="tab-suppliers" class="tab-btn shrink-0 xl:shrink px-2.5 py-1.5 sm:py-2 sm:px-2 xl:px-2.5 rounded-xl transition-all flex items-center justify-start gap-1.5 sm:gap-1.5 xl:gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap text-left overflow-hidden">
-          <div class="w-6 h-6 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
-            <i data-lucide="building-2" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
-          </div>
-          <div class="min-w-0 flex-1">
-            <div class="flex items-center gap-1 min-w-0">
-              <span class="font-bold text-xs xl:text-xs 2xl:text-sm tracking-tight truncate">NCC Cấp 1</span>
-              <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono bg-amber-500/15 text-amber-400 font-semibold shrink-0">12 Nước</span>
-            </div>
-            <span class="text-[10px] text-slate-400 font-mono hidden md:block truncate">Đại Lý & QA</span>
-          </div>
+        <button onclick="switchTab('suppliers')" id="tab-suppliers" class="tab-btn shrink-0 xl:shrink px-3.5 py-2 sm:px-3 sm:py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap">
+          <i data-lucide="building-2" class="w-4 h-4 shrink-0"></i>
+          <span class="font-bold text-xs md:text-sm tracking-tight">Nhà Cung Cấp</span>
         </button>
 
         <!-- Tab 4: Trade Matchmaker (Bàn Khớp Giao Dịch B2B) -->
-        <button onclick="switchTab('matchmaker')" id="tab-matchmaker" class="tab-btn shrink-0 xl:shrink px-2.5 py-1.5 sm:py-2 sm:px-2 xl:px-2.5 rounded-xl transition-all flex items-center justify-start gap-1.5 sm:gap-1.5 xl:gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap text-left overflow-hidden">
-          <div class="w-6 h-6 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
-            <i data-lucide="sparkles" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400"></i>
-          </div>
-          <div class="min-w-0 flex-1">
-            <div class="flex items-center gap-1 min-w-0">
-              <span class="font-bold text-xs xl:text-xs 2xl:text-sm tracking-tight truncate">Khớp Lệnh</span>
-              <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono bg-emerald-500/20 text-emerald-300 font-semibold shrink-0">AI B2B</span>
-            </div>
-            <span class="text-[10px] text-slate-400 font-mono hidden md:block truncate">Ma Trận 6 Chiều</span>
-          </div>
+        <button onclick="switchTab('matchmaker')" id="tab-matchmaker" class="tab-btn shrink-0 xl:shrink px-3.5 py-2 sm:px-3 sm:py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap">
+          <i data-lucide="sparkles" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+          <span class="font-bold text-xs md:text-sm tracking-tight">Khớp Lệnh</span>
         </button>
 
         <!-- Tab 5: Customs B/L -->
-        <button onclick="switchTab('sourcing')" id="tab-sourcing" class="tab-btn shrink-0 xl:shrink px-2.5 py-1.5 sm:py-2 sm:px-2 xl:px-2.5 rounded-xl transition-all flex items-center justify-start gap-1.5 sm:gap-1.5 xl:gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap text-left overflow-hidden">
-          <div class="w-6 h-6 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
-            <i data-lucide="container" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
-          </div>
-          <div class="min-w-0 flex-1">
-            <div class="flex items-center gap-1 min-w-0">
-              <span class="font-bold text-xs xl:text-xs 2xl:text-sm tracking-tight truncate">Vận Đơn B/L</span>
-              <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono bg-blue-500/15 text-blue-400 font-semibold shrink-0">Hải Quan</span>
-            </div>
-            <span class="text-[10px] text-slate-400 font-mono hidden md:block truncate">Manifest Cảng</span>
-          </div>
+        <button onclick="switchTab('sourcing')" id="tab-sourcing" class="tab-btn shrink-0 xl:shrink px-3.5 py-2 sm:px-3 sm:py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap">
+          <i data-lucide="container" class="w-4 h-4 shrink-0"></i>
+          <span class="font-bold text-xs md:text-sm tracking-tight">Vận Đơn B/L</span>
         </button>
 
         <!-- Tab 6: Factory Audit -->
-        <button onclick="switchTab('audit')" id="tab-audit" class="tab-btn shrink-0 xl:shrink px-2.5 py-1.5 sm:py-2 sm:px-2 xl:px-2.5 rounded-xl transition-all flex items-center justify-start gap-1.5 sm:gap-1.5 xl:gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap text-left overflow-hidden">
-          <div class="w-6 h-6 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
-            <i data-lucide="clipboard-check" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
-          </div>
-          <div class="min-w-0 flex-1">
-            <div class="flex items-center gap-1 min-w-0">
-              <span class="font-bold text-xs xl:text-xs 2xl:text-sm tracking-tight truncate">Kiểm Toán</span>
-              <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono bg-purple-500/15 text-purple-400 font-semibold shrink-0">SOP-02</span>
-            </div>
-            <span class="text-[10px] text-slate-400 font-mono hidden md:block truncate">Thực Địa 5 Tiêu Chí</span>
-          </div>
+        <button onclick="switchTab('audit')" id="tab-audit" class="tab-btn shrink-0 xl:shrink px-3.5 py-2 sm:px-3 sm:py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap">
+          <i data-lucide="clipboard-check" class="w-4 h-4 shrink-0"></i>
+          <span class="font-bold text-xs md:text-sm tracking-tight">Kiểm Toán</span>
         </button>
 
         <!-- Tab 7: Multi-Exchange Commodity Prices & Charts (Bảng Giá & Biểu Đồ Đa Sàn) -->
-        <button onclick="window.location.href='/prices'" id="tab-prices" class="tab-btn shrink-0 xl:shrink px-2.5 py-1.5 sm:py-2 sm:px-2 xl:px-2.5 rounded-xl transition-all flex items-center justify-start gap-1.5 sm:gap-1.5 xl:gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap text-left overflow-hidden">
-          <div class="w-6 h-6 rounded-lg bg-emerald-500/15 flex items-center justify-center shrink-0">
-            <i data-lucide="trending-up" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400"></i>
-          </div>
-          <div class="min-w-0 flex-1">
-            <div class="flex items-center gap-1 min-w-0">
-              <span class="font-bold text-xs xl:text-xs 2xl:text-sm tracking-tight truncate text-white">Giá Đa Sàn</span>
-              <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono bg-emerald-500/20 text-emerald-300 font-semibold shrink-0">28 Sàn</span>
-            </div>
-            <span class="text-[10px] text-slate-400 font-mono hidden md:block truncate">Biểu Đồ & Nguồn</span>
-          </div>
+        <button onclick="window.location.href='/prices'" id="tab-prices" class="tab-btn shrink-0 xl:shrink px-3.5 py-2 sm:px-3 sm:py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap">
+          <i data-lucide="trending-up" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+          <span class="font-bold text-xs md:text-sm tracking-tight text-white">Giá Đa Sàn</span>
         </button>
 
       </div>
     </div>
 
     <!-- GUIDANCE CALLOUT: SWIPE RIGHT TO EXPLORE DATA (STICKY ĐÍNH NGAY DƯỚI MENU KHI Ở TAB KHÁCH HÀNG) -->
-    <div id="tableSwipeGuidanceWrapper" class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 pb-1.5 sm:pb-2 transition-all">
-      <div id="tableSwipeGuidance" class="rounded-xl p-2 sm:p-2.5 bg-gradient-to-r from-cyan-500/15 via-blue-500/10 to-brand-900 border border-cyan-500/30 shadow-md flex items-center justify-between gap-2.5 w-full max-w-full overflow-hidden">
-        <div class="flex items-center gap-2 sm:gap-2.5 min-w-0">
-          <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-cyan-500/25 border border-cyan-500/40 flex items-center justify-center shrink-0 text-cyan-300 shadow-sm animate-pulse">
-            <i data-lucide="hand" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
-          </div>
-          <div class="min-w-0">
-            <div class="flex items-center gap-1.5 sm:gap-2">
-              <span class="font-extrabold text-white text-xs tracking-tight flex items-center gap-1">
-                <span>Hướng Dẫn:</span>
-                <span class="text-cyan-400 font-bold">Vuốt Sang Phải 👉</span>
-              </span>
-              <span class="px-1.5 py-0.2 rounded-full text-[9px] font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 uppercase">Thao Tác</span>
-            </div>
-            <p id="tableSwipeGuidanceText" class="text-[10px] sm:text-xs text-slate-300 mt-0.5 line-clamp-1 sm:line-clamp-none">
-              Bảng dữ liệu nhiều cột: Hãy <strong>vuốt/lướt sang phải 👉</strong> để xem trọn vẹn <strong>Mã HS, Sản Lượng, Phễu Điểm, Vận Đơn B/L, Đầu Mối Liên Hệ</strong>.
-            </p>
-          </div>
-        </div>
-        <div class="flex items-center gap-1 shrink-0">
-          <span class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1 rounded-xl text-[10px] font-mono font-bold bg-brand-950 text-cyan-300 border border-cyan-500/30">
-            <i data-lucide="chevrons-right" class="w-3.5 h-3.5 text-cyan-400"></i>
-            <span>Cuộn Ngang</span>
-          </span>
+    <div id="tableSwipeGuidanceWrapper" class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 pb-1.5 transition-all">
+      <div id="tableSwipeGuidance" class="rounded-xl px-3 py-1.5 bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-between gap-2 w-full max-w-full overflow-hidden text-xs text-slate-300">
+        <div class="flex items-center gap-2 min-w-0">
+          <i data-lucide="info" class="w-3.5 h-3.5 text-cyan-400 shrink-0"></i>
+          <span id="tableSwipeGuidanceText" class="text-[11px] truncate">Vuốt sang phải để xem đầy đủ: Mã HS, Sản Lượng, Phễu Điểm, Vận Đơn B/L và Đầu Mối Liên Hệ.</span>
         </div>
       </div>
     </div>
@@ -1101,27 +1024,6 @@
     <!-- ============================================================= -->
     <section id="section-prospecting" class="space-y-4 sm:space-y-6 w-full max-w-full">
       
-      <!-- Quick Access Banner to Multi-Exchange Commodity Prices & Charts -->
-      <div onclick="window.location.href='/prices'" class="rounded-2xl p-3 sm:p-4 bg-gradient-to-r from-emerald-500/20 via-cyan-500/15 to-brand-900 border border-emerald-500/40 hover:border-emerald-400 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-lg shadow-emerald-500/10 cursor-pointer transition-all hover:scale-[1.005]">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shrink-0">
-            <i data-lucide="trending-up" class="w-5 h-5"></i>
-          </div>
-          <div>
-            <div class="flex items-center gap-2 flex-wrap">
-              <span class="px-2 py-0.5 rounded text-[9px] font-mono font-bold uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 animate-pulse">⚡ TÍNH NĂNG MỚI ĐÃ SẴN SÀNG</span>
-              <h3 class="text-xs sm:text-sm font-bold text-white">Bảng Giá Đa Sàn, Minh Bạch Nguồn & Biểu Đồ Nến Lịch Sử 28 Nguồn</h3>
-            </div>
-            <p class="text-[11px] text-slate-300 mt-0.5">Tìm kiếm gắn nhãn sàn (Yahoo Finance, ICE London, CME, Cát Lái FOB, VFA...), theo dõi biến động 24h/7D & biểu đồ tương tác 12 tháng.</p>
-          </div>
-        </div>
-        <div class="shrink-0 flex items-center gap-2">
-          <span class="px-3.5 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-brand-950 font-bold font-mono text-xs flex items-center gap-1.5 shadow-md shadow-emerald-500/20">
-            <span>Mở Bảng Giá & Biểu Đồ</span>
-            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-          </span>
-        </div>
-      </div>
 
       <!-- Executive Banner -->
       <div class="rounded-3xl p-1 bg-gradient-to-b from-cyan-500/20 via-white/5 to-white/[0.02] border border-cyan-500/30 shadow-2xl w-full max-w-full overflow-hidden">
@@ -5333,24 +5235,20 @@
               <div class="text-[10px] text-cyan-400 font-mono truncate max-w-[150px]" title="${contact.email}">${contact.email || 'N/A'}</div>
               <div class="text-[10px] text-slate-400 font-mono mt-1">Incoterms: <strong class="text-white">${lead.preferred_incoterms || 'FOB'}</strong></div>
               <div class="text-[10px] text-slate-400 font-mono mt-0.5">TT: ${lead.payment_terms_accepted || 'L/C'}</div>
-              <button type="button" onclick="viewMoreContacts('lead', '${lead.lead_id}')" class="mt-2 inline-flex items-center gap-1 text-[10px] font-mono font-semibold text-cyan-400 hover:text-cyan-300 bg-cyan-950/40 hover:bg-cyan-900/60 px-2 py-0.5 rounded border border-cyan-500/30 transition-all cursor-pointer" title="Xem thêm đầu mối liên hệ nếu có">
-                <i data-lucide="users" class="w-3 h-3"></i>
+              <button type="button" onclick="viewMoreContacts('lead', '${lead.lead_id}')" class="mt-2 inline-flex items-center text-[10px] font-mono font-semibold text-cyan-400 hover:text-cyan-300 bg-cyan-950/40 hover:bg-cyan-900/60 px-2 py-0.5 rounded border border-cyan-500/30 transition-all cursor-pointer" title="Xem thêm đầu mối liên hệ nếu có">
                 <span>Xem thêm liên hệ</span>
               </button>
             </td>
 
             <td class="py-3 px-4 align-top">
               <div class="flex flex-col gap-1.5 w-full">
-                <button onclick="pushLeadToVerify('${lead.company_name}')" class="w-full px-2 py-1.5 rounded-lg text-[11px] font-semibold bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 flex items-center justify-center gap-1 transition-all" title="Chuyển sang phân hệ Thẩm định 4 tầng">
-                  <i data-lucide="shield-check" class="w-3 h-3 text-amber-400"></i>
+                <button onclick="pushLeadToVerify('${lead.company_name}')" class="w-full px-2 py-1.5 rounded-lg text-[11px] font-semibold bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 flex items-center justify-center transition-all" title="Chuyển sang phân hệ Thẩm định 4 tầng">
                   <span>Thẩm Định</span>
                 </button>
-                <button onclick="openOutreachModal('${lead.lead_id}')" class="w-full px-2 py-1.5 rounded-lg text-[11px] font-bold bg-cyan-500/20 hover:bg-cyan-500 text-cyan-300 hover:text-brand-950 border border-cyan-500/40 flex items-center justify-center gap-1 transition-all" title="Soạn Thư Chào Hàng RFQ">
-                  <i data-lucide="mail" class="w-3 h-3"></i>
+                <button onclick="openOutreachModal('${lead.lead_id}')" class="w-full px-2 py-1.5 rounded-lg text-[11px] font-bold bg-cyan-500/20 hover:bg-cyan-500 text-cyan-300 hover:text-brand-950 border border-cyan-500/40 flex items-center justify-center transition-all" title="Soạn Thư Chào Hàng RFQ">
                   <span>Thư RFQ</span>
                 </button>
-                <button onclick="dispatchSpecificLeadTelegram('${lead.lead_id}')" class="w-full px-2 py-1.5 rounded-lg text-[11px] font-semibold bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 border border-emerald-500/30 flex items-center justify-center gap-1 transition-all" title="Bắn Lead sang kênh Telegram">
-                  <i data-lucide="send" class="w-3 h-3"></i>
+                <button onclick="dispatchSpecificLeadTelegram('${lead.lead_id}')" class="w-full px-2 py-1.5 rounded-lg text-[11px] font-semibold bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 border border-emerald-500/30 flex items-center justify-center transition-all" title="Bắn Lead sang kênh Telegram">
                   <span>Bắn Bot</span>
                 </button>
               </div>
@@ -6638,20 +6536,16 @@
                 </div>
 
                 <div class="flex items-center gap-2 w-full sm:w-auto">
-                  <button type="button" onclick="viewMoreContacts('supplier', '${s.id}')" class="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-cyan-950/50 hover:bg-cyan-900/70 text-cyan-300 border border-cyan-500/30 transition-all flex items-center gap-1 cursor-pointer" title="Xem thêm đầu mối liên hệ">
-                    <i data-lucide="users" class="w-3.5 h-3.5"></i>
+                  <button type="button" onclick="viewMoreContacts('supplier', '${s.id}')" class="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-cyan-950/50 hover:bg-cyan-900/70 text-cyan-300 border border-cyan-500/30 transition-all cursor-pointer" title="Xem thêm đầu mối liên hệ">
                     <span>Liên Hệ</span>
                   </button>
-                  <button type="button" onclick="openSupplierDetailModal('${s.id}')" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/10 transition-all flex items-center gap-1 cursor-pointer">
-                    <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                  <button type="button" onclick="openSupplierDetailModal('${s.id}')" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/10 transition-all cursor-pointer">
                     <span>Hồ Sơ</span>
                   </button>
-                  <button type="button" onclick="dispatchSupplierTelegramAlert('${s.id}')" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 border border-emerald-500/30 transition-all flex items-center gap-1 cursor-pointer">
-                    <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                  <button type="button" onclick="dispatchSupplierTelegramAlert('${s.id}')" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 border border-emerald-500/30 transition-all cursor-pointer">
                     <span>Bắn Bot</span>
                   </button>
-                  <button type="button" onclick="inspectSupplier('${s.id}')" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-cyan-500/20 hover:bg-cyan-500 text-cyan-300 hover:text-brand-950 border border-cyan-500/40 transition-all flex items-center gap-1 cursor-pointer">
-                    <i data-lucide="shield" class="w-3.5 h-3.5"></i>
+                  <button type="button" onclick="inspectSupplier('${s.id}')" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-cyan-500/20 hover:bg-cyan-500 text-cyan-300 hover:text-brand-950 border border-cyan-500/40 transition-all cursor-pointer">
                     <span>Thẩm Định</span>
                   </button>
                 </div>
@@ -8237,8 +8131,8 @@
                   <span class="text-[9px] font-mono text-slate-400">${m.buyer_country_code || ''}</span>
                 </div>
                 <h4 class="text-xs font-bold text-white hover:text-cyan-400 cursor-pointer underline decoration-cyan-500/30 underline-offset-2 transition-colors truncate" title="Nhấn để xem hồ sơ chi tiết khách hàng" onclick="openCompanyDetailModal('${m.buyer_id}')">${m.buyer_name}</h4>
-                <p class="text-[11px] text-slate-300 truncate font-mono">📍 ${m.buyer_country}</p>
-                <p class="text-[10px] text-slate-400 truncate">📦 Cần: ${m.matched_commodity}</p>
+                <p class="text-[11px] text-slate-300 truncate font-mono">${m.buyer_country}</p>
+                <p class="text-[10px] text-slate-400 truncate">Cần: ${m.matched_commodity}</p>
               </div>
 
               <!-- Center Arrow / Synergy (1 col) -->
@@ -8255,8 +8149,8 @@
                   <span class="text-[9px] font-mono text-slate-400">${m.supplier_country_code || ''}</span>
                 </div>
                 <h4 class="text-xs font-bold text-white hover:text-emerald-400 cursor-pointer underline decoration-emerald-500/30 underline-offset-2 transition-colors truncate" title="Nhấn để xem hồ sơ chi tiết nhà cung cấp" onclick="openSupplierDetailModal('${m.supplier_id}')">${m.supplier_short_name}</h4>
-                <p class="text-[11px] text-slate-300 truncate font-mono">🏭 ${m.supplier_country}</p>
-                <p class="text-[10px] text-emerald-400 truncate">✓ ${m.supplier_type}</p>
+                <p class="text-[11px] text-slate-300 truncate font-mono">${m.supplier_country}</p>
+                <p class="text-[10px] text-emerald-400 truncate">${m.supplier_type}</p>
               </div>
 
             </div>

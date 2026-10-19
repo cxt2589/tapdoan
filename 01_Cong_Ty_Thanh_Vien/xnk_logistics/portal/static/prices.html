@@ -299,7 +299,7 @@
             </div>
             <div>
               <div class="flex items-center gap-2 flex-wrap">
-                <h3 class="font-bold text-white text-base sm:text-lg">📈 BẢNG GIÁ THAM CHIẾU ĐA SÀN & RADAR CHÊNH LỆCH GIÁ (ARBITRAGE)</h3>
+                <h3 class="font-bold text-white text-base sm:text-lg">BẢNG GIÁ THAM CHIẾU ĐA SÀN & RADAR CHÊNH LỆCH GIÁ (ARBITRAGE)</h3>
                 <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">28 Sàn & Nguồn</span>
                 <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">4 Tầng Định Giá</span>
               </div>
@@ -315,17 +315,17 @@
           <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
             <div class="relative flex-1">
               <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
-              <input type="text" id="priceMultiSourceSearchInput" oninput="handlePriceMultiSourceSearch(this.value)" placeholder="🔍 Tìm mặt hàng hoặc sàn (vd: Cà phê ICE, Arabica Yahoo, Gạo VFA, Cát Lái, NOLA CME...)" class="w-full pl-10 pr-9 py-2.5 rounded-xl text-xs font-mono bg-brand-950 border border-white/10 text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500">
+              <input type="text" id="priceMultiSourceSearchInput" oninput="handlePriceMultiSourceSearch(this.value)" placeholder="Tìm mặt hàng hoặc sàn (vd: Cà phê ICE, Arabica Yahoo, Gạo VFA, Cát Lái, NOLA CME...)" class="w-full pl-10 pr-9 py-2.5 rounded-xl text-xs font-mono bg-brand-950 border border-white/10 text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500">
               <button type="button" id="clearPriceSearchBtn" onclick="clearPriceMultiSourceSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white cursor-pointer">
                 <i data-lucide="x" class="w-3.5 h-3.5"></i>
               </button>
             </div>
             <div class="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1 sm:pb-0" id="priceSourceCategoryPills">
               <button type="button" onclick="filterPriceBySourceCategory('ALL')" id="filter-src-ALL" class="px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-cyan-500 text-brand-950 border border-cyan-400 cursor-pointer">Tất Cả Sàn</button>
-              <button type="button" onclick="filterPriceBySourceCategory('GLOBAL_EXCHANGE')" id="filter-src-GLOBAL_EXCHANGE" class="px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-brand-950 text-slate-300 hover:text-white border border-white/10 cursor-pointer">🌐 Sàn Quốc Tế</button>
-              <button type="button" onclick="filterPriceBySourceCategory('EXPORT_FOB')" id="filter-src-EXPORT_FOB" class="px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-brand-950 text-slate-300 hover:text-white border border-white/10 cursor-pointer">🚢 Cảng FOB VN</button>
-              <button type="button" onclick="filterPriceBySourceCategory('DOMESTIC_FARM')" id="filter-src-DOMESTIC_FARM" class="px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-brand-950 text-slate-300 hover:text-white border border-white/10 cursor-pointer">🌾 Cửa Vườn Spot</button>
-              <button type="button" onclick="filterPriceBySourceCategory('INDUSTRY_AGENCY')" id="filter-src-INDUSTRY_AGENCY" class="px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-brand-950 text-slate-300 hover:text-white border border-white/10 cursor-pointer">🏛️ Hiệp Hội</button>
+              <button type="button" onclick="filterPriceBySourceCategory('GLOBAL_EXCHANGE')" id="filter-src-GLOBAL_EXCHANGE" class="px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-brand-950 text-slate-300 hover:text-white border border-white/10 cursor-pointer">Sàn Quốc Tế</button>
+              <button type="button" onclick="filterPriceBySourceCategory('EXPORT_FOB')" id="filter-src-EXPORT_FOB" class="px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-brand-950 text-slate-300 hover:text-white border border-white/10 cursor-pointer">Cảng FOB VN</button>
+              <button type="button" onclick="filterPriceBySourceCategory('DOMESTIC_FARM')" id="filter-src-DOMESTIC_FARM" class="px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-brand-950 text-slate-300 hover:text-white border border-white/10 cursor-pointer">Cửa Vườn Spot</button>
+              <button type="button" onclick="filterPriceBySourceCategory('INDUSTRY_AGENCY')" id="filter-src-INDUSTRY_AGENCY" class="px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-brand-950 text-slate-300 hover:text-white border border-white/10 cursor-pointer">Hiệp Hội</button>
             </div>
           </div>
 
@@ -476,7 +476,7 @@
               <div class="flex items-center gap-1.5">
                 <label for="countryFilterSelect" class="text-[11px] font-mono font-bold text-slate-400 whitespace-nowrap">Quốc Gia:</label>
                 <select id="countryFilterSelect" onchange="filterCountryTopTable(this.value)" class="country-filter-select px-2.5 py-1.5 rounded-lg text-xs font-semibold border cursor-pointer">
-                  <option value="ALL">🌐 Tất Cả Quốc Gia</option>
+                  <option value="ALL">Tất Cả Quốc Gia</option>
                   <option value="AU">🇦🇺 Australia (Úc)</option>
                   <option value="VN">🇻🇳 Việt Nam</option>
                   <option value="BR">🇧🇷 Brazil</option>
@@ -492,12 +492,12 @@
               <div class="flex items-center gap-1.5">
                 <label for="categoryFilterSelect" class="text-[11px] font-mono font-bold text-slate-400 whitespace-nowrap">Ngành Hàng:</label>
                 <select id="categoryFilterSelect" onchange="filterCategoryTopTable(this.value)" class="country-filter-select px-2.5 py-1.5 rounded-lg text-xs font-semibold border cursor-pointer">
-                  <option value="ALL">📦 Tất Cả Ngành</option>
-                  <option value="agri_food">🌾 Nông - Thủy Sản</option>
-                  <option value="industrial">⛏️ Khoáng Sản & Công Nghiệp</option>
-                  <option value="fertilizer">🧪 Phân Bón & Hóa Chất</option>
-                  <option value="energy">⚡ Năng Lượng & Than Đá</option>
-                  <option value="textiles">🧵 Dệt May & Bông Sợi</option>
+                  <option value="ALL">Tất Cả Ngành</option>
+                  <option value="agri_food">Nông - Thủy Sản</option>
+                  <option value="industrial">Khoáng Sản & Công Nghiệp</option>
+                  <option value="fertilizer">Phân Bón & Hóa Chất</option>
+                  <option value="energy">Năng Lượng & Than Đá</option>
+                  <option value="textiles">Dệt May & Bông Sợi</option>
                 </select>
               </div>
 
@@ -505,10 +505,10 @@
               <div class="flex items-center gap-1.5">
                 <label for="sortFilterSelect" class="text-[11px] font-mono font-bold text-slate-400 whitespace-nowrap">Sắp Xếp:</label>
                 <select id="sortFilterSelect" onchange="sortCountryTopTable(this.value)" class="country-filter-select px-2.5 py-1.5 rounded-lg text-xs font-semibold border cursor-pointer">
-                  <option value="revenue_desc">💎 Quy Mô / Doanh Thu (Lớn nhất)</option>
-                  <option value="price_desc">💰 Giá Tham Chiếu (Cao nhất)</option>
-                  <option value="price_asc">💵 Giá Tham Chiếu (Thấp nhất)</option>
-                  <option value="change_1y_desc">📈 Tăng Trưởng 1 Năm (Cao nhất)</option>
+                  <option value="revenue_desc">Quy Mô / Doanh Thu (Lớn nhất)</option>
+                  <option value="price_desc">Giá Tham Chiếu (Cao nhất)</option>
+                  <option value="price_asc">Giá Tham Chiếu (Thấp nhất)</option>
+                  <option value="change_1y_desc">Tăng Trưởng 1 Năm (Cao nhất)</option>
                 </select>
               </div>
             </div>
@@ -851,15 +851,15 @@
     function getCategoryBadgeMeta(cat) {
       switch (cat) {
         case 'GLOBAL_EXCHANGE':
-          return { label: '🌐 Sàn Thế Giới', class: 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40' };
+          return { label: 'Sàn Thế Giới', class: 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40' };
         case 'EXPORT_FOB':
-          return { label: '🚢 Cảng FOB VN', class: 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' };
+          return { label: 'Cảng FOB VN', class: 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' };
         case 'DESTINATION_CIF':
-          return { label: '⚓ Cảng Đích CIF', class: 'bg-purple-500/20 text-purple-300 border border-purple-500/40' };
+          return { label: 'Cảng Đích CIF', class: 'bg-purple-500/20 text-purple-300 border border-purple-500/40' };
         case 'DOMESTIC_FARM':
-          return { label: '🌾 Cửa Vườn Spot', class: 'bg-amber-500/20 text-amber-300 border border-amber-500/40' };
+          return { label: 'Cửa Vườn Spot', class: 'bg-amber-500/20 text-amber-300 border border-amber-500/40' };
         case 'INDUSTRY_AGENCY':
-          return { label: '🏛️ Hiệp Hội Ngành', class: 'bg-blue-500/20 text-blue-300 border border-blue-500/40' };
+          return { label: 'Hiệp Hội Ngành', class: 'bg-blue-500/20 text-blue-300 border border-blue-500/40' };
         default:
           return { label: cat || 'Nguồn Sàn', class: 'bg-white/10 text-slate-300 border border-white/10' };
       }
@@ -906,7 +906,7 @@
              </button>`
           : `<button type="button" onclick="selectCommodityPriceAndSource('${commodity.commodity_id}', '${b.source_id}')" 
                      class="px-2.5 py-1 rounded-lg bg-brand-900 hover:bg-cyan-500/20 text-slate-300 hover:text-cyan-300 border border-white/10 hover:border-cyan-500/40 text-[10px] font-bold flex items-center gap-1 ml-auto transition-all cursor-pointer">
-               <span>📈 Xem Biểu Đồ</span>
+               <span>Xem Biểu Đồ</span>
              </button>`;
 
         return `
@@ -1375,10 +1375,10 @@
       if (!container || !commodity.benchmarks) return;
 
       const tierLabels = {
-        'GLOBAL_BENCHMARK': { title: '🌐 Sàn Quốc Tế', badge: 'Global Futures', border: 'border-cyan-500/30', headerBg: 'bg-cyan-500/10 text-cyan-300' },
-        'EXPORT_FOB': { title: '🚢 Xuất Khẩu FOB VN', badge: 'FOB Vietnam', border: 'border-emerald-500/30', headerBg: 'bg-emerald-500/10 text-emerald-300' },
-        'DESTINATION_CIF': { title: '⚓ Cảng Đích CIF', badge: 'CIF Destination', border: 'border-purple-500/30', headerBg: 'bg-purple-500/10 text-purple-300' },
-        'DOMESTIC_FARM': { title: '🌾 Nội Địa Cửa Vườn', badge: 'Farm-gate VN', border: 'border-amber-500/30', headerBg: 'bg-amber-500/10 text-amber-300' }
+        'GLOBAL_BENCHMARK': { title: 'Sàn Quốc Tế', badge: 'Global Futures', border: 'border-cyan-500/30', headerBg: 'bg-cyan-500/10 text-cyan-300' },
+        'EXPORT_FOB': { title: 'Xuất Khẩu FOB VN', badge: 'FOB Vietnam', border: 'border-emerald-500/30', headerBg: 'bg-emerald-500/10 text-emerald-300' },
+        'DESTINATION_CIF': { title: 'Cảng Đích CIF', badge: 'CIF Destination', border: 'border-purple-500/30', headerBg: 'bg-purple-500/10 text-purple-300' },
+        'DOMESTIC_FARM': { title: 'Nội Địa Cửa Vườn', badge: 'Farm-gate VN', border: 'border-amber-500/30', headerBg: 'bg-amber-500/10 text-amber-300' }
       };
 
       container.innerHTML = commodity.benchmarks.map(b => {
@@ -1627,13 +1627,13 @@
                 <button type="button" onclick="inspectCountryProductInChart('${p.id}', '${p.product_name.replace(/'/g, "\\'")}', '${p.hs_code}', ${p.price_usd_mt})" 
                         class="px-2 py-1 rounded-md text-[10px] font-medium flex items-center gap-1 cursor-pointer transition-all active:scale-95 ${isDark ? 'bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-cyan-300 border border-slate-700' : 'bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 border border-slate-200'}" 
                         title="Cuộn lên xem biểu đồ lịch sử giá">
-                  <span>📈 Biểu Đồ</span>
+                  <span>Biểu Đồ</span>
                 </button>
                 <!-- Nút Chính: Khớp Lệnh (nổi bật, ưu tiên cao nhất cho nghiệp vụ ngoại thương B2B) -->
                 <button type="button" onclick="openQuickMatchmakerModal('${p.id}', '${p.product_name.replace(/'/g, "\\'")}', '${p.hs_code}')" 
                         class="px-3 py-1 rounded-lg text-[11px] font-extrabold flex items-center gap-1 cursor-pointer transition-all active:scale-95 shadow-sm ${isDark ? 'bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-emerald-500/20' : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-600/20'}" 
                         title="Mở Bàn Khớp Lệnh Ngoại Thương B2B">
-                  <span>⚡ Khớp Lệnh</span>
+                  <span>Khớp Lệnh</span>
                 </button>
               </div>
             </td>
@@ -1807,11 +1807,11 @@
           <div class="flex items-center gap-2 flex-wrap">
             <button type="button" onclick="triggerQuickDualRfq('${commodityId}', '${commodityName.replace(/'/g, "\\'")}')" class="px-3 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold font-mono text-xs flex items-center gap-1.5 cursor-pointer shadow-md transition-all active:scale-95">
               <i data-lucide="zap" class="w-3.5 h-3.5"></i>
-              <span>⚡ Bắn Bộ Đôi RFQ (Dual RFQ)</span>
+              <span>Bắn Bộ Đôi RFQ (Dual RFQ)</span>
             </button>
             <button type="button" onclick="triggerQuickTelegramReport('${commodityId}', '${commodityName.replace(/'/g, "\\'")}')" class="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold font-mono text-xs flex items-center gap-1.5 cursor-pointer shadow-md transition-all active:scale-95">
               <i data-lucide="send" class="w-3.5 h-3.5"></i>
-              <span>📱 Báo Cáo Telegram</span>
+              <span>Báo Cáo Telegram</span>
             </button>
             <a href="/?tab=matchmaker" class="px-3 py-2 rounded-xl ${isDark ? 'bg-white/10 text-white hover:bg-white/20' : 'bg-slate-200 text-slate-800 hover:bg-slate-300'} font-bold font-mono text-xs flex items-center gap-1.5 transition-all">
               <i data-lucide="external-link" class="w-3.5 h-3.5"></i>

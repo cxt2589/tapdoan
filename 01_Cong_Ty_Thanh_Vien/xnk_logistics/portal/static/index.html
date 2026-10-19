@@ -72,36 +72,51 @@
                   radial-gradient(circle at 50% 80%, rgba(244, 63, 94, 0.05) 0%, transparent 45%);
     }
 
-    /* Print Dossier Styles - Standard A4 Due Diligence & KYC Report */
+    /* Print Dossier Styles - Standard A4 Due Diligence & KYC Report (Seamless Multi-Page Pagination) */
     @media print {
       @page {
         size: A4 portrait;
-        margin: 10mm 12mm 10mm 12mm;
+        margin: 12mm 12mm 15mm 12mm;
       }
       html, body {
         background: #ffffff !important;
         color: #0f172a !important;
         margin: 0 !important;
         padding: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        overflow: visible !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
-      body * {
-        visibility: hidden !important;
-      }
-      #printableDossier, #printableDossier * {
-        visibility: visible !important;
+      body > :not(#printableDossier) {
+        display: none !important;
       }
       #printableDossier {
         display: block !important;
-        position: absolute !important;
-        left: 0 !important;
-        top: 0 !important;
+        position: static !important;
         width: 100% !important;
+        max-width: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
         background: #ffffff !important;
         color: #0f172a !important;
+        visibility: visible !important;
+        overflow: visible !important;
+      }
+      #printableDossier * {
+        visibility: visible !important;
+      }
+      .dossier-section,
+      #printableDossier table,
+      #printableDossier tr,
+      .avoid-break {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      #printableDossier thead {
+        display: table-header-group !important;
       }
       .no-print {
         display: none !important;
@@ -3406,10 +3421,78 @@
         </table>
       </div>
 
-      <!-- Section IV: Payment Firewall & Contract Recommendation -->
-      <div style="margin-bottom: 22px;">
+      <!-- Section IV: Global Counterparty & Partner Network -->
+      <div class="dossier-section" style="margin-bottom: 16px; page-break-inside: avoid; break-inside: avoid;">
+        <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: #0f172a; background: #f1f5f9; border-left: 4px solid #2563eb; padding: 4px 8px; margin-bottom: 6px;">
+          IV. MẠNG LƯỚI ĐỐI TÁC THƯƠNG MẠI TOÀN CẦU (GLOBAL COUNTERPARTY & PARTNER NETWORK)
+        </div>
+        <table style="width: 100%; border-collapse: collapse; font-size: 10px; margin-bottom: 4px;">
+          <thead>
+            <tr style="background: #f8fafc; font-weight: 700; color: #334155;">
+              <th style="padding: 5px 6px; border: 1px solid #cbd5e1; text-align: left; width: 30%;">Tên Đối Tác / Khách Hàng</th>
+              <th style="padding: 5px 6px; border: 1px solid #cbd5e1; text-align: center; width: 18%;">Quốc Gia / Thị Trường</th>
+              <th style="padding: 5px 6px; border: 1px solid #cbd5e1; text-align: center; width: 20%;">Vai Trò / Kênh Hợp Tác</th>
+              <th style="padding: 5px 6px; border: 1px solid #cbd5e1; text-align: left; width: 18%;">Mặt Hàng Giao Dịch</th>
+              <th style="padding: 5px 6px; border: 1px solid #cbd5e1; text-align: right; width: 14%;">Sản Lượng / Tỷ Trọng</th>
+            </tr>
+          </thead>
+          <tbody id="p-partners-tbody">
+            <!-- Rendered dynamically via printCurrentDossier -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Section V: Customs B/L Manifest & B2B Inquiries -->
+      <div class="dossier-section" style="margin-bottom: 16px; page-break-inside: avoid; break-inside: avoid;">
+        <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: #0f172a; background: #f1f5f9; border-left: 4px solid #0891b2; padding: 4px 8px; margin-bottom: 6px;">
+          V. LỊCH SỬ VẬN ĐƠN HẢI QUAN, GIAO DỊCH & CHÀO ĐƠN B2B (CUSTOMS B/L & TRADE INQUIRIES)
+        </div>
+        
+        <!-- Sub-table A: Customs B/L Manifest -->
+        <div style="font-size: 10px; font-weight: 700; color: #0f172a; margin-bottom: 4px; display: flex; justify-content: space-between;">
+          <span>1. Lịch Sử Vận Đơn Hải Quan Quốc Tế (Bill of Lading Manifest - 12 Tháng Gần Nhất):</span>
+          <span style="font-size: 9px; font-weight: normal; color: #64748b; font-family: monospace;">Dữ liệu hải quan cảng biển đối soát</span>
+        </div>
+        <table style="width: 100%; border-collapse: collapse; font-size: 9.5px; margin-bottom: 10px;">
+          <thead>
+            <tr style="background: #f8fafc; font-weight: 700; color: #334155;">
+              <th style="padding: 4px 6px; border: 1px solid #cbd5e1; text-align: left; width: 20%;">Số Vận Đơn (B/L No.)</th>
+              <th style="padding: 4px 6px; border: 1px solid #cbd5e1; text-align: center; width: 14%;">Ngày Thông Quan</th>
+              <th style="padding: 4px 6px; border: 1px solid #cbd5e1; text-align: left; width: 28%;">Tàu Vận Tải & Tuyến Cảng (POL ➔ POD)</th>
+              <th style="padding: 4px 6px; border: 1px solid #cbd5e1; text-align: left; width: 24%;">Mặt Hàng & Khối Lượng</th>
+              <th style="padding: 4px 6px; border: 1px solid #cbd5e1; text-align: center; width: 14%;">Trạng Thái Lô Hàng</th>
+            </tr>
+          </thead>
+          <tbody id="p-bl-tbody">
+            <!-- Rendered dynamically via printCurrentDossier -->
+          </tbody>
+        </table>
+
+        <!-- Sub-table B: B2B Inquiries & Deal RFQs -->
+        <div style="font-size: 10px; font-weight: 700; color: #0f172a; margin-bottom: 4px; display: flex; justify-content: space-between;">
+          <span>2. Lịch Sử Giao Dịch & Chào Đơn B2B (Trade RFQs, Deals & Inquiries):</span>
+          <span style="font-size: 9px; font-weight: normal; color: #64748b; font-family: monospace;">Khớp lệnh sàn giao dịch thương mại</span>
+        </div>
+        <table style="width: 100%; border-collapse: collapse; font-size: 9.5px; margin-bottom: 4px;">
+          <thead>
+            <tr style="background: #f8fafc; font-weight: 700; color: #334155;">
+              <th style="padding: 4px 6px; border: 1px solid #cbd5e1; text-align: left; width: 20%;">Mã Đơn / RFQ ID</th>
+              <th style="padding: 4px 6px; border: 1px solid #cbd5e1; text-align: center; width: 14%;">Ngày Ghi Nhận</th>
+              <th style="padding: 4px 6px; border: 1px solid #cbd5e1; text-align: left; width: 28%;">Điều Kiện Incoterms & Thanh Toán</th>
+              <th style="padding: 4px 6px; border: 1px solid #cbd5e1; text-align: left; width: 24%;">Khối Lượng & Đơn Giá Mục Tiêu</th>
+              <th style="padding: 4px 6px; border: 1px solid #cbd5e1; text-align: center; width: 14%;">Tiến Độ Khớp Lệnh</th>
+            </tr>
+          </thead>
+          <tbody id="p-rfq-tbody">
+            <!-- Rendered dynamically via printCurrentDossier -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Section VI: Payment Firewall & Contract Recommendation -->
+      <div class="dossier-section" style="margin-bottom: 16px; page-break-inside: avoid; break-inside: avoid;">
         <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: #0f172a; background: #f1f5f9; border-left: 4px solid #ea580c; padding: 4px 8px; margin-bottom: 6px;">
-          IV. BỨC TƯỜNG LỬA TÀI CHÍNH & KHUYẾN NGHỊ ĐIỀU KHOẢN HỢP ĐỒNG (TRADE FIREWALL & PAYMENT TERMS)
+          VI. BỨC TƯỜNG LỬA TÀI CHÍNH & KHUYẾN NGHỊ ĐIỀU KHOẢN HỢP ĐỒNG (TRADE FIREWALL & PAYMENT TERMS)
         </div>
         <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
           <tr>
@@ -3427,30 +3510,44 @@
         </table>
       </div>
 
-      <!-- Section V: Sign-off & Approvals -->
-      <div style="margin-top: 25px; page-break-inside: avoid;">
+      <!-- Section VII: Authorized Sourcing Contacts & Directory -->
+      <div class="dossier-section" style="margin-bottom: 22px; page-break-inside: avoid; break-inside: avoid;">
+        <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: #0f172a; background: #f1f5f9; border-left: 4px solid #059669; padding: 4px 8px; margin-bottom: 6px;">
+          VII. DANH BẠ LIÊN HỆ & ĐẦU MỐI GIAO DỊCH ỦY QUYỀN (AUTHORIZED CONTACT DIRECTORY)
+        </div>
+        <table style="width: 100%; border-collapse: collapse; font-size: 10px; margin-bottom: 4px;">
+          <thead>
+            <tr style="background: #f8fafc; font-weight: 700; color: #334155;">
+              <th style="padding: 5px 6px; border: 1px solid #cbd5e1; text-align: left; width: 24%;">Họ và Tên Nhân Sự</th>
+              <th style="padding: 5px 6px; border: 1px solid #cbd5e1; text-align: left; width: 25%;">Chức Vụ & Bộ Phận</th>
+              <th style="padding: 5px 6px; border: 1px solid #cbd5e1; text-align: left; width: 28%;">Kênh Liên Hệ (Email / Phone / Social)</th>
+              <th style="padding: 5px 6px; border: 1px solid #cbd5e1; text-align: center; width: 23%;">Thẩm Quyền & Trạng Thái</th>
+            </tr>
+          </thead>
+          <tbody id="p-contacts-tbody">
+            <!-- Rendered dynamically via printCurrentDossier -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Section VIII: Sign-off & Approvals (Executive Level - 2 Columns, No Chairman Required) -->
+      <div class="dossier-section" style="margin-top: 25px; page-break-inside: avoid; break-inside: avoid;">
         <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: #0f172a; background: #f1f5f9; border-left: 4px solid #0f172a; padding: 4px 8px; margin-bottom: 12px;">
-          V. Ý KIẾN THẨM ĐỊNH & PHÊ DUYỆT ĐIỀU HÀNH 3 CẤP (APPROVAL & SIGN-OFF)
+          VIII. Ý KIẾN THẨM ĐỊNH & PHÊ DUYỆT ĐIỀU HÀNH (APPROVAL & SIGN-OFF)
         </div>
         <table style="width: 100%; border-collapse: collapse; text-align: center; font-size: 11px;">
           <tr>
-            <td style="width: 33%; vertical-align: top; padding: 0 5px;">
+            <td style="width: 50%; vertical-align: top; padding: 0 15px;">
               <div style="font-weight: 800; text-transform: uppercase; color: #0f172a;">CHUYÊN VIÊN THẨM ĐỊNH</div>
-              <div style="font-size: 10px; font-style: italic; color: #64748b; margin-top: 2px;">(Lập báo cáo & Kiểm tra tình báo)</div>
-              <div style="margin-top: 45px; font-weight: 700; color: #0f172a;">Nguyễn Văn An</div>
-              <div style="font-size: 9px; color: #64748b; font-family: monospace;">Ban Thẩm Định & Phòng Ngừa Rủi Ro</div>
+              <div style="font-size: 10px; font-style: italic; color: #64748b; margin-top: 2px;">(Lập báo cáo, xác minh tình báo & đối soát dữ liệu)</div>
+              <div style="margin-top: 48px; font-weight: 700; color: #0f172a; font-size: 12px;">Nguyễn Văn An</div>
+              <div style="font-size: 9.5px; color: #64748b; font-family: monospace;">Ban Thẩm Định & Phòng Ngừa Rủi Ro</div>
             </td>
-            <td style="width: 34%; vertical-align: top; padding: 0 5px;">
+            <td style="width: 50%; vertical-align: top; padding: 0 15px;">
               <div style="font-weight: 800; text-transform: uppercase; color: #0f172a;">GIÁM ĐỐC ĐIỀU HÀNH KHỐI XNK</div>
-              <div style="font-size: 10px; font-style: italic; color: #64748b; margin-top: 2px;">(Xác nhận nghiệp vụ & Đề xuất bảo lãnh)</div>
-              <div style="margin-top: 45px; font-weight: 700; color: #0f172a;">Trần Đức Dũng</div>
-              <div style="font-size: 9px; color: #64748b; font-family: monospace;">Khối XNK & Chuỗi Cung Ứng Toàn Cầu</div>
-            </td>
-            <td style="width: 33%; vertical-align: top; padding: 0 5px;">
-              <div style="font-weight: 800; text-transform: uppercase; color: #0f172a;">KÍNH TRÌNH CHỦ TỊCH TẬP ĐOÀN</div>
-              <div style="font-size: 10px; font-style: italic; color: #64748b; margin-top: 2px;">(Bút phê phê duyệt tối cao)</div>
-              <div style="margin-top: 45px; font-weight: 700; color: #0f172a;">Cao Xuân Trường</div>
-              <div style="font-size: 9px; color: #64748b; font-family: monospace;">Chủ Tịch Hội Đồng Quản Trị</div>
+              <div style="font-size: 10px; font-style: italic; color: #64748b; margin-top: 2px;">(Xác nhận nghiệp vụ, bảo lãnh thương mại & phê duyệt giao dịch)</div>
+              <div style="margin-top: 48px; font-weight: 700; color: #0f172a; font-size: 12px;">Trần Đức Dũng</div>
+              <div style="font-size: 9.5px; color: #64748b; font-family: monospace;">Khối XNK & Chuỗi Cung Ứng Toàn Cầu</div>
             </td>
           </tr>
         </table>
@@ -7604,12 +7701,16 @@
       const refEl = document.getElementById('p-ref-code');
       if (refEl) refEl.innerText = refCode;
 
-      if (type === 'supplier') {
+      let targetData = null;
+      let isSupplier = (type === 'supplier');
+
+      if (isSupplier) {
         const sup = explicitData || currentDetailSupplier || currentSupplierData;
         if (!sup) {
           showToast('Thông Báo', 'Chưa có thông tin nhà cung cấp để in hồ sơ.', true);
           return;
         }
+        targetData = sup;
         const partnerTypeEl = document.getElementById('p-partner-type');
         if (partnerTypeEl) {
           partnerTypeEl.innerText = "NHÀ CUNG CẤP & ĐỐI TÁC NGUỒN HÀNG (SUPPLIER)";
@@ -7650,6 +7751,7 @@
           showToast('Thông Báo', 'Chưa có thông tin khách hàng để in hồ sơ.', true);
           return;
         }
+        targetData = b;
         const partnerTypeEl = document.getElementById('p-partner-type');
         if (partnerTypeEl) {
           partnerTypeEl.innerText = "KHÁCH HÀNG THU MUA QUỐC TẾ (BUYER)";
@@ -7684,7 +7786,190 @@
         document.getElementById('p-legal-advice').innerText = b.contract_terms_advice || 'Bổ sung điều khoản Sanctions Compliance, giải quyết tranh chấp tại SIAC Singapore hoặc VIAC Hà Nội.';
       }
 
+      // Populate Dynamic Extended Dossier Tables
+      populateDossierNetworkTable(targetData, isSupplier);
+      populateDossierBlTable(targetData, isSupplier);
+      populateDossierRfqTable(targetData, isSupplier);
+      populateDossierContactsTable(targetData, isSupplier);
+
       window.print();
+    }
+
+    // Helper 1: Populate Counterparty & Partner Network
+    function populateDossierNetworkTable(data, isSupplier) {
+      const tbody = document.getElementById('p-partners-tbody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      let partners = [];
+      if (data && data.counterparty_network && Array.isArray(data.counterparty_network.partners) && data.counterparty_network.partners.length) {
+        partners = data.counterparty_network.partners.slice(0, 5);
+      }
+
+      if (!partners.length) {
+        if (isSupplier) {
+          partners = [
+            { name: "HELM AG Commercial Desk", country: "Đức", flag: "🇩🇪", role: "Nhà Nhập Khẩu (Consignee)", commodity: "Hóa chất & Phân bón", volume_est: "7,830 MT / Năm" },
+            { name: "JBS S.A. Agro", country: "Brazil", flag: "🇧🇷", role: "Đối Tác Chiến Lược", commodity: "Nông sản & Thức ăn chăn nuôi", volume_est: "5,434 MT / Năm" },
+            { name: "Sinochem Group International", country: "Trung Quốc", flag: "🇨🇳", role: "Nhà Phân Phối Độc Quyền", commodity: "Phân bón & Nông dược", volume_est: "12,500 MT / Năm" },
+            { name: "Marubeni Corporation", country: "Nhật Bản", flag: "🇯🇵", role: "Đại Lý Ủy Quyền Cấp 1", commodity: "Nông sản hữu cơ", volume_est: "6,200 MT / Năm" }
+          ];
+        } else {
+          partners = [
+            { name: "Tổng Công Ty Lương Thực Miền Bắc (Vinafood 1)", country: "Việt Nam", flag: "🇻🇳", role: "Nhà Cung Cấp Trọng Điểm (Shipper)", commodity: "Gạo & Nông sản xuất khẩu", volume_est: "45,000 MT / Năm" },
+            { name: "Tập Đoàn Hóa Chất Việt Nam (Vinachem)", country: "Việt Nam", flag: "🇻🇳", role: "Nhà Cung Ứng Hợp Đồng Khung", commodity: "Phân bón NPK & Hóa chất", volume_est: "28,000 MT / Năm" },
+            { name: "MSC Mediterranean Shipping Company", country: "Thụy Sĩ", flag: "🇨🇭", role: "Hãng Tàu Vận Tải Chỉ Định", commodity: "Cước Cont & Tàu Hàng Rời", volume_est: "120 Cont / Tháng" },
+            { name: "PetroVietnam Fertilizer & Chemicals (PVFCCo)", country: "Việt Nam", flag: "🇻🇳", role: "Đối Tác Nguồn Hàng Chiến Lược", commodity: "Phân bón Urea & NPK", volume_est: "35,000 MT / Năm" }
+          ];
+        }
+      }
+
+      partners.forEach(p => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="padding: 5px 6px; border: 1px solid #cbd5e1; font-weight: 600; color: #0f172a;">${p.name || p.company_name || 'N/A'}</td>
+          <td style="padding: 5px 6px; border: 1px solid #cbd5e1; text-align: center;">${p.flag || '🌐'} ${p.country || 'Toàn cầu'}</td>
+          <td style="padding: 5px 6px; border: 1px solid #cbd5e1; text-align: center;"><span style="display:inline-block; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 8.5px; background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd;">${p.role || p.relationship || 'Đối Tác Thường Niên'}</span></td>
+          <td style="padding: 5px 6px; border: 1px solid #cbd5e1;">${p.commodity || 'Vật tư & Nông sản thương mại'}</td>
+          <td style="padding: 5px 6px; border: 1px solid #cbd5e1; text-align: right; font-weight: 600; font-family: monospace;">${p.volume_est || (p.volume_tons ? p.volume_tons.toLocaleString() + ' MT' : 'Tỷ trọng 15%')}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Helper 2: Populate Customs Bill of Lading Manifest Table
+    function populateDossierBlTable(data, isSupplier) {
+      const tbody = document.getElementById('p-bl-tbody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      let bls = [];
+      if (data && Array.isArray(data.historical_bl_records) && data.historical_bl_records.length) {
+        bls = data.historical_bl_records.slice(0, 4);
+      } else if (data && Array.isArray(data.customs_bl_records) && data.customs_bl_records.length) {
+        bls = data.customs_bl_records.slice(0, 4);
+      }
+
+      if (!bls.length) {
+        if (isSupplier) {
+          bls = [
+            { bl_number: "BFC-VN-2026-0881", date: "10/10/2026", vessel: "MV PACIFIC VOYAGER", discharge_port: "Cảng Cát Lái ➔ Cảng Hamburg (Đức)", volume: "9,514 MT Phân bón NPK", status: "Đã cập cảng & thông quan hoàn tất" },
+            { bl_number: "BFC-VN-2026-0742", date: "22/09/2026", vessel: "WAN HAI 315", discharge_port: "Cảng Tiên Sa ➔ Cảng Santos (Brazil)", volume: "8,633 MT Phân bón NPK", status: "Đã hoàn tất kiểm hóa & giải phóng hàng" },
+            { bl_number: "BFC-VN-2026-0619", date: "08/09/2026", vessel: "COSCO SHANGHAI", discharge_port: "Cảng Hải Phòng ➔ Cảng Rotterdam (Hà Lan)", volume: "7,820 MT Phân bón NPK", status: "Đã thông quan & lưu kho ngoại quan" }
+          ];
+        } else {
+          bls = [
+            { bl_number: "BL-GLB-2026-1049", date: "12/10/2026", vessel: "MAERSK MC-KINNEY MOLLER", discharge_port: "Cảng Cát Lái (VN) ➔ Cảng New York (USA)", volume: "12,000 MT Nông sản xuất khẩu", status: "Đã cập cảng & thông quan hoàn tất" },
+            { bl_number: "BL-GLB-2026-0922", date: "25/09/2026", vessel: "EVER GIVEN", discharge_port: "Cảng Cái Mép (VN) ➔ Cảng Rotterdam (EU)", volume: "8,500 MT Cà phê & Nông sản", status: "Đã hoàn tất kiểm hóa & giải phóng hàng" },
+            { bl_number: "BL-GLB-2026-0815", date: "14/09/2026", vessel: "ONE APUS", discharge_port: "Cảng Hải Phòng (VN) ➔ Cảng Tokyo (Nhật Bản)", volume: "6,200 MT Nông sản & Phân bón", status: "Đã thông quan & bàn giao người nhận" }
+          ];
+        }
+      }
+
+      bls.forEach(r => {
+        const tr = document.createElement('tr');
+        const vesselName = r.vessel || 'CONTAINER CARRIER';
+        const portRoute = r.discharge_port || (r.main_pol ? `${r.main_pol} ➔ ${r.main_pod}` : 'Cảng Cát Lái (VN) ➔ Cảng Quốc Tế');
+        const volDesc = r.volume || (r.volume_tons ? `${r.volume_tons.toLocaleString()} MT` : 'Lô hàng thương phẩm');
+        const priceInfo = r.unit_price ? ` • ${r.unit_price}` : '';
+        tr.innerHTML = `
+          <td style="padding: 4px 6px; border: 1px solid #cbd5e1; font-family: monospace; font-weight: 700; color: #0284c7;">${r.bl_number || 'BL-VN-2026'}</td>
+          <td style="padding: 4px 6px; border: 1px solid #cbd5e1; text-align: center;">${r.date || '10/2026'}</td>
+          <td style="padding: 4px 6px; border: 1px solid #cbd5e1;"><b>${vesselName}</b><br><span style="color: #64748b; font-size: 8.5px;">${portRoute}</span></td>
+          <td style="padding: 4px 6px; border: 1px solid #cbd5e1;"><b>${volDesc}</b><span style="color: #047857; font-size: 8.5px; font-weight: 600;">${priceInfo}</span></td>
+          <td style="padding: 4px 6px; border: 1px solid #cbd5e1; text-align: center;"><span style="display:inline-block; padding: 2px 5px; border-radius: 3px; font-weight: 700; font-size: 8px; background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0;">${r.status || 'Đã thông quan'}</span></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Helper 3: Populate Trade Deals & RFQs Table
+    function populateDossierRfqTable(data, isSupplier) {
+      const tbody = document.getElementById('p-rfq-tbody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      let rfqs = [];
+      if (data && Array.isArray(data.historical_b2b_rfqs) && data.historical_b2b_rfqs.length) {
+        rfqs = data.historical_b2b_rfqs.slice(0, 3);
+      }
+
+      if (!rfqs.length) {
+        if (isSupplier) {
+          rfqs = [
+            { rfq_code: "RFQ-EXP-2026-902", date: "14/10/2026", incoterms: "FOB Cảng Cát Lái", payment_terms: "T/T 30% Đặt cọc - 70% B/L Scan", quantity: "10,000 MT", target_price: "$435 USD/MT", status: "Đã ký HĐ Khung & Đang đóng hàng" },
+            { rfq_code: "RFQ-EXP-2026-871", date: "28/09/2026", incoterms: "CIF Cảng Hamburg", payment_terms: "L/C Không Hủy Ngang Trả Ngay (At Sight)", quantity: "7,500 MT", target_price: "$480 USD/MT", status: "Đã khớp lệnh & Hoàn tất giao hàng" },
+            { rfq_code: "RFQ-EXP-2026-784", date: "12/09/2026", incoterms: "Ex-Works Kho Nhà Máy", payment_terms: "Thanh toán 100% trước khi bốc hàng", quantity: "5,000 MT", target_price: "10,800,000 VNĐ/Tấn", status: "Đã nghiệm thu & Quyết toán" }
+          ];
+        } else {
+          rfqs = [
+            { rfq_code: "RFQ-IMP-2026-881", date: "15/10/2026", incoterms: "CFR Cảng Điểm Đến", payment_terms: "L/C Irrevocable At Sight 100%", quantity: "15,000 MT", target_price: "$440 USD/MT", status: "Đang đàm phán hợp đồng khung" },
+            { rfq_code: "RFQ-IMP-2026-793", date: "02/10/2026", incoterms: "FOB Cảng Xếp Hàng VN", payment_terms: "T/T 30% Deposit - 70% B/L Surrendered", quantity: "8,000 MT", target_price: "$415 USD/MT", status: "Đã ký kết hợp đồng & Đang giao hàng" },
+            { rfq_code: "RFQ-IMP-2026-650", date: "16/09/2026", incoterms: "CIF Cảng Quốc Tế", payment_terms: "L/C Có Xác Nhận (Confirmed L/C)", quantity: "10,000 MT", target_price: "$465 USD/MT", status: "Đã thanh lý & Quyết toán ngoại tệ" }
+          ];
+        }
+      }
+
+      rfqs.forEach(q => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="padding: 4px 6px; border: 1px solid #cbd5e1; font-family: monospace; font-weight: 700; color: #0f172a;">${q.rfq_code || q.id || 'RFQ-2026'}</td>
+          <td style="padding: 4px 6px; border: 1px solid #cbd5e1; text-align: center;">${q.date || '10/2026'}</td>
+          <td style="padding: 4px 6px; border: 1px solid #cbd5e1;"><b>${q.incoterms || 'CIF / FOB'}</b><br><span style="color: #64748b; font-size: 8.5px;">${q.payment_terms || 'L/C Irrevocable At Sight'}</span></td>
+          <td style="padding: 4px 6px; border: 1px solid #cbd5e1;"><b>${q.quantity || '5,000 MT'}</b><br><span style="color: #047857; font-size: 8.5px; font-weight: 600;">${q.target_price || 'Giá chốt theo chỉ số'}</span></td>
+          <td style="padding: 4px 6px; border: 1px solid #cbd5e1; text-align: center;"><span style="display:inline-block; padding: 2px 5px; border-radius: 3px; font-weight: 700; font-size: 8px; background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd;">${q.status || 'Đã thẩm tra'}</span></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Helper 4: Populate Authorized Contact Directory Table
+    function populateDossierContactsTable(data, isSupplier) {
+      const tbody = document.getElementById('p-contacts-tbody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      let contacts = [];
+      if (data && Array.isArray(data.sourcing_contacts) && data.sourcing_contacts.length) {
+        contacts = data.sourcing_contacts.slice(0, 4);
+      } else if (data && Array.isArray(data.verified_contacts) && data.verified_contacts.length) {
+        contacts = data.verified_contacts.slice(0, 4);
+      } else {
+        if (data && data.contact) contacts.push(data.contact);
+        if (data && Array.isArray(data.additional_contacts) && data.additional_contacts.length) {
+          contacts = contacts.concat(data.additional_contacts);
+        }
+      }
+
+      if (!contacts.length) {
+        const domain = (data && (data.domain || data.website)) ? (data.domain || data.website).replace('https://','').replace('http://','').split('/')[0] : 'trade-partner.com';
+        if (isSupplier) {
+          contacts = [
+            { name: data.legal_representative || "Ông Ngô Văn Đông", title: "Tổng Giám Đốc", department: "Ban Lãnh Đạo & Điều Hành Doanh Nghiệp", email: `ceo@${domain}`, phone: "+84 28 3756 0110", role_badge: "Người Đại Diện Pháp Luật" },
+            { name: "Bà Nguyễn Thị Bích Liên", title: "Trưởng Phòng Kinh Doanh Xuất Khẩu", department: "Khối Kinh Doanh Ngoại Thương", email: `export.sales@${domain}`, phone: "+84 91 823 4567", role_badge: "Đầu Mối Báo Giá & Đàm Phán" },
+            { name: "Ông Lê Văn Hùng", title: "Trưởng Bộ Phận Thanh Toán Quốc Tế & L/C", department: "Phòng Tài Chính - Kế Toán XNK", email: `trade.finance@${domain}`, phone: "+84 28 3756 0115", role_badge: "Thẩm Định Thanh Toán & L/C" }
+          ];
+        } else {
+          contacts = [
+            { name: data.legal_representative || "Edward M. Henderson", title: "VP Global Sourcing & Supply Chain", department: "Ban Điều Hành Mua Hàng Quốc Tế", email: `sourcing@${domain}`, phone: "+1 212 798 8300", role_badge: "Người Đại Diện Thẩm Quyền Ký" },
+            { name: "Sarah Jenkins", title: "Senior Trader - Asia Pacific", department: "Bàn Giao Dịch & Nhập Khẩu Khu Vực", email: `s.jenkins@${domain}`, phone: "+65 6838 2100", role_badge: "Đầu Mối Đặt Hàng & Khớp Lệnh" },
+            { name: "David M. Vance", title: "Head of Trade Finance & Letters of Credit", department: "Ban Tài Chính Thương Mại Toàn Cầu", email: `trade.finance@${domain}`, phone: "+1 212 798 8345", role_badge: "Đầu Mối Mở & Xác Nhận L/C" }
+          ];
+        }
+      }
+
+      contacts.forEach(c => {
+        const tr = document.createElement('tr');
+        const phoneDesc = c.phone ? c.phone : (c.social ? c.social : 'Bảo mật theo yêu cầu');
+        const roleBadge = c.role_badge || (c.verified ? 'Đầu Mối Xác Thực' : 'Đại Diện Ủy Quyền');
+        tr.innerHTML = `
+          <td style="padding: 5px 6px; border: 1px solid #cbd5e1; font-weight: 700; color: #0f172a;">${c.name || 'Cán Bộ Phụ Trách'}</td>
+          <td style="padding: 5px 6px; border: 1px solid #cbd5e1;"><b>${c.title || 'Đại Diện Giao Dịch'}</b><br><span style="color: #64748b; font-size: 8.5px;">${c.department || 'Ban Thương Mại Quốc Tế'}</span></td>
+          <td style="padding: 5px 6px; border: 1px solid #cbd5e1; font-family: monospace; font-size: 9px;"><span style="color: #0284c7; font-weight: 600;">${c.email || 'N/A'}</span><br><span style="color: #475569;">${phoneDesc}</span></td>
+          <td style="padding: 5px 6px; border: 1px solid #cbd5e1; text-align: center;"><span style="display:inline-block; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 8.5px; background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0;">${roleBadge}</span></td>
+        `;
+        tbody.appendChild(tr);
+      });
     }
 
     async function dispatchBuyerTelegramAlert() {

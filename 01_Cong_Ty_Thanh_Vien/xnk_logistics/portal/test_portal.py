@@ -643,15 +643,24 @@ def run_all_tests():
             assert 'INTERNATIONAL TRADE COUNTERPARTY DUE DILIGENCE & KYC DOSSIER' in html_text
             assert 'I. THÔNG TIN ĐỊNH DANH PHÁP NHÂN' in html_text
             assert 'II. KẾT QUẢ RÀ SOÁT TÌNH BÁO & THẨM ĐỊNH 4 TẦNG' in html_text
-            assert 'III. NĂNG LỰC THƯƠNG MẠI, NGUỒN CUNG & LỊCH SỬ VẬN ĐƠN' in html_text
-            assert 'IV. BỨC TƯỜNG LỬA TÀI CHÍNH & KHUYẾN NGHỊ ĐIỀU KHOẢN HỢP ĐỒNG' in html_text
-            assert 'V. Ý KIẾN THẨM ĐỊNH & PHÊ DUYỆT ĐIỀU HÀNH 3 CẤP' in html_text
+            assert 'III. NĂNG LỰC THƯƠNG MẠI, NGUỒN CUNG & LỊCH SỬ VẬN ĐƠN' in html_text or 'NĂNG LỰC THƯƠNG MẠI' in html_text
+            assert 'MẠNG LƯỚI ĐỐI TÁC THƯƠNG MẠI TOÀN CẦU' in html_text
+            assert 'LỊCH SỬ VẬN ĐƠN HẢI QUAN, GIAO DỊCH & CHÀO ĐƠN B2B' in html_text
+            assert 'BỨC TƯỜNG LỬA TÀI CHÍNH & KHUYẾN NGHỊ ĐIỀU KHOẢN HỢP ĐỒNG' in html_text
+            assert 'DANH BẠ LIÊN HỆ & ĐẦU MỐI GIAO DỊCH ỦY QUYỀN' in html_text
+            assert 'Ý KIẾN THẨM ĐỊNH & PHÊ DUYỆT ĐIỀU HÀNH' in html_text
             assert 'CHUYÊN VIÊN THẨM ĐỊNH' in html_text
             assert 'GIÁM ĐỐC ĐIỀU HÀNH KHỐI XNK' in html_text
-            assert 'KÍNH TRÌNH CHỦ TỊCH TẬP ĐOÀN' in html_text
+            assert 'p-partners-tbody' in html_text
+            assert 'p-bl-tbody' in html_text
+            assert 'p-rfq-tbody' in html_text
+            assert 'p-contacts-tbody' in html_text
+            # Verify Chairman signature is removed from printable dossier per directive
+            dossier_sub = html_text[html_text.find('id="printableDossier"'):html_text.find('<!-- ============================================================= -->')]
+            assert 'KÍNH TRÌNH CHỦ TỊCH TẬP ĐOÀN' not in dossier_sub
             assert "printCurrentDossier('supplier')" in html_text
             assert "printCurrentDossier('buyer')" in html_text
-        print(f"✅ Test 39/42: Khắc Phục Lỗi In Giấy Trắng & Hoàn Thiện Biểu Mẫu Hồ Sơ Thẩm Định Ngoại Thương 360° Chuẩn Quốc Tế chuẩn 100%")
+        print(f"✅ Test 39/42: Khắc Phục Lỗi In Giấy Trắng & Hoàn Thiện Biểu Mẫu Hồ Sơ Thẩm Định Ngoại Thương 360° Chuẩn Quốc Tế (Mạng Lưới ĐT, B/L, RFQ, Danh Bạ & Phê Duyệt GĐ Điều Hành) chuẩn 100%")
         passed_count += 1
 
         # Test 40: Mạng Lưới Đối Tác Ngoại Thương Theo Quốc Gia (Counterparty Network)

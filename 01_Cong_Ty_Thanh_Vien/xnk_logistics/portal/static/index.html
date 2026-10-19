@@ -44,10 +44,25 @@
               850: '#0B1226',
               800: '#101B37',
               700: '#1A2952',
-              cyan: '#00F0FF',
+              blue: '#2563EB',
+              sky: '#0284C7',
+              cyan: '#2563EB',
               emerald: '#10B981',
               amber: '#F59E0B',
-              rose: '#F43F5E',
+              rose: '#EF4444',
+            },
+            cyan: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              300: '#93c5fd',
+              400: '#60a5fa',
+              500: '#2563eb',
+              600: '#1d4ed8',
+              700: '#1e40af',
+              800: '#1e3a8a',
+              900: '#172554',
+              950: '#0f172a',
             }
           }
         }
@@ -328,76 +343,122 @@
       color: #475569 !important; /* Slate-600 */
     }
 
-    /* 11. Preserve Crisp White Text on Solid Buttons & Gradients */
+    /* 11. High-Contrast Interactive Button Feedback Engine (9h03 Identity) */
     html:not(.dark) [class*="bg-gradient-to-r"],
     html:not(.dark) [class*="bg-gradient-to-r"] *,
     html.light [class*="bg-gradient-to-r"],
     html.light [class*="bg-gradient-to-r"] * {
       color: #ffffff !important;
     }
-    html:not(.dark) button[class*="bg-cyan-500"],
-    html:not(.dark) button[class*="bg-emerald-500"],
-    html:not(.dark) button[class*="bg-blue-600"],
-    html:not(.dark) button[class*="bg-indigo-600"],
-    html.light button[class*="bg-cyan-500"],
-    html.light button[class*="bg-emerald-500"],
-    html.light button[class*="bg-blue-600"],
-    html.light button[class*="bg-indigo-600"] {
+    html:not(.dark) button.bg-blue-600,
+    html:not(.dark) button.bg-emerald-600,
+    html:not(.dark) button.bg-emerald-500,
+    html.light button.bg-blue-600,
+    html.light button.bg-emerald-600,
+    html.light button.bg-emerald-500 {
       color: #ffffff !important;
     }
-    html:not(.dark) button[class*="bg-cyan-500"] *,
-    html:not(.dark) button[class*="bg-emerald-500"] *,
-    html.light button[class*="bg-cyan-500"] *,
-    html.light button[class*="bg-emerald-500"] * {
+    html:not(.dark) button.bg-blue-600 *,
+    html:not(.dark) button.bg-emerald-600 *,
+    html.light button.bg-blue-600 *,
+    html.light button.bg-emerald-600 * {
       color: #ffffff !important;
     }
 
-    /* 12. Primary Active / Sky Cerulean Accent System */
-    html:not(.dark) .bg-cyan-500,
-    html.light .bg-cyan-500 {
-      background-color: #0284c7 !important; /* Executive Sky-600 */
+    /* 12. Primary Active / Royal Blue Accent System (9h03 Identity: #2563EB) */
+    html:not(.dark) .bg-cyan-500:not([class*="/"]),
+    html.light .bg-cyan-500:not([class*="/"]) {
+      background-color: #2563eb !important; /* Royal Blue */
       color: #ffffff !important;
-      border-color: #0284c7 !important;
-      box-shadow: 0 2px 8px -1px rgba(2, 132, 199, 0.3) !important;
+      border-color: #1d4ed8 !important;
+      box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.25) !important;
     }
-    html:not(.dark) .bg-cyan-500 *,
-    html.light .bg-cyan-500 * {
+    html:not(.dark) .bg-cyan-500:not([class*="/"]) *,
+    html.light .bg-cyan-500:not([class*="/"]) * {
       color: #ffffff !important;
     }
     html:not(.dark) .text-brand-950,
     html.light .text-brand-950 {
-      color: #ffffff !important; /* White text on active colored badges/buttons */
+      color: #0f172a !important;
     }
-    html:not(.dark) .text-cyan-400, html.light .text-cyan-400 { color: #0284c7 !important; } /* Sky-600 */
-    html:not(.dark) .text-cyan-300, html.light .text-cyan-300 { color: #0369a1 !important; } /* Sky-700 */
-    html:not(.dark) .text-cyan-200, html.light .text-cyan-200 { color: #0369a1 !important; }
-    html:not(.dark) .text-cyan-100, html.light .text-cyan-100 { color: #0c4a6e !important; }
-    html:not(.dark) .text-brand-cyan, html.light .text-brand-cyan { color: #0284c7 !important; }
+    html:not(.dark) .text-cyan-400, html.light .text-cyan-400 { color: #1d4ed8 !important; } /* Blue-700 */
+    html:not(.dark) .text-cyan-300, html.light .text-cyan-300 { color: #1e40af !important; } /* Blue-800 */
+    html:not(.dark) .text-cyan-200, html.light .text-cyan-200 { color: #1e3a8a !important; }
+    html:not(.dark) .text-cyan-100, html.light .text-cyan-100 { color: #0f172a !important; }
+    html:not(.dark) .text-brand-cyan, html.light .text-brand-cyan { color: #2563eb !important; }
 
     /* Cerulean / Sky Wells & Badges */
     html:not(.dark) [class*="bg-cyan-950"],
     html:not(.dark) [class*="bg-cyan-500/"],
     html.light [class*="bg-cyan-950"],
     html.light [class*="bg-cyan-500/"] {
-      background-color: #f0f9ff !important; /* Sky-50 */
-      border-color: rgba(2, 132, 199, 0.22) !important;
+      background-color: #eff6ff !important; /* Soft Blue-50 */
+      border-color: #bfdbfe !important; /* Blue-200 */
+      color: #1e40af !important; /* Deep Blue-800 - high contrast */
+    }
+    html:not(.dark) [class*="bg-cyan-950"] *,
+    html:not(.dark) [class*="bg-cyan-500/"] *,
+    html.light [class*="bg-cyan-950"] *,
+    html.light [class*="bg-cyan-500/"] * {
+      color: #1e40af !important; /* Deep Blue-800 */
     }
     html:not(.dark) [class*="hover:bg-cyan-500/"]:hover,
     html:not(.dark) [class*="hover:bg-cyan-900"]:hover,
     html.light [class*="hover:bg-cyan-500/"]:hover,
     html.light [class*="hover:bg-cyan-900"]:hover {
-      background-color: #e0f2fe !important; /* Sky-100 */
-      border-color: rgba(2, 132, 199, 0.35) !important;
+      background-color: #2563eb !important; /* Invert to Royal Blue on hover */
+      color: #ffffff !important;
+      border-color: #1d4ed8 !important;
+    }
+    html:not(.dark) [class*="hover:bg-cyan-500/"]:hover *,
+    html:not(.dark) [class*="hover:bg-cyan-900"]:hover *,
+    html.light [class*="hover:bg-cyan-500/"]:hover *,
+    html.light [class*="hover:bg-cyan-900"]:hover * {
+      color: #ffffff !important;
     }
     html:not(.dark) [class*="border-cyan-500/"],
     html:not(.dark) [class*="border-cyan-400"],
     html.light [class*="border-cyan-500/"],
     html.light [class*="border-cyan-400"] {
-      border-color: rgba(2, 132, 199, 0.25) !important;
+      border-color: #bfdbfe !important;
     }
     html:not(.dark) #tableSwipeGuidance, html.light #tableSwipeGuidance {
-      background: linear-gradient(to right, rgba(2, 132, 199, 0.08), rgba(2, 132, 199, 0.02), #ffffff) !important;
-      border-color: rgba(2, 132, 199, 0.22) !important;
+      background: linear-gradient(to right, rgba(37, 99, 235, 0.08), rgba(37, 99, 235, 0.02), #ffffff) !important;
+      border-color: #bfdbfe !important;
+    }
+
+    /* ========================================================================= */
+    /* 🎯 HIGH-CONTRAST INTERACTIVE BUTTON FEEDBACK ENGINE (CHỈ THỊ ĐỐI NGHỊCH)  */
+    /* Đảm bảo khi ấn (active / pressed) màu chữ và nền luôn đối lập 100%       */
+    /* ========================================================================= */
+    button, .tab-btn {
+      transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    button:active, .tab-btn:active {
+      transform: scale(0.97) !important;
+    }
+    button.bg-blue-600:active,
+    button[class*="bg-blue-600"]:active,
+    button[class*="from-cyan-500"]:active {
+      background: #1d4ed8 !important;
+      color: #ffffff !important;
+    }
+    button.bg-blue-600:active *,
+    button[class*="bg-blue-600"]:active *,
+    button[class*="from-cyan-500"]:active * {
+      color: #ffffff !important;
+    }
+    button[class*="bg-cyan-500/"]:active,
+    button[class*="bg-cyan-950"]:active,
+    button[class*="hover:bg-cyan-500"]:active {
+      background-color: #1d4ed8 !important;
+      color: #ffffff !important;
+      border-color: #1e40af !important;
+    }
+    button[class*="bg-cyan-500/"]:active *,
+    button[class*="bg-cyan-950"]:active *,
+    button[class*="hover:bg-cyan-500"]:active * {
+      color: #ffffff !important;
     }
 
     /* 13. Emerald Semantic System (Tier A / Passed / Safe / Khớp Hoàn Toàn) */
@@ -613,14 +674,26 @@
       color: #e2e8f0 !important;
     }
 
-    /* 21. Navigation Tabs Architecture */
-    html:not(.dark) .tab-btn.text-cyan-400,
-    html.light .tab-btn.text-cyan-400 {
-      background-color: #f0f9ff !important;
-      border-color: #bae6fd !important;
-      color: #0369a1 !important;
+    /* 21. Navigation Tabs Architecture (9h03 Identity: Royal Blue Solid) */
+    .tab-btn.bg-blue-600,
+    .tab-btn.bg-cyan-500,
+    html:not(.dark) .tab-btn.bg-blue-600,
+    html:not(.dark) .tab-btn.bg-cyan-500,
+    html.light .tab-btn.bg-blue-600,
+    html.light .tab-btn.bg-cyan-500 {
+      background-color: #2563eb !important;
+      border-color: #1d4ed8 !important;
+      color: #ffffff !important;
       font-weight: 700 !important;
-      box-shadow: 0 1px 3px 0 rgba(2, 132, 199, 0.1) !important;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.28) !important;
+    }
+    .tab-btn.bg-blue-600 *,
+    .tab-btn.bg-cyan-500 *,
+    html:not(.dark) .tab-btn.bg-blue-600 *,
+    html:not(.dark) .tab-btn.bg-cyan-500 *,
+    html.light .tab-btn.bg-blue-600 *,
+    html.light .tab-btn.bg-cyan-500 * {
+      color: #ffffff !important;
     }
     html:not(.dark) .tab-btn.text-slate-400,
     html.light .tab-btn.text-slate-400 {
@@ -850,45 +923,45 @@
       <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto scrollbar-none xl:grid xl:grid-cols-7 w-full py-0.5" id="mainTabScrollContainer">
         
         <!-- Tab 1: Prospecting Leads -->
-        <button onclick="switchTab('prospecting')" id="tab-prospecting" class="tab-btn shrink-0 xl:shrink px-3.5 py-2 sm:px-3 sm:py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 shadow-sm cursor-pointer whitespace-nowrap">
-          <i data-lucide="target" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+        <button onclick="switchTab('prospecting')" id="tab-prospecting" class="tab-btn shrink-0 xl:shrink px-3.5 py-2 sm:px-3 sm:py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 text-white bg-blue-600 border border-blue-500 font-bold shadow-md shadow-blue-600/25 cursor-pointer whitespace-nowrap active:scale-95">
+          <i data-lucide="target" class="w-4 h-4 shrink-0"></i>
           <span class="font-bold text-xs md:text-sm tracking-tight">Khách Hàng</span>
         </button>
 
         <!-- Tab 2: Buyer Verification -->
-        <button onclick="switchTab('buyers')" id="tab-buyers" class="tab-btn shrink-0 xl:shrink px-3.5 py-2 sm:px-3 sm:py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap">
+        <button onclick="switchTab('buyers')" id="tab-buyers" class="tab-btn shrink-0 xl:shrink px-3.5 py-2 sm:px-3 sm:py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap active:scale-95">
           <i data-lucide="shield-check" class="w-4 h-4 shrink-0"></i>
           <span class="font-bold text-xs md:text-sm tracking-tight">Thẩm Định</span>
         </button>
 
         <!-- Tab 3: Suppliers & Tier-1 -->
-        <button onclick="switchTab('suppliers')" id="tab-suppliers" class="tab-btn shrink-0 xl:shrink px-3.5 py-2 sm:px-3 sm:py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap">
+        <button onclick="switchTab('suppliers')" id="tab-suppliers" class="tab-btn shrink-0 xl:shrink px-3.5 py-2 sm:px-3 sm:py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap active:scale-95">
           <i data-lucide="building-2" class="w-4 h-4 shrink-0"></i>
           <span class="font-bold text-xs md:text-sm tracking-tight">Nhà Cung Cấp</span>
         </button>
 
         <!-- Tab 4: Trade Matchmaker (Bàn Khớp Giao Dịch B2B) -->
-        <button onclick="switchTab('matchmaker')" id="tab-matchmaker" class="tab-btn shrink-0 xl:shrink px-3.5 py-2 sm:px-3 sm:py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap">
+        <button onclick="switchTab('matchmaker')" id="tab-matchmaker" class="tab-btn shrink-0 xl:shrink px-3.5 py-2 sm:px-3 sm:py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap active:scale-95">
           <i data-lucide="sparkles" class="w-4 h-4 text-emerald-400 shrink-0"></i>
           <span class="font-bold text-xs md:text-sm tracking-tight">Khớp Lệnh</span>
         </button>
 
         <!-- Tab 5: Customs B/L -->
-        <button onclick="switchTab('sourcing')" id="tab-sourcing" class="tab-btn shrink-0 xl:shrink px-3.5 py-2 sm:px-3 sm:py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap">
+        <button onclick="switchTab('sourcing')" id="tab-sourcing" class="tab-btn shrink-0 xl:shrink px-3.5 py-2 sm:px-3 sm:py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap active:scale-95">
           <i data-lucide="container" class="w-4 h-4 shrink-0"></i>
           <span class="font-bold text-xs md:text-sm tracking-tight">Vận Đơn B/L</span>
         </button>
 
         <!-- Tab 6: Factory Audit -->
-        <button onclick="switchTab('audit')" id="tab-audit" class="tab-btn shrink-0 xl:shrink px-3.5 py-2 sm:px-3 sm:py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap">
+        <button onclick="switchTab('audit')" id="tab-audit" class="tab-btn shrink-0 xl:shrink px-3.5 py-2 sm:px-3 sm:py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap active:scale-95">
           <i data-lucide="clipboard-check" class="w-4 h-4 shrink-0"></i>
           <span class="font-bold text-xs md:text-sm tracking-tight">Kiểm Toán</span>
         </button>
 
         <!-- Tab 7: Multi-Exchange Commodity Prices & Charts (Bảng Giá & Biểu Đồ Đa Sàn) -->
-        <button onclick="window.location.href='/prices'" id="tab-prices" class="tab-btn shrink-0 xl:shrink px-3.5 py-2 sm:px-3 sm:py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap">
+        <button onclick="window.location.href='/prices'" id="tab-prices" class="tab-btn shrink-0 xl:shrink px-3.5 py-2 sm:px-3 sm:py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap active:scale-95">
           <i data-lucide="trending-up" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-          <span class="font-bold text-xs md:text-sm tracking-tight text-white">Giá Đa Sàn</span>
+          <span class="font-bold text-xs md:text-sm tracking-tight">Giá Đa Sàn</span>
         </button>
 
       </div>
@@ -4116,7 +4189,7 @@
         if (sec) sec.classList.add('hidden');
         const btn = document.getElementById(`tab-${t}`);
         if (btn) {
-          btn.classList.remove('text-cyan-400', 'bg-cyan-500/10', 'border-cyan-500/20', 'text-white', 'border-white/10', 'text-emerald-400', 'bg-emerald-500/10', 'border-emerald-500/30');
+          btn.classList.remove('text-white', 'bg-blue-600', 'border-blue-500', 'shadow-md', 'shadow-blue-600/25', 'font-bold', 'text-cyan-400', 'bg-cyan-500/10', 'border-cyan-500/20', 'border-white/10', 'text-emerald-400', 'bg-emerald-500/10', 'border-emerald-500/30', 'bg-emerald-600', 'border-emerald-500', 'shadow-emerald-600/25');
           btn.classList.add('text-slate-400', 'border-transparent');
         }
       });
@@ -4127,9 +4200,9 @@
       if (activeBtn) {
         activeBtn.classList.remove('text-slate-400', 'border-transparent');
         if (tab === 'prices') {
-          activeBtn.classList.add('text-emerald-400', 'bg-emerald-500/10', 'border-emerald-500/30');
+          activeBtn.classList.add('text-white', 'bg-emerald-600', 'border-emerald-500', 'font-bold', 'shadow-md', 'shadow-emerald-600/25');
         } else {
-          activeBtn.classList.add('text-cyan-400', 'bg-cyan-500/10', 'border-cyan-500/20');
+          activeBtn.classList.add('text-white', 'bg-blue-600', 'border-blue-500', 'font-bold', 'shadow-md', 'shadow-blue-600/25');
         }
         try {
           activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
@@ -8966,13 +9039,13 @@
       const supPanel = document.getElementById('drfq-supplier-panel');
 
       if (tab === 'buyer') {
-        if (buyerBtn) buyerBtn.className = 'py-2.5 px-3 rounded-xl font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 bg-cyan-500 text-brand-950 shadow-md cursor-pointer';
-        if (supBtn) supBtn.className = 'py-2.5 px-3 rounded-xl font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer';
+        if (buyerBtn) buyerBtn.className = 'py-2.5 px-3 rounded-xl font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 bg-blue-600 text-white shadow-md shadow-blue-500/25 cursor-pointer active:scale-95';
+        if (supBtn) supBtn.className = 'py-2.5 px-3 rounded-xl font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer active:scale-95';
         if (buyerPanel) buyerPanel.classList.remove('hidden');
         if (supPanel) supPanel.classList.add('hidden');
       } else {
-        if (supBtn) supBtn.className = 'py-2.5 px-3 rounded-xl font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 bg-emerald-500 text-brand-950 shadow-md cursor-pointer';
-        if (buyerBtn) buyerBtn.className = 'py-2.5 px-3 rounded-xl font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer';
+        if (supBtn) supBtn.className = 'py-2.5 px-3 rounded-xl font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 bg-emerald-600 text-white shadow-md shadow-emerald-500/25 cursor-pointer active:scale-95';
+        if (buyerBtn) buyerBtn.className = 'py-2.5 px-3 rounded-xl font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer active:scale-95';
         if (supPanel) supPanel.classList.remove('hidden');
         if (buyerPanel) buyerPanel.classList.add('hidden');
       }

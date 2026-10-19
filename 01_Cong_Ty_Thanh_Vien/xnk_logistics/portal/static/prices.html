@@ -25,13 +25,36 @@
       darkMode: 'class',
       theme: {
         extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
           colors: {
             brand: {
               950: '#070b14',
               900: '#0b1324',
               850: '#0f1c36',
               800: '#142548',
-              700: '#1d3565'
+              700: '#1d3565',
+              blue: '#2563EB',
+              sky: '#0284C7',
+              cyan: '#2563EB',
+              emerald: '#10B981',
+              amber: '#F59E0B',
+              rose: '#EF4444',
+            },
+            cyan: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              300: '#93c5fd',
+              400: '#60a5fa',
+              500: '#2563eb',
+              600: '#1d4ed8',
+              700: '#1e40af',
+              800: '#1e3a8a',
+              900: '#172554',
+              950: '#0f172a',
             }
           }
         }
@@ -231,6 +254,45 @@
       background-color: #ffffff !important;
       border-color: #cbd5e1 !important;
       box-shadow: 0 12px 28px rgba(0,0,0,0.15) !important;
+    }
+    /* 🎯 HIGH-CONTRAST INTERACTIVE BUTTON FEEDBACK & IDENTITY SYSTEM */
+    button, .tab-btn {
+      transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    button:active, .tab-btn:active {
+      transform: scale(0.97) !important;
+    }
+    button.bg-blue-600:active,
+    button[class*="bg-blue-600"]:active,
+    button[class*="bg-cyan-500"]:active {
+      background: #1d4ed8 !important;
+      color: #ffffff !important;
+    }
+    button.bg-blue-600:active *,
+    button[class*="bg-blue-600"]:active *,
+    button[class*="bg-cyan-500"]:active * {
+      color: #ffffff !important;
+    }
+    button[class*="bg-cyan-500/"]:active,
+    button[class*="hover:bg-cyan-500"]:active {
+      background-color: #1d4ed8 !important;
+      color: #ffffff !important;
+      border-color: #1e40af !important;
+    }
+    button[class*="bg-cyan-500/"]:active *,
+    button[class*="hover:bg-cyan-500"]:active * {
+      color: #ffffff !important;
+    }
+
+    html:not(.dark) .text-cyan-400, html.light .text-cyan-400 { color: #1d4ed8 !important; }
+    html:not(.dark) .text-cyan-300, html.light .text-cyan-300 { color: #1e40af !important; }
+    html:not(.dark) [class*="bg-cyan-500/"], html.light [class*="bg-cyan-500/"] {
+      background-color: #eff6ff !important;
+      border-color: #bfdbfe !important;
+      color: #1e40af !important;
+    }
+    html:not(.dark) [class*="bg-cyan-500/"] *, html.light [class*="bg-cyan-500/"] * {
+      color: #1e40af !important;
     }
     html:not(.dark) footer {
       background-color: #f8fafc !important;
@@ -940,12 +1002,12 @@
         const isDark = document.documentElement.classList.contains('dark');
         if (c === cat) {
           btn.className = isDark
-            ? "px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-cyan-500 text-brand-950 border border-cyan-400 cursor-pointer shadow-md shadow-cyan-500/20"
-            : "px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-blue-600 text-white border border-blue-600 cursor-pointer shadow-md shadow-blue-500/20";
+            ? "px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-blue-600 text-white border border-blue-500 cursor-pointer shadow-md shadow-blue-600/30 active:scale-95"
+            : "px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-blue-600 text-white border border-blue-600 cursor-pointer shadow-md shadow-blue-500/25 active:scale-95";
         } else {
           btn.className = isDark
-            ? "px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-brand-950 text-slate-300 hover:text-white border border-white/10 cursor-pointer"
-            : "px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-slate-100 text-slate-700 hover:bg-slate-200 border-slate-200 cursor-pointer";
+            ? "px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-brand-950 text-slate-300 hover:text-white border border-white/10 hover:border-slate-500 cursor-pointer active:scale-95"
+            : "px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-slate-100 text-slate-700 hover:bg-slate-200 border-slate-200 cursor-pointer active:scale-95";
         }
       });
       if (cachedCommodityPricesData && cachedCommodityPricesData.sectors) {
@@ -1960,13 +2022,13 @@
       const supPanel = document.getElementById('drfq-supplier-panel');
 
       if (tab === 'buyer') {
-        if (buyerBtn) buyerBtn.className = 'py-2.5 px-3 rounded-xl font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 bg-cyan-500 text-brand-950 shadow-md cursor-pointer';
-        if (supBtn) supBtn.className = 'py-2.5 px-3 rounded-xl font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer';
+        if (buyerBtn) buyerBtn.className = 'py-2.5 px-3 rounded-xl font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 bg-blue-600 text-white shadow-md shadow-blue-600/30 cursor-pointer active:scale-95';
+        if (supBtn) supBtn.className = 'py-2.5 px-3 rounded-xl font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer active:scale-95';
         if (buyerPanel) buyerPanel.classList.remove('hidden');
         if (supPanel) supPanel.classList.add('hidden');
       } else {
-        if (supBtn) supBtn.className = 'py-2.5 px-3 rounded-xl font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 bg-emerald-500 text-brand-950 shadow-md cursor-pointer';
-        if (buyerBtn) buyerBtn.className = 'py-2.5 px-3 rounded-xl font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer';
+        if (supBtn) supBtn.className = 'py-2.5 px-3 rounded-xl font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 bg-emerald-600 text-white shadow-md shadow-emerald-600/30 cursor-pointer active:scale-95';
+        if (buyerBtn) buyerBtn.className = 'py-2.5 px-3 rounded-xl font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer active:scale-95';
         if (supPanel) supPanel.classList.remove('hidden');
         if (buyerPanel) buyerPanel.classList.add('hidden');
       }
@@ -1984,9 +2046,9 @@
         const btn = document.getElementById(`btn-dbuyer-${l}`);
         if (btn) {
           if (l === lang) {
-            btn.className = 'px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-cyan-500 text-brand-950 cursor-pointer';
+            btn.className = 'px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-blue-600 text-white cursor-pointer shadow-sm active:scale-95';
           } else {
-            btn.className = 'px-2.5 py-1 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer';
+            btn.className = 'px-2.5 py-1 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer active:scale-95';
           }
         }
       });
@@ -1999,9 +2061,9 @@
         const btn = document.getElementById(`btn-dsup-${l}`);
         if (btn) {
           if (l === lang) {
-            btn.className = 'px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-emerald-500 text-brand-950 cursor-pointer';
+            btn.className = 'px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-emerald-600 text-white cursor-pointer shadow-sm active:scale-95';
           } else {
-            btn.className = 'px-2.5 py-1 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer';
+            btn.className = 'px-2.5 py-1 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer active:scale-95';
           }
         }
       });
@@ -2112,27 +2174,27 @@
           <div>
             <div class="flex flex-wrap items-center gap-2">
               <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-bold">BỘ ĐÔI RFQ & CHÀO HÀNG B2B NGOẠI THƯƠNG</span>
-              <span id="drfq-status-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">Cặp Khớp Kim Cương</span>
+              <span id="drfq-status-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-blue-500/15 text-blue-300 border border-blue-500/30">Cặp Khớp Kim Cương</span>
             </div>
             <h3 class="text-lg sm:text-2xl font-black text-white mt-2 tracking-tight flex flex-wrap items-center gap-2">
-              <span id="drfq-buyer-name" class="text-cyan-400">Buyer</span>
+              <span id="drfq-buyer-name" class="text-blue-400">Buyer</span>
               <span class="text-slate-400 text-sm sm:text-base font-normal">⇄</span>
               <span id="drfq-supplier-name" class="text-emerald-400">Supplier</span>
             </h3>
             <p class="text-xs text-slate-400 mt-1 font-mono" id="drfq-desc-sub">Đồng bộ 2 luồng: Thư chào bán gửi Khách hàng & Thư hỏi nguồn hàng gửi Nhà cung cấp</p>
           </div>
-          <button type="button" onclick="closeDualRfqModal()" class="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all cursor-pointer">
+          <button type="button" onclick="closeDualRfqModal()" class="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all cursor-pointer active:scale-95">
             <i data-lucide="x" class="w-5 h-5"></i>
           </button>
         </div>
 
         <!-- 2 Main Sub-Tabs: Buyer RFQ vs Supplier RFQ -->
         <div class="grid grid-cols-2 gap-2 p-1.5 rounded-2xl bg-brand-950/80 border border-white/10">
-          <button type="button" id="btn-drfq-tab-buyer" onclick="switchDualRfqTab('buyer')" class="py-2.5 px-3 rounded-xl font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 bg-cyan-500 text-brand-950 shadow-md cursor-pointer">
+          <button type="button" id="btn-drfq-tab-buyer" onclick="switchDualRfqTab('buyer')" class="py-2.5 px-3 rounded-xl font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 bg-blue-600 text-white shadow-md shadow-blue-600/30 cursor-pointer active:scale-95">
             <i data-lucide="mail" class="w-4 h-4"></i>
             <span class="truncate">1. Thư Chào Hàng Cho Khách Hàng (Buyer)</span>
           </button>
-          <button type="button" id="btn-drfq-tab-supplier" onclick="switchDualRfqTab('supplier')" class="py-2.5 px-3 rounded-xl font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer">
+          <button type="button" id="btn-drfq-tab-supplier" onclick="switchDualRfqTab('supplier')" class="py-2.5 px-3 rounded-xl font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer active:scale-95">
             <i data-lucide="factory" class="w-4 h-4"></i>
             <span class="truncate">2. Thư Hỏi Hàng Gửi Nhà Cung Cấp (Supplier)</span>
           </button>
@@ -2145,28 +2207,28 @@
             <div class="flex items-center gap-2">
               <span class="text-xs text-slate-400 font-mono">NGÔN NGỮ GỬI KHÁCH:</span>
               <div class="flex items-center gap-1.5">
-                <button type="button" onclick="changeDualBuyerLanguage('EN')" id="btn-dbuyer-EN" class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-cyan-500 text-brand-950 cursor-pointer">ENGLISH</button>
-                <button type="button" onclick="changeDualBuyerLanguage('CN')" id="btn-dbuyer-CN" class="px-2.5 py-1 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer">中文</button>
-                <button type="button" onclick="changeDualBuyerLanguage('RU')" id="btn-dbuyer-RU" class="px-2.5 py-1 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer">РУССКИЙ</button>
-                <button type="button" onclick="changeDualBuyerLanguage('VN')" id="btn-dbuyer-VN" class="px-2.5 py-1 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer">TIẾNG VIỆT</button>
+                <button type="button" onclick="changeDualBuyerLanguage('EN')" id="btn-dbuyer-EN" class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-blue-600 text-white cursor-pointer shadow-sm active:scale-95">ENGLISH</button>
+                <button type="button" onclick="changeDualBuyerLanguage('CN')" id="btn-dbuyer-CN" class="px-2.5 py-1 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer active:scale-95">中文</button>
+                <button type="button" onclick="changeDualBuyerLanguage('RU')" id="btn-dbuyer-RU" class="px-2.5 py-1 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer active:scale-95">РУССКИЙ</button>
+                <button type="button" onclick="changeDualBuyerLanguage('VN')" id="btn-dbuyer-VN" class="px-2.5 py-1 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer active:scale-95">TIẾNG VIỆT</button>
               </div>
             </div>
-            <span class="text-xs font-mono text-cyan-300 bg-cyan-950/60 border border-cyan-500/20 px-2.5 py-0.5 rounded truncate max-w-full" id="drfq-buyer-recipient-badge">Khách hàng: ...</span>
+            <span class="text-xs font-mono text-blue-300 bg-blue-950/60 border border-blue-500/20 px-2.5 py-0.5 rounded truncate max-w-full" id="drfq-buyer-recipient-badge">Khách hàng: ...</span>
           </div>
 
           <div class="space-y-1.5">
             <label class="block text-xs font-mono uppercase text-slate-400">Tiêu đề Thư Chào Hàng (Subject Line):</label>
             <div class="flex items-center gap-2">
-              <input type="text" id="drfq-buyer-subject" class="flex-1 px-4 py-2.5 bg-brand-950 border border-white/10 rounded-xl text-xs sm:text-sm text-cyan-400 font-mono focus:border-cyan-400 outline-none">
-              <button type="button" onclick="copyToClipboard('drfq-buyer-subject')" class="px-3.5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 text-xs font-mono cursor-pointer">Copy</button>
+              <input type="text" id="drfq-buyer-subject" class="flex-1 px-4 py-2.5 bg-brand-950 border border-white/10 rounded-xl text-xs sm:text-sm text-blue-400 font-mono focus:border-blue-400 outline-none">
+              <button type="button" onclick="copyToClipboard('drfq-buyer-subject')" class="px-3.5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 text-xs font-mono cursor-pointer active:scale-95">Copy</button>
             </div>
           </div>
 
           <div class="space-y-1.5">
             <label class="block text-xs font-mono uppercase text-slate-400">Nội dung Thư Chào Hàng (Official B2B Quotation Body):</label>
             <div class="relative">
-              <textarea id="drfq-buyer-body" rows="9" class="w-full px-4 py-3 bg-brand-950 border border-white/10 rounded-2xl text-xs sm:text-sm text-slate-200 font-mono leading-relaxed focus:border-cyan-400 outline-none"></textarea>
-              <button type="button" onclick="copyToClipboard('drfq-buyer-body')" class="absolute top-3 right-3 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-mono backdrop-blur-sm border border-white/10 cursor-pointer">Sao Chép Thư</button>
+              <textarea id="drfq-buyer-body" rows="9" class="w-full px-4 py-3 bg-brand-950 border border-white/10 rounded-2xl text-xs sm:text-sm text-slate-200 font-mono leading-relaxed focus:border-blue-400 outline-none"></textarea>
+              <button type="button" onclick="copyToClipboard('drfq-buyer-body')" class="absolute top-3 right-3 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-mono backdrop-blur-sm border border-white/10 cursor-pointer active:scale-95">Sao Chép Thư</button>
             </div>
           </div>
         </div>
@@ -2178,8 +2240,8 @@
             <div class="flex items-center gap-2">
               <span class="text-xs text-slate-400 font-mono">NGÔN NGỮ GỬI NCC:</span>
               <div class="flex items-center gap-1.5">
-                <button type="button" onclick="changeDualSupplierLanguage('VN')" id="btn-dsup-VN" class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-emerald-500 text-brand-950 cursor-pointer">TIẾNG VIỆT (Nội địa)</button>
-                <button type="button" onclick="changeDualSupplierLanguage('EN')" id="btn-dsup-EN" class="px-2.5 py-1 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer">ENGLISH (Quốc tế)</button>
+                <button type="button" onclick="changeDualSupplierLanguage('VN')" id="btn-dsup-VN" class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-emerald-600 text-white cursor-pointer shadow-sm active:scale-95">TIẾNG VIỆT (Nội địa)</button>
+                <button type="button" onclick="changeDualSupplierLanguage('EN')" id="btn-dsup-EN" class="px-2.5 py-1 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer active:scale-95">ENGLISH (Quốc tế)</button>
               </div>
             </div>
             <span class="text-xs font-mono text-emerald-300 bg-emerald-950/60 border border-emerald-500/20 px-2.5 py-0.5 rounded truncate max-w-full" id="drfq-supplier-recipient-badge">Nhà Cung Cấp: ...</span>
@@ -2189,7 +2251,7 @@
             <label class="block text-xs font-mono uppercase text-slate-400">Tiêu đề Yêu Cầu Báo Giá (Supplier Inquiry Subject):</label>
             <div class="flex items-center gap-2">
               <input type="text" id="drfq-supplier-subject" class="flex-1 px-4 py-2.5 bg-brand-950 border border-white/10 rounded-xl text-xs sm:text-sm text-emerald-400 font-mono focus:border-emerald-400 outline-none">
-              <button type="button" onclick="copyToClipboard('drfq-supplier-subject')" class="px-3.5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 text-xs font-mono cursor-pointer">Copy</button>
+              <button type="button" onclick="copyToClipboard('drfq-supplier-subject')" class="px-3.5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 text-xs font-mono cursor-pointer active:scale-95">Copy</button>
             </div>
           </div>
 
@@ -2197,7 +2259,7 @@
             <label class="block text-xs font-mono uppercase text-slate-400">Nội dung Yêu Cầu Chào Hàng / Đặt Hàng NCC (Purchase RFQ Body):</label>
             <div class="relative">
               <textarea id="drfq-supplier-body" rows="9" class="w-full px-4 py-3 bg-brand-950 border border-white/10 rounded-2xl text-xs sm:text-sm text-slate-200 font-mono leading-relaxed focus:border-emerald-400 outline-none"></textarea>
-              <button type="button" onclick="copyToClipboard('drfq-supplier-body')" class="absolute top-3 right-3 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-mono backdrop-blur-sm border border-white/10 cursor-pointer">Sao Chép Thư</button>
+              <button type="button" onclick="copyToClipboard('drfq-supplier-body')" class="absolute top-3 right-3 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-mono backdrop-blur-sm border border-white/10 cursor-pointer active:scale-95">Sao Chép Thư</button>
             </div>
           </div>
         </div>
@@ -2209,11 +2271,11 @@
             <span>Đã khóa định dạng bảo mật thông tin & biên lợi nhuận môi giới</span>
           </div>
           <div class="flex items-center gap-2">
-            <button type="button" onclick="dispatchDualRfqTelegramAlert()" class="px-4 py-2 rounded-xl text-xs font-bold bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-500/30 transition-all flex items-center justify-center gap-2 cursor-pointer">
+            <button type="button" onclick="dispatchDualRfqTelegramAlert()" class="px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-600/25 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95">
               <i data-lucide="send" class="w-3.5 h-3.5"></i>
               <span>Bắn Báo Cáo Bộ Đôi RFQ Telegram</span>
             </button>
-            <button type="button" onclick="closeDualRfqModal()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/10 transition-all cursor-pointer">
+            <button type="button" onclick="closeDualRfqModal()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/10 transition-all cursor-pointer active:scale-95">
               Đóng (Esc)
             </button>
           </div>

@@ -959,6 +959,18 @@ def run_all_tests():
             assert 'id="unitCalcQuantity"' in html_text
             assert 'id="unitCalcUnitSelect"' in html_text
 
+        # 1b. Trạm Giám Sát Giá Đa Sàn Độc Lập (/prices)
+        url_prices = f"http://127.0.0.1:{TEST_PORT}/prices"
+        with urllib.request.urlopen(url_prices, timeout=5) as prices_resp:
+            assert prices_resp.status == 200
+            prices_html = prices_resp.read().decode('utf-8')
+            assert 'Trạm Giám Sát Giá Đa Sàn' in prices_html
+            assert 'id="commodityPriceCanvas"' in prices_html
+            assert 'id="commodityVolatilityTableBody"' in prices_html
+
+        with urllib.request.urlopen(url_html, timeout=5) as html_resp:
+            html_text = html_resp.read().decode('utf-8')
+
             # 2. Khắc phục lỗi cuộn trang Desktop & Mobile
             assert 'overflow-y: auto' in html_text
             assert 'overflow-y: visible' in html_text

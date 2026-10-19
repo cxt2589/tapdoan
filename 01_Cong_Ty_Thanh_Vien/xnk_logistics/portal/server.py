@@ -1175,11 +1175,27 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                 self._send_json({"ok": False, "error": str(e)}, 500)
             return
 
+        elif path in ["/prices", "/prices/", "/market-prices"]:
+            prices_path = os.path.join(STATIC_DIR, "prices.html")
+            if os.path.exists(prices_path):
+                self.send_response(200)
+                self.send_header("Content-Type", "text/html; charset=utf-8")
+                self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
+                self.send_header("Pragma", "no-cache")
+                self.send_header("Expires", "0")
+                self.end_headers()
+                with open(prices_path, "rb") as f:
+                    self.wfile.write(f.read())
+                return
+
         elif path == "/" or path == "/index.html":
             index_path = os.path.join(STATIC_DIR, "index.html")
             if os.path.exists(index_path):
                 self.send_response(200)
                 self.send_header("Content-Type", "text/html; charset=utf-8")
+                self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
+                self.send_header("Pragma", "no-cache")
+                self.send_header("Expires", "0")
                 self.end_headers()
                 with open(index_path, "rb") as f:
                     self.wfile.write(f.read())

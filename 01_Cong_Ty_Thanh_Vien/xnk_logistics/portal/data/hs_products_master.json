@@ -68,15 +68,15 @@
       "day old chick",
       "gia cam"
     ],
-    "benchmark_ref": "CME Live Cattle / Giá xuất trại Úc",
-    "benchmark_symbol": "LIVE_CATTLE_CME",
+    "benchmark_ref": "Hiệp Hội Chăn Nuôi Gia Cầm VN (VIPA)",
+    "benchmark_symbol": "DAY_OLD_CHICKS",
     "price_usd_mt": 2850,
-    "price_original": "~2,850 USD/MT",
-    "change_24h": "+0.4%",
-    "change_7d": "+1.2%",
-    "change_1m": "+2.8%",
-    "change_6m": "+5.4%",
-    "change_1y": "+11.2%"
+    "price_original": "0.65 USD/con (~2,850 USD/MT)",
+    "change_24h": "+0.2%",
+    "change_7d": "+0.5%",
+    "change_1m": "+1.2%",
+    "change_6m": "+3.1%",
+    "change_1y": "+5.4%"
   },
   {
     "hs": "0202.30",
@@ -95,15 +95,15 @@
       "wagyu",
       "angus"
     ],
-    "benchmark_ref": "CME Feeder Cattle / FOB Brisbane",
-    "benchmark_symbol": "FROZEN_MEAT_CME",
-    "price_usd_mt": 3400,
-    "price_original": "~3,400 USD/MT",
-    "change_24h": "+0.3%",
-    "change_7d": "+0.9%",
-    "change_1m": "-1.5%",
-    "change_6m": "+3.8%",
-    "change_1y": "+8.4%"
+    "benchmark_ref": "Meat & Livestock Australia (MLA Wagyu / Black Angus)",
+    "benchmark_symbol": "BEEF_WAGYU_MLA",
+    "price_usd_mt": 12500,
+    "price_original": "12,500 USD/MT (FOB Brisbane / MLA)",
+    "change_24h": "+0.5%",
+    "change_7d": "+1.2%",
+    "change_1m": "+2.8%",
+    "change_6m": "+6.4%",
+    "change_1y": "+11.5%"
   },
   {
     "hs": "0207.14",
@@ -202,15 +202,15 @@
       "tuna",
       "bigeye tuna"
     ],
-    "benchmark_ref": "VASEP Seafood Export Index / Urner Barry",
-    "benchmark_symbol": "SEAFOOD_VASEP",
-    "price_usd_mt": 5800,
-    "price_original": "~5,800 USD/MT",
-    "change_24h": "+0.8%",
-    "change_7d": "+2.1%",
-    "change_1m": "+4.5%",
-    "change_6m": "+8.2%",
-    "change_1y": "+15.6%"
+    "benchmark_ref": "Bangkok Tuna Market / VASEP Tuna Index",
+    "benchmark_symbol": "TUNA_RAW_BANGKOK",
+    "price_usd_mt": 1750,
+    "price_original": "1,750 USD/MT (Bangkok CFR Tuna)",
+    "change_24h": "+0.4%",
+    "change_7d": "+1.1%",
+    "change_1m": "+2.4%",
+    "change_6m": "+5.2%",
+    "change_1y": "-4.2%"
   },
   {
     "hs": "0307.43",
@@ -257,15 +257,15 @@
       "smp",
       "wmp"
     ],
-    "benchmark_ref": "Global Dairy Trade (GDT New Zealand)",
-    "benchmark_symbol": "DAIRY_GDT",
-    "price_usd_mt": 2400,
-    "price_original": "~2,400 USD/MT",
-    "change_24h": "-0.2%",
-    "change_7d": "+0.6%",
-    "change_1m": "+1.8%",
-    "change_6m": "+4.2%",
-    "change_1y": "+6.8%"
+    "benchmark_ref": "Global Dairy Trade (GDT New Zealand WMP/SMP)",
+    "benchmark_symbol": "DAIRY_POWDER_GDT",
+    "price_usd_mt": 3450,
+    "price_original": "3,450 USD/MT (FOB Tauranga)",
+    "change_24h": "+0.8%",
+    "change_7d": "+1.9%",
+    "change_1m": "+3.8%",
+    "change_6m": "+7.5%",
+    "change_1y": "+12.4%"
   },
   {
     "hs": "0409.00",
@@ -283,15 +283,15 @@
       "honey",
       "natural honey"
     ],
-    "benchmark_ref": "Global Dairy Trade (GDT New Zealand)",
-    "benchmark_symbol": "DAIRY_GDT",
-    "price_usd_mt": 2400,
-    "price_original": "~2,400 USD/MT",
-    "change_24h": "-0.2%",
-    "change_7d": "+0.6%",
-    "change_1m": "+1.8%",
-    "change_6m": "+4.2%",
-    "change_1y": "+6.8%"
+    "benchmark_ref": "Hiệp Hội Nuôi Ong VN & USDA Honey Report",
+    "benchmark_symbol": "HONEY_EXPORT_VN",
+    "price_usd_mt": 1550,
+    "price_original": "1,550 USD/MT (FOB Cát Lái)",
+    "change_24h": "+0.3%",
+    "change_7d": "+0.7%",
+    "change_1m": "+1.5%",
+    "change_6m": "+3.2%",
+    "change_1y": "-2.5%"
   },
   {
     "hs": "0714.10",
@@ -309,15 +309,15 @@
       "cassava chips",
       "tapioca chips"
     ],
-    "benchmark_ref": "Hiệp Hội Rau Quả VN (VINAFRUIT) / FOB Cát Lái",
-    "benchmark_symbol": "VEGETABLES_VN",
-    "price_usd_mt": 650,
-    "price_original": "~650 USD/MT",
-    "change_24h": "+0.5%",
-    "change_7d": "+1.4%",
-    "change_1m": "-2.1%",
+    "benchmark_ref": "Hiệp Hội Sắn Việt Nam & GACC Trung Quốc",
+    "benchmark_symbol": "CASSAVA_CHIPS_VN",
+    "price_usd_mt": 255,
+    "price_original": "255 USD/MT (FOB Quy Nhơn / Dung Quất)",
+    "change_24h": "+0.4%",
+    "change_7d": "+1.2%",
+    "change_1m": "+2.5%",
     "change_6m": "+5.8%",
-    "change_1y": "+12.4%"
+    "change_1y": "+9.4%"
   },
   {
     "hs": "0801.31",
@@ -336,15 +336,15 @@
       "rcn",
       "raw cashew nuts"
     ],
-    "benchmark_ref": "VINACAS & Chợ Đầu Mối Giang Nam Quảng Châu",
-    "benchmark_symbol": "FRUITS_CASHEW",
-    "price_usd_mt": 2400,
-    "price_original": "~2,400 USD/MT",
-    "change_24h": "+1.1%",
-    "change_7d": "+2.8%",
-    "change_1m": "+7.4%",
-    "change_6m": "+18.2%",
-    "change_1y": "+34.5%"
+    "benchmark_ref": "VINACAS & Conseil du Coton et de l'Anacarde (CCA)",
+    "benchmark_symbol": "RCN_CASHEW_RAW",
+    "price_usd_mt": 1250,
+    "price_original": "1,250 USD/MT (CFR Cát Lái / Hải Phòng)",
+    "change_24h": "+0.5%",
+    "change_7d": "+1.4%",
+    "change_1m": "+3.2%",
+    "change_6m": "+8.4%",
+    "change_1y": "+14.2%"
   },
   {
     "hs": "0801.32",
@@ -841,15 +841,15 @@
       "cocoa beans",
       "cacao"
     ],
-    "benchmark_ref": "Sàn ICE Futures US Cocoa Benchmark",
-    "benchmark_symbol": "COCOA_ICE",
-    "price_usd_mt": 7800,
-    "price_original": "~7,800 USD/MT",
-    "change_24h": "+2.4%",
-    "change_7d": "+5.6%",
-    "change_1m": "+14.2%",
-    "change_6m": "+48.5%",
-    "change_1y": "+85.2%"
+    "benchmark_ref": "Sàn ICE Futures US Cocoa & VICOFA",
+    "benchmark_symbol": "COCOA_BEANS_ICE",
+    "price_usd_mt": 7850,
+    "price_original": "7,850 USD/MT (FOB Sài Gòn)",
+    "change_24h": "+1.2%",
+    "change_7d": "+3.4%",
+    "change_1m": "+8.2%",
+    "change_6m": "+28.5%",
+    "change_1y": "+64.2%"
   },
   {
     "hs": "2101.11",
@@ -867,15 +867,15 @@
       "freeze dried",
       "say lanh"
     ],
-    "benchmark_ref": "Hiệp Hội Cà Phê Ca Cao VN (VICOFA)",
-    "benchmark_symbol": "MISC_EDIBLE",
-    "price_usd_mt": 4500,
-    "price_original": "~4,500 USD/MT",
-    "change_24h": "+1.2%",
-    "change_7d": "+3.1%",
-    "change_1m": "+7.2%",
-    "change_6m": "+19.5%",
-    "change_1y": "+31.8%"
+    "benchmark_ref": "Hiệp Hội Cà Phê Ca Cao VN (VICOFA Instant)",
+    "benchmark_symbol": "INSTANT_COFFEE_VN",
+    "price_usd_mt": 8400,
+    "price_original": "8,400 USD/MT (FOB Cát Lái)",
+    "change_24h": "+0.8%",
+    "change_7d": "+2.1%",
+    "change_1m": "+4.9%",
+    "change_6m": "+14.5%",
+    "change_1y": "+26.8%"
   },
   {
     "hs": "2207.10",
@@ -893,15 +893,15 @@
       "ethanol 96",
       "ethyl alcohol"
     ],
-    "benchmark_ref": "Chỉ số Đồ uống & Rượu bia VBA / Platts Ethanol",
-    "benchmark_symbol": "BEVERAGES_VBA",
-    "price_usd_mt": 850,
-    "price_original": "~850 USD/MT",
-    "change_24h": "+0.2%",
-    "change_7d": "+0.6%",
-    "change_1m": "+1.5%",
-    "change_6m": "+3.2%",
-    "change_1y": "+5.8%"
+    "benchmark_ref": "S&P Global Platts Ethanol Asia",
+    "benchmark_symbol": "ETHANOL_PLATTS",
+    "price_usd_mt": 680,
+    "price_original": "680 USD/MT (FOB Dung Quất / Đình Vũ)",
+    "change_24h": "+0.3%",
+    "change_7d": "+0.8%",
+    "change_1m": "+1.6%",
+    "change_6m": "+4.2%",
+    "change_1y": "-3.8%"
   },
   {
     "hs": "2304.00",
@@ -919,15 +919,15 @@
       "soybean meal",
       "thuc an chan nuoi"
     ],
-    "benchmark_ref": "Sàn CBOT Soybean Meal & FOB Hải Phòng",
-    "benchmark_symbol": "ANIMAL_FEED_CBOT",
-    "price_usd_mt": 380,
-    "price_original": "~380 USD/MT",
+    "benchmark_ref": "Sàn CME CBOT Soybean Meal & VFA",
+    "benchmark_symbol": "SOYBEAN_MEAL_CBOT",
+    "price_usd_mt": 385,
+    "price_original": "385 USD/MT (CFR Cát Lái / Cái Mép)",
     "change_24h": "-0.5%",
-    "change_7d": "+0.8%",
-    "change_1m": "-2.1%",
-    "change_6m": "-8.4%",
-    "change_1y": "-18.2%"
+    "change_7d": "-1.2%",
+    "change_1m": "-2.8%",
+    "change_6m": "-6.4%",
+    "change_1y": "-15.2%"
   },
   {
     "hs": "2523.29",
@@ -1648,15 +1648,15 @@
       "tablet",
       "may tinh bang"
     ],
-    "benchmark_ref": "Hiệp Hội Doanh Nghiệp Cơ Khí VN (VAMI Machinery)",
-    "benchmark_symbol": "MACHINERY_VAMI",
+    "benchmark_ref": "Hiệp Hội Doanh Nghiệp Cơ Khí & Công Nghệ VAMI",
+    "benchmark_symbol": "LAPTOP_TABLET_VAMI",
     "price_usd_mt": 24000,
-    "price_original": "~24,000 USD/MT",
-    "change_24h": "+0.6%",
-    "change_7d": "+1.5%",
-    "change_1m": "+3.5%",
-    "change_6m": "+8.2%",
-    "change_1y": "+14.5%"
+    "price_original": "520 USD/chiếc (~24,000 USD/MT)",
+    "change_24h": "+0.3%",
+    "change_7d": "+0.8%",
+    "change_1m": "-0.5%",
+    "change_6m": "-2.4%",
+    "change_1y": "-7.5%"
   },
   {
     "hs": "8517.13",
@@ -1676,15 +1676,15 @@
       "samsung",
       "iphone"
     ],
-    "benchmark_ref": "Hiệp Hội Điện Tử VN (VEIA Electronics & Solar)",
-    "benchmark_symbol": "ELECTRONICS_VEIA",
+    "benchmark_ref": "Hiệp Hội Doanh Nghiệp Điện Tử VN (VEIA Mobile)",
+    "benchmark_symbol": "SMARTPHONE_5G_VEIA",
     "price_usd_mt": 45000,
-    "price_original": "~45,000 USD/MT",
-    "change_24h": "+0.8%",
-    "change_7d": "+2.1%",
-    "change_1m": "+4.8%",
-    "change_6m": "+11.4%",
-    "change_1y": "+19.8%"
+    "price_original": "680 USD/chiếc (~45,000 USD/MT)",
+    "change_24h": "+0.4%",
+    "change_7d": "+1.0%",
+    "change_1m": "+1.8%",
+    "change_6m": "-1.5%",
+    "change_1y": "-6.8%"
   },
   {
     "hs": "8541.43",
@@ -1921,15 +1921,15 @@
       "plants",
       "orchids"
     ],
-    "benchmark_ref": "Sàn Đấu Giá Hoa Royal FloraHolland Hà Lan",
-    "benchmark_symbol": "FLOWERS_FLORA",
+    "benchmark_ref": "Royal FloraHolland & Dalat Hasfarm Index",
+    "benchmark_symbol": "FRESH_ROSES_FLORA",
     "price_usd_mt": 3500,
-    "price_original": "~3,500 USD/MT",
-    "change_24h": "+1.2%",
-    "change_7d": "+3.4%",
-    "change_1m": "+6.5%",
-    "change_6m": "-4.2%",
-    "change_1y": "+9.1%"
+    "price_original": "0.35 USD/cành (~3,500 USD/MT)",
+    "change_24h": "+0.5%",
+    "change_7d": "+1.2%",
+    "change_1m": "+2.8%",
+    "change_6m": "+6.2%",
+    "change_1y": "+10.5%"
   },
   {
     "hs": "0602.90",
@@ -2101,15 +2101,15 @@
       "sesame",
       "oil seeds"
     ],
-    "benchmark_ref": "Sàn CBOT Chicago Soybean & FOB Paranaguá",
-    "benchmark_symbol": "SOYBEAN_CBOT",
-    "price_usd_mt": 440,
-    "price_original": "~440 USD/MT",
-    "change_24h": "-0.6%",
-    "change_7d": "+1.2%",
-    "change_1m": "-1.5%",
-    "change_6m": "-5.8%",
-    "change_1y": "-14.2%"
+    "benchmark_ref": "Hiệp Hội Hồ Tiêu & Cây Gia Vị VN (VPSA)",
+    "benchmark_symbol": "SESAME_WHITE_VPSA",
+    "price_usd_mt": 1850,
+    "price_original": "1,850 USD/MT (FOB Cát Lái)",
+    "change_24h": "+0.6%",
+    "change_7d": "+1.5%",
+    "change_1m": "+3.4%",
+    "change_6m": "+7.5%",
+    "change_1y": "+12.8%"
   },
   {
     "hs": "1301.90",
@@ -2773,15 +2773,15 @@
       "sulfuric acid",
       "caustic soda"
     ],
-    "benchmark_ref": "ICIS Caustic Soda Asia CFR & FOB Hải Phòng",
-    "benchmark_symbol": "INORG_CHEM_ICIS",
-    "price_usd_mt": 380,
-    "price_original": "~380 USD/MT",
-    "change_24h": "+0.3%",
-    "change_7d": "+0.9%",
-    "change_1m": "+1.8%",
-    "change_6m": "+4.1%",
-    "change_1y": "+6.5%"
+    "benchmark_ref": "Platts Sulphuric Acid Asia CFR/FOB",
+    "benchmark_symbol": "SULPHURIC_ACID_PLATTS",
+    "price_usd_mt": 65,
+    "price_original": "65 USD/MT (FOB Hải Phòng / Đình Vũ)",
+    "change_24h": "0.0%",
+    "change_7d": "+0.4%",
+    "change_1m": "+0.8%",
+    "change_6m": "+2.1%",
+    "change_1y": "-8.5%"
   },
   {
     "hs": "2905.11",
@@ -2800,15 +2800,15 @@
       "dung moi",
       "organic chemicals"
     ],
-    "benchmark_ref": "ICIS Petrochemicals & Solvents Asia",
-    "benchmark_symbol": "ORG_CHEM_ICIS",
-    "price_usd_mt": 750,
-    "price_original": "~750 USD/MT",
-    "change_24h": "-0.2%",
-    "change_7d": "+0.6%",
+    "benchmark_ref": "ICIS Methanol Asia CFR Benchmark",
+    "benchmark_symbol": "METHANOL_ICIS_ASIA",
+    "price_usd_mt": 310,
+    "price_original": "310 USD/MT (CFR Cát Lái / Hải Phòng)",
+    "change_24h": "+0.3%",
+    "change_7d": "+0.8%",
     "change_1m": "-1.2%",
-    "change_6m": "+2.8%",
-    "change_1y": "-5.4%"
+    "change_6m": "+3.4%",
+    "change_1y": "-5.8%"
   },
   {
     "hs": "2902.50",
@@ -3298,15 +3298,15 @@
       "plastics",
       "polymers"
     ],
-    "benchmark_ref": "ICIS PE/PP Asia CFR & Sàn Dalian DCE",
-    "benchmark_symbol": "PLASTICS_ICIS",
-    "price_usd_mt": 960,
-    "price_original": "~960 USD/MT",
-    "change_24h": "+0.3%",
-    "change_7d": "+0.8%",
-    "change_1m": "-1.4%",
-    "change_6m": "+3.5%",
-    "change_1y": "-6.8%"
+    "benchmark_ref": "Hiệp Hội Nhựa VN (VPA Plastic Bags)",
+    "benchmark_symbol": "PLASTIC_BAGS_VPA",
+    "price_usd_mt": 1450,
+    "price_original": "1,450 USD/MT (FOB Cát Lái)",
+    "change_24h": "+0.4%",
+    "change_7d": "+1.0%",
+    "change_1m": "+2.2%",
+    "change_6m": "+5.1%",
+    "change_1y": "-4.5%"
   },
   {
     "hs": "4011.20",
@@ -3327,15 +3327,15 @@
       "latex",
       "tyres"
     ],
-    "benchmark_ref": "Sàn SGX SICOM TSR20 & FOB Cát Lái VRA",
-    "benchmark_symbol": "RUBBER_SGX_VRA",
+    "benchmark_ref": "VRG Rubber Tires Export Index",
+    "benchmark_symbol": "TRUCK_TIRES_VRG",
     "price_usd_mt": 2450,
-    "price_original": "~2,450 USD/MT",
-    "change_24h": "+1.2%",
-    "change_7d": "+2.8%",
-    "change_1m": "+5.2%",
-    "change_6m": "+19.4%",
-    "change_1y": "+28.7%"
+    "price_original": "135 USD/chiếc (~2,450 USD/MT)",
+    "change_24h": "+0.5%",
+    "change_7d": "+1.2%",
+    "change_1m": "+2.8%",
+    "change_6m": "+6.5%",
+    "change_1y": "+12.1%"
   },
   {
     "hs": "4104.11",
@@ -3616,15 +3616,15 @@
       "pulp",
       "wood pulp"
     ],
-    "benchmark_ref": "FOEX PIX Pulp Index & Fastmarkets OCC",
-    "benchmark_symbol": "PULP_FOEX",
-    "price_usd_mt": 420,
-    "price_original": "~420 USD/MT",
-    "change_24h": "+0.6%",
-    "change_7d": "+1.4%",
-    "change_1m": "+3.1%",
-    "change_6m": "+7.5%",
-    "change_1y": "+13.8%"
+    "benchmark_ref": "FOEX PIX Bleached Softwood Pulp (NBSK)",
+    "benchmark_symbol": "PULP_NBSK_FOEX",
+    "price_usd_mt": 820,
+    "price_original": "820 USD/MT (CFR Cát Lái / Hải Phòng)",
+    "change_24h": "+0.5%",
+    "change_7d": "+1.2%",
+    "change_1m": "+2.6%",
+    "change_6m": "+7.1%",
+    "change_1y": "+14.5%"
   },
   {
     "hs": "4707.10",
@@ -3641,15 +3641,15 @@
       "pulp",
       "wood pulp"
     ],
-    "benchmark_ref": "FOEX PIX Pulp Index & Fastmarkets OCC",
-    "benchmark_symbol": "PULP_FOEX",
-    "price_usd_mt": 420,
-    "price_original": "~420 USD/MT",
-    "change_24h": "+0.6%",
-    "change_7d": "+1.4%",
-    "change_1m": "+3.1%",
-    "change_6m": "+7.5%",
-    "change_1y": "+13.8%"
+    "benchmark_ref": "Fastmarkets RISI OCC 11 Waste Paper Index",
+    "benchmark_symbol": "OCC_WASTE_PAPER",
+    "price_usd_mt": 160,
+    "price_original": "160 USD/MT (CFR Cát Lái / Hải Phòng)",
+    "change_24h": "+0.2%",
+    "change_7d": "+0.6%",
+    "change_1m": "-1.5%",
+    "change_6m": "+2.4%",
+    "change_1y": "-8.2%"
   },
   {
     "hs": "4819.10",
@@ -3697,15 +3697,15 @@
       "cardboard",
       "packaging"
     ],
-    "benchmark_ref": "Hiệp Hội Giấy VN (VPPA Carton & Paper)",
-    "benchmark_symbol": "PAPER_VPPA",
-    "price_usd_mt": 720,
-    "price_original": "~720 USD/MT",
+    "benchmark_ref": "Hiệp Hội Giấy VN (VPPA Copy Paper 70-80gsm)",
+    "benchmark_symbol": "COPY_PAPER_VPPA",
+    "price_usd_mt": 920,
+    "price_original": "920 USD/MT (FOB Cát Lái / Hải Phòng)",
     "change_24h": "+0.3%",
     "change_7d": "+0.8%",
-    "change_1m": "+1.9%",
-    "change_6m": "+4.2%",
-    "change_1y": "+7.5%"
+    "change_1m": "+1.8%",
+    "change_6m": "+4.5%",
+    "change_1y": "+7.8%"
   },
   {
     "hs": "4901.99",
@@ -4827,15 +4827,15 @@
       "diamonds",
       "jewelry"
     ],
-    "benchmark_ref": "LBMA London Gold / SJC / PNJ Index",
-    "benchmark_symbol": "PRECIOUS_STONES",
+    "benchmark_ref": "Rapaport Diamond Report (1 Carat G-VS1)",
+    "benchmark_symbol": "DIAMOND_RAPAPORT",
     "price_usd_mt": 1200000,
-    "price_original": "~1,200,000 USD/MT",
-    "change_24h": "+1.1%",
-    "change_7d": "+2.8%",
-    "change_1m": "+6.5%",
-    "change_6m": "+18.4%",
-    "change_1y": "+32.1%"
+    "price_original": "5,800 USD/carat (~1,200,000 USD/MT)",
+    "change_24h": "+0.1%",
+    "change_7d": "+0.4%",
+    "change_1m": "+0.9%",
+    "change_6m": "+2.2%",
+    "change_1y": "-6.4%"
   },
   {
     "hs": "7208.39",
@@ -5290,14 +5290,14 @@
       "auto parts"
     ],
     "benchmark_ref": "Hiệp Hội Các Nhà Sản Xuất Ô Tô VN (VAMA)",
-    "benchmark_symbol": "VEHICLES_VAMA",
-    "price_usd_mt": 12500,
-    "price_original": "~12,500 USD/MT",
-    "change_24h": "+0.5%",
-    "change_7d": "+1.4%",
-    "change_1m": "+3.2%",
-    "change_6m": "+7.5%",
-    "change_1y": "+13.2%"
+    "benchmark_symbol": "PASSENGER_CARS_VAMA",
+    "price_usd_mt": 15000,
+    "price_original": "22,500 USD/xe (~15,000 USD/MT)",
+    "change_24h": "+0.2%",
+    "change_7d": "+0.6%",
+    "change_1m": "+1.2%",
+    "change_6m": "+3.4%",
+    "change_1y": "+5.8%"
   },
   {
     "hs": "8708.29",
@@ -5513,15 +5513,15 @@
       "watches",
       "clocks"
     ],
-    "benchmark_ref": "Swiss Watch Industry Federation (FH)",
-    "benchmark_symbol": "CLOCKS_WATCHES",
+    "benchmark_ref": "Federation of the Swiss Watch Industry (FH)",
+    "benchmark_symbol": "WATCHES_QUARTZ_FH",
     "price_usd_mt": 85000,
-    "price_original": "~85,000 USD/MT",
-    "change_24h": "+0.6%",
-    "change_7d": "+1.5%",
-    "change_1m": "+3.6%",
-    "change_6m": "+8.5%",
-    "change_1y": "+15.2%"
+    "price_original": "180 USD/chiếc (~85,000 USD/MT)",
+    "change_24h": "+0.4%",
+    "change_7d": "+1.1%",
+    "change_1m": "+2.5%",
+    "change_6m": "+5.8%",
+    "change_1y": "+9.8%"
   },
   {
     "hs": "9102.21",

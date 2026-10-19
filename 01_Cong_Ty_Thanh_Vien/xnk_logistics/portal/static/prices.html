@@ -1025,13 +1025,15 @@
                   </div>
                   <div>
                     <div class="flex items-center gap-1.5 flex-wrap">
-                      <span class="font-bold text-white text-xs">${item.commodity_name}</span>
-                      <span class="px-1.5 py-0.2 rounded text-[9px] font-mono font-bold ${catBadge.class}">${item.source_name}</span>
+                      <span class="font-bold text-white text-xs">${item.base_commodity_name || (item.commodity_name ? item.commodity_name.split('—')[0].trim() : '')}</span>
+                      <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold ${catBadge.class}">${item.source_name || item.exchange_name}</span>
                     </div>
-                    <div class="text-[10px] font-mono text-slate-400 flex items-center gap-2 mt-0.5">
+                    <div class="text-[10px] font-mono text-slate-400 flex items-center gap-2 mt-0.5 flex-wrap">
                       <span>Mã: <strong class="text-cyan-300">${item.contract_code}</strong></span>
                       <span>•</span>
-                      <span>Sàn: ${item.exchange_name}</span>
+                      <span>Sàn: <span class="text-slate-300 font-medium">${item.exchange_name}</span></span>
+                      <span>•</span>
+                      <span>HS: <span class="text-slate-300">${item.hs_code}</span></span>
                     </div>
                   </div>
                 </div>

@@ -1292,7 +1292,7 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
             source_filter = query.get("source_type", [""])[0].strip().upper()
             prices_file = os.path.join(BASE_DIR, "data", "multi_exchange_commodity_prices.json")
             results = []
-            seen_hs = set()
+            seen_keys = set()
 
             q_clean = q.replace("à","a").replace("á","a").replace("ạ","a").replace("ả","a").replace("ã","a").replace("â","a").replace("ầ","a").replace("ấ","a").replace("ậ","a").replace("ẩ","a").replace("ẫ","a").replace("è","e").replace("é","e").replace("ẹ","e").replace("ẻ","e").replace("ẽ","e").replace("ê","e").replace("ề","e").replace("ế","e").replace("ệ","e").replace("ể","e").replace("ễ","e").replace("ò","o").replace("ó","o").replace("ọ","o").replace("ỏ","o").replace("õ","o").replace("ô","o").replace("ồ","o").replace("ố","o").replace("ộ","o").replace("ổ","o").replace("ỗ","o").replace("ơ","o").replace("ờ","o").replace("ớ","o").replace("ợ","o").replace("ở","o").replace("ỡ","o").replace("ù","u").replace("ú","u").replace("ụ","u").replace("ủ","u").replace("ũ","u").replace("ư","u").replace("ừ","u").replace("ứ","u").replace("ự","u").replace("ử","u").replace("ữ","u").replace("ì","i").replace("í","i").replace("ị","i").replace("ỉ","i").replace("ĩ","i").replace("đ","d")
             
@@ -1354,6 +1354,7 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                             src_name = b.get("source_name", b.get("exchange_name", ""))
                             ex_name = b.get("exchange_name", "")
                             c_code = b.get("contract_code", "")
+                            s_id = b.get("source_id", b.get("tier_type", ""))
                             
                             search_corpus = f"{comm_id} {comm_name} {hs_code} {src_name} {ex_name} {c_code} {sector_name}".lower()
                             search_corpus_clean = search_corpus.replace("à","a").replace("á","a").replace("ạ","a").replace("ả","a").replace("ã","a").replace("â","a").replace("ầ","a").replace("ấ","a").replace("ậ","a").replace("ẩ","a").replace("ẫ","a").replace("è","e").replace("é","e").replace("ẹ","e").replace("ẻ","e").replace("ẽ","e").replace("ê","e").replace("ề","e").replace("ế","e").replace("ệ","e").replace("ể","e").replace("ễ","e").replace("ò","o").replace("ó","o").replace("ọ","o").replace("ỏ","o").replace("õ","o").replace("ô","o").replace("ồ","o").replace("ố","o").replace("ộ","o").replace("ổ","o").replace("ỗ","o").replace("ơ","o").replace("ờ","o").replace("ớ","o").replace("ợ","o").replace("ở","o").replace("ỡ","o").replace("ù","u").replace("ú","u").replace("ụ","u").replace("ủ","u").replace("ũ","u").replace("ư","u").replace("ừ","u").replace("ứ","u").replace("ự","u").replace("ử","u").replace("ữ","u").replace("ì","i").replace("í","i").replace("ị","i").replace("ỉ","i").replace("ĩ","i").replace("đ","d")
@@ -1361,13 +1362,14 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                             is_matched = not q or any(t in search_corpus or t in search_corpus_clean for t in search_tokens if t)
 
                             if is_matched:
-                                seen_hs.add(hs_code.replace(".", ""))
+                                seen_keys.add((comm_id, s_id))
                                 results.append({
                                     "commodity_id": comm_id,
-                                    "commodity_name": comm_name,
+                                    "base_commodity_name": comm_name,
+                                    "commodity_name": f"{comm_name} — {src_name}",
                                     "hs_code": hs_code,
                                     "sector": sector_name,
-                                    "source_id": b.get("source_id", b.get("tier_type", "")),
+                                    "source_id": s_id,
                                     "source_name": src_name,
                                     "source_category": s_cat,
                                     "exchange_name": ex_name,
@@ -1385,34 +1387,36 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                     self._send_json({"ok": False, "error": str(e)}, 500)
                     return
 
-            # Mở rộng tìm kiếm sang 20 mặt hàng top quốc gia (Country Top Products)
+            # Mở rộng tìm kiếm sang 30+ mặt hàng top quốc gia (Country Top Products)
             if country_top_products and hasattr(country_top_products, "COUNTRY_TOP_PRODUCTS"):
                 for p in country_top_products.COUNTRY_TOP_PRODUCTS:
-                    p_hs = p.get("hs_code", "").replace(".", "")
-                    if p_hs in seen_hs:
-                        continue
-                    
                     p_name = p.get("product_name", "")
                     p_country = p.get("country", "")
                     p_ex = p.get("exchange_name", "")
                     p_id = p.get("id", "")
                     p_cid = p.get("commodity_id", "")
+                    p_hs = p.get("hs_code", "")
                     
-                    p_corpus = f"{p_id} {p_cid} {p_name} {p_country} {p.get('hs_code')} {p_ex}".lower()
+                    p_key = (p_id, p_id)
+                    if p_key in seen_keys:
+                        continue
+                    
+                    p_corpus = f"{p_id} {p_cid} {p_name} {p_country} {p_hs} {p_ex}".lower()
                     p_corpus_clean = p_corpus.replace("à","a").replace("á","a").replace("ạ","a").replace("ả","a").replace("ã","a").replace("â","a").replace("ầ","a").replace("ấ","a").replace("ậ","a").replace("ẩ","a").replace("ẫ","a").replace("è","e").replace("é","e").replace("ẹ","e").replace("ẻ","e").replace("ẽ","e").replace("ê","e").replace("ề","e").replace("ế","e").replace("ệ","e").replace("ể","e").replace("ễ","e").replace("ò","o").replace("ó","o").replace("ọ","o").replace("ỏ","o").replace("õ","o").replace("ô","o").replace("ồ","o").replace("ố","o").replace("ộ","o").replace("ổ","o").replace("ỗ","o").replace("ơ","o").replace("ờ","o").replace("ớ","o").replace("ợ","o").replace("ở","o").replace("ỡ","o").replace("ù","u").replace("ú","u").replace("ụ","u").replace("ủ","u").replace("ũ","u").replace("ư","u").replace("ừ","u").replace("ứ","u").replace("ự","u").replace("ử","u").replace("ữ","u").replace("ì","i").replace("í","i").replace("ị","i").replace("ỉ","i").replace("ĩ","i").replace("đ","d")
                     
                     if not q or any(t in p_corpus or t in p_corpus_clean for t in search_tokens if t):
-                        seen_hs.add(p_hs)
+                        seen_keys.add(p_key)
                         results.append({
                             "commodity_id": p_id,
-                            "commodity_name": f"{p.get('flag', '')} {p_name}",
-                            "hs_code": p.get("hs_code"),
+                            "base_commodity_name": p_name,
+                            "commodity_name": f"{p.get('flag', '')} {p_name} — {p_ex}",
+                            "hs_code": p_hs,
                             "sector": f"Top Hàng Đầu {p_country}",
                             "source_id": p_id,
                             "source_name": p_ex,
                             "source_category": "GLOBAL_EXCHANGE",
                             "exchange_name": p_ex,
-                            "contract_code": f"{p.get('country_code')} • {p.get('hs_code')}",
+                            "contract_code": f"{p.get('country_code')} • {p_hs}",
                             "price_original": p.get("price_original"),
                             "price_usd_mt": p.get("price_usd_mt"),
                             "change_24h": p.get("change_24h", "0.0%"),
@@ -1428,17 +1432,19 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                 extra_matches = hs_products.search_products_master(q, limit=30 if q else 15)
                 for p in extra_matches:
                     clean_p_hs = p.get("hs", "").replace(".", "")
-                    if clean_p_hs in seen_hs:
-                        continue
-                    seen_hs.add(clean_p_hs)
-                    
                     b_ref = p.get("benchmark_ref", "Giá Tham Chiếu Quốc Tế / FOB")
                     b_sym = p.get("benchmark_symbol", p.get("hs", ""))
+                    
+                    hs_key = (f"hs_{clean_p_hs}", b_sym)
+                    if hs_key in seen_keys:
+                        continue
+                    
                     is_futures = any(k in b_ref.upper() for k in ["CME", "NYMEX", "LME", "CBOT", "ICE", "SGX"])
                     s_cat = "FUTURES" if is_futures else "FOB"
                     if source_filter and source_filter != "ALL" and s_cat != source_filter:
                         continue
                     
+                    seen_keys.add(hs_key)
                     # Tra cứu giá thực tế & sàn giao dịch từ Catalog chuẩn hóa
                     if commodity_prices_catalog and hasattr(commodity_prices_catalog, "resolve_commodity_pricing"):
                         c_info = commodity_prices_catalog.resolve_commodity_pricing(p, p.get("hs"), p.get("chapter_code"))
@@ -1459,7 +1465,8 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                     
                     results.append({
                         "commodity_id": f"hs_{clean_p_hs}",
-                        "commodity_name": p.get("name_vi", ""),
+                        "base_commodity_name": p.get("name_vi", ""),
+                        "commodity_name": f"{p.get('name_vi', '')} — {b_ref}",
                         "hs_code": p.get("hs", ""),
                         "sector": p.get("sector", "Ngành Hàng Chiến Lược"),
                         "source_id": b_sym,
@@ -1492,38 +1499,12 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
             src_id = query.get("source_id", [""])[0].strip()
             time_range = query.get("range", ["1y"])[0].strip().lower()
 
-            # 1. Tra cứu trực tiếp từ Country Top Products
-            if country_top_products and hasattr(country_top_products, "get_country_product_by_id_or_code"):
-                ctry_prod = country_top_products.get_country_product_by_id_or_code(comm_id)
-                if ctry_prod:
-                    base_p = ctry_prod.get("price_usd_mt", 2000)
-                    metrics = {
-                        "change_24h": ctry_prod.get("change_24h"),
-                        "change_7d": ctry_prod.get("change_7d"),
-                        "change_1m": ctry_prod.get("change_1m"),
-                        "change_6m": ctry_prod.get("change_6m"),
-                        "change_1y": ctry_prod.get("change_1y")
-                    }
-                    history = generate_chart_history_series(base_p, time_range, commodity_id=ctry_prod.get("id"), metrics=metrics)
-                    self._send_json({
-                        "ok": True,
-                        "commodity_id": ctry_prod.get("id"),
-                        "commodity_name": ctry_prod.get("product_name"),
-                        "hs_code": ctry_prod.get("hs_code"),
-                        "source_id": ctry_prod.get("id"),
-                        "source_name": ctry_prod.get("exchange_name"),
-                        "source_category": ctry_prod.get("category", "GLOBAL_EXCHANGE"),
-                        "contract_code": f"{ctry_prod.get('country_code')} • {ctry_prod.get('hs_code')}",
-                        "current_price_usd_mt": base_p,
-                        "price_original": ctry_prod.get("price_original", f"{base_p:,} USD/MT"),
-                        "change_24h": ctry_prod.get("change_24h", "0.0%"),
-                        "change_7d": ctry_prod.get("change_7d", "0.0%"),
-                        "range": time_range,
-                        "history": history
-                    })
-                    return
+            if "__" in comm_id:
+                parts = comm_id.split("__", 1)
+                comm_id = parts[0]
+                if not src_id:
+                    src_id = parts[1]
 
-            # 2. Tra cứu từ Multi-Exchange Commodity Prices (7 mặt hàng chiến lược)
             alias_map = {
                 "rice_white_5pct": "rice_5pct",
                 "rice_st25": "rice_5pct",
@@ -1537,6 +1518,7 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
             }
             resolved_comm_id = alias_map.get(comm_id, comm_id)
 
+            # 1. Tra cứu từ Multi-Exchange Commodity Prices (Hỗ trợ từng sàn riêng biệt qua source_id)
             prices_file = os.path.join(BASE_DIR, "data", "multi_exchange_commodity_prices.json")
             matched_sec = None
             matched_bench = None
@@ -1545,10 +1527,10 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                 try:
                     with open(prices_file, "r", encoding="utf-8") as f:
                         p_data = json.load(f)
-                    matched_sec = next((s for s in p_data.get("sectors", []) if s.get("commodity_id") == resolved_comm_id or s.get("hs_code") == resolved_comm_id), None)
+                    matched_sec = next((s for s in p_data.get("sectors", []) if s.get("commodity_id") == resolved_comm_id or s.get("hs_code") == resolved_comm_id or s.get("hs_code") == comm_id), None)
                     if matched_sec:
                         if src_id:
-                            matched_bench = next((b for b in matched_sec.get("benchmarks", []) if b.get("source_id") == src_id or b.get("tier_type") == src_id), None)
+                            matched_bench = next((b for b in matched_sec.get("benchmarks", []) if b.get("source_id") == src_id or b.get("tier_type") == src_id or src_id.lower() in b.get("source_id", "").lower()), None)
                         if not matched_bench and matched_sec.get("benchmarks"):
                             matched_bench = matched_sec["benchmarks"][0]
                 except Exception as e:
@@ -1568,12 +1550,12 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                 self._send_json({
                     "ok": True,
                     "commodity_id": comm_id,
-                    "commodity_name": matched_sec.get("commodity_name"),
+                    "commodity_name": f"{matched_sec.get('commodity_name')} ({matched_bench.get('source_name', matched_bench.get('exchange_name', ''))})",
                     "hs_code": matched_sec.get("hs_code"),
-                    "source_id": matched_bench.get("source_id", "") if matched_bench else "",
-                    "source_name": matched_bench.get("source_name", matched_bench.get("exchange_name", "")) if matched_bench else "",
-                    "source_category": matched_bench.get("source_category", "") if matched_bench else "",
-                    "contract_code": matched_bench.get("contract_code", "") if matched_bench else "",
+                    "source_id": matched_bench.get("source_id", ""),
+                    "source_name": matched_bench.get("source_name", matched_bench.get("exchange_name", "")),
+                    "source_category": matched_bench.get("source_category", ""),
+                    "contract_code": matched_bench.get("contract_code", ""),
                     "current_price_usd_mt": base_p,
                     "price_original": matched_bench.get("price_original", f"{base_p:,} USD/MT"),
                     "change_24h": matched_bench.get("change_24h", "0.0%"),
@@ -1582,6 +1564,50 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                     "history": history
                 })
                 return
+
+            # 2. Tra cứu trực tiếp từ Country Top Products
+            if country_top_products and hasattr(country_top_products, "get_country_product_by_id_or_code"):
+                ctry_prod = country_top_products.get_country_product_by_id_or_code(comm_id)
+                if ctry_prod:
+                    base_p = ctry_prod.get("price_usd_mt", 2000)
+                    src_name = ctry_prod.get("exchange_name")
+                    c_code = f"{ctry_prod.get('country_code')} • {ctry_prod.get('hs_code')}"
+                    p_orig = ctry_prod.get("price_original", f"{base_p:,} USD/MT")
+                    
+                    if src_id and "_cif" in src_id.lower():
+                        base_p = round(base_p * 1.06)
+                        src_name = "CIF Cảng Đích Quốc Tế"
+                        p_orig = f"{base_p:,} USD/MT"
+                    elif src_id and "_domestic" in src_id.lower():
+                        base_p = round(base_p * 0.92)
+                        src_name = f"Nội Địa / Cửa Vườn / Mỏ ({ctry_prod.get('country')})"
+                        p_orig = f"{base_p:,} USD/MT"
+
+                    metrics = {
+                        "change_24h": ctry_prod.get("change_24h"),
+                        "change_7d": ctry_prod.get("change_7d"),
+                        "change_1m": ctry_prod.get("change_1m"),
+                        "change_6m": ctry_prod.get("change_6m"),
+                        "change_1y": ctry_prod.get("change_1y")
+                    }
+                    history = generate_chart_history_series(base_p, time_range, commodity_id=ctry_prod.get("id"), metrics=metrics)
+                    self._send_json({
+                        "ok": True,
+                        "commodity_id": ctry_prod.get("id"),
+                        "commodity_name": f"{ctry_prod.get('product_name')} ({src_name})",
+                        "hs_code": ctry_prod.get("hs_code"),
+                        "source_id": src_id or ctry_prod.get("id"),
+                        "source_name": src_name,
+                        "source_category": ctry_prod.get("category", "GLOBAL_EXCHANGE"),
+                        "contract_code": c_code,
+                        "current_price_usd_mt": base_p,
+                        "price_original": p_orig,
+                        "change_24h": ctry_prod.get("change_24h", "0.0%"),
+                        "change_7d": ctry_prod.get("change_7d", "0.0%"),
+                        "range": time_range,
+                        "history": history
+                    })
+                    return
 
             # 3. Tra cứu từ danh bạ 213 sản phẩm / 97 chương HS
             if hs_products and hasattr(hs_products, "ALL_PRODUCTS_MASTER"):

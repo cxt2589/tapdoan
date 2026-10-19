@@ -1323,15 +1323,15 @@
       "acacia",
       "go keo"
     ],
-    "benchmark_ref": "VIFOREST Wood Chips & Pellets FOB Cát Lái",
-    "benchmark_symbol": "WOOD_VIFOREST",
-    "price_usd_mt": 260,
-    "price_original": "~260 USD/MT",
-    "change_24h": "+0.4%",
-    "change_7d": "+1.2%",
-    "change_1m": "+2.5%",
-    "change_6m": "+6.8%",
-    "change_1y": "+12.4%"
+    "benchmark_ref": "Chi Hội Dăm Gỗ VIFOREST & Fastmarkets RISI Asian Woodchip Index",
+    "benchmark_symbol": "ACACIA_WOODCHIP_BDMT",
+    "price_usd_mt": 140,
+    "price_original": "140 USD/BDMT (FOB Cái Lân / Dung Quất / Quy Nhơn)",
+    "change_24h": "+0.2%",
+    "change_7d": "+0.8%",
+    "change_1m": "+1.5%",
+    "change_6m": "+4.2%",
+    "change_1y": "+8.5%"
   },
   {
     "hs": "4401.31",
@@ -1349,15 +1349,15 @@
       "sinh khoi",
       "biomass"
     ],
-    "benchmark_ref": "VIFOREST Wood Chips & Pellets FOB Cát Lái",
-    "benchmark_symbol": "WOOD_VIFOREST",
-    "price_usd_mt": 260,
-    "price_original": "~260 USD/MT",
-    "change_24h": "+0.4%",
-    "change_7d": "+1.2%",
-    "change_1m": "+2.5%",
-    "change_6m": "+6.8%",
-    "change_1y": "+12.4%"
+    "benchmark_ref": "Argus Biomass Pellets Asia & VIFOREST",
+    "benchmark_symbol": "WOOD_PELLETS_ARGUS",
+    "price_usd_mt": 125,
+    "price_original": "125 USD/MT (FOB Quy Nhơn / Cái Mép)",
+    "change_24h": "+0.3%",
+    "change_7d": "+0.7%",
+    "change_1m": "+1.2%",
+    "change_6m": "-2.5%",
+    "change_1y": "+6.2%"
   },
   {
     "hs": "4412.33",
@@ -1376,15 +1376,15 @@
       "cop pha",
       "go van ep"
     ],
-    "benchmark_ref": "VIFOREST Wood Chips & Pellets FOB Cát Lái",
-    "benchmark_symbol": "WOOD_VIFOREST",
-    "price_usd_mt": 260,
-    "price_original": "~260 USD/MT",
+    "benchmark_ref": "VIFOREST Plywood & HAWA Export Index",
+    "benchmark_symbol": "PLYWOOD_VIFOREST",
+    "price_usd_mt": 380,
+    "price_original": "380 USD/m3 (~480 USD/MT)",
     "change_24h": "+0.4%",
-    "change_7d": "+1.2%",
-    "change_1m": "+2.5%",
-    "change_6m": "+6.8%",
-    "change_1y": "+12.4%"
+    "change_7d": "+1.0%",
+    "change_1m": "+2.4%",
+    "change_6m": "+5.8%",
+    "change_1y": "+11.2%"
   },
   {
     "hs": "5205.22",

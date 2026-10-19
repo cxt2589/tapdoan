@@ -556,6 +556,29 @@ SPECIFIC_HS_PRICES = {
         "ref": "HAWA Wooden Furniture Export Index",
         "sym": "FURNITURE_HAWA",
         "ch_24h": "+0.5%", "ch_7d": "+1.4%", "ch_1m": "+3.4%", "ch_6m": "+8.1%", "ch_1y": "+14.5%"
+    },
+
+    # --- GỖ, DĂM GỖ & LÂM SẢN (CHƯƠNG 44) ---
+    "4401.22": {
+        "price": 140,
+        "price_original": "140 USD/BDMT (FOB Cái Lân / Dung Quất / Quy Nhơn)",
+        "ref": "Chi Hội Dăm Gỗ VIFOREST & Fastmarkets RISI Asian Woodchip Index",
+        "sym": "ACACIA_WOODCHIP_BDMT",
+        "ch_24h": "+0.2%", "ch_7d": "+0.8%", "ch_1m": "+1.5%", "ch_6m": "+4.2%", "ch_1y": "+8.5%"
+    },
+    "4401.31": {
+        "price": 125,
+        "price_original": "125 USD/MT (FOB Quy Nhơn / Cái Mép)",
+        "ref": "Argus Biomass Pellets Asia & VIFOREST",
+        "sym": "WOOD_PELLETS_ARGUS",
+        "ch_24h": "+0.3%", "ch_7d": "+0.7%", "ch_1m": "+1.2%", "ch_6m": "-2.5%", "ch_1y": "+6.2%"
+    },
+    "4412.33": {
+        "price": 380,
+        "price_original": "380 USD/m3 (~480 USD/MT)",
+        "ref": "VIFOREST Plywood & HAWA Export Index",
+        "sym": "PLYWOOD_VIFOREST",
+        "ch_24h": "+0.4%", "ch_7d": "+1.0%", "ch_1m": "+2.4%", "ch_6m": "+5.8%", "ch_1y": "+11.2%"
     }
 }
 

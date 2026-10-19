@@ -412,6 +412,27 @@ COUNTRY_TOP_PRODUCTS = [
         "category": "industrial"
     },
     {
+        "id": "vn-acacia-woodchips",
+        "commodity_id": "acacia_woodchips",
+        "product_name": "Dăm Gỗ Keo Xuất Khẩu (Acacia Woodchips BDMT)",
+        "country": "Việt Nam",
+        "country_code": "VN",
+        "flag": "🇻🇳",
+        "hs_code": "4401.22",
+        "market_scale": "15 Triệu Tấn / $2.2 Tỷ USD",
+        "revenue_usd_billion": 2.2,
+        "metric_rank": "Top 1 Thế Giới",
+        "price_usd_mt": 140,
+        "price_original": "140 USD/BDMT (FOB Cái Lân / Dung Quất)",
+        "exchange_name": "Fastmarkets RISI & Chi Hội Dăm Gỗ VIFOREST",
+        "change_24h": "+0.2%",
+        "change_7d": "+0.8%",
+        "change_1m": "+1.5%",
+        "change_6m": "+4.2%",
+        "change_1y": "+8.5%",
+        "category": "industrial"
+    },
+    {
         "id": "vn-black-pepper",
         "commodity_id": "black_pepper",
         "product_name": "Hồ Tiêu Đen Chư Sê / Gia Lai (FAQ 500g/l)",

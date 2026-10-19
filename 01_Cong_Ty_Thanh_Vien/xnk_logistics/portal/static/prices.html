@@ -1621,12 +1621,18 @@
             <td class="py-3 px-2 text-center font-bold whitespace-nowrap ${getChangeColorClass(p.change_1m)}">${p.change_1m}</td>
             <td class="py-3 px-2 text-center font-bold whitespace-nowrap ${getChangeColorClass(p.change_6m)}">${p.change_6m}</td>
             <td class="py-3 px-2 text-center font-bold whitespace-nowrap ${getChangeColorClass(p.change_1y)}">${p.change_1y}</td>
-            <td class="py-3 px-3 text-right">
+            <td class="py-3 px-3 text-right whitespace-nowrap">
               <div class="flex items-center justify-end gap-1.5">
-                <button type="button" onclick="inspectCountryProductInChart('${p.id}', '${p.product_name.replace(/'/g, "\\'")}', '${p.hs_code}', ${p.price_usd_mt})" class="px-2 py-1 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/30 text-[10px] font-bold flex items-center gap-1 cursor-pointer transition-all active:scale-95" title="Soi Biểu Đồ Giá">
-                  <span>📈 Soi Biểu Đồ</span>
+                <!-- Nút Phụ: Soi Biểu Đồ (tinh gọn, không chiếm diện tích ngang bằng) -->
+                <button type="button" onclick="inspectCountryProductInChart('${p.id}', '${p.product_name.replace(/'/g, "\\'")}', '${p.hs_code}', ${p.price_usd_mt})" 
+                        class="px-2 py-1 rounded-md text-[10px] font-medium flex items-center gap-1 cursor-pointer transition-all active:scale-95 ${isDark ? 'bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-cyan-300 border border-slate-700' : 'bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 border border-slate-200'}" 
+                        title="Cuộn lên xem biểu đồ lịch sử giá">
+                  <span>📈 Biểu Đồ</span>
                 </button>
-                <button type="button" onclick="openQuickMatchmakerModal('${p.id}', '${p.product_name.replace(/'/g, "\\'")}', '${p.hs_code}')" class="px-2 py-1 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold flex items-center gap-1 cursor-pointer transition-all active:scale-95" title="Khớp Lệnh B2B">
+                <!-- Nút Chính: Khớp Lệnh (nổi bật, ưu tiên cao nhất cho nghiệp vụ ngoại thương B2B) -->
+                <button type="button" onclick="openQuickMatchmakerModal('${p.id}', '${p.product_name.replace(/'/g, "\\'")}', '${p.hs_code}')" 
+                        class="px-3 py-1 rounded-lg text-[11px] font-extrabold flex items-center gap-1 cursor-pointer transition-all active:scale-95 shadow-sm ${isDark ? 'bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-emerald-500/20' : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-600/20'}" 
+                        title="Mở Bàn Khớp Lệnh Ngoại Thương B2B">
                   <span>⚡ Khớp Lệnh</span>
                 </button>
               </div>

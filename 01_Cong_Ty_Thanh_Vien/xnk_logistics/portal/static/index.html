@@ -2190,7 +2190,7 @@
             <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
               <div class="relative flex-1">
                 <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
-                <input type="text" id="priceMultiSourceSearchInput" oninput="handlePriceMultiSourceSearch(this.value)" placeholder="🔍 Tìm mặt hàng hoặc sàn (vd: Cà phê ICE, Arabica Yahoo, Gạo VFA, Cát Lái, NOLA CME...)" class="w-full pl-10 pr-9 py-2.5 rounded-xl text-xs font-mono bg-brand-950 border border-white/10 text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500">
+                <input type="text" id="priceMultiSourceSearchInput" oninput="handlePriceMultiSourceSearch(this.value)" onkeydown="if(event.key === 'Enter'){ handlePriceSearchEnter(event); }" placeholder="🔍 Tìm mặt hàng hoặc sàn (vd: Cà phê ICE, Arabica Yahoo, Gạo VFA, Cát Lái, NOLA CME...)" class="w-full pl-10 pr-9 py-2.5 rounded-xl text-xs font-mono bg-brand-950 border border-white/10 text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500">
                 <button type="button" id="clearPriceSearchBtn" onclick="clearPriceMultiSourceSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white cursor-pointer">
                   <i data-lucide="x" class="w-3.5 h-3.5"></i>
                 </button>
@@ -2224,7 +2224,7 @@
           </div>
 
           <!-- Interactive Multi-Source Price Chart Card -->
-          <div class="p-4 sm:p-5 rounded-2xl bg-brand-950/90 border border-emerald-500/30 space-y-3.5">
+          <div id="priceHistoryChartCard" class="scroll-mt-24 p-4 sm:p-5 rounded-2xl bg-brand-950/90 border border-emerald-500/30 space-y-3.5">
             <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 border-b border-white/10 pb-3">
               <div class="min-w-0 flex-1 space-y-1">
                 <div class="flex items-center gap-2 flex-wrap">
@@ -9598,7 +9598,7 @@
           ? "bg-emerald-500 text-brand-950 font-bold border-emerald-400 shadow-md shadow-emerald-500/20" 
           : "bg-brand-900 text-slate-300 hover:text-white hover:bg-white/5 border-white/10";
         return `
-          <button type="button" onclick="selectCommodityPrice('${sec.commodity_id}')" 
+          <button type="button" onclick="selectCommodityPrice('${sec.commodity_id}', true)" 
                   class="px-3 py-1.5 rounded-xl text-xs font-mono shrink-0 border transition-all flex items-center gap-1.5 cursor-pointer ${activeClass}">
             <span>${sec.commodity_name.split(' ')[0]}</span>
             <span class="text-[10px] opacity-80">(${sec.hs_code})</span>
@@ -9607,7 +9607,15 @@
       }).join('');
     }
 
-    function selectCommodityPrice(commodityId) {
+    function navigateToPriceHistoryChart() {
+      const chartCard = document.getElementById('priceHistoryChartCard') || 
+                        document.getElementById('commodityPriceCanvas');
+      if (chartCard) {
+        chartCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function selectCommodityPrice(commodityId, shouldScroll = false) {
       if (!cachedCommodityPricesData || !cachedCommodityPricesData.sectors) return;
       currentSelectedCommodityId = commodityId;
       const commodity = cachedCommodityPricesData.sectors.find(s => s.commodity_id === commodityId) || cachedCommodityPricesData.sectors[0];
@@ -9627,16 +9635,17 @@
       calculateUnitConversion();
       updateChartForCurrentCommodityAndSource();
       if (window.lucide) lucide.createIcons();
+
+      if (shouldScroll) {
+        navigateToPriceHistoryChart();
+      }
     }
 
     function selectCommodityPriceAndSource(commodityId, sourceId) {
       currentSelectedCommodityId = commodityId;
       currentChartSourceId = sourceId;
-      selectCommodityPrice(commodityId);
-      const chartCard = document.getElementById('commodityPriceCanvas');
-      if (chartCard) {
-        chartCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }
+      selectCommodityPrice(commodityId, false);
+      navigateToPriceHistoryChart();
     }
 
     function getCategoryBadgeMeta(cat) {
@@ -9779,7 +9788,16 @@
       }
     }
 
+    function handlePriceSearchEnter(e) {
+      if (e) e.preventDefault();
+      if (window._lastSearchResults && window._lastSearchResults.length > 0) {
+        const item = window._lastSearchResults[0];
+        selectFromSearchResult(item.commodity_id, item.source_id);
+      }
+    }
+
     function renderPriceSearchResultsDropdown(results, query) {
+      window._lastSearchResults = results || [];
       const dropdown = document.getElementById('priceSearchAutocompleteDropdown');
       if (!dropdown) return;
 

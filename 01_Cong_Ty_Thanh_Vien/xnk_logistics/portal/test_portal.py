@@ -966,7 +966,7 @@ def run_all_tests():
             prices_html = prices_resp.read().decode('utf-8')
             assert 'Trạm Giám Sát Giá Đa Sàn' in prices_html
             assert 'id="commodityPriceCanvas"' in prices_html
-            assert 'id="commodityVolatilityTableBody"' in prices_html
+            assert 'id="multiSourcePriceTableBody"' in prices_html
 
         with urllib.request.urlopen(url_html, timeout=5) as html_resp:
             html_text = html_resp.read().decode('utf-8')

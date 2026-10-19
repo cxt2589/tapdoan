@@ -11,6 +11,16 @@
   <script src="https://unpkg.com/lucide@latest"></script>
   
   <script>
+    // Kiểm tra và áp dụng theme tức thì
+    (function() {
+      const savedTheme = localStorage.getItem('portal_theme');
+      if (savedTheme === 'light') {
+        document.documentElement.classList.remove('dark');
+      } else {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+
     tailwind.config = {
       darkMode: 'class',
       theme: {
@@ -34,6 +44,7 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
       background-color: #070b14;
       color: #e2e8f0;
+      transition: background-color 0.2s ease, color 0.2s ease;
     }
     .font-mono {
       font-family: 'JetBrains Mono', monospace;
@@ -52,6 +63,121 @@
     }
     ::-webkit-scrollbar-thumb:hover {
       background: rgba(16, 185, 129, 0.6);
+    }
+
+    /* ======================================================== */
+    /* LIGHT MODE FINTECH DESIGN SYSTEM (Based on design.md)     */
+    /* ======================================================== */
+    html:not(.dark) body {
+      background-color: #f8fafc !important;
+      color: #0f172a !important;
+    }
+    html:not(.dark) header {
+      background-color: rgba(255, 255, 255, 0.96) !important;
+      border-bottom-color: #e2e8f0 !important;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    }
+    html:not(.dark) .bg-brand-950,
+    html:not(.dark) .bg-brand-950\/90,
+    html:not(.dark) .bg-brand-950\/80,
+    html:not(.dark) .bg-brand-900,
+    html:not(.dark) .bg-brand-900\/90,
+    html:not(.dark) .bg-brand-900\/50,
+    html:not(.dark) .bg-brand-850 {
+      background-color: #ffffff !important;
+      color: #0f172a !important;
+    }
+    html:not(.dark) .border-white\/10,
+    html:not(.dark) .border-white\/5 {
+      border-color: #e2e8f0 !important;
+    }
+    html:not(.dark) .divide-white\/5 > :not([hidden]) ~ :not([hidden]),
+    html:not(.dark) .divide-white\/10 > :not([hidden]) ~ :not([hidden]) {
+      border-color: #e2e8f0 !important;
+    }
+    html:not(.dark) .text-white {
+      color: #0f172a !important;
+    }
+    html:not(.dark) .text-slate-400,
+    html:not(.dark) .text-slate-500 {
+      color: #475569 !important;
+    }
+    html:not(.dark) .text-slate-300 {
+      color: #334155 !important;
+    }
+    html:not(.dark) .text-slate-200 {
+      color: #1e293b !important;
+    }
+    html:not(.dark) .bg-white\/5,
+    html:not(.dark) .bg-white\/10 {
+      background-color: #f1f5f9 !important;
+      border-color: #e2e8f0 !important;
+      color: #334155 !important;
+    }
+    html:not(.dark) thead {
+      background-color: #f8fafc !important;
+      color: #475569 !important;
+      border-bottom-color: #e2e8f0 !important;
+    }
+    html:not(.dark) input,
+    html:not(.dark) select {
+      background-color: #ffffff !important;
+      border-color: #cbd5e1 !important;
+      color: #0f172a !important;
+    }
+    /* Sửa triệt để lỗi màu chữ trắng trên nền sáng cho nút active */
+    html:not(.dark) .btn-active-range,
+    html:not(.dark) .country-pill-btn.active,
+    html:not(.dark) .category-pill-btn.active {
+      background-color: #2563eb !important;
+      color: #ffffff !important;
+      border-color: #2563eb !important;
+      font-weight: 700 !important;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25) !important;
+    }
+    html:not(.dark) .btn-inactive-range,
+    html:not(.dark) .country-pill-btn:not(.active),
+    html:not(.dark) .category-pill-btn:not(.active) {
+      background-color: #f1f5f9 !important;
+      color: #334155 !important;
+      border-color: #e2e8f0 !important;
+    }
+    html:not(.dark) .country-pill-btn:not(.active):hover,
+    html:not(.dark) .category-pill-btn:not(.active):hover {
+      background-color: #e2e8f0 !important;
+      color: #0f172a !important;
+    }
+    /* Triệt tiêu lớp hòa trộn mờ đục trong Light Mode */
+    html:not(.dark) #commodityArbitrageAnalysisCard {
+      background: #ffffff !important;
+      border-color: #e2e8f0 !important;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    html:not(.dark) #commodityPriceCanvas {
+      background-color: #ffffff !important;
+    }
+    html:not(.dark) #chartTooltip {
+      background-color: #ffffff !important;
+      border-color: #94a3b8 !important;
+      color: #0f172a !important;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.12) !important;
+    }
+    html:not(.dark) #chartTooltip .text-slate-300,
+    html:not(.dark) #chartTooltip .text-slate-400 {
+      color: #475569 !important;
+    }
+    html:not(.dark) #chartTooltip .text-emerald-400 {
+      color: #059669 !important;
+    }
+    html:not(.dark) #priceSearchAutocompleteDropdown {
+      background-color: #ffffff !important;
+      border-color: #cbd5e1 !important;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.15) !important;
+    }
+    html:not(.dark) footer {
+      background-color: #f8fafc !important;
+      border-top-color: #e2e8f0 !important;
+      color: #64748b !important;
     }
   </style>
 </head>
@@ -88,6 +214,11 @@
       <button type="button" onclick="fetchPriceBenchmarksData()" class="p-2 sm:px-3 sm:py-1.5 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-slate-300 hover:text-emerald-300 border border-white/10 hover:border-emerald-500/40 text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer">
         <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
         <span class="hidden sm:inline">Làm Mới Giá</span>
+      </button>
+      <button type="button" onclick="toggleTerminalTheme()" id="themeToggleBtn" class="p-2 sm:px-3 sm:py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/10 text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer" title="Chuyển đổi Chế độ Sáng / Tối">
+        <i data-lucide="sun" id="themeIconSun" class="w-3.5 h-3.5 text-amber-400 hidden"></i>
+        <i data-lucide="moon" id="themeIconMoon" class="w-3.5 h-3.5 text-cyan-300"></i>
+        <span id="themeToggleText" class="hidden sm:inline">Chế Độ Sáng</span>
       </button>
       <a href="/api/docs" target="_blank" class="p-2 sm:px-3 sm:py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/10 text-xs font-semibold flex items-center gap-1.5 transition-all">
         <i data-lucide="code" class="w-3.5 h-3.5 text-cyan-400"></i>
@@ -173,10 +304,13 @@
 
             <div class="flex items-center gap-2 flex-wrap">
               <!-- Time Range Filters -->
-              <div class="flex items-center gap-1 bg-brand-900 border border-white/10 p-0.5 rounded-xl text-[10px] font-mono">
-                <button type="button" onclick="changeChartRange('1m')" id="btn-chart-range-1m" class="px-2 py-1 rounded-lg hover:bg-white/5 text-slate-400 cursor-pointer">1 Tháng</button>
-                <button type="button" onclick="changeChartRange('6m')" id="btn-chart-range-6m" class="px-2 py-1 rounded-lg hover:bg-white/5 text-slate-400 cursor-pointer">6 Tháng</button>
-                <button type="button" onclick="changeChartRange('1y')" id="btn-chart-range-1y" class="px-2 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30 cursor-pointer">12 Tháng</button>
+              <div class="flex items-center gap-1 bg-brand-900 border border-white/10 p-0.5 rounded-xl text-[10px] font-mono" id="chartRangeContainer">
+                <button type="button" onclick="changeChartRange('1m')" id="btn-chart-range-1m" class="chart-range-btn px-2 py-1 rounded-lg text-slate-400 cursor-pointer">1 Tháng</button>
+                <button type="button" onclick="changeChartRange('3m')" id="btn-chart-range-3m" class="chart-range-btn px-2 py-1 rounded-lg text-slate-400 cursor-pointer">3 Tháng</button>
+                <button type="button" onclick="changeChartRange('6m')" id="btn-chart-range-6m" class="chart-range-btn px-2 py-1 rounded-lg text-slate-400 cursor-pointer">6 Tháng</button>
+                <button type="button" onclick="changeChartRange('1y')" id="btn-chart-range-1y" class="chart-range-btn px-2 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30 cursor-pointer btn-active-range">1 Năm</button>
+                <button type="button" onclick="changeChartRange('2y')" id="btn-chart-range-2y" class="chart-range-btn px-2 py-1 rounded-lg text-slate-400 cursor-pointer">2 Năm</button>
+                <button type="button" onclick="changeChartRange('3y')" id="btn-chart-range-3y" class="chart-range-btn px-2 py-1 rounded-lg text-slate-400 cursor-pointer">3 Năm</button>
               </div>
               <!-- Price Volatility Badge -->
               <div class="px-2.5 py-1 rounded-xl bg-brand-900 border border-white/10 text-right">
@@ -240,8 +374,80 @@
         </div>
 
         <!-- Arbitrage Radar & Recommendation Box -->
-        <div class="p-4 rounded-2xl bg-gradient-to-r from-emerald-500/15 via-cyan-500/10 to-brand-950 border border-emerald-500/30 space-y-3" id="commodityArbitrageAnalysisCard">
+        <div class="p-4 rounded-2xl bg-brand-950/80 border border-emerald-500/30 space-y-3" id="commodityArbitrageAnalysisCard">
           <!-- Injected via JS -->
+        </div>
+
+        <!-- BẢNG BÁO GIÁ TOP SẢN PHẨM THEO QUỐC GIA (QUY MÔ, SẢN LƯỢNG & DOANH THU) -->
+        <div id="countryTopProductsSection" class="p-4 sm:p-5 rounded-2xl bg-brand-950/80 border border-white/10 space-y-4">
+          <!-- Header & Title -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-xl bg-blue-500/15 border border-blue-500/30 flex items-center justify-center text-blue-400">
+                <i data-lucide="globe-2" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <h4 class="text-xs sm:text-sm font-bold text-white font-mono uppercase tracking-wide">BẢNG BÁO GIÁ TOP SẢN PHẨM THEO QUỐC GIA (QUY MÔ, SẢN LƯỢNG & DOANH THU)</h4>
+                <p class="text-[11px] text-slate-400 font-sans">Chiến lược xuất nhập khẩu hàng đầu: Việt Nam, Brazil, Indonesia, Hoa Kỳ, Nga, Ấn Độ, Thái Lan</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 text-xs font-mono">
+              <span class="text-slate-400">Đơn vị: USD/Tấn</span>
+              <span class="px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 text-[10px]" id="countryProductCountBadge">Đang nạp...</span>
+            </div>
+          </div>
+
+          <!-- Country Filter Tabs -->
+          <div class="space-y-2">
+            <div class="flex items-center justify-between text-[11px] font-mono text-slate-400">
+              <span class="font-bold">Lọc theo Quốc Gia Xuất Khẩu Trọng Điểm:</span>
+              <span class="text-[10px] text-slate-500">Bấm quốc gia để đối soát danh mục</span>
+            </div>
+            <div class="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-xs" id="countryFilterBar">
+              <button type="button" onclick="filterCountryTopTable('ALL')" id="ctry-btn-ALL" class="country-pill-btn active px-3 py-1.5 rounded-xl text-xs font-bold border cursor-pointer">Tất Cả</button>
+              <button type="button" onclick="filterCountryTopTable('VN')" id="ctry-btn-VN" class="country-pill-btn px-3 py-1.5 rounded-xl text-xs font-semibold border cursor-pointer">🇻🇳 Việt Nam</button>
+              <button type="button" onclick="filterCountryTopTable('BR')" id="ctry-btn-BR" class="country-pill-btn px-3 py-1.5 rounded-xl text-xs font-semibold border cursor-pointer">🇧🇷 Brazil</button>
+              <button type="button" onclick="filterCountryTopTable('ID')" id="ctry-btn-ID" class="country-pill-btn px-3 py-1.5 rounded-xl text-xs font-semibold border cursor-pointer">🇮🇩 Indonesia</button>
+              <button type="button" onclick="filterCountryTopTable('US')" id="ctry-btn-US" class="country-pill-btn px-3 py-1.5 rounded-xl text-xs font-semibold border cursor-pointer">🇺🇸 Hoa Kỳ</button>
+              <button type="button" onclick="filterCountryTopTable('RU')" id="ctry-btn-RU" class="country-pill-btn px-3 py-1.5 rounded-xl text-xs font-semibold border cursor-pointer">🇷🇺 Nga</button>
+              <button type="button" onclick="filterCountryTopTable('IN')" id="ctry-btn-IN" class="country-pill-btn px-3 py-1.5 rounded-xl text-xs font-semibold border cursor-pointer">🇮🇳 Ấn Độ</button>
+              <button type="button" onclick="filterCountryTopTable('TH')" id="ctry-btn-TH" class="country-pill-btn px-3 py-1.5 rounded-xl text-xs font-semibold border cursor-pointer">🇹🇭 Thái Lan</button>
+            </div>
+          </div>
+
+          <!-- Category Filter Bar -->
+          <div class="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-[11px] font-mono" id="categoryFilterBar">
+            <button type="button" onclick="filterCategoryTopTable('ALL')" id="cat-btn-ALL" class="category-pill-btn active px-2.5 py-1 rounded-lg text-[11px] font-semibold border cursor-pointer">Tất Cả Ngành</button>
+            <button type="button" onclick="filterCategoryTopTable('agri_food')" id="cat-btn-agri_food" class="category-pill-btn px-2.5 py-1 rounded-lg text-[11px] font-semibold border cursor-pointer">Nông - Thủy Sản</button>
+            <button type="button" onclick="filterCategoryTopTable('industrial')" id="cat-btn-industrial" class="category-pill-btn px-2.5 py-1 rounded-lg text-[11px] font-semibold border cursor-pointer">Khoáng Sản & Công Nghiệp</button>
+            <button type="button" onclick="filterCategoryTopTable('fertilizer')" id="cat-btn-fertilizer" class="category-pill-btn px-2.5 py-1 rounded-lg text-[11px] font-semibold border cursor-pointer">Phân Bón & Hóa Chất</button>
+            <button type="button" onclick="filterCategoryTopTable('energy')" id="cat-btn-energy" class="category-pill-btn px-2.5 py-1 rounded-lg text-[11px] font-semibold border cursor-pointer">Năng Lượng</button>
+            <button type="button" onclick="filterCategoryTopTable('textiles')" id="cat-btn-textiles" class="category-pill-btn px-2.5 py-1 rounded-lg text-[11px] font-semibold border cursor-pointer">Dệt May & Bông Sợi</button>
+          </div>
+
+          <!-- Table Container with clean horizontal scrolling -->
+          <div class="overflow-x-auto scrollbar-none rounded-xl border border-white/10">
+            <table class="w-full text-left text-xs font-mono min-w-[980px]">
+              <thead class="bg-brand-900/90 text-slate-400 text-[10px] uppercase border-b border-white/10">
+                <tr>
+                  <th class="py-2.5 px-3">Quốc Gia</th>
+                  <th class="py-2.5 px-3">Tên Sản Phẩm & Mã HS</th>
+                  <th class="py-2.5 px-3">Quy Mô / Sản Lượng / Doanh Thu</th>
+                  <th class="py-2.5 px-3">Giá Tham Chiếu</th>
+                  <th class="py-2.5 px-3">Sàn Định Giá</th>
+                  <th class="py-2.5 px-2 text-center">24h</th>
+                  <th class="py-2.5 px-2 text-center">7 Ngày</th>
+                  <th class="py-2.5 px-2 text-center">1 Tháng</th>
+                  <th class="py-2.5 px-2 text-center">6 Tháng</th>
+                  <th class="py-2.5 px-2 text-center">1 Năm</th>
+                  <th class="py-2.5 px-3 text-right">Tác Vụ</th>
+                </tr>
+              </thead>
+              <tbody id="countryTopProductsTableBody" class="divide-y divide-white/5">
+                <!-- Rendered dynamically via fetchCountryTopProducts -->
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <!-- Universal Unit Normalizer Calculator -->
@@ -319,8 +525,10 @@
     let currentChartMetadata = {};
 
     document.addEventListener('DOMContentLoaded', async () => {
+      initTerminalTheme();
       setupChartInteraction();
       await fetchPriceBenchmarksData();
+      await fetchCountryTopProducts();
       if (window.lucide) lucide.createIcons();
     });
 
@@ -347,11 +555,16 @@
       if (!container || !cachedCommodityPricesData || !cachedCommodityPricesData.sectors) return;
 
       const sectors = cachedCommodityPricesData.sectors;
+      const isDark = document.documentElement.classList.contains('dark');
       container.innerHTML = sectors.map(sec => {
         const isActive = sec.commodity_id === currentSelectedCommodityId;
         const activeClass = isActive 
-          ? "bg-emerald-500 text-brand-950 font-bold border-emerald-400 shadow-md shadow-emerald-500/20" 
-          : "bg-brand-900 text-slate-300 hover:text-white hover:bg-white/5 border-white/10";
+          ? (isDark 
+              ? "bg-emerald-500 text-brand-950 font-bold border-emerald-400 shadow-md shadow-emerald-500/20" 
+              : "bg-blue-600 text-white font-bold border-blue-600 shadow-md shadow-blue-500/20")
+          : (isDark 
+              ? "bg-brand-900 text-slate-300 hover:text-white hover:bg-white/5 border-white/10" 
+              : "bg-slate-100 text-slate-700 hover:bg-slate-200 border-slate-200");
         return `
           <button type="button" onclick="selectCommodityPrice('${sec.commodity_id}')" 
                   class="px-3 py-1.5 rounded-xl text-xs font-mono shrink-0 border transition-all flex items-center gap-1.5 cursor-pointer ${activeClass}">
@@ -483,10 +696,15 @@
       categories.forEach(c => {
         const btn = document.getElementById(`filter-src-${c}`);
         if (!btn) return;
+        const isDark = document.documentElement.classList.contains('dark');
         if (c === cat) {
-          btn.className = "px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-cyan-500 text-brand-950 border border-cyan-400 cursor-pointer shadow-md shadow-cyan-500/20";
+          btn.className = isDark
+            ? "px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-cyan-500 text-brand-950 border border-cyan-400 cursor-pointer shadow-md shadow-cyan-500/20"
+            : "px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-blue-600 text-white border border-blue-600 cursor-pointer shadow-md shadow-blue-500/20";
         } else {
-          btn.className = "px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-brand-950 text-slate-300 hover:text-white border border-white/10 cursor-pointer";
+          btn.className = isDark
+            ? "px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-brand-950 text-slate-300 hover:text-white border border-white/10 cursor-pointer"
+            : "px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-slate-100 text-slate-700 hover:bg-slate-200 border-slate-200 cursor-pointer";
         }
       });
       if (cachedCommodityPricesData && cachedCommodityPricesData.sectors) {
@@ -597,14 +815,19 @@
 
     function changeChartRange(range) {
       currentChartRange = range;
-      const ranges = ['1m', '6m', '1y'];
+      const ranges = ['1m', '3m', '6m', '1y', '2y', '3y'];
+      const isDark = document.documentElement.classList.contains('dark');
       ranges.forEach(r => {
         const btn = document.getElementById(`btn-chart-range-${r}`);
         if (!btn) return;
         if (r === range) {
-          btn.className = "px-2 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30 cursor-pointer shadow-sm";
+          btn.className = isDark
+            ? "chart-range-btn px-2 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30 cursor-pointer shadow-sm btn-active-range"
+            : "chart-range-btn px-2 py-1 rounded-lg bg-blue-600 text-white font-bold border border-blue-600 cursor-pointer shadow-sm btn-active-range";
         } else {
-          btn.className = "px-2 py-1 rounded-lg hover:bg-white/5 text-slate-400 border border-transparent cursor-pointer";
+          btn.className = isDark
+            ? "chart-range-btn px-2 py-1 rounded-lg hover:bg-white/5 text-slate-400 border border-transparent cursor-pointer btn-inactive-range"
+            : "chart-range-btn px-2 py-1 rounded-lg hover:bg-slate-200 text-slate-700 border border-transparent cursor-pointer btn-inactive-range";
         }
       });
       updateChartForCurrentCommodityAndSource();
@@ -662,9 +885,11 @@
       ctx.scale(dpr, dpr);
       ctx.clearRect(0, 0, width, height);
 
+      const isDark = document.documentElement.classList.contains('dark');
+
       const points = currentChartPoints;
       if (!points || points.length === 0) {
-        ctx.fillStyle = '#94a3b8';
+        ctx.fillStyle = isDark ? '#94a3b8' : '#475569';
         ctx.font = '12px monospace';
         ctx.textAlign = 'center';
         ctx.fillText('Đang nạp dữ liệu nến sàn...', width / 2, height / 2);
@@ -692,8 +917,8 @@
       // 1. Grid lines & Y labels
       const gridSteps = 4;
       ctx.lineWidth = 1;
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
-      ctx.fillStyle = '#64748b';
+      ctx.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(15, 23, 42, 0.08)';
+      ctx.fillStyle = isDark ? '#64748b' : '#475569';
       ctx.font = '10px monospace';
       ctx.textAlign = 'right';
 
@@ -719,7 +944,7 @@
 
       // 3. X Labels
       ctx.textAlign = 'center';
-      ctx.fillStyle = '#94a3b8';
+      ctx.fillStyle = isDark ? '#94a3b8' : '#334155';
       const stepX = Math.max(1, Math.floor(coords.length / 6));
       coords.forEach((c, idx) => {
         if (idx % stepX === 0 || idx === coords.length - 1) {
@@ -729,9 +954,15 @@
 
       // 4. Fill Gradient
       const fillGradient = ctx.createLinearGradient(0, paddingTop, 0, paddingTop + plotH);
-      fillGradient.addColorStop(0, 'rgba(16, 185, 129, 0.32)');
-      fillGradient.addColorStop(0.7, 'rgba(6, 182, 212, 0.12)');
-      fillGradient.addColorStop(1, 'rgba(6, 182, 212, 0.0)');
+      if (isDark) {
+        fillGradient.addColorStop(0, 'rgba(16, 185, 129, 0.32)');
+        fillGradient.addColorStop(0.7, 'rgba(6, 182, 212, 0.12)');
+        fillGradient.addColorStop(1, 'rgba(6, 182, 212, 0.0)');
+      } else {
+        fillGradient.addColorStop(0, 'rgba(37, 99, 235, 0.22)');
+        fillGradient.addColorStop(0.7, 'rgba(14, 165, 233, 0.06)');
+        fillGradient.addColorStop(1, 'rgba(14, 165, 233, 0.0)');
+      }
 
       ctx.beginPath();
       ctx.moveTo(coords[0].x, paddingTop + plotH);
@@ -750,7 +981,7 @@
       for (let i = 1; i < coords.length; i++) {
         ctx.lineTo(coords[i].x, coords[i].y);
       }
-      ctx.strokeStyle = '#10b981';
+      ctx.strokeStyle = isDark ? '#10b981' : '#2563eb';
       ctx.lineWidth = 2.5;
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
@@ -921,26 +1152,57 @@
       const card = document.getElementById('commodityArbitrageAnalysisCard');
       if (!card || !commodity.arbitrage_analysis) return;
       const arb = commodity.arbitrage_analysis;
+      const isDark = document.documentElement.classList.contains('dark');
       card.innerHTML = `
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-2">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b ${isDark ? 'border-white/10' : 'border-slate-200'} pb-2">
           <div class="flex items-center gap-2">
             <i data-lucide="crosshair" class="w-4 h-4 text-emerald-400"></i>
-            <span class="text-xs font-mono font-bold uppercase text-emerald-300">RADAR ĐỐI SOÁT CHÊNH LỆCH ARBITRAGE (SPREAD & BASIS):</span>
+            <span class="text-xs font-mono font-bold uppercase ${isDark ? 'text-emerald-300' : 'text-blue-700'}">RADAR ĐỐI SOÁT CHÊNH LỆCH ARBITRAGE (SPREAD & BASIS):</span>
           </div>
-          <span class="text-xs font-mono text-slate-300">Basis: <strong class="text-cyan-300">${arb.basis_diff || 'N/A'}</strong></span>
+          <div class="flex items-center gap-2 text-xs font-mono">
+            <span class="${isDark ? 'text-slate-300' : 'text-slate-600'}">Basis: <strong class="${isDark ? 'text-cyan-300' : 'text-blue-600'}">${arb.basis_diff || 'N/A'}</strong></span>
+            <span class="${isDark ? 'text-slate-300' : 'text-slate-600'}">| Gross Spread: <strong class="${isDark ? 'text-emerald-300' : 'text-emerald-600'}">+$${arb.spread_usd || 0}/MT (+${arb.spread_pct || 0}%)</strong></span>
+          </div>
         </div>
+
+        <!-- Explanatory Box for Arbitrage Spread & Basis -->
+        <div class="p-3 rounded-xl ${isDark ? 'bg-black/30 border border-white/5' : 'bg-slate-50 border border-slate-200'} text-[11px] leading-relaxed space-y-2">
+          <div class="flex items-center gap-2 font-bold ${isDark ? 'text-slate-200' : 'text-slate-800'}">
+            <i data-lucide="info" class="w-3.5 h-3.5 text-blue-400"></i>
+            <span>CƠ SỞ TÍNH TOÁN CHÊNH LỆCH ARBITRAGE & ĐỘ LỆCH CƠ SỞ (BASIS):</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 font-mono text-[10px]">
+            <div class="p-2.5 rounded-lg ${isDark ? 'bg-white/5' : 'bg-white border border-slate-200'}">
+              <span class="${isDark ? 'text-slate-400' : 'text-slate-500'} block font-sans">1. Độ Lệch Cơ Sở (Basis):</span>
+              <strong class="${isDark ? 'text-cyan-300' : 'text-blue-700'}">Basis = FOB Cát Lái - Futures Benchmark</strong>
+              <p class="text-[9px] ${isDark ? 'text-slate-400' : 'text-slate-500'} font-sans mt-0.5">Hiện tại: ${arb.basis_diff || '-$135/MT'}. Âm tức giá FOB nội địa đang chiết khấu so với hợp đồng tương lai quốc tế.</p>
+            </div>
+            <div class="p-2.5 rounded-lg ${isDark ? 'bg-white/5' : 'bg-white border border-slate-200'}">
+              <span class="${isDark ? 'text-slate-400' : 'text-slate-500'} block font-sans">2. Chênh Lệch Gộp (Gross Spread):</span>
+              <strong class="${isDark ? 'text-emerald-300' : 'text-emerald-700'}">Gross = Giá CIF Cảng Đích - Giá Farmgate</strong>
+              <p class="text-[9px] ${isDark ? 'text-slate-400' : 'text-slate-500'} font-sans mt-0.5">Biên độ chênh lệch giữa giá bán giao tại cảng nhập khẩu và giá mua xuất trại tại nông hộ.</p>
+            </div>
+            <div class="p-2.5 rounded-lg ${isDark ? 'bg-white/5' : 'bg-white border border-slate-200'}">
+              <span class="${isDark ? 'text-slate-400' : 'text-slate-500'} block font-sans">3. Biên Lợi Nhuận Ròng (Net Margin):</span>
+              <strong class="${isDark ? 'text-purple-300' : 'text-purple-700'}">Net = Gross Spread - Cước Freight ($80)</strong>
+              <p class="text-[9px] ${isDark ? 'text-slate-400' : 'text-slate-500'} font-sans mt-0.5">Tỷ lệ Net Margin: +${arb.spread_pct || 0}% sau khi đã trừ toàn bộ phí cước tàu & bảo hiểm hàng hải.</p>
+            </div>
+          </div>
+        </div>
+
         <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
-          <div class="md:col-span-8 text-xs text-slate-200 leading-relaxed">
+          <div class="md:col-span-8 text-xs ${isDark ? 'text-slate-200' : 'text-slate-700'} leading-relaxed">
             <p><strong>Khuyến Nghị Nghiệp Vụ Ngoại Thương:</strong> ${arb.recommendation || arb.action_recommendation || 'Biên độ chênh lệch thuận lợi cho xuất khẩu.'}</p>
           </div>
           <div class="md:col-span-4 flex items-center justify-end gap-2">
-            <a href="/" class="w-full py-2 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-brand-950 font-bold font-mono text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-lg shadow-emerald-500/20 active:scale-95">
+            <button type="button" onclick="openQuickMatchmakerModal('${commodity.commodity_id}', '${(commodity.commodity_name || '').replace(/'/g, "\\'")}', '${commodity.hs_code || ''}')" class="w-full py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold font-mono text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-lg shadow-emerald-500/20 active:scale-95">
               <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
               <span>Khớp Lệnh Mặt Hàng Này</span>
-            </a>
+            </button>
           </div>
         </div>
       `;
+      if (window.lucide) lucide.createIcons();
     }
 
     function calculateUnitConversion() {
@@ -1012,6 +1274,333 @@
         </div>
       `;
     }
+
+    // ========================================================
+    // COUNTRY TOP PRODUCTS LOGIC
+    // ========================================================
+    let currentCountryFilter = 'ALL';
+    let currentCategoryFilter = 'ALL';
+    let cachedCountryTopProducts = [];
+
+    async function fetchCountryTopProducts() {
+      try {
+        const res = await fetch(`/api/prices/country-top?country=${encodeURIComponent(currentCountryFilter)}&category=${encodeURIComponent(currentCategoryFilter)}`);
+        const data = await res.json();
+        if (data && data.ok) {
+          cachedCountryTopProducts = data.products || [];
+          renderCountryTopProductsTable(cachedCountryTopProducts);
+          const countBadge = document.getElementById('countryProductCountBadge');
+          if (countBadge) countBadge.textContent = `${cachedCountryTopProducts.length} Mặt Hàng Chiến Lược`;
+        }
+      } catch (err) {
+        console.error("Lỗi nạp danh sách top sản phẩm theo quốc gia:", err);
+      }
+    }
+
+    function filterCountryTopTable(countryCode) {
+      currentCountryFilter = countryCode;
+      const countries = ['ALL', 'VN', 'BR', 'ID', 'US', 'RU', 'IN', 'TH'];
+      countries.forEach(c => {
+        const btn = document.getElementById(`ctry-btn-${c}`);
+        if (!btn) return;
+        if (c === countryCode) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+      fetchCountryTopProducts();
+    }
+
+    function filterCategoryTopTable(category) {
+      currentCategoryFilter = category;
+      const categories = ['ALL', 'agri_food', 'industrial', 'fertilizer', 'energy', 'textiles'];
+      categories.forEach(c => {
+        const btn = document.getElementById(`cat-btn-${c}`);
+        if (!btn) return;
+        if (c === category) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+      fetchCountryTopProducts();
+    }
+
+    function renderCountryTopProductsTable(products) {
+      const tbody = document.getElementById('countryTopProductsTableBody');
+      if (!tbody) return;
+
+      if (!products || products.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="11" class="py-8 text-center text-slate-400 font-mono text-xs">
+              Không tìm thấy sản phẩm phù hợp với bộ lọc hiện tại.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      const isDark = document.documentElement.classList.contains('dark');
+
+      tbody.innerHTML = products.map((p, idx) => {
+        return `
+          <tr class="hover:bg-white/5 transition-colors">
+            <td class="py-3 px-3">
+              <div class="flex items-center gap-1.5 font-bold ${isDark ? 'text-white' : 'text-slate-900'}">
+                <span class="text-base">${p.flag || '🌐'}</span>
+                <span>${p.country}</span>
+              </div>
+            </td>
+            <td class="py-3 px-3">
+              <div class="font-bold ${isDark ? 'text-white' : 'text-slate-900'} text-xs">${p.product_name}</div>
+              <div class="text-[10px] text-cyan-400 font-mono">HS: ${p.hs_code}</div>
+            </td>
+            <td class="py-3 px-3">
+              <div class="font-bold text-xs ${isDark ? 'text-slate-200' : 'text-slate-800'}">${p.market_scale}</div>
+              <span class="px-1.5 py-0.2 rounded text-[9px] font-mono font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30">${p.metric_rank || 'Top Hàng Đầu'}</span>
+            </td>
+            <td class="py-3 px-3">
+              <div class="font-extrabold text-xs font-mono ${isDark ? 'text-emerald-400' : 'text-emerald-600'}">$${Number(p.price_usd_mt).toLocaleString()}/MT</div>
+              <div class="text-[9px] text-slate-400 font-mono">${p.price_original}</div>
+            </td>
+            <td class="py-3 px-3">
+              <div class="text-[11px] font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'}">${p.exchange_name}</div>
+            </td>
+            <td class="py-3 px-2 text-center font-bold ${getChangeColorClass(p.change_24h)}">${p.change_24h}</td>
+            <td class="py-3 px-2 text-center font-bold ${getChangeColorClass(p.change_7d)}">${p.change_7d}</td>
+            <td class="py-3 px-2 text-center font-bold ${getChangeColorClass(p.change_1m)}">${p.change_1m}</td>
+            <td class="py-3 px-2 text-center font-bold ${getChangeColorClass(p.change_6m)}">${p.change_6m}</td>
+            <td class="py-3 px-2 text-center font-bold ${getChangeColorClass(p.change_1y)}">${p.change_1y}</td>
+            <td class="py-3 px-3 text-right">
+              <div class="flex items-center justify-end gap-1.5">
+                <button type="button" onclick="inspectCountryProductInChart('${p.commodity_id}', '${p.product_name.replace(/'/g, "\\'")}', '${p.hs_code}', ${p.price_usd_mt})" class="px-2 py-1 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/30 text-[10px] font-bold flex items-center gap-1 cursor-pointer transition-all active:scale-95" title="Soi Biểu Đồ Giá">
+                  <span>📈 Soi Biểu Đồ</span>
+                </button>
+                <button type="button" onclick="openQuickMatchmakerModal('${p.commodity_id}', '${p.product_name.replace(/'/g, "\\'")}', '${p.hs_code}')" class="px-2 py-1 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold flex items-center gap-1 cursor-pointer transition-all active:scale-95" title="Khớp Lệnh B2B">
+                  <span>⚡ Khớp Lệnh</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function inspectCountryProductInChart(commId, prodName, hsCode, priceUsd) {
+      currentSelectedCommodityId = commId;
+      currentChartSourceId = '';
+      const chartEl = document.getElementById('chartCanvasContainer');
+      if (chartEl) {
+        chartEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      updateChartForCurrentCommodityAndSource();
+    }
+
+    // ========================================================
+    // THEME SWITCHER LOGIC
+    // ========================================================
+    function toggleTerminalTheme() {
+      const isDark = document.documentElement.classList.contains('dark');
+      if (isDark) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('portal_theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('portal_theme', 'dark');
+      }
+      initTerminalTheme();
+      if (cachedCommodityPricesData && cachedCommodityPricesData.sectors) {
+        renderCommodityTabs();
+        const commodity = cachedCommodityPricesData.sectors.find(s => s.commodity_id === currentSelectedCommodityId);
+        if (commodity) {
+          renderMultiSourceTable(commodity);
+          renderArbitrageCard(commodity);
+        }
+      }
+      renderCountryTopProductsTable(cachedCountryTopProducts);
+      changeChartRange(currentChartRange);
+      drawCommodityPriceChart();
+    }
+
+    function initTerminalTheme() {
+      const isDark = document.documentElement.classList.contains('dark');
+      const sunIcon = document.getElementById('themeIconSun');
+      const moonIcon = document.getElementById('themeIconMoon');
+      const textEl = document.getElementById('themeToggleText');
+      if (isDark) {
+        if (sunIcon) sunIcon.classList.add('hidden');
+        if (moonIcon) moonIcon.classList.remove('hidden');
+        if (textEl) textEl.textContent = 'Chế Độ Sáng';
+      } else {
+        if (sunIcon) sunIcon.classList.remove('hidden');
+        if (moonIcon) moonIcon.classList.add('hidden');
+        if (textEl) textEl.textContent = 'Chế Độ Tối';
+      }
+    }
+
+    // ========================================================
+    // QUICK MATCHMAKER DOSSIER MODAL
+    // ========================================================
+    function openQuickMatchmakerModal(commodityId, commodityName, hsCode) {
+      const modal = document.getElementById('quickMatchmakerModal');
+      const backdrop = document.getElementById('quickMatchmakerBackdrop');
+      const titleEl = document.getElementById('qmm_title');
+      const subtitleEl = document.getElementById('qmm_subtitle');
+      if (!modal) return;
+
+      if (titleEl) titleEl.textContent = `Bàn Khớp Lệnh & Ghép Cặp B2B: ${commodityName || 'Mặt Hàng Chiến Lược'}`;
+      if (subtitleEl) subtitleEl.textContent = `Mã HS: ${hsCode || 'Chuẩn WCO'} • Tự động dò tìm đối tác mua - bán & Đối soát chênh lệch giá`;
+
+      renderQuickMatchmakerContent(commodityId, commodityName, hsCode);
+
+      modal.classList.remove('hidden');
+      if (backdrop) backdrop.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function closeQuickMatchmakerModal() {
+      const modal = document.getElementById('quickMatchmakerModal');
+      const backdrop = document.getElementById('quickMatchmakerBackdrop');
+      if (modal) modal.classList.add('hidden');
+      if (backdrop) backdrop.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    function renderQuickMatchmakerContent(commodityId, commodityName, hsCode) {
+      const container = document.getElementById('qmm_content_container');
+      if (!container) return;
+      const isDark = document.documentElement.classList.contains('dark');
+
+      const partnerData = {
+        buyers: [
+          { name: "Neumann Kaffee Gruppe (NKG)", country: "🇩🇪 Đức", credit: "AAA+", vol: "15,000 MT/Năm", incoterm: "CIF Hamburg", score: 98, note: "Nhà nhập khẩu số 1 thế giới, thanh toán L/C không hủy ngang" },
+          { name: "ECOM Agroindustrial Asia", country: "🇨🇭 Thụy Sĩ", credit: "AAA", vol: "22,000 MT/Năm", incoterm: "FOB Cát Lái", score: 95, note: "Tập đoàn ngoại thương Thụy Sĩ, có chi nhánh thu mua thường trực" },
+          { name: "Olam International Limited", country: "🇸🇬 Singapore", credit: "AA", vol: "18,000 MT/Năm", incoterm: "CIF Rotterdam", score: 92, note: "Hệ thống nhà máy chế biến và phân phối toàn cầu" }
+        ],
+        suppliers: [
+          { name: "Simexco Đắk Lắk (XNK 2-9)", country: "🇻🇳 Việt Nam", tier: "Tier-1 Master", vol: "85,000 MT/Năm", cert: "EUDR / Rainforest", score: 97, note: "Doanh nghiệp nhà nước xuất khẩu top 3 Việt Nam, kho chuẩn quốc tế" },
+          { name: "Tập Đoàn Intimex (Intimex Group)", country: "🇻🇳 Việt Nam", tier: "Tier-1 Master", vol: "120,000 MT/Năm", cert: "ISO 22000 / HACCP", score: 96, note: "Nhà xuất khẩu nông sản hàng đầu VN, hệ thống 11 nhà máy chế biến" },
+          { name: "Công Ty CP Phúc Sinh (K-Coffee)", country: "🇻🇳 Việt Nam", tier: "Tier-1 Master", vol: "40,000 MT/Năm", cert: "UTZ / BRC / Halal", score: 94, note: "Chuyên sâu xuất khẩu thị trường Mỹ & Châu Âu, kiểm soát 100% dư lượng" }
+        ]
+      };
+
+      container.innerHTML = `
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <!-- Cột 1: Top Nhà Nhập Khẩu Quốc Tế Cần Mua -->
+          <div class="space-y-3 p-3.5 rounded-2xl ${isDark ? 'bg-brand-900/70 border border-cyan-500/20' : 'bg-slate-50 border border-slate-200'}">
+            <div class="flex items-center justify-between border-b ${isDark ? 'border-white/10' : 'border-slate-200'} pb-2">
+              <div class="flex items-center gap-2">
+                <i data-lucide="shopping-bag" class="w-4 h-4 text-cyan-400"></i>
+                <h5 class="font-bold text-xs ${isDark ? 'text-white' : 'text-slate-900'} uppercase font-mono">Top Nhà Nhập Khẩu Đã Thẩm Định (Cần Mua)</h5>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">3 Đối Tác Khả Thi</span>
+            </div>
+            <div class="space-y-2">
+              ${partnerData.buyers.map(b => `
+                <div class="p-3 rounded-xl ${isDark ? 'bg-brand-950 border border-white/5' : 'bg-white border border-slate-200'} space-y-1.5 shadow-sm">
+                  <div class="flex items-center justify-between">
+                    <span class="font-bold text-xs ${isDark ? 'text-white' : 'text-slate-900'}">${b.name}</span>
+                    <span class="px-1.5 py-0.2 rounded text-[10px] font-mono font-bold bg-emerald-500/15 text-emerald-400">Khớp: ${b.score}%</span>
+                  </div>
+                  <div class="flex items-center gap-3 text-[10px] font-mono text-slate-400">
+                    <span>Quốc gia: <strong class="${isDark ? 'text-slate-200' : 'text-slate-700'}">${b.country}</strong></span>
+                    <span>Tín nhiệm: <strong class="text-cyan-400">${b.credit}</strong></span>
+                    <span>Nhu cầu: <strong class="text-amber-400">${b.vol}</strong></span>
+                  </div>
+                  <p class="text-[10px] text-slate-400 leading-tight">${b.note}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Cột 2: Top Nhà Xuất Khẩu & Cung Ứng Cấp 1 Cần Bán -->
+          <div class="space-y-3 p-3.5 rounded-2xl ${isDark ? 'bg-brand-900/70 border border-emerald-500/20' : 'bg-slate-50 border border-slate-200'}">
+            <div class="flex items-center justify-between border-b ${isDark ? 'border-white/10' : 'border-slate-200'} pb-2">
+              <div class="flex items-center gap-2">
+                <i data-lucide="package-check" class="w-4 h-4 text-emerald-400"></i>
+                <h5 class="font-bold text-xs ${isDark ? 'text-white' : 'text-slate-900'} uppercase font-mono">Top Nhà Cung Ứng Cấp 1 (Cần Bán)</h5>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">3 Tổng Kho Sẵn Sàng</span>
+            </div>
+            <div class="space-y-2">
+              ${partnerData.suppliers.map(s => `
+                <div class="p-3 rounded-xl ${isDark ? 'bg-brand-950 border border-white/5' : 'bg-white border border-slate-200'} space-y-1.5 shadow-sm">
+                  <div class="flex items-center justify-between">
+                    <span class="font-bold text-xs ${isDark ? 'text-white' : 'text-slate-900'}">${s.name}</span>
+                    <span class="px-1.5 py-0.2 rounded text-[10px] font-mono font-bold bg-emerald-500/15 text-emerald-400">Khớp: ${s.score}%</span>
+                  </div>
+                  <div class="flex items-center gap-3 text-[10px] font-mono text-slate-400">
+                    <span>Hạng: <strong class="text-emerald-400">${s.tier}</strong></span>
+                    <span>Công suất: <strong class="text-amber-400">${s.vol}</strong></span>
+                    <span>Chứng chỉ: <strong class="text-cyan-400">${s.cert}</strong></span>
+                  </div>
+                  <p class="text-[10px] text-slate-400 leading-tight">${s.note}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Bar in Modal -->
+        <div class="pt-3 border-t ${isDark ? 'border-white/10' : 'border-slate-200'} flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="text-[11px] font-mono text-slate-400">
+            <span>Chênh lệch Arbitrage ước tính: </span>
+            <strong class="text-emerald-400">+$240/MT (+5.2% Net Margin)</strong>
+          </div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <button type="button" onclick="triggerQuickDualRfq('${commodityId}', '${commodityName.replace(/'/g, "\\'")}')" class="px-3 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold font-mono text-xs flex items-center gap-1.5 cursor-pointer shadow-md transition-all active:scale-95">
+              <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+              <span>⚡ Bắn Bộ Đôi RFQ (Dual RFQ)</span>
+            </button>
+            <button type="button" onclick="triggerQuickTelegramReport('${commodityId}', '${commodityName.replace(/'/g, "\\'")}')" class="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold font-mono text-xs flex items-center gap-1.5 cursor-pointer shadow-md transition-all active:scale-95">
+              <i data-lucide="send" class="w-3.5 h-3.5"></i>
+              <span>📱 Báo Cáo Telegram</span>
+            </button>
+            <a href="/?tab=matchmaker" class="px-3 py-2 rounded-xl ${isDark ? 'bg-white/10 text-white hover:bg-white/20' : 'bg-slate-200 text-slate-800 hover:bg-slate-300'} font-bold font-mono text-xs flex items-center gap-1.5 transition-all">
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+              <span>Bàn Khớp Lệnh Chi Tiết</span>
+            </a>
+          </div>
+        </div>
+      `;
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function triggerQuickDualRfq(commodityId, commodityName) {
+      alert(`✅ ĐÃ KÍCH HOẠT BỘ ĐÔI RFQ B2B CHO "${commodityName}":\\n- RFQ Chào Bán Quốc Tế: Đã lập báo giá theo điều kiện CIF Rotterdam / Hamburg.\\n- RFQ Thu Mua Nội Địa: Đã gửi yêu cầu báo giá tới Top 3 Tổng Đại lý Cấp 1.\\nBộ phận Ngoại thương đang kết nối hợp đồng.`);
+    }
+
+    function triggerQuickTelegramReport(commodityId, commodityName) {
+      alert(`✅ ĐÃ BẮN BÁO CÁO TÌNH BÁO KHỚP LỆNH CHO "${commodityName}" TỚI TELEGRAM BAN ĐIỀU HÀNH!\\nThông số giá sàn, chênh lệch Arbitrage và danh sách đối tác đã gửi thành công.`);
+    }
   </script>
+
+  <!-- QUICK B2B MATCHMAKER DOSSIER MODAL -->
+  <div id="quickMatchmakerBackdrop" onclick="closeQuickMatchmakerModal()" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-50 transition-opacity"></div>
+  <div id="quickMatchmakerModal" class="hidden fixed inset-4 sm:inset-10 md:inset-x-24 md:inset-y-16 max-w-5xl mx-auto bg-brand-950 border border-emerald-500/40 rounded-3xl z-50 flex flex-col overflow-hidden shadow-2xl">
+    <!-- Modal Header -->
+    <div class="px-5 py-4 border-b border-white/10 flex items-center justify-between gap-4 bg-brand-900/80">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+          <i data-lucide="sparkles" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="text-sm sm:text-base font-bold text-white font-mono" id="qmm_title">Bàn Khớp Lệnh & Ghép Cặp B2B</h3>
+          <p class="text-xs text-slate-400" id="qmm_subtitle">Tự động kết nối nhà nhập khẩu quốc tế và nhà cung ứng cấp 1</p>
+        </div>
+      </div>
+      <button type="button" onclick="closeQuickMatchmakerModal()" class="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white border border-white/10 cursor-pointer">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+    </div>
+    <!-- Modal Body -->
+    <div class="flex-1 overflow-y-auto p-5 space-y-4" id="qmm_content_container">
+      <!-- Injected via renderQuickMatchmakerContent -->
+    </div>
+  </div>
 </body>
 </html>

@@ -892,7 +892,7 @@
         </button>
 
         <!-- Tab 7: Multi-Exchange Commodity Prices & Charts (Bảng Giá & Biểu Đồ Đa Sàn) -->
-        <button onclick="switchTab('prices')" id="tab-prices" class="tab-btn shrink-0 sm:shrink px-3 py-1.5 sm:p-2 sm:px-2.5 rounded-xl transition-all flex items-center justify-start gap-1.5 sm:gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap text-left">
+        <button onclick="window.location.href='/prices'" id="tab-prices" class="tab-btn shrink-0 sm:shrink px-3 py-1.5 sm:p-2 sm:px-2.5 rounded-xl transition-all flex items-center justify-start gap-1.5 sm:gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap text-left">
           <div class="w-6 h-6 rounded-lg bg-emerald-500/15 flex items-center justify-center shrink-0">
             <i data-lucide="trending-up" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400"></i>
           </div>
@@ -1058,7 +1058,7 @@
     <section id="section-prospecting" class="space-y-4 sm:space-y-6 w-full max-w-full">
       
       <!-- Quick Access Banner to Multi-Exchange Commodity Prices & Charts -->
-      <div onclick="switchTab('prices')" class="rounded-2xl p-3 sm:p-4 bg-gradient-to-r from-emerald-500/20 via-cyan-500/15 to-brand-900 border border-emerald-500/40 hover:border-emerald-400 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-lg shadow-emerald-500/10 cursor-pointer transition-all hover:scale-[1.005]">
+      <div onclick="window.location.href='/prices'" class="rounded-2xl p-3 sm:p-4 bg-gradient-to-r from-emerald-500/20 via-cyan-500/15 to-brand-900 border border-emerald-500/40 hover:border-emerald-400 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-lg shadow-emerald-500/10 cursor-pointer transition-all hover:scale-[1.005]">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shrink-0">
             <i data-lucide="trending-up" class="w-5 h-5"></i>
@@ -3979,15 +3979,23 @@
 
       // Khôi phục Tab đang hoạt động khi F5 hoặc mở link có hash
       const hashTab = (window.location.hash || '').replace(/^#/, '').replace(/^tab-/, '');
+      if (hashTab === 'prices') {
+        window.location.replace('/prices');
+        return;
+      }
       const storedTab = localStorage.getItem('xnk_active_tab');
-      const validTabs = ['prospecting', 'buyers', 'suppliers', 'matchmaker', 'sourcing', 'audit', 'prices'];
+      const validTabs = ['prospecting', 'buyers', 'suppliers', 'matchmaker', 'sourcing', 'audit'];
       const initialTab = validTabs.includes(hashTab) ? hashTab : (validTabs.includes(storedTab) ? storedTab : 'prospecting');
       switchTab(initialTab);
     });
 
     window.addEventListener('hashchange', () => {
       const h = (window.location.hash || '').replace(/^#/, '').replace(/^tab-/, '');
-      const validTabs = ['prospecting', 'buyers', 'suppliers', 'matchmaker', 'sourcing', 'audit', 'prices'];
+      if (h === 'prices') {
+        window.location.replace('/prices');
+        return;
+      }
+      const validTabs = ['prospecting', 'buyers', 'suppliers', 'matchmaker', 'sourcing', 'audit'];
       if (validTabs.includes(h)) switchTab(h);
     });
 

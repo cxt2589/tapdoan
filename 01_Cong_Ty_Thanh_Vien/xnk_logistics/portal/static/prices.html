@@ -71,8 +71,8 @@
         </div>
         <div class="min-w-0">
           <div class="flex items-center gap-2">
-            <h1 class="text-sm sm:text-base font-extrabold text-white tracking-tight truncate">Bảng Giá Đa Sàn & Radar Arbitrage</h1>
-            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shrink-0">28 NGUỒN QUỐC TẾ</span>
+            <h1 class="text-sm sm:text-base font-extrabold text-white tracking-tight truncate">Trạm Giám Sát Giá Đa Sàn & Radar Arbitrage</h1>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shrink-0">28 SÀN & NGUỒN</span>
           </div>
           <p class="text-[11px] text-slate-400 hidden md:block truncate">Minh bạch nguồn dữ liệu thời gian thực: ICE London/NY, CME, SGX, FOB Cát Lái, CIF Rotterdam, Yahoo Finance</p>
         </div>
@@ -85,9 +85,9 @@
         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
         <span>Thị trường: MỞ CỬA 24/7</span>
       </div>
-      <button onclick="fetchPriceBenchmarksData()" class="p-2 sm:px-3 sm:py-1.5 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-slate-300 hover:text-emerald-300 border border-white/10 hover:border-emerald-500/40 text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer">
+      <button type="button" onclick="fetchPriceBenchmarksData()" class="p-2 sm:px-3 sm:py-1.5 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-slate-300 hover:text-emerald-300 border border-white/10 hover:border-emerald-500/40 text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer">
         <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
-        <span class="hidden sm:inline">Làm Mới</span>
+        <span class="hidden sm:inline">Làm Mới Giá</span>
       </button>
       <a href="/api/docs" target="_blank" class="p-2 sm:px-3 sm:py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/10 text-xs font-semibold flex items-center gap-1.5 transition-all">
         <i data-lucide="code" class="w-3.5 h-3.5 text-cyan-400"></i>
@@ -96,324 +96,206 @@
     </div>
   </header>
 
-  <!-- LIVE MARKET TICKER TAPE -->
-  <div class="bg-brand-900 border-b border-white/5 overflow-x-auto py-2 px-4 sm:px-8">
-    <div class="flex items-center gap-6 text-xs whitespace-nowrap min-w-max">
-      <div class="flex items-center gap-2 text-slate-400 font-mono text-[11px]">
-        <i data-lucide="activity" class="w-3.5 h-3.5 text-emerald-400"></i>
-        <span class="font-bold text-slate-300">BENCHMARKS:</span>
-      </div>
-      <div class="flex items-center gap-1.5 font-mono">
-        <span class="text-slate-400">Robusta (ICE):</span>
-        <span class="text-emerald-400 font-bold">$4,785/MT</span>
-        <span class="text-[10px] text-emerald-400 font-bold">(+1.8%)</span>
-      </div>
-      <div class="w-px h-3 bg-white/10"></div>
-      <div class="flex items-center gap-1.5 font-mono">
-        <span class="text-slate-400">Arabica (ICE NY):</span>
-        <span class="text-emerald-400 font-bold">248.50¢/lb</span>
-        <span class="text-[10px] text-emerald-400 font-bold">(+0.9%)</span>
-      </div>
-      <div class="w-px h-3 bg-white/10"></div>
-      <div class="flex items-center gap-1.5 font-mono">
-        <span class="text-slate-400">Gạo 5% (FOB Sài Gòn):</span>
-        <span class="text-rose-400 font-bold">$585/MT</span>
-        <span class="text-[10px] text-rose-400 font-bold">(-0.8%)</span>
-      </div>
-      <div class="w-px h-3 bg-white/10"></div>
-      <div class="flex items-center gap-1.5 font-mono">
-        <span class="text-slate-400">Tiêu Đen (VPA):</span>
-        <span class="text-emerald-400 font-bold">$6,800/MT</span>
-        <span class="text-[10px] text-emerald-400 font-bold">(+2.2%)</span>
-      </div>
-      <div class="w-px h-3 bg-white/10"></div>
-      <div class="flex items-center gap-1.5 font-mono">
-        <span class="text-slate-400">Cao Su RSS3 (SGX):</span>
-        <span class="text-emerald-400 font-bold">$2,420/MT</span>
-        <span class="text-[10px] text-emerald-400 font-bold">(+1.2%)</span>
-      </div>
-      <div class="w-px h-3 bg-white/10"></div>
-      <div class="flex items-center gap-1.5 font-mono">
-        <span class="text-slate-400">Phân Urê (Yuzhny):</span>
-        <span class="text-rose-400 font-bold">$365/MT</span>
-        <span class="text-[10px] text-rose-400 font-bold">(-1.4%)</span>
-      </div>
-    </div>
-  </div>
-
   <!-- MAIN APP CONTAINER -->
   <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
 
-    <!-- SEARCH & MULTI-SOURCE FILTER BAR -->
-    <div class="rounded-2xl p-4 sm:p-5 bg-brand-900 border border-white/10 space-y-3.5 shadow-xl">
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
-        <div class="relative flex-1">
-          <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
-          <input 
-            type="text" 
-            id="priceSearchInput" 
-            oninput="handlePriceSearchInput(this.value)" 
-            placeholder="Tìm kiếm mặt hàng, sàn giao dịch hoặc nguồn dữ liệu (ví dụ: cafe, robusta, ice london, gạo, cme, fob cát lái)..." 
-            class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-brand-950/80 border border-white/10 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
-          >
-          <!-- Suggestions Dropdown -->
-          <div id="priceSearchDropdown" class="hidden absolute left-0 right-0 top-full mt-1.5 bg-brand-900/95 backdrop-blur-xl border border-emerald-500/30 rounded-xl shadow-2xl p-2 z-30 max-h-72 overflow-y-auto space-y-1">
-          </div>
-        </div>
-
-        <div class="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0">
-          <span class="text-xs text-slate-400 font-mono shrink-0">Lọc nguồn:</span>
-          <div class="flex items-center gap-1.5 shrink-0" id="sourceCategoryFilterContainer">
-            <button onclick="setSourceCategoryFilter('ALL')" class="category-filter-btn px-2.5 py-1 rounded-lg text-xs font-mono font-semibold transition-all bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">Tất Cả (28)</button>
-            <button onclick="setSourceCategoryFilter('FUTURES_EXCHANGE')" class="category-filter-btn px-2.5 py-1 rounded-lg text-xs font-mono font-semibold transition-all text-slate-400 hover:text-white bg-white/5 border border-transparent">Sàn Quốc Tế (ICE/CME/SGX)</button>
-            <button onclick="setSourceCategoryFilter('SPOT_DOMESTIC')" class="category-filter-btn px-2.5 py-1 rounded-lg text-xs font-mono font-semibold transition-all text-slate-400 hover:text-white bg-white/5 border border-transparent">Thực Địa (FOB/CIF)</button>
-            <button onclick="setSourceCategoryFilter('INDUSTRY_REPORT')" class="category-filter-btn px-2.5 py-1 rounded-lg text-xs font-mono font-semibold transition-all text-slate-400 hover:text-white bg-white/5 border border-transparent">Báo Cáo (ICO/USDA)</button>
-            <button onclick="setSourceCategoryFilter('FINANCIAL_PORTAL')" class="category-filter-btn px-2.5 py-1 rounded-lg text-xs font-mono font-semibold transition-all text-slate-400 hover:text-white bg-white/5 border border-transparent">Tài Chính (Yahoo)</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- COMMODITY SELECTOR TABS -->
-    <div class="flex items-center gap-2 overflow-x-auto pb-1" id="commodityPriceTabsContainer">
-      <!-- Injected via JavaScript -->
-    </div>
-
-    <!-- MAIN INTERACTIVE CHART & METRICS PANEL -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-      
-      <!-- Chart Column (8 cols) -->
-      <div class="lg:col-span-8 rounded-2xl bg-brand-900 border border-white/10 p-5 space-y-4 shadow-xl flex flex-col justify-between">
-        <div>
-          <!-- Chart Header -->
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-3">
-            <div>
-              <div class="flex items-center gap-2">
-                <h2 id="chartCommodityName" class="text-base sm:text-lg font-bold text-white tracking-tight">Cà Phê Robusta (Kỳ Hạn Luân Đôn)</h2>
-                <span id="chartSourceBadge" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30">ICE Futures Europe</span>
-              </div>
-              <p id="chartCommodityDesc" class="text-xs text-slate-400 mt-0.5">Tiêu chuẩn Loại 2 (Grade 2), giao dịch trên Sàn Kỳ hạn London, mã RC</p>
-            </div>
-
-            <!-- Range Buttons -->
-            <div class="flex items-center gap-1 bg-brand-950 p-1 rounded-xl border border-white/10 shrink-0 self-start sm:self-auto">
-              <button onclick="changeChartRange('1m')" id="range-btn-1m" class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold text-slate-400 hover:text-white transition-all">1T</button>
-              <button onclick="changeChartRange('3m')" id="range-btn-3m" class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold text-slate-400 hover:text-white transition-all">3T</button>
-              <button onclick="changeChartRange('6m')" id="range-btn-6m" class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold text-slate-400 hover:text-white transition-all">6T</button>
-              <button onclick="changeChartRange('1y')" id="range-btn-1y" class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">1N</button>
-              <button onclick="changeChartRange('3y')" id="range-btn-3y" class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold text-slate-400 hover:text-white transition-all">3N</button>
-              <button onclick="changeChartRange('all')" id="range-btn-all" class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold text-slate-400 hover:text-white transition-all">TẤT CẢ</button>
-            </div>
-          </div>
-
-          <!-- Price Highlight & Source Attribution Bar -->
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 py-3">
-            <div class="p-3 rounded-xl bg-brand-950/60 border border-white/5">
-              <span class="text-[10px] text-slate-400 uppercase tracking-wider font-mono block">Giá Mới Nhất</span>
-              <div class="flex items-baseline gap-1 mt-0.5">
-                <span id="chartCurrentPrice" class="text-lg sm:text-xl font-bold font-mono text-emerald-400">$4,785</span>
-                <span id="chartCurrentUnit" class="text-[11px] text-slate-400 font-mono">USD/MT</span>
-              </div>
-            </div>
-            <div class="p-3 rounded-xl bg-brand-950/60 border border-white/5">
-              <span class="text-[10px] text-slate-400 uppercase tracking-wider font-mono block">Biến Động 24h</span>
-              <div class="flex items-baseline gap-1 mt-0.5">
-                <span id="chartChange24h" class="text-base sm:text-lg font-bold font-mono text-emerald-400">+1.8%</span>
-                <i data-lucide="trending-up" class="w-3.5 h-3.5 text-emerald-400"></i>
-              </div>
-            </div>
-            <div class="p-3 rounded-xl bg-brand-950/60 border border-white/5">
-              <span class="text-[10px] text-slate-400 uppercase tracking-wider font-mono block">Quy Đổi VNĐ</span>
-              <span id="chartCurrentVnd" class="text-base sm:text-lg font-bold font-mono text-cyan-400 block mt-0.5">122,017 đ/kg</span>
-            </div>
-            <div class="p-3 rounded-xl bg-brand-950/60 border border-white/5">
-              <span class="text-[10px] text-slate-400 uppercase tracking-wider font-mono block">Nguồn & Mã Sàn</span>
-              <span id="chartTickerCode" class="text-xs sm:text-sm font-bold font-mono text-amber-300 block mt-0.5 truncate">ICE: RC24 / Yahoo</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- HTML5 Canvas Chart -->
-        <div class="relative w-full h-72 sm:h-80 bg-brand-950 rounded-xl p-3 border border-white/5" id="chartCanvasContainer">
-          <canvas id="commodityPriceCanvas" class="w-full h-full cursor-crosshair"></canvas>
-          <div id="chartTooltip" class="hidden absolute pointer-events-none z-20 px-3 py-2 rounded-xl bg-brand-900/95 border border-emerald-500/40 text-white shadow-2xl backdrop-blur-md font-mono text-xs space-y-0.5">
-          </div>
-        </div>
-
-        <!-- Chart Footer Source Legend -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2 text-[11px] text-slate-400 font-mono border-t border-white/5">
-          <div class="flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-            <span>Đường giá đóng cửa thực tế (Close Price Series)</span>
-          </div>
-          <div class="flex items-center gap-1.5 text-slate-400">
-            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i>
-            <span>Dữ liệu có chứng thực & đóng dấu nguồn sàn thời gian thực</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Unit Normalizer & Arbitrage Radar (4 cols) -->
-      <div class="lg:col-span-4 space-y-6">
+    <div class="rounded-3xl p-1 bg-gradient-to-b from-emerald-500/30 via-cyan-500/15 to-white/5 border border-emerald-500/30 shadow-2xl overflow-hidden">
+      <div id="crossExchangePricesScrollBody" class="bg-brand-900 rounded-[22px] p-4 sm:p-7 space-y-6">
         
-        <!-- Unit & Currency Normalizer -->
-        <div class="rounded-2xl bg-brand-900 border border-white/10 p-5 space-y-4 shadow-xl">
-          <div class="flex items-center justify-between border-b border-white/10 pb-3">
-            <div class="flex items-center gap-2">
-              <i data-lucide="scale" class="w-4 h-4 text-emerald-400"></i>
-              <h3 class="text-sm font-bold text-white">Chuẩn Hóa Đơn Vị Ngoại Thương</h3>
+        <!-- Header Banner -->
+        <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 border-b border-white/10 pb-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-2xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
+              <i data-lucide="trending-up" class="w-5 h-5"></i>
             </div>
-            <span class="text-[10px] font-mono text-slate-400">Tỷ giá: 25,500</span>
-          </div>
-
-          <div class="space-y-3">
             <div>
-              <label class="text-[11px] text-slate-400 font-mono block mb-1">Số Lượng Cần Quy Đổi:</label>
-              <div class="flex gap-2">
-                <input 
-                  type="number" 
-                  id="unitCalcQuantity" 
-                  value="1" 
-                  min="0.1" 
-                  step="0.1" 
-                  oninput="calculateUnitConversion()" 
-                  class="flex-1 px-3 py-2 rounded-xl bg-brand-950 border border-white/10 text-xs font-mono text-white focus:outline-none focus:border-emerald-500"
-                >
-                <select 
-                  id="unitCalcUnitSelect" 
-                  onchange="calculateUnitConversion()" 
-                  class="w-32 px-2.5 py-2 rounded-xl bg-brand-950 border border-white/10 text-xs font-mono text-white focus:outline-none focus:border-emerald-500"
-                >
-                  <option value="MT">Tấn (MT)</option>
-                  <option value="lbs">Pound (lbs)</option>
-                  <option value="kg">Kilogram (kg)</option>
-                  <option value="bag_60kg">Bao 60kg</option>
-                </select>
+              <div class="flex items-center gap-2 flex-wrap">
+                <h3 class="font-bold text-white text-base sm:text-lg">📈 BẢNG GIÁ THAM CHIẾU ĐA SÀN & RADAR CHÊNH LỆCH GIÁ (ARBITRAGE)</h3>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">28 Sàn & Nguồn</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">4 Tầng Định Giá</span>
               </div>
-            </div>
-
-            <!-- Conversion Results -->
-            <div class="rounded-xl bg-brand-950/70 p-3.5 border border-white/5 space-y-2 font-mono text-xs">
-              <div class="flex items-center justify-between">
-                <span class="text-slate-400">Trọng lượng (kg):</span>
-                <span id="unitCalcResKg" class="font-bold text-white">1,000 kg</span>
-              </div>
-              <div class="flex items-center justify-between">
-                <span class="text-slate-400">Trọng lượng (lbs):</span>
-                <span id="unitCalcResLbs" class="font-bold text-white">2,204.62 lbs</span>
-              </div>
-              <div class="flex items-center justify-between">
-                <span class="text-slate-400">Quy đổi bao 60kg:</span>
-                <span id="unitCalcResBags" class="font-bold text-white">16.67 bao</span>
-              </div>
-              <div class="h-px bg-white/10 my-1"></div>
-              <div class="flex items-center justify-between">
-                <span class="text-slate-400">Tổng Trị Giá (USD):</span>
-                <span id="unitCalcResUsd" class="font-bold text-emerald-400 text-sm">$4,785.00</span>
-              </div>
-              <div class="flex items-center justify-between">
-                <span class="text-slate-400">Tổng Trị Giá (VNĐ):</span>
-                <span id="unitCalcResVnd" class="font-bold text-cyan-400 text-sm">122,017,500 đ</span>
-              </div>
+              <p class="text-xs text-slate-400 mt-0.5">
+                Đối soát 4 tầng giá thực tế: <span class="text-cyan-300 font-semibold">Sàn Thế Giới</span> ➔ <span class="text-emerald-300 font-semibold">FOB Cát Lái</span> ➔ <span class="text-purple-300 font-semibold">CIF Cảng Đích</span> ➔ <span class="text-amber-300 font-semibold">Cửa Vườn Nội Địa</span>. Tỷ giá VCB: 25,430 VNĐ/USD.
+              </p>
             </div>
           </div>
         </div>
 
-        <!-- Cross-Exchange Arbitrage Radar -->
-        <div class="rounded-2xl bg-brand-900 border border-emerald-500/30 p-5 space-y-4 shadow-xl">
-          <div class="flex items-center justify-between border-b border-white/10 pb-3">
-            <div class="flex items-center gap-2">
-              <i data-lucide="zap" class="w-4 h-4 text-emerald-400"></i>
-              <h3 class="text-sm font-bold text-white">Radar Chênh Lệch Giá (Arbitrage)</h3>
+        <!-- Multi-Source Omni-Search Bar & Source Filter Chips -->
+        <div class="relative space-y-2">
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+            <div class="relative flex-1">
+              <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+              <input type="text" id="priceMultiSourceSearchInput" oninput="handlePriceMultiSourceSearch(this.value)" placeholder="🔍 Tìm mặt hàng hoặc sàn (vd: Cà phê ICE, Arabica Yahoo, Gạo VFA, Cát Lái, NOLA CME...)" class="w-full pl-10 pr-9 py-2.5 rounded-xl text-xs font-mono bg-brand-950 border border-white/10 text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500">
+              <button type="button" id="clearPriceSearchBtn" onclick="clearPriceMultiSourceSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white cursor-pointer">
+                <i data-lucide="x" class="w-3.5 h-3.5"></i>
+              </button>
             </div>
-            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300">BIÊN ĐỘ</span>
+            <div class="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1 sm:pb-0" id="priceSourceCategoryPills">
+              <button type="button" onclick="filterPriceBySourceCategory('ALL')" id="filter-src-ALL" class="px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-cyan-500 text-brand-950 border border-cyan-400 cursor-pointer">Tất Cả Sàn</button>
+              <button type="button" onclick="filterPriceBySourceCategory('GLOBAL_EXCHANGE')" id="filter-src-GLOBAL_EXCHANGE" class="px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-brand-950 text-slate-300 hover:text-white border border-white/10 cursor-pointer">🌐 Sàn Quốc Tế</button>
+              <button type="button" onclick="filterPriceBySourceCategory('EXPORT_FOB')" id="filter-src-EXPORT_FOB" class="px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-brand-950 text-slate-300 hover:text-white border border-white/10 cursor-pointer">🚢 Cảng FOB VN</button>
+              <button type="button" onclick="filterPriceBySourceCategory('DOMESTIC_FARM')" id="filter-src-DOMESTIC_FARM" class="px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-brand-950 text-slate-300 hover:text-white border border-white/10 cursor-pointer">🌾 Cửa Vườn Spot</button>
+              <button type="button" onclick="filterPriceBySourceCategory('INDUSTRY_AGENCY')" id="filter-src-INDUSTRY_AGENCY" class="px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-brand-950 text-slate-300 hover:text-white border border-white/10 cursor-pointer">🏛️ Hiệp Hội</button>
+            </div>
           </div>
 
-          <div class="space-y-3 font-mono text-xs">
-            <div class="p-3 rounded-xl bg-brand-950/80 border border-white/5 space-y-2">
-              <div class="flex items-center justify-between">
-                <span class="text-slate-400">Sàn Tham Chiếu:</span>
-                <span id="arbBenchmarkName" class="font-bold text-white">ICE London</span>
-              </div>
-              <div class="flex items-center justify-between">
-                <span class="text-slate-400">Giá Sàn Quốc Tế:</span>
-                <span id="arbBenchmarkPrice" class="font-bold text-emerald-400">$4,785 / MT</span>
-              </div>
-              <div class="flex items-center justify-between">
-                <span class="text-slate-400">Giá FOB Cát Lái:</span>
-                <span id="arbFobPrice" class="font-bold text-amber-300">$4,580 / MT</span>
-              </div>
-              <div class="h-px bg-white/10 my-1"></div>
-              <div class="flex items-center justify-between">
-                <span class="text-slate-300 font-bold">Chênh lệch gộp (Spread):</span>
-                <span id="arbSpreadValue" class="font-bold text-emerald-300 text-sm">+$205 / MT</span>
-              </div>
-              <div class="flex items-center justify-between">
-                <span class="text-slate-400">Ước tính phí gom & vận chuyển:</span>
-                <span class="text-slate-400">~$120 / MT</span>
-              </div>
-              <div class="flex items-center justify-between">
-                <span class="text-emerald-400 font-bold">Biên độ khả thi (Net Margin):</span>
-                <span id="arbNetMargin" class="font-bold text-emerald-400 text-sm">+$85 / MT (1.8%)</span>
-              </div>
-            </div>
-
-            <a href="/" class="w-full py-2.5 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-brand-950 font-bold font-mono text-xs flex items-center justify-center gap-1.5 transition-all shadow-lg shadow-emerald-500/20">
-              <i data-lucide="sparkles" class="w-4 h-4"></i>
-              <span>Khớp Lệnh Giao Dịch Mặt Hàng Này</span>
-            </a>
+          <!-- Autocomplete Floating Dropdown Menu -->
+          <div id="priceSearchAutocompleteDropdown" class="hidden absolute left-0 right-0 top-full mt-1.5 z-30 max-h-64 overflow-y-auto rounded-2xl bg-brand-950/95 border border-cyan-500/40 shadow-2xl backdrop-blur-xl p-2 space-y-1">
+            <!-- Injected dynamically via JS: each item shows commodity_name + source_name badge -->
           </div>
         </div>
 
-      </div>
-    </div>
-
-    <!-- 4-TIER REAL WORLD PRICE GRID -->
-    <div class="rounded-2xl bg-brand-900 border border-white/10 p-5 space-y-4 shadow-xl">
-      <div class="flex items-center justify-between border-b border-white/10 pb-3">
-        <div class="flex items-center gap-2.5">
-          <i data-lucide="layers" class="w-4 h-4 text-emerald-400"></i>
-          <div>
-            <h3 class="text-sm font-bold text-white">Lưới Đối Soát 4 Tầng Giá Thực Địa Ngoại Thương</h3>
-            <p class="text-[11px] text-slate-400">So sánh đồng bộ giữa Giá Sàn Kỳ Hạn – Giá FOB Cảng Xuất – Giá Thu Mua Nông Hộ – Giá CIF Cảng Đến</p>
-          </div>
-        </div>
-        <span class="text-xs font-mono text-slate-400 hidden sm:inline">Chuẩn Hóa MT & Kg</span>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="commodity4TierGridContainer">
-        <!-- Injected via JavaScript -->
-      </div>
-    </div>
-
-    <!-- VOLATILITY & BENCHMARKS TABLE (28 SOURCES OVERVIEW) -->
-    <div class="rounded-2xl bg-brand-900 border border-white/10 p-5 space-y-4 shadow-xl">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-3">
+        <!-- 7 Commodity Selection Pills -->
         <div>
-          <h3 class="text-sm font-bold text-white">Bảng Báo Giá Chi Tiết Theo Nguồn Sàn & Thị Trường</h3>
-          <p class="text-[11px] text-slate-400">Danh mục 7 mặt hàng chiến lược và đối soát 28 nguồn cấp dữ liệu uy tín</p>
+          <span class="text-[11px] font-mono uppercase text-slate-400 font-bold block mb-2">CHỌN MẶT HÀNG CHIẾN LƯỢC:</span>
+          <div class="flex items-center gap-2 overflow-x-auto scrollbar-none pb-1" id="commodityPriceTabsContainer">
+            <!-- Injected via JS -->
+          </div>
         </div>
-        <span class="text-xs font-mono text-emerald-400">Cập nhật mỗi 5 phút</span>
-      </div>
 
-      <div class="overflow-x-auto">
-        <table class="w-full text-left text-xs font-mono">
-          <thead>
-            <tr class="border-b border-white/10 text-slate-400">
-              <th class="py-2.5 px-3">Mặt Hàng & Tiêu Chuẩn</th>
-              <th class="py-2.5 px-3">Nguồn Sàn / Thị Trường</th>
-              <th class="py-2.5 px-3">Mã Niêm Yết</th>
-              <th class="py-2.5 px-3 text-right">Giá Hiện Tại (USD)</th>
-              <th class="py-2.5 px-3 text-right">Giá Quy Đổi (VNĐ)</th>
-              <th class="py-2.5 px-3 text-right">Biến Động 24h</th>
-              <th class="py-2.5 px-3 text-right">Biến Động 7d</th>
-              <th class="py-2.5 px-3 text-center">Tác Vụ</th>
-            </tr>
-          </thead>
-          <tbody id="commodityVolatilityTableBody" class="divide-y divide-white/5">
-            <!-- Injected via JavaScript -->
-          </tbody>
-        </table>
+        <!-- Active Commodity Title & Spread Badge -->
+        <div id="activeCommodityHeaderBanner" class="p-4 rounded-2xl bg-brand-950/80 border border-white/5 flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <!-- Injected via JS -->
+        </div>
+
+        <!-- Interactive Multi-Source Price Chart Card -->
+        <div class="p-4 sm:p-5 rounded-2xl bg-brand-950/90 border border-emerald-500/30 space-y-3.5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 border-b border-white/10 pb-3">
+            <div>
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/30" id="chartSourceBadge">Sàn ICE London</span>
+                <h4 class="text-sm font-bold text-white flex items-center gap-2" id="chartTitle">Biểu Đồ Lịch Sử Giá 12 Tháng</h4>
+                <span class="text-xs font-mono text-cyan-300" id="chartContractCode">RC Futures</span>
+              </div>
+              <p class="text-[11px] text-slate-400 mt-0.5" id="chartSubtitle">Dữ liệu nến / giá chốt phiên lịch sử chuẩn hóa theo USD/Tấn</p>
+            </div>
+
+            <div class="flex items-center gap-2 flex-wrap">
+              <!-- Time Range Filters -->
+              <div class="flex items-center gap-1 bg-brand-900 border border-white/10 p-0.5 rounded-xl text-[10px] font-mono">
+                <button type="button" onclick="changeChartRange('1m')" id="btn-chart-range-1m" class="px-2 py-1 rounded-lg hover:bg-white/5 text-slate-400 cursor-pointer">1 Tháng</button>
+                <button type="button" onclick="changeChartRange('6m')" id="btn-chart-range-6m" class="px-2 py-1 rounded-lg hover:bg-white/5 text-slate-400 cursor-pointer">6 Tháng</button>
+                <button type="button" onclick="changeChartRange('1y')" id="btn-chart-range-1y" class="px-2 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30 cursor-pointer">12 Tháng</button>
+              </div>
+              <!-- Price Volatility Badge -->
+              <div class="px-2.5 py-1 rounded-xl bg-brand-900 border border-white/10 text-right">
+                <span class="text-[9px] font-mono text-slate-400 block">Biến động 7D</span>
+                <span class="text-xs font-mono font-bold text-emerald-400" id="chart7dChange">+4.2%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- HTML5 Canvas Responsive Chart Container -->
+          <div class="relative w-full h-56 sm:h-64 bg-brand-900/50 rounded-xl border border-white/5 p-2 overflow-hidden flex flex-col justify-between" id="chartCanvasContainer">
+            <canvas id="commodityPriceCanvas" class="w-full h-full block cursor-crosshair"></canvas>
+            <div id="chartTooltip" class="hidden absolute pointer-events-none px-2.5 py-1.5 rounded-lg bg-brand-950/95 border border-cyan-400/50 text-[11px] font-mono text-white shadow-xl z-20"></div>
+          </div>
+
+          <div class="flex items-center justify-between text-[10px] font-mono text-slate-400 px-1">
+            <div class="flex items-center gap-3">
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-400 inline-block"></span> Đường Giá Đóng Cửa (USD/MT)</span>
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-0.5 bg-cyan-400/60 inline-block border-b border-dashed"></span> Vùng Biến Động Sàn</span>
+            </div>
+            <span class="text-slate-500 hidden sm:inline">Chạm / Rê chuột trên biểu đồ để xem mốc giá chi tiết</span>
+          </div>
+        </div>
+
+        <!-- Multi-Source Price & Volatility Matrix Table -->
+        <div class="p-4 rounded-2xl bg-brand-950/80 border border-white/5 space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <i data-lucide="layers" class="w-4 h-4 text-cyan-400"></i>
+              <h4 class="text-xs font-mono font-bold uppercase text-white">BẢNG THEO DÕI ĐA NGUỒN & BIẾN ĐỘNG GIÁ CHI TIẾT:</h4>
+            </div>
+            <span class="text-[10px] font-mono text-slate-400">Bấm "Xem Biểu Đồ" để vẽ riêng từng sàn</span>
+          </div>
+          
+          <div class="overflow-x-auto scrollbar-none rounded-xl border border-white/5">
+            <table class="w-full text-left text-xs font-mono">
+              <thead class="bg-brand-900/90 text-slate-400 text-[10px] uppercase border-b border-white/10">
+                <tr>
+                  <th class="py-2.5 px-3">Nguồn Tham Chiếu / Sàn</th>
+                  <th class="py-2.5 px-3">Mã Hợp Đồng</th>
+                  <th class="py-2.5 px-3">Giá Gốc Niêm Yết</th>
+                  <th class="py-2.5 px-3">Quy Đổi USD/MT</th>
+                  <th class="py-2.5 px-3">Biến Động 24h</th>
+                  <th class="py-2.5 px-3">Biến Động 7D</th>
+                  <th class="py-2.5 px-3 text-right">Biểu Đồ Sàn</th>
+                </tr>
+              </thead>
+              <tbody id="multiSourcePriceTableBody" class="divide-y divide-white/5">
+                <!-- Rendered via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 4-Tier Comparative Price Grid -->
+        <div>
+          <span class="text-[11px] font-mono uppercase text-slate-400 font-bold block mb-2">BẢNG ĐỐI SOÁT 4 TẦNG GIÁ THỰC TẾ:</span>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3" id="commodity4TierGridContainer">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+
+        <!-- Arbitrage Radar & Recommendation Box -->
+        <div class="p-4 rounded-2xl bg-gradient-to-r from-emerald-500/15 via-cyan-500/10 to-brand-950 border border-emerald-500/30 space-y-3" id="commodityArbitrageAnalysisCard">
+          <!-- Injected via JS -->
+        </div>
+
+        <!-- Universal Unit Normalizer Calculator -->
+        <div class="p-4 rounded-2xl bg-brand-950/90 border border-cyan-500/30 space-y-4">
+          <div class="flex items-center justify-between border-b border-white/5 pb-2">
+            <div class="flex items-center gap-2">
+              <i data-lucide="calculator" class="w-4 h-4 text-cyan-400"></i>
+              <h4 class="text-xs font-bold text-white uppercase tracking-wider font-mono">BỘ CHUẨN HÓA ĐƠN VỊ ĐO LƯỜNG QUỐC TẾ (UNIVERSAL UNIT NORMALIZER)</h4>
+            </div>
+            <span class="text-[10px] font-mono text-cyan-300">Tự động quy đổi tức thì</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-end">
+            <!-- Quantity Input -->
+            <div class="md:col-span-4 space-y-1">
+              <label class="text-[10px] font-mono text-slate-400 block">Số Lượng Hàng Thực Tế:</label>
+              <input type="number" id="unitCalcQuantity" value="100" min="1" step="any" oninput="calculateUnitConversion()" class="w-full px-3 py-2 rounded-xl text-xs font-mono font-bold bg-brand-900 border border-white/10 text-white focus:outline-none focus:border-cyan-500">
+            </div>
+
+            <!-- Unit Dropdown -->
+            <div class="md:col-span-5 space-y-1">
+              <label class="text-[10px] font-mono text-slate-400 block">Đơn Vị Đo Lường Hợp Đồng / Bao Bì:</label>
+              <select id="unitCalcUnitSelect" onchange="calculateUnitConversion()" class="w-full px-3 py-2 rounded-xl text-xs font-mono font-bold bg-brand-900 border border-white/10 text-white focus:outline-none focus:border-cyan-500">
+                <option value="mt">Tấn (Metric Ton / MT - 1,000 kg)</option>
+                <option value="bag_60kg">Bao đay tiêu chuẩn (60 kg / bao)</option>
+                <option value="lbs">Pounds / Cân Anh (lbs - 0.453592 kg)</option>
+                <option value="cwt">Hundredweight Mỹ (Cwt - 45.3592 kg)</option>
+                <option value="carton_10kg">Thùng Carton lạnh xuất khẩu (10 kg / thùng)</option>
+                <option value="cntr_20ft">Container 20ft khô (Tiêu chuẩn ~19.2 Tấn)</option>
+                <option value="cntr_40ft">Container 40ft khô/lạnh (Tiêu chuẩn ~27 Tấn)</option>
+              </select>
+            </div>
+
+            <!-- Reset / Recalculate Button -->
+            <div class="md:col-span-3">
+              <button type="button" onclick="calculateUnitConversion()" class="w-full py-2 px-3 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 text-xs font-mono font-bold flex items-center justify-center gap-1.5 cursor-pointer">
+                <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                <span>Quy Đổi Lại</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Conversion Output Summary 4 Bento Wells -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5 pt-2" id="unitCalcOutputsContainer">
+            <!-- Metric Tons, Total FOB USD, Total CIF USD, Domestic VND -->
+          </div>
+        </div>
+
+        <!-- Footer Note -->
+        <div class="flex items-center justify-between border-t border-white/10 pt-4 text-[11px] text-slate-400 font-mono">
+          <p>Nguồn dữ liệu đối soát: ICE Futures, CME Group, SGX Commodities, MXV, Cảng Cát Lái, Vietcombank FX.</p>
+          <span class="text-emerald-400 font-bold">Trạng Thái: Trực Tuyến 24/7</span>
+        </div>
+
       </div>
     </div>
 
@@ -432,26 +314,31 @@
     let currentChartSourceId = 'ICE_LONDON';
     let currentChartRange = '1y';
     let currentSourceCategoryFilter = 'ALL';
+    let priceSearchDebounceTimer = null;
     let currentChartPoints = [];
     let currentChartMetadata = {};
 
     document.addEventListener('DOMContentLoaded', async () => {
-      await fetchPriceBenchmarksData();
       setupChartInteraction();
+      await fetchPriceBenchmarksData();
       if (window.lucide) lucide.createIcons();
     });
 
     async function fetchPriceBenchmarksData() {
       try {
-        const res = await fetch('/api/prices/benchmarks');
-        const data = await res.json();
-        if (data && data.ok && data.data) {
-          cachedCommodityPricesData = data.data;
+        if (!cachedCommodityPricesData) {
+          const res = await fetch('/api/prices/benchmarks');
+          const data = await res.json();
+          if (data && data.ok && data.data) {
+            cachedCommodityPricesData = data.data;
+          }
+        }
+        if (cachedCommodityPricesData) {
           renderCommodityTabs();
           selectCommodityPrice(currentSelectedCommodityId);
         }
       } catch (err) {
-        console.error("Lỗi nạp dữ liệu Giá Đa Sàn:", err);
+        console.error("Lỗi nạp dữ liệu Bảng Giá Đa Sàn:", err);
       }
     }
 
@@ -463,431 +350,667 @@
       container.innerHTML = sectors.map(sec => {
         const isActive = sec.commodity_id === currentSelectedCommodityId;
         const activeClass = isActive 
-          ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50 shadow-sm shadow-emerald-500/20' 
-          : 'bg-brand-900/80 text-slate-400 hover:text-white hover:bg-white/5 border-white/10';
+          ? "bg-emerald-500 text-brand-950 font-bold border-emerald-400 shadow-md shadow-emerald-500/20" 
+          : "bg-brand-900 text-slate-300 hover:text-white hover:bg-white/5 border-white/10";
         return `
-          <button 
-            onclick="selectCommodityPrice('${sec.commodity_id}')" 
-            class="px-3.5 py-2 rounded-xl border text-xs font-mono font-bold shrink-0 transition-all cursor-pointer flex items-center gap-2 ${activeClass}">
-            <span>${sec.name}</span>
-            <span class="px-1.5 py-0.2 rounded text-[10px] ${sec.change_24h.startsWith('+') ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'}">${sec.change_24h}</span>
+          <button type="button" onclick="selectCommodityPrice('${sec.commodity_id}')" 
+                  class="px-3 py-1.5 rounded-xl text-xs font-mono shrink-0 border transition-all flex items-center gap-1.5 cursor-pointer ${activeClass}">
+            <span>${sec.commodity_name.split(' ')[0]}</span>
+            <span class="text-[10px] opacity-80">(${sec.hs_code})</span>
           </button>
         `;
       }).join('');
     }
 
     function selectCommodityPrice(commodityId) {
+      if (!cachedCommodityPricesData || !cachedCommodityPricesData.sectors) return;
       currentSelectedCommodityId = commodityId;
-      if (!cachedCommodityPricesData) return;
+      const commodity = cachedCommodityPricesData.sectors.find(s => s.commodity_id === commodityId) || cachedCommodityPricesData.sectors[0];
+      if (!commodity) return;
 
-      const sectors = cachedCommodityPricesData.sectors;
-      const current = sectors.find(s => s.commodity_id === commodityId) || sectors[0];
-      if (!current) return;
+      // Ensure currentChartSourceId belongs to current commodity
+      const benchmarkExists = commodity.benchmarks && commodity.benchmarks.some(b => b.source_id === currentChartSourceId);
+      if (!benchmarkExists && commodity.benchmarks && commodity.benchmarks.length > 0) {
+        currentChartSourceId = commodity.benchmarks[0].source_id;
+      }
 
       renderCommodityTabs();
-
-      // Update Chart Meta Text
-      const nameEl = document.getElementById('chartCommodityName');
-      const badgeEl = document.getElementById('chartSourceBadge');
-      const descEl = document.getElementById('chartCommodityDesc');
-      const curPriceEl = document.getElementById('chartCurrentPrice');
-      const curUnitEl = document.getElementById('chartCurrentUnit');
-      const chg24El = document.getElementById('chartChange24h');
-      const curVndEl = document.getElementById('chartCurrentVnd');
-      const tickerEl = document.getElementById('chartTickerCode');
-
-      if (nameEl) nameEl.innerText = `${current.name} (${current.specification})`;
-      if (badgeEl) badgeEl.innerText = current.exchange;
-      if (descEl) descEl.innerText = `Nguồn cấp: ${current.source_name || current.exchange} • HS Code: ${current.hs_code || 'N/A'}`;
-      if (curPriceEl) curPriceEl.innerText = `$${current.current_price_usd.toLocaleString()}`;
-      if (curUnitEl) curUnitEl.innerText = `${current.currency}/${current.unit}`;
-      if (chg24El) {
-        chg24El.innerText = current.change_24h;
-        chg24El.className = current.change_24h.startsWith('+') ? 'text-lg sm:text-xl font-bold font-mono text-emerald-400' : 'text-lg sm:text-xl font-bold font-mono text-rose-400';
-      }
-      if (curVndEl) curVndEl.innerText = `${(current.price_vnd_kg || (current.current_price_usd * 25.5)).toLocaleString()} đ/kg`;
-      if (tickerEl) tickerEl.innerText = `${current.exchange_code || current.exchange}: ${current.ticker_symbol || 'SPOT'}`;
-
-      // Update 4-Tier Grid
-      render4TierPriceGrid(current);
-
-      // Update Table
-      renderVolatilityTable();
-
-      // Calculate Conversions & Arbitrage
+      renderActiveCommodityBanner(commodity);
+      renderMultiSourceTable(commodity);
+      render4TierPriceGrid(commodity);
+      renderArbitrageCard(commodity);
       calculateUnitConversion();
-      updateArbitrageRadar(current);
-
-      // Fetch & Draw Chart
-      fetchAndDrawChart(commodityId, currentChartSourceId, currentChartRange);
+      updateChartForCurrentCommodityAndSource();
+      if (window.lucide) lucide.createIcons();
     }
 
-    function render4TierPriceGrid(commodity) {
-      const container = document.getElementById('commodity4TierGridContainer');
-      if (!container || !commodity) return;
-
-      const tiers = [
-        {
-          tier: 'TẦNG 1',
-          name: 'Giá Sàn Quốc Tế',
-          source: commodity.exchange,
-          price_usd: commodity.current_price_usd,
-          unit: 'USD/MT',
-          note: 'Hợp đồng tương lai giao dịch tập trung',
-          borderColor: 'border-emerald-500/40',
-          textColor: 'text-emerald-400'
-        },
-        {
-          tier: 'TẦNG 2',
-          name: 'Giá Xuất Khẩu FOB',
-          source: commodity.fob_port || 'Cảng Cát Lái (VN)',
-          price_usd: commodity.fob_price_usd || (commodity.current_price_usd * 0.96),
-          unit: 'USD/MT',
-          note: 'Giá giao hàng lên tàu tại cảng xuất khẩu',
-          borderColor: 'border-cyan-500/40',
-          textColor: 'text-cyan-400'
-        },
-        {
-          tier: 'TẦNG 3',
-          name: 'Giá Thu Mua Nông Hộ',
-          source: commodity.local_origin || 'Đắk Lắk / Đồng Nai',
-          price_usd: commodity.farmgate_price_usd || (commodity.current_price_usd * 0.91),
-          unit: 'USD/MT',
-          note: 'Giá đại lý cấp 1 & nông trại thực địa',
-          borderColor: 'border-amber-500/40',
-          textColor: 'text-amber-400'
-        },
-        {
-          tier: 'TẦNG 4',
-          name: 'Giá CIF Cảng Đến',
-          source: commodity.cif_port || 'Cảng Rotterdam (EU)',
-          price_usd: commodity.cif_price_usd || (commodity.current_price_usd * 1.05),
-          unit: 'USD/MT',
-          note: 'Bao gồm bảo hiểm và cước tàu biển quốc tế',
-          borderColor: 'border-purple-500/40',
-          textColor: 'text-purple-400'
-        }
-      ];
-
-      container.innerHTML = tiers.map(t => `
-        <div class="rounded-xl p-4 bg-brand-950/70 border ${t.borderColor} space-y-2 font-mono">
-          <div class="flex items-center justify-between text-[10px] text-slate-400">
-            <span class="font-bold tracking-wider">${t.tier}</span>
-            <span class="truncate max-w-[120px]">${t.source}</span>
-          </div>
-          <span class="text-xs font-bold text-white block truncate">${t.name}</span>
-          <div class="flex items-baseline gap-1">
-            <span class="text-lg font-bold ${t.textColor}">$${Math.round(t.price_usd).toLocaleString()}</span>
-            <span class="text-[10px] text-slate-400">${t.unit}</span>
-          </div>
-          <p class="text-[10px] text-slate-400 leading-tight">${t.note}</p>
-        </div>
-      `).join('');
+    function selectCommodityPriceAndSource(commodityId, sourceId) {
+      currentSelectedCommodityId = commodityId;
+      currentChartSourceId = sourceId;
+      selectCommodityPrice(commodityId);
+      const chartCard = document.getElementById('commodityPriceCanvas');
+      if (chartCard) {
+        chartCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
     }
 
-    function renderVolatilityTable() {
-      const tbody = document.getElementById('commodityVolatilityTableBody');
-      if (!tbody || !cachedCommodityPricesData || !cachedCommodityPricesData.sectors) return;
+    function getCategoryBadgeMeta(cat) {
+      switch (cat) {
+        case 'GLOBAL_EXCHANGE':
+          return { label: '🌐 Sàn Thế Giới', class: 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40' };
+        case 'EXPORT_FOB':
+          return { label: '🚢 Cảng FOB VN', class: 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' };
+        case 'DESTINATION_CIF':
+          return { label: '⚓ Cảng Đích CIF', class: 'bg-purple-500/20 text-purple-300 border border-purple-500/40' };
+        case 'DOMESTIC_FARM':
+          return { label: '🌾 Cửa Vườn Spot', class: 'bg-amber-500/20 text-amber-300 border border-amber-500/40' };
+        case 'INDUSTRY_AGENCY':
+          return { label: '🏛️ Hiệp Hội Ngành', class: 'bg-blue-500/20 text-blue-300 border border-blue-500/40' };
+        default:
+          return { label: cat || 'Nguồn Sàn', class: 'bg-white/10 text-slate-300 border border-white/10' };
+      }
+    }
 
-      const sectors = cachedCommodityPricesData.sectors;
-      tbody.innerHTML = sectors.map(sec => {
-        const isSelected = sec.commodity_id === currentSelectedCommodityId;
-        const rowBg = isSelected ? 'bg-emerald-500/10' : 'hover:bg-white/5';
-        const isUp = sec.change_24h.startsWith('+');
+    function getChangeColorClass(changeStr) {
+      if (!changeStr) return 'text-slate-400';
+      if (changeStr.startsWith('+')) return 'text-emerald-400 font-bold';
+      if (changeStr.startsWith('-')) return 'text-rose-400 font-bold';
+      return 'text-slate-400 font-bold';
+    }
+
+    function renderMultiSourceTable(commodity) {
+      const tbody = document.getElementById('multiSourcePriceTableBody');
+      if (!tbody || !commodity || !commodity.benchmarks) return;
+
+      let benchmarks = commodity.benchmarks;
+      if (currentSourceCategoryFilter !== 'ALL') {
+        benchmarks = benchmarks.filter(b => b.source_category === currentSourceCategoryFilter || b.tier_type === currentSourceCategoryFilter);
+      }
+
+      if (benchmarks.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" class="py-4 text-center text-xs font-mono text-slate-400">
+              Không có sàn hoặc nguồn nào thuộc bộ lọc đã chọn cho mặt hàng này.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = benchmarks.map(b => {
+        const isCurrentChart = (b.source_id === currentChartSourceId);
+        const catBadge = getCategoryBadgeMeta(b.source_category);
+        const rowHighlightClass = isCurrentChart 
+          ? "bg-emerald-500/10 border-l-4 border-l-emerald-400" 
+          : "hover:bg-white/[0.03]";
+
+        const chartButton = isCurrentChart
+          ? `<button type="button" class="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold text-[10px] flex items-center gap-1 ml-auto cursor-default shadow-sm shadow-emerald-500/20">
+               <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+               <span>Đang Xem</span>
+             </button>`
+          : `<button type="button" onclick="selectCommodityPriceAndSource('${commodity.commodity_id}', '${b.source_id}')" 
+                     class="px-2.5 py-1 rounded-lg bg-brand-900 hover:bg-cyan-500/20 text-slate-300 hover:text-cyan-300 border border-white/10 hover:border-cyan-500/40 text-[10px] font-bold flex items-center gap-1 ml-auto transition-all cursor-pointer">
+               <span>📈 Xem Biểu Đồ</span>
+             </button>`;
+
         return `
-          <tr class="transition-colors ${rowBg}">
-            <td class="py-3 px-3">
-              <span class="font-bold text-white block">${sec.name}</span>
-              <span class="text-[10px] text-slate-400 block">${sec.specification}</span>
+          <tr class="transition-colors ${rowHighlightClass}">
+            <td class="py-2.5 px-3">
+              <div class="flex items-center gap-2">
+                <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold shrink-0 ${catBadge.class}">${catBadge.label}</span>
+                <div>
+                  <div class="font-bold text-white text-xs">${b.source_name || b.exchange_name}</div>
+                  <div class="text-[10px] text-slate-400">${b.note || b.exchange_name}</div>
+                </div>
+              </div>
             </td>
-            <td class="py-3 px-3">
-              <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-white/5 text-slate-300 border border-white/10">${sec.exchange}</span>
-            </td>
-            <td class="py-3 px-3 text-slate-400 text-[11px]">${sec.ticker_symbol || 'SPOT'}</td>
-            <td class="py-3 px-3 text-right font-bold text-emerald-400">$${sec.current_price_usd.toLocaleString()}</td>
-            <td class="py-3 px-3 text-right text-cyan-300 font-bold">${((sec.price_vnd_kg || (sec.current_price_usd * 25.5))).toLocaleString()} đ</td>
-            <td class="py-3 px-3 text-right font-bold ${isUp ? 'text-emerald-400' : 'text-rose-400'}">${sec.change_24h}</td>
-            <td class="py-3 px-3 text-right text-slate-300 font-semibold">${sec.change_7d || '0.0%'}</td>
-            <td class="py-3 px-3 text-center">
-              <button onclick="selectCommodityPrice('${sec.commodity_id}')" class="px-2.5 py-1 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 text-[11px] font-bold transition-all cursor-pointer">
-                Soi Biểu Đồ
-              </button>
-            </td>
+            <td class="py-2.5 px-3 font-mono font-bold text-cyan-300">${b.contract_code}</td>
+            <td class="py-2.5 px-3 font-mono font-extrabold text-white">${b.price_original}</td>
+            <td class="py-2.5 px-3 font-mono font-bold text-emerald-400">$${Number(b.price_usd_mt).toLocaleString()}/MT</td>
+            <td class="py-2.5 px-3 font-mono ${getChangeColorClass(b.change_24h)}">${b.change_24h}</td>
+            <td class="py-2.5 px-3 font-mono ${getChangeColorClass(b.change_7d)}">${b.change_7d}</td>
+            <td class="py-2.5 px-3 text-right">${chartButton}</td>
           </tr>
         `;
       }).join('');
     }
 
-    async function fetchAndDrawChart(commodityId, sourceId, range) {
+    function filterPriceBySourceCategory(cat) {
+      currentSourceCategoryFilter = cat;
+      const categories = ['ALL', 'GLOBAL_EXCHANGE', 'EXPORT_FOB', 'DOMESTIC_FARM', 'INDUSTRY_AGENCY'];
+      categories.forEach(c => {
+        const btn = document.getElementById(`filter-src-${c}`);
+        if (!btn) return;
+        if (c === cat) {
+          btn.className = "px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-cyan-500 text-brand-950 border border-cyan-400 cursor-pointer shadow-md shadow-cyan-500/20";
+        } else {
+          btn.className = "px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-bold shrink-0 bg-brand-950 text-slate-300 hover:text-white border border-white/10 cursor-pointer";
+        }
+      });
+      if (cachedCommodityPricesData && cachedCommodityPricesData.sectors) {
+        const commodity = cachedCommodityPricesData.sectors.find(s => s.commodity_id === currentSelectedCommodityId);
+        if (commodity) {
+          renderMultiSourceTable(commodity);
+        }
+      }
+    }
+
+    function handlePriceMultiSourceSearch(val) {
+      const clearBtn = document.getElementById('clearPriceSearchBtn');
+      const dropdown = document.getElementById('priceSearchAutocompleteDropdown');
+      if (!val || !val.trim()) {
+        if (clearBtn) clearBtn.classList.add('hidden');
+        if (dropdown) {
+          dropdown.classList.add('hidden');
+          dropdown.innerHTML = '';
+        }
+        return;
+      }
+      if (clearBtn) clearBtn.classList.remove('hidden');
+
+      if (priceSearchDebounceTimer) clearTimeout(priceSearchDebounceTimer);
+      priceSearchDebounceTimer = setTimeout(async () => {
+        try {
+          const res = await fetch(`/api/prices/search?q=${encodeURIComponent(val.trim())}&source_filter=${encodeURIComponent(currentSourceCategoryFilter)}`);
+          const data = await res.json();
+          renderPriceSearchResultsDropdown(data.results || [], val.trim());
+        } catch (err) {
+          console.error("Lỗi tìm kiếm giá đa sàn:", err);
+        }
+      }, 200);
+    }
+
+    function clearPriceMultiSourceSearch() {
+      const input = document.getElementById('priceMultiSourceSearchInput');
+      const clearBtn = document.getElementById('clearPriceSearchBtn');
+      const dropdown = document.getElementById('priceSearchAutocompleteDropdown');
+      if (input) input.value = '';
+      if (clearBtn) clearBtn.classList.add('hidden');
+      if (dropdown) {
+        dropdown.classList.add('hidden');
+        dropdown.innerHTML = '';
+      }
+    }
+
+    function renderPriceSearchResultsDropdown(results, query) {
+      const dropdown = document.getElementById('priceSearchAutocompleteDropdown');
+      if (!dropdown) return;
+
+      if (!results || results.length === 0) {
+        dropdown.innerHTML = `
+          <div class="p-3 text-center text-xs font-mono text-slate-400">
+            Không tìm thấy sàn giao dịch hoặc mặt hàng nào khớp với <span class="text-cyan-300 font-bold">"${query}"</span>
+          </div>
+        `;
+        dropdown.classList.remove('hidden');
+        return;
+      }
+
+      dropdown.innerHTML = `
+        <div class="px-2 py-1 text-[10px] font-mono uppercase text-slate-400 border-b border-white/5 flex items-center justify-between">
+          <span>Gợi Ý Tìm Kiếm Theo Sàn (${results.length} kết quả):</span>
+          <span class="text-cyan-400 font-bold">Chọn để mở biểu đồ & bảng giá</span>
+        </div>
+        <div class="space-y-1 pt-1 max-h-56 overflow-y-auto">
+          ${results.map(item => {
+            const catBadge = getCategoryBadgeMeta(item.source_category);
+            return `
+              <div onclick="selectFromSearchResult('${item.commodity_id}', '${item.source_id}')" 
+                   class="p-2.5 rounded-xl hover:bg-white/10 transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-2 border border-transparent hover:border-cyan-500/30">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-7 h-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center font-mono font-bold text-xs text-white shrink-0">
+                    ${item.hs_code ? item.hs_code.split('.')[0] : 'HS'}
+                  </div>
+                  <div>
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                      <span class="font-bold text-white text-xs">${item.commodity_name}</span>
+                      <span class="px-1.5 py-0.2 rounded text-[9px] font-mono font-bold ${catBadge.class}">${item.source_name}</span>
+                    </div>
+                    <div class="text-[10px] font-mono text-slate-400 flex items-center gap-2 mt-0.5">
+                      <span>Mã: <strong class="text-cyan-300">${item.contract_code}</strong></span>
+                      <span>•</span>
+                      <span>Sàn: ${item.exchange_name}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-right shrink-0 flex sm:flex-col items-center sm:items-end justify-between sm:justify-center">
+                  <span class="text-xs font-bold font-mono text-white">${item.price_original}</span>
+                  <div class="flex items-center gap-1 text-[10px] font-mono">
+                    <span class="text-cyan-300 font-bold">$${Number(item.price_usd_mt).toLocaleString()}/MT</span>
+                    <span class="${getChangeColorClass(item.change_24h)}">(${item.change_24h})</span>
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+      dropdown.classList.remove('hidden');
+    }
+
+    function selectFromSearchResult(commodityId, sourceId) {
+      clearPriceMultiSourceSearch();
+      selectCommodityPriceAndSource(commodityId, sourceId);
+    }
+
+    function changeChartRange(range) {
+      currentChartRange = range;
+      const ranges = ['1m', '6m', '1y'];
+      ranges.forEach(r => {
+        const btn = document.getElementById(`btn-chart-range-${r}`);
+        if (!btn) return;
+        if (r === range) {
+          btn.className = "px-2 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30 cursor-pointer shadow-sm";
+        } else {
+          btn.className = "px-2 py-1 rounded-lg hover:bg-white/5 text-slate-400 border border-transparent cursor-pointer";
+        }
+      });
+      updateChartForCurrentCommodityAndSource();
+    }
+
+    async function updateChartForCurrentCommodityAndSource() {
       try {
-        const res = await fetch(`/api/prices/chart?commodity_id=${encodeURIComponent(commodityId)}&source_id=${encodeURIComponent(sourceId)}&range=${encodeURIComponent(range)}`);
+        const res = await fetch(`/api/prices/chart?commodity_id=${encodeURIComponent(currentSelectedCommodityId)}&source_id=${encodeURIComponent(currentChartSourceId)}&range=${encodeURIComponent(currentChartRange)}`);
         const data = await res.json();
-        if (data && data.ok && data.history) {
-          currentChartPoints = data.history;
+        if (data && data.ok) {
+          currentChartPoints = data.history || [];
           currentChartMetadata = data;
-          drawCommodityPriceChart();
+          
+          const badgeEl = document.getElementById('chartSourceBadge');
+          const titleEl = document.getElementById('chartTitle');
+          const contractEl = document.getElementById('chartContractCode');
+          const change7dEl = document.getElementById('chart7dChange');
+          const subtitleEl = document.getElementById('chartSubtitle');
+
+          if (badgeEl) badgeEl.textContent = data.source_name || data.source_id;
+          if (titleEl) titleEl.textContent = `Biểu Đồ Lịch Sử Giá (${data.range.toUpperCase()}) - ${data.commodity_name}`;
+          if (contractEl) contractEl.textContent = `${data.contract_code} • ${data.price_original}`;
+          if (change7dEl) {
+            change7dEl.textContent = data.change_7d || 'N/A';
+            change7dEl.className = `text-xs font-mono font-bold ${getChangeColorClass(data.change_7d)}`;
+          }
+          if (subtitleEl) {
+            subtitleEl.textContent = `Nguồn: ${data.source_name} | Giá tham chiếu chuẩn hóa: $${Number(data.current_price_usd_mt).toLocaleString()}/MT`;
+          }
+
+          requestAnimationFrame(() => drawCommodityPriceChart());
+          setTimeout(() => drawCommodityPriceChart(), 60);
         }
       } catch (err) {
-        console.error("Lỗi nạp biểu đồ:", err);
+        console.error("Lỗi cập nhật biểu đồ giá:", err);
       }
     }
 
     function drawCommodityPriceChart(hoverIndex = -1) {
       const canvas = document.getElementById('commodityPriceCanvas');
-      if (!canvas || !currentChartPoints || currentChartPoints.length < 2) return;
-
-      const container = document.getElementById('chartCanvasContainer');
-      const dpr = window.devicePixelRatio || 1;
-      const width = container.clientWidth - 24;
-      const height = container.clientHeight - 24;
-
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
-
+      if (!canvas) return;
       const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      const container = canvas.parentElement;
+      const width = container.clientWidth || 600;
+      const height = container.clientHeight || 240;
+      const dpr = window.devicePixelRatio || 1;
+
+      if (canvas.width !== width * dpr || canvas.height !== height * dpr) {
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+      }
+      ctx.resetTransform();
       ctx.scale(dpr, dpr);
       ctx.clearRect(0, 0, width, height);
 
-      const prices = currentChartPoints.map(p => p.close);
-      const minPrice = Math.min(...prices) * 0.98;
-      const maxPrice = Math.max(...prices) * 1.02;
-      const priceRange = maxPrice - minPrice || 1;
+      const points = currentChartPoints;
+      if (!points || points.length === 0) {
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '12px monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('Đang nạp dữ liệu nến sàn...', width / 2, height / 2);
+        return;
+      }
 
-      const paddingLeft = 10;
-      const paddingRight = 10;
-      const paddingTop = 20;
-      const paddingBottom = 25;
-      const chartW = width - paddingLeft - paddingRight;
-      const chartH = height - paddingTop - paddingBottom;
+      const paddingLeft = 55;
+      const paddingRight = 25;
+      const paddingTop = 25;
+      const paddingBottom = 28;
+      const plotW = width - paddingLeft - paddingRight;
+      const plotH = height - paddingTop - paddingBottom;
 
-      // Draw Grid Lines
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+      const prices = points.map(p => Number(p.price_usd_mt || p.close || p.price || 0));
+      let minP = Math.min(...prices);
+      let maxP = Math.max(...prices);
+      if (minP === maxP) {
+        minP = minP * 0.95;
+        maxP = maxP * 1.05;
+      }
+      const rangeP = maxP - minP;
+      const yMin = Math.max(0, Math.floor(minP - rangeP * 0.08));
+      const yMax = Math.ceil(maxP + rangeP * 0.08);
+
+      // 1. Grid lines & Y labels
+      const gridSteps = 4;
       ctx.lineWidth = 1;
-      for (let i = 0; i <= 4; i++) {
-        const y = paddingTop + (chartH / 4) * i;
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
+      ctx.fillStyle = '#64748b';
+      ctx.font = '10px monospace';
+      ctx.textAlign = 'right';
+
+      for (let i = 0; i <= gridSteps; i++) {
+        const val = yMin + ((yMax - yMin) / gridSteps) * i;
+        const y = paddingTop + plotH - (i / gridSteps) * plotH;
+        
         ctx.beginPath();
         ctx.moveTo(paddingLeft, y);
         ctx.lineTo(width - paddingRight, y);
         ctx.stroke();
 
-        const gridVal = maxPrice - (priceRange / 4) * i;
-        ctx.fillStyle = 'rgba(148, 163, 184, 0.5)';
-        ctx.font = '10px JetBrains Mono';
-        ctx.fillText(`$${Math.round(gridVal)}`, width - paddingRight - 45, y - 4);
+        ctx.fillText(`$${Math.round(val).toLocaleString()}`, paddingLeft - 8, y + 3);
       }
 
-      // Compute Coordinates
-      const coords = currentChartPoints.map((pt, idx) => {
-        const x = paddingLeft + (idx / (currentChartPoints.length - 1)) * chartW;
-        const y = paddingTop + chartH - ((pt.close - minPrice) / priceRange) * chartH;
-        return { x, y, pt, idx };
+      // 2. Coords
+      const coords = points.map((p, idx) => {
+        const x = paddingLeft + (idx / Math.max(1, points.length - 1)) * plotW;
+        const val = Number(p.price_usd_mt || p.close || p.price || 0);
+        const y = paddingTop + plotH - ((val - yMin) / (yMax - yMin)) * plotH;
+        return { x, y, price: val, date: p.date, raw: p };
       });
 
-      // Draw Gradient Fill
-      const gradient = ctx.createLinearGradient(0, paddingTop, 0, height - paddingBottom);
-      gradient.addColorStop(0, 'rgba(16, 185, 129, 0.35)');
-      gradient.addColorStop(1, 'rgba(16, 185, 129, 0.0)');
+      // 3. X Labels
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#94a3b8';
+      const stepX = Math.max(1, Math.floor(coords.length / 6));
+      coords.forEach((c, idx) => {
+        if (idx % stepX === 0 || idx === coords.length - 1) {
+          ctx.fillText(c.date, c.x, height - 8);
+        }
+      });
+
+      // 4. Fill Gradient
+      const fillGradient = ctx.createLinearGradient(0, paddingTop, 0, paddingTop + plotH);
+      fillGradient.addColorStop(0, 'rgba(16, 185, 129, 0.32)');
+      fillGradient.addColorStop(0.7, 'rgba(6, 182, 212, 0.12)');
+      fillGradient.addColorStop(1, 'rgba(6, 182, 212, 0.0)');
 
       ctx.beginPath();
-      ctx.moveTo(coords[0].x, height - paddingBottom);
-      coords.forEach(c => ctx.lineTo(c.x, c.y));
-      ctx.lineTo(coords[coords.length - 1].x, height - paddingBottom);
+      ctx.moveTo(coords[0].x, paddingTop + plotH);
+      ctx.lineTo(coords[0].x, coords[0].y);
+      for (let i = 1; i < coords.length; i++) {
+        ctx.lineTo(coords[i].x, coords[i].y);
+      }
+      ctx.lineTo(coords[coords.length - 1].x, paddingTop + plotH);
       ctx.closePath();
-      ctx.fillStyle = gradient;
+      ctx.fillStyle = fillGradient;
       ctx.fill();
 
-      // Draw Price Line
+      // 5. Line Stroke
       ctx.beginPath();
-      coords.forEach((c, i) => {
-        if (i === 0) ctx.moveTo(c.x, c.y);
-        else ctx.lineTo(c.x, c.y);
-      });
+      ctx.moveTo(coords[0].x, coords[0].y);
+      for (let i = 1; i < coords.length; i++) {
+        ctx.lineTo(coords[i].x, coords[i].y);
+      }
       ctx.strokeStyle = '#10b981';
       ctx.lineWidth = 2.5;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
       ctx.stroke();
 
-      // Draw Hover Point & Crosshair
-      if (hoverIndex >= 0 && hoverIndex < coords.length) {
-        const active = coords[hoverIndex];
-        
-        // Vertical dashed line
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
-        ctx.setLineDash([4, 4]);
+      // 6. Data Points
+      coords.forEach((c, idx) => {
+        const isHovered = (idx === hoverIndex);
         ctx.beginPath();
-        ctx.moveTo(active.x, paddingTop);
-        ctx.lineTo(active.x, height - paddingBottom);
+        ctx.arc(c.x, c.y, isHovered ? 6 : 3.5, 0, Math.PI * 2);
+        ctx.fillStyle = isHovered ? '#34d399' : '#10b981';
+        ctx.fill();
+        ctx.lineWidth = isHovered ? 2.5 : 1.5;
+        ctx.strokeStyle = '#ffffff';
         ctx.stroke();
-        ctx.setLineDash([]);
 
-        // Outer glow dot
-        ctx.beginPath();
-        ctx.arc(active.x, active.y, 6, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(16, 185, 129, 0.4)';
-        ctx.fill();
+        if (isHovered) {
+          ctx.save();
+          ctx.setLineDash([4, 4]);
+          ctx.strokeStyle = 'rgba(52, 211, 153, 0.6)';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(c.x, paddingTop);
+          ctx.lineTo(c.x, paddingTop + plotH);
+          ctx.stroke();
+          ctx.restore();
+        }
+      });
 
-        // Inner solid dot
-        ctx.beginPath();
-        ctx.arc(active.x, active.y, 3.5, 0, Math.PI * 2);
-        ctx.fillStyle = '#ffffff';
-        ctx.fill();
-      }
+      canvas._chartCoords = coords;
     }
 
     function setupChartInteraction() {
       const canvas = document.getElementById('commodityPriceCanvas');
       const tooltip = document.getElementById('chartTooltip');
-      if (!canvas || !tooltip) return;
+      if (!canvas || !tooltip || canvas._hasListener) return;
+      canvas._hasListener = true;
 
-      canvas.addEventListener('mousemove', (e) => {
-        if (!currentChartPoints || currentChartPoints.length < 2) return;
+      function handleMove(e) {
+        if (!canvas._chartCoords || canvas._chartCoords.length === 0) return;
         const rect = canvas.getBoundingClientRect();
-        const mouseX = e.clientX - rect.left;
-        const total = currentChartPoints.length;
-        const idx = Math.min(total - 1, Math.max(0, Math.round((mouseX / rect.width) * (total - 1))));
-        const pt = currentChartPoints[idx];
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        const mouseX = clientX - rect.left;
 
-        drawCommodityPriceChart(idx);
+        let nearestIdx = 0;
+        let minDist = 999999;
+        canvas._chartCoords.forEach((c, idx) => {
+          const dist = Math.abs(c.x - mouseX);
+          if (dist < minDist) {
+            minDist = dist;
+            nearestIdx = idx;
+          }
+        });
 
-        tooltip.innerHTML = `
-          <div class="text-[10px] text-slate-400">${pt.date} • ${currentChartMetadata.source_name || 'Nguồn sàn'}</div>
-          <div class="font-bold text-emerald-400 text-sm">$${pt.close.toLocaleString()} <span class="text-[10px] text-slate-400">USD/MT</span></div>
-          <div class="text-[10px] text-slate-300">Biên độ: $${pt.low || pt.close} - $${pt.high || pt.close}</div>
-        `;
-        tooltip.classList.remove('hidden');
+        const p = canvas._chartCoords[nearestIdx];
+        if (p) {
+          drawCommodityPriceChart(nearestIdx);
 
-        const tooltipX = Math.min(rect.width - 150, Math.max(10, mouseX - 60));
-        tooltip.style.left = `${tooltipX}px`;
-        tooltip.style.top = `15px`;
-      });
+          tooltip.innerHTML = `
+            <div class="text-[10px] text-slate-400 font-mono">${p.date} • ${currentChartMetadata.source_name || ''}</div>
+            <div class="text-sm font-extrabold text-emerald-400 font-mono">$${Number(p.price).toLocaleString()}/MT</div>
+            <div class="text-[9px] text-slate-300 font-mono">Quy đổi: ${(p.price * 25.43).toLocaleString()} VNĐ/kg</div>
+          `;
+          tooltip.classList.remove('hidden');
 
-      canvas.addEventListener('mouseleave', () => {
+          let tooltipX = p.x + 12;
+          if (tooltipX + 160 > rect.width) {
+            tooltipX = p.x - 170;
+          }
+          let tooltipY = p.y - 30;
+          if (tooltipY < 10) tooltipY = 10;
+
+          tooltip.style.left = `${tooltipX}px`;
+          tooltip.style.top = `${tooltipY}px`;
+        }
+      }
+
+      function handleLeave() {
         tooltip.classList.add('hidden');
         drawCommodityPriceChart(-1);
-      });
+      }
 
+      canvas.addEventListener('mousemove', handleMove);
+      canvas.addEventListener('mouseleave', handleLeave);
+      canvas.addEventListener('touchmove', handleMove, { passive: true });
+      canvas.addEventListener('touchend', handleLeave);
       window.addEventListener('resize', () => {
         drawCommodityPriceChart();
       });
-    }
 
-    function changeChartRange(range) {
-      currentChartRange = range;
-      ['1m', '3m', '6m', '1y', '3y', 'all'].forEach(r => {
-        const btn = document.getElementById(`range-btn-${r}`);
-        if (btn) {
-          if (r === range) {
-            btn.className = "px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40";
-          } else {
-            btn.className = "px-2.5 py-1 rounded-lg text-xs font-mono font-bold text-slate-400 hover:text-white transition-all";
+      document.addEventListener('click', (e) => {
+        const dropdown = document.getElementById('priceSearchAutocompleteDropdown');
+        if (dropdown && !dropdown.classList.contains('hidden')) {
+          if (!e.target.closest('#priceMultiSourceSearchInput') && !e.target.closest('#priceSearchAutocompleteDropdown')) {
+            dropdown.classList.add('hidden');
           }
         }
       });
-      fetchAndDrawChart(currentSelectedCommodityId, currentChartSourceId, range);
+    }
+
+    function renderActiveCommodityBanner(commodity) {
+      const banner = document.getElementById('activeCommodityHeaderBanner');
+      if (!banner) return;
+      const arb = commodity.arbitrage_analysis || {};
+      banner.innerHTML = `
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold font-mono">
+            HS
+          </div>
+          <div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <h4 class="text-sm sm:text-base font-bold text-white">${commodity.commodity_name}</h4>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">Mã HS: ${commodity.hs_code}</span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-white/5 text-slate-300 border border-white/10">${commodity.sector}</span>
+            </div>
+            <p class="text-xs text-slate-400 mt-0.5">Đơn vị đo lường gốc sàn: <span class="text-white font-mono font-bold">${commodity.primary_unit}</span></p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3 font-mono shrink-0">
+          <div class="text-left md:text-right">
+            <span class="text-[10px] text-slate-400 block uppercase">Chênh Lệch Arbitrage (Spread):</span>
+            <span class="text-base sm:text-lg font-extrabold text-emerald-400">+$${arb.spread_usd || 0}/MT (+${arb.spread_pct || 0}%)</span>
+          </div>
+          <div class="px-3 py-1.5 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-center">
+            <span class="text-[9px] text-emerald-300 block uppercase font-bold">Điểm Cơ Hội</span>
+            <span class="text-base font-extrabold text-emerald-300">${arb.opportunity_score || 0}/100</span>
+          </div>
+        </div>
+      `;
+    }
+
+    function render4TierPriceGrid(commodity) {
+      const container = document.getElementById('commodity4TierGridContainer');
+      if (!container || !commodity.benchmarks) return;
+
+      const tierLabels = {
+        'GLOBAL_BENCHMARK': { title: '🌐 Sàn Quốc Tế', badge: 'Global Futures', border: 'border-cyan-500/30', headerBg: 'bg-cyan-500/10 text-cyan-300' },
+        'EXPORT_FOB': { title: '🚢 Xuất Khẩu FOB VN', badge: 'FOB Vietnam', border: 'border-emerald-500/30', headerBg: 'bg-emerald-500/10 text-emerald-300' },
+        'DESTINATION_CIF': { title: '⚓ Cảng Đích CIF', badge: 'CIF Destination', border: 'border-purple-500/30', headerBg: 'bg-purple-500/10 text-purple-300' },
+        'DOMESTIC_FARM': { title: '🌾 Nội Địa Cửa Vườn', badge: 'Farm-gate VN', border: 'border-amber-500/30', headerBg: 'bg-amber-500/10 text-amber-300' }
+      };
+
+      container.innerHTML = commodity.benchmarks.map(b => {
+        const meta = tierLabels[b.tier_type] || { title: b.exchange_name, badge: b.tier_type, border: 'border-white/10', headerBg: 'bg-white/5 text-slate-300' };
+        return `
+          <div class="p-3.5 rounded-2xl bg-brand-950/80 border ${meta.border} space-y-2.5 flex flex-col justify-between">
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between gap-1">
+                <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold ${meta.headerBg} border border-white/5">${meta.badge}</span>
+                <span class="text-[10px] font-mono font-bold text-emerald-400">${b.change_24h}</span>
+              </div>
+              <h5 class="text-xs font-bold text-white leading-tight">${b.exchange_name}</h5>
+              <p class="text-[10px] font-mono text-slate-400">${b.contract_code}</p>
+            </div>
+
+            <div class="pt-2 border-t border-white/5 space-y-1">
+              <div class="text-sm font-extrabold text-white font-mono">${b.price_original}</div>
+              <div class="text-[10px] font-mono text-cyan-300">Quy đổi: <span class="font-bold">$${Number(b.price_usd_mt).toLocaleString()}/MT</span></div>
+              <p class="text-[10px] text-slate-400 line-clamp-2 leading-tight pt-1">${b.note}</p>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderArbitrageCard(commodity) {
+      const card = document.getElementById('commodityArbitrageAnalysisCard');
+      if (!card || !commodity.arbitrage_analysis) return;
+      const arb = commodity.arbitrage_analysis;
+      card.innerHTML = `
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-2">
+          <div class="flex items-center gap-2">
+            <i data-lucide="crosshair" class="w-4 h-4 text-emerald-400"></i>
+            <span class="text-xs font-mono font-bold uppercase text-emerald-300">RADAR ĐỐI SOÁT CHÊNH LỆCH ARBITRAGE (SPREAD & BASIS):</span>
+          </div>
+          <span class="text-xs font-mono text-slate-300">Basis: <strong class="text-cyan-300">${arb.basis_diff || 'N/A'}</strong></span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
+          <div class="md:col-span-8 text-xs text-slate-200 leading-relaxed">
+            <p><strong>Khuyến Nghị Nghiệp Vụ Ngoại Thương:</strong> ${arb.recommendation || arb.action_recommendation || 'Biên độ chênh lệch thuận lợi cho xuất khẩu.'}</p>
+          </div>
+          <div class="md:col-span-4 flex items-center justify-end gap-2">
+            <a href="/" class="w-full py-2 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-brand-950 font-bold font-mono text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-lg shadow-emerald-500/20 active:scale-95">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+              <span>Khớp Lệnh Mặt Hàng Này</span>
+            </a>
+          </div>
+        </div>
+      `;
     }
 
     function calculateUnitConversion() {
-      const qtyEl = document.getElementById('unitCalcQuantity');
-      const unitEl = document.getElementById('unitCalcUnitSelect');
-      if (!qtyEl || !unitEl || !cachedCommodityPricesData) return;
+      const qtyInput = document.getElementById('unitCalcQuantity');
+      const unitSelect = document.getElementById('unitCalcUnitSelect');
+      const outputsContainer = document.getElementById('unitCalcOutputsContainer');
+      if (!qtyInput || !unitSelect || !outputsContainer) return;
 
-      const qty = parseFloat(qtyEl.value) || 1;
-      const unit = unitEl.value;
-      const current = cachedCommodityPricesData.sectors.find(s => s.commodity_id === currentSelectedCommodityId) || cachedCommodityPricesData.sectors[0];
-      const pricePerMt = current ? current.current_price_usd : 4785;
-      const rateVnd = 25500;
+      const qty = parseFloat(qtyInput.value) || 0;
+      const unit = unitSelect.value;
 
-      let mtVal = 1;
-      if (unit === 'MT') mtVal = qty;
-      else if (unit === 'lbs') mtVal = qty / 2204.62;
-      else if (unit === 'kg') mtVal = qty / 1000;
-      else if (unit === 'bag_60kg') mtVal = (qty * 60) / 1000;
+      // Conversion to Metric Tons (MT)
+      let mt = 0;
+      if (unit === 'mt') mt = qty;
+      else if (unit === 'bag_60kg') mt = (qty * 60) / 1000;
+      else if (unit === 'lbs') mt = (qty * 0.45359237) / 1000;
+      else if (unit === 'cwt') mt = (qty * 45.359237) / 1000;
+      else if (unit === 'carton_10kg') mt = (qty * 10) / 1000;
+      else if (unit === 'cntr_20ft') mt = qty * 19.2;
+      else if (unit === 'cntr_40ft') mt = qty * 27.0;
 
-      const kgVal = mtVal * 1000;
-      const lbsVal = mtVal * 2204.62;
-      const bagsVal = kgVal / 60;
-      const totalUsd = mtVal * pricePerMt;
-      const totalVnd = totalUsd * rateVnd;
+      const kg = mt * 1000;
 
-      document.getElementById('unitCalcResKg').innerText = `${Math.round(kgVal).toLocaleString()} kg`;
-      document.getElementById('unitCalcResLbs').innerText = `${lbsVal.toFixed(2).toLocaleString()} lbs`;
-      document.getElementById('unitCalcResBags').innerText = `${bagsVal.toFixed(2).toLocaleString()} bao`;
-      document.getElementById('unitCalcResUsd').innerText = `$${totalUsd.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-      document.getElementById('unitCalcResVnd').innerText = `${Math.round(totalVnd).toLocaleString()} đ`;
-    }
+      // Current commodity benchmarks
+      let fobPriceMt = 4640;
+      let cifPriceMt = 4960;
+      let farmVndKg = 116500;
+      const vcbRate = 25430;
 
-    function updateArbitrageRadar(current) {
-      if (!current) return;
-      const benchName = document.getElementById('arbBenchmarkName');
-      const benchPrice = document.getElementById('arbBenchmarkPrice');
-      const fobPrice = document.getElementById('arbFobPrice');
-      const spreadVal = document.getElementById('arbSpreadValue');
-      const netMargin = document.getElementById('arbNetMargin');
-
-      const pBench = current.current_price_usd;
-      const pFob = current.fob_price_usd || (pBench * 0.96);
-      const spread = pBench - pFob;
-      const net = spread - 120; // 120 USD logistics cost
-      const netPct = (net / pBench) * 100;
-
-      if (benchName) benchName.innerText = current.exchange;
-      if (benchPrice) benchPrice.innerText = `$${pBench.toLocaleString()} / MT`;
-      if (fobPrice) fobPrice.innerText = `$${Math.round(pFob).toLocaleString()} / MT`;
-      if (spreadVal) spreadVal.innerText = `+$${Math.round(spread).toLocaleString()} / MT`;
-      if (netMargin) {
-        netMargin.innerText = net > 0 ? `+$${Math.round(net).toLocaleString()} / MT (${netPct.toFixed(1)}%)` : `-$${Math.abs(Math.round(net))} (Âm)`;
-        netMargin.className = net > 0 ? "font-bold text-emerald-400 text-sm" : "font-bold text-rose-400 text-sm";
-      }
-    }
-
-    async function handlePriceSearchInput(query) {
-      const dropdown = document.getElementById('priceSearchDropdown');
-      if (!dropdown) return;
-
-      if (!query || query.trim().length < 2) {
-        dropdown.classList.add('hidden');
-        return;
-      }
-
-      try {
-        const res = await fetch(`/api/prices/search?q=${encodeURIComponent(query)}`);
-        const data = await res.json();
-        if (data && data.ok && data.results && data.results.length > 0) {
-          dropdown.innerHTML = data.results.map(r => `
-            <div onclick="selectSearchResult('${r.commodity_id}', '${r.source_id}')" class="p-2.5 rounded-lg hover:bg-emerald-500/15 cursor-pointer flex items-center justify-between transition-colors">
-              <div>
-                <span class="text-xs font-bold text-white block">${r.display_label}</span>
-                <span class="text-[10px] text-slate-400">${r.source_name} • ${r.exchange_category}</span>
-              </div>
-              <span class="text-xs font-mono font-bold text-emerald-400">$${r.price_usd.toLocaleString()}</span>
-            </div>
-          `).join('');
-          dropdown.classList.remove('hidden');
-        } else {
-          dropdown.innerHTML = `<div class="p-2 text-xs text-slate-400 text-center font-mono">Không tìm thấy nguồn giá phù hợp</div>`;
-          dropdown.classList.remove('hidden');
+      if (cachedCommodityPricesData && cachedCommodityPricesData.sectors) {
+        const com = cachedCommodityPricesData.sectors.find(s => s.commodity_id === currentSelectedCommodityId);
+        if (com && com.benchmarks) {
+          const fob = com.benchmarks.find(b => b.tier_type === 'EXPORT_FOB');
+          const cif = com.benchmarks.find(b => b.tier_type === 'DESTINATION_CIF');
+          const farm = com.benchmarks.find(b => b.tier_type === 'DOMESTIC_FARM');
+          if (fob && fob.price_usd_mt) fobPriceMt = fob.price_usd_mt;
+          if (cif && cif.price_usd_mt) cifPriceMt = cif.price_usd_mt;
+          if (farm && farm.price_original) {
+            const rawVnd = parseInt(farm.price_original.replace(/[^0-9]/g, '')) || 0;
+            if (rawVnd > 0) farmVndKg = rawVnd;
+          }
         }
-      } catch (err) {
-        console.error("Lỗi tìm kiếm nguồn giá:", err);
       }
-    }
 
-    function selectSearchResult(commodityId, sourceId) {
-      const dropdown = document.getElementById('priceSearchDropdown');
-      if (dropdown) dropdown.classList.add('hidden');
-      currentSelectedCommodityId = commodityId;
-      currentChartSourceId = sourceId;
-      selectCommodityPrice(commodityId);
-    }
+      const totalFobUsd = Math.round(mt * fobPriceMt);
+      const totalCifUsd = Math.round(mt * cifPriceMt);
+      const totalFarmVnd = Math.round(kg * farmVndKg);
 
-    function setSourceCategoryFilter(cat) {
-      currentSourceCategoryFilter = cat;
-      const btns = document.querySelectorAll('.category-filter-btn');
-      btns.forEach(b => {
-        b.className = "category-filter-btn px-2.5 py-1 rounded-lg text-xs font-mono font-semibold transition-all text-slate-400 hover:text-white bg-white/5 border border-transparent";
-      });
-      event.target.className = "category-filter-btn px-2.5 py-1 rounded-lg text-xs font-mono font-semibold transition-all bg-emerald-500/20 text-emerald-300 border border-emerald-500/40";
+      outputsContainer.innerHTML = `
+        <div class="p-2.5 rounded-xl bg-brand-900 border border-white/5 space-y-1">
+          <span class="text-[10px] font-mono text-slate-400 block uppercase">1. Khối Lượng Tịnh (MT):</span>
+          <span class="text-sm font-extrabold text-cyan-300 font-mono">${mt.toLocaleString(undefined, {maximumFractionDigits: 2})} MT</span>
+          <span class="text-[10px] text-slate-400 block font-mono">(${kg.toLocaleString(undefined, {maximumFractionDigits: 1})} kg)</span>
+        </div>
+        <div class="p-2.5 rounded-xl bg-brand-900 border border-white/5 space-y-1">
+          <span class="text-[10px] font-mono text-slate-400 block uppercase">2. Trị Giá FOB Cát Lái:</span>
+          <span class="text-sm font-extrabold text-emerald-300 font-mono">$${totalFobUsd.toLocaleString()}</span>
+          <span class="text-[10px] text-slate-400 block font-mono">($${fobPriceMt.toLocaleString()}/MT)</span>
+        </div>
+        <div class="p-2.5 rounded-xl bg-brand-900 border border-white/5 space-y-1">
+          <span class="text-[10px] font-mono text-slate-400 block uppercase">3. Trị Giá CIF Cảng Đích:</span>
+          <span class="text-sm font-extrabold text-purple-300 font-mono">$${totalCifUsd.toLocaleString()}</span>
+          <span class="text-[10px] text-slate-400 block font-mono">($${cifPriceMt.toLocaleString()}/MT)</span>
+        </div>
+        <div class="p-2.5 rounded-xl bg-brand-900 border border-white/5 space-y-1">
+          <span class="text-[10px] font-mono text-slate-400 block uppercase">4. Quy Đổi Cửa Vườn (VND):</span>
+          <span class="text-sm font-extrabold text-amber-300 font-mono">${(totalFarmVnd / 1e9).toFixed(2)} Tỷ VNĐ</span>
+          <span class="text-[10px] text-slate-400 block font-mono">(${farmVndKg.toLocaleString()} đ/kg)</span>
+        </div>
+      `;
     }
   </script>
 </body>

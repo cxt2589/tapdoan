@@ -2206,27 +2206,44 @@
 
           <!-- Interactive Multi-Source Price Chart Card -->
           <div class="p-4 sm:p-5 rounded-2xl bg-brand-950/90 border border-emerald-500/30 space-y-3.5">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 border-b border-white/10 pb-3">
-              <div>
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 border-b border-white/10 pb-3">
+              <div class="min-w-0 flex-1 space-y-1">
                 <div class="flex items-center gap-2 flex-wrap">
-                  <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/30" id="chartSourceBadge">Sàn ICE London</span>
-                  <h4 class="text-sm font-bold text-white flex items-center gap-2" id="chartTitle">Biểu Đồ Lịch Sử Giá 12 Tháng</h4>
-                  <span class="text-xs font-mono text-cyan-300" id="chartContractCode">RC Futures</span>
+                  <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 shrink-0" id="chartSourceBadge">Sàn ICE London</span>
+                  <h4 class="text-xs sm:text-sm font-bold text-white leading-snug break-words" id="chartTitle">Biểu Đồ Lịch Sử Giá 12 Tháng</h4>
+                  <span class="text-xs font-mono text-cyan-300 shrink-0" id="chartContractCode">RC Futures</span>
                 </div>
-                <p class="text-[11px] text-slate-400 mt-0.5" id="chartSubtitle">Dữ liệu nến / giá chốt phiên lịch sử chuẩn hóa theo USD/Tấn</p>
+                <p class="text-[11px] text-slate-400 truncate max-w-full" id="chartSubtitle">Dữ liệu nến / giá chốt phiên lịch sử chuẩn hóa theo USD/Tấn</p>
               </div>
 
-              <div class="flex items-center gap-2 flex-wrap">
-                <!-- Time Range Filters -->
-                <div class="flex items-center gap-1 bg-brand-900 border border-white/10 p-0.5 rounded-xl text-[10px] font-mono">
-                  <button type="button" onclick="changeChartRange('1m')" id="btn-chart-range-1m" class="px-2 py-1 rounded-lg hover:bg-white/5 text-slate-400 cursor-pointer">1 Tháng</button>
-                  <button type="button" onclick="changeChartRange('6m')" id="btn-chart-range-6m" class="px-2 py-1 rounded-lg hover:bg-white/5 text-slate-400 cursor-pointer">6 Tháng</button>
-                  <button type="button" onclick="changeChartRange('1y')" id="btn-chart-range-1y" class="px-2 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30 cursor-pointer">12 Tháng</button>
+              <div class="flex items-center justify-between sm:justify-end gap-2.5 flex-wrap sm:flex-nowrap shrink-0 w-full lg:w-auto">
+                <!-- Time Range Dropdown Selector -->
+                <div class="relative inline-flex items-center min-w-[145px] max-w-[200px]" id="chartRangeContainer">
+                  <label for="chartRangeSelect" class="sr-only">Khung thời gian biểu đồ</label>
+                  <div class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-slate-400">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                  </div>
+                  <select id="chartRangeSelect" onchange="changeChartRange(this.value)" 
+                          class="chart-range-select w-full appearance-none bg-brand-900 border border-white/10 hover:border-cyan-400/50 text-slate-200 text-xs font-mono font-semibold rounded-xl pl-8 pr-7 py-1.5 cursor-pointer focus:outline-none focus:ring-1 focus:ring-cyan-400 transition-all shadow-sm truncate">
+                    <option value="1m">1 Tháng (30 ngày)</option>
+                    <option value="3m">3 Tháng (12 tuần)</option>
+                    <option value="6m">6 Tháng</option>
+                    <option value="1y" selected>1 Năm (12 tháng)</option>
+                    <option value="2y">2 Năm (24 tháng)</option>
+                    <option value="3y">3 Năm (36 tháng)</option>
+                  </select>
+                  <div class="absolute inset-y-0 right-0 pr-2 flex items-center pointer-events-none text-slate-400">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                  </div>
                 </div>
-                <!-- Price Volatility Badge -->
-                <div class="px-2.5 py-1 rounded-xl bg-brand-900 border border-white/10 text-right">
-                  <span class="text-[9px] font-mono text-slate-400 block">Biến động 7D</span>
-                  <span class="text-xs font-mono font-bold text-emerald-400" id="chart7dChange">+4.2%</span>
+                <!-- Price Volatility Badge: Bảo vệ không gian hiển thị, chống tràn viền khi ký tự biến động dài -->
+                <div class="px-3 py-1 rounded-xl bg-brand-900 border border-white/10 text-right shrink-0 min-w-[96px] shadow-sm">
+                  <span class="text-[9px] font-mono text-slate-400 block whitespace-nowrap">Biến động 7D</span>
+                  <span class="text-xs font-mono font-bold text-emerald-400 whitespace-nowrap block" id="chart7dChange">+4.2%</span>
                 </div>
               </div>
             </div>
@@ -2257,16 +2274,16 @@
             </div>
             
             <div class="overflow-x-auto scrollbar-none rounded-xl border border-white/5">
-              <table class="w-full text-left text-xs font-mono">
+              <table class="w-full text-left text-xs font-mono min-w-[780px]">
                 <thead class="bg-brand-900/90 text-slate-400 text-[10px] uppercase border-b border-white/10">
                   <tr>
-                    <th class="py-2.5 px-3">Nguồn Tham Chiếu / Sàn</th>
-                    <th class="py-2.5 px-3">Mã Hợp Đồng</th>
-                    <th class="py-2.5 px-3">Giá Gốc Niêm Yết</th>
-                    <th class="py-2.5 px-3">Quy Đổi USD/MT</th>
-                    <th class="py-2.5 px-3">Biến Động 24h</th>
-                    <th class="py-2.5 px-3">Biến Động 7D</th>
-                    <th class="py-2.5 px-3 text-right">Biểu Đồ Sàn</th>
+                    <th class="py-2.5 px-3 whitespace-nowrap">Nguồn Tham Chiếu / Sàn</th>
+                    <th class="py-2.5 px-3 whitespace-nowrap">Mã Hợp Đồng</th>
+                    <th class="py-2.5 px-3 whitespace-nowrap">Giá Gốc Niêm Yết</th>
+                    <th class="py-2.5 px-3 whitespace-nowrap">Quy Đổi USD/MT</th>
+                    <th class="py-2.5 px-3 whitespace-nowrap">Biến Động 24h</th>
+                    <th class="py-2.5 px-3 whitespace-nowrap">Biến Động 7D</th>
+                    <th class="py-2.5 px-3 text-right whitespace-nowrap">Biểu Đồ Sàn</th>
                   </tr>
                 </thead>
                 <tbody id="multiSourcePriceTableBody" class="divide-y divide-white/5">
@@ -9413,12 +9430,12 @@
                 </div>
               </div>
             </td>
-            <td class="py-2.5 px-3 font-mono font-bold text-cyan-300">${b.contract_code}</td>
-            <td class="py-2.5 px-3 font-mono font-extrabold text-white">${b.price_original}</td>
-            <td class="py-2.5 px-3 font-mono font-bold text-emerald-400">$${Number(b.price_usd_mt).toLocaleString()}/MT</td>
-            <td class="py-2.5 px-3 font-mono ${getChangeColorClass(b.change_24h)}">${b.change_24h}</td>
-            <td class="py-2.5 px-3 font-mono ${getChangeColorClass(b.change_7d)}">${b.change_7d}</td>
-            <td class="py-2.5 px-3 text-right">${chartButton}</td>
+            <td class="py-2.5 px-3 font-mono font-bold text-cyan-300 whitespace-nowrap">${b.contract_code}</td>
+            <td class="py-2.5 px-3 font-mono font-extrabold text-white whitespace-nowrap">${b.price_original}</td>
+            <td class="py-2.5 px-3 font-mono font-bold text-emerald-400 whitespace-nowrap">$${Number(b.price_usd_mt).toLocaleString()}/MT</td>
+            <td class="py-2.5 px-3 font-mono whitespace-nowrap ${getChangeColorClass(b.change_24h)}">${b.change_24h}</td>
+            <td class="py-2.5 px-3 font-mono whitespace-nowrap ${getChangeColorClass(b.change_7d)}">${b.change_7d}</td>
+            <td class="py-2.5 px-3 text-right whitespace-nowrap">${chartButton}</td>
           </tr>
         `;
       }).join('');
@@ -9544,7 +9561,11 @@
 
     function changeChartRange(range) {
       currentChartRange = range;
-      const ranges = ['1m', '6m', '1y'];
+      const selectEl = document.getElementById('chartRangeSelect');
+      if (selectEl && selectEl.value !== range) {
+        selectEl.value = range;
+      }
+      const ranges = ['1m', '3m', '6m', '1y', '2y', '3y'];
       ranges.forEach(r => {
         const btn = document.getElementById(`btn-chart-range-${r}`);
         if (!btn) return;

@@ -350,19 +350,19 @@
 
         <!-- Interactive Multi-Source Price Chart Card -->
         <div class="p-4 sm:p-5 rounded-2xl bg-brand-950/90 border border-emerald-500/30 space-y-3.5">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 border-b border-white/10 pb-3">
-            <div>
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 border-b border-white/10 pb-3">
+            <div class="min-w-0 flex-1 space-y-1">
               <div class="flex items-center gap-2 flex-wrap">
-                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/30" id="chartSourceBadge">Sàn ICE London</span>
-                <h4 class="text-sm font-bold text-white flex items-center gap-2" id="chartTitle">Biểu Đồ Lịch Sử Giá 12 Tháng</h4>
-                <span class="text-xs font-mono text-cyan-300" id="chartContractCode">RC Futures</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 shrink-0" id="chartSourceBadge">Sàn ICE London</span>
+                <h4 class="text-xs sm:text-sm font-bold text-white leading-snug break-words" id="chartTitle">Biểu Đồ Lịch Sử Giá 12 Tháng</h4>
+                <span class="text-xs font-mono text-cyan-300 shrink-0" id="chartContractCode">RC Futures</span>
               </div>
-              <p class="text-[11px] text-slate-400 mt-0.5" id="chartSubtitle">Dữ liệu nến / giá chốt phiên lịch sử chuẩn hóa theo USD/Tấn</p>
+              <p class="text-[11px] text-slate-400 truncate max-w-full" id="chartSubtitle">Dữ liệu nến / giá chốt phiên lịch sử chuẩn hóa theo USD/Tấn</p>
             </div>
 
-            <div class="flex items-center gap-2 flex-wrap sm:flex-nowrap">
+            <div class="flex items-center justify-between sm:justify-end gap-2.5 flex-wrap sm:flex-nowrap shrink-0 w-full lg:w-auto">
               <!-- Time Range Dropdown Selector -->
-              <div class="relative inline-flex items-center" id="chartRangeContainer">
+              <div class="relative inline-flex items-center min-w-[145px] max-w-[200px]" id="chartRangeContainer">
                 <label for="chartRangeSelect" class="sr-only">Khung thời gian biểu đồ</label>
                 <div class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-slate-400">
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -370,7 +370,7 @@
                   </svg>
                 </div>
                 <select id="chartRangeSelect" onchange="changeChartRange(this.value)" 
-                        class="chart-range-select appearance-none bg-brand-900 border border-white/10 hover:border-cyan-400/50 text-slate-200 text-xs font-mono font-semibold rounded-xl pl-8 pr-7 py-1.5 cursor-pointer focus:outline-none focus:ring-1 focus:ring-cyan-400 transition-all shadow-sm">
+                        class="chart-range-select w-full appearance-none bg-brand-900 border border-white/10 hover:border-cyan-400/50 text-slate-200 text-xs font-mono font-semibold rounded-xl pl-8 pr-7 py-1.5 cursor-pointer focus:outline-none focus:ring-1 focus:ring-cyan-400 transition-all shadow-sm truncate">
                   <option value="1m">1 Tháng (30 ngày)</option>
                   <option value="3m">3 Tháng (12 tuần)</option>
                   <option value="6m">6 Tháng</option>
@@ -384,10 +384,10 @@
                   </svg>
                 </div>
               </div>
-              <!-- Price Volatility Badge -->
-              <div class="px-2.5 py-1 rounded-xl bg-brand-900 border border-white/10 text-right shrink-0">
-                <span class="text-[9px] font-mono text-slate-400 block">Biến động 7D</span>
-                <span class="text-xs font-mono font-bold text-emerald-400" id="chart7dChange">+4.2%</span>
+              <!-- Price Volatility Badge: Bảo vệ không gian hiển thị, chống tràn viền khi ký tự biến động dài -->
+              <div class="px-3 py-1 rounded-xl bg-brand-900 border border-white/10 text-right shrink-0 min-w-[96px] shadow-sm">
+                <span class="text-[9px] font-mono text-slate-400 block whitespace-nowrap">Biến động 7D</span>
+                <span class="text-xs font-mono font-bold text-emerald-400 whitespace-nowrap block" id="chart7dChange">+4.2%</span>
               </div>
             </div>
           </div>
@@ -418,16 +418,16 @@
           </div>
           
           <div class="overflow-x-auto scrollbar-none rounded-xl border border-white/5">
-            <table class="w-full text-left text-xs font-mono">
+            <table class="w-full text-left text-xs font-mono min-w-[780px]">
               <thead class="bg-brand-900/90 text-slate-400 text-[10px] uppercase border-b border-white/10">
                 <tr>
-                  <th class="py-2.5 px-3">Nguồn Tham Chiếu / Sàn</th>
-                  <th class="py-2.5 px-3">Mã Hợp Đồng</th>
-                  <th class="py-2.5 px-3">Giá Gốc Niêm Yết</th>
-                  <th class="py-2.5 px-3">Quy Đổi USD/MT</th>
-                  <th class="py-2.5 px-3">Biến Động 24h</th>
-                  <th class="py-2.5 px-3">Biến Động 7D</th>
-                  <th class="py-2.5 px-3 text-right">Biểu Đồ Sàn</th>
+                  <th class="py-2.5 px-3 whitespace-nowrap">Nguồn Tham Chiếu / Sàn</th>
+                  <th class="py-2.5 px-3 whitespace-nowrap">Mã Hợp Đồng</th>
+                  <th class="py-2.5 px-3 whitespace-nowrap">Giá Gốc Niêm Yết</th>
+                  <th class="py-2.5 px-3 whitespace-nowrap">Quy Đổi USD/MT</th>
+                  <th class="py-2.5 px-3 whitespace-nowrap">Biến Động 24h</th>
+                  <th class="py-2.5 px-3 whitespace-nowrap">Biến Động 7D</th>
+                  <th class="py-2.5 px-3 text-right whitespace-nowrap">Biểu Đồ Sàn</th>
                 </tr>
               </thead>
               <tbody id="multiSourcePriceTableBody" class="divide-y divide-white/5">
@@ -524,17 +524,17 @@
             <table class="w-full text-left text-xs font-mono min-w-[980px]">
               <thead class="bg-brand-900/90 text-slate-400 text-[10px] uppercase border-b border-white/10">
                 <tr>
-                  <th class="py-2.5 px-3">Quốc Gia</th>
-                  <th class="py-2.5 px-3">Tên Sản Phẩm & Mã HS</th>
-                  <th class="py-2.5 px-3">Quy Mô / Sản Lượng / Doanh Thu</th>
-                  <th class="py-2.5 px-3">Giá Tham Chiếu</th>
-                  <th class="py-2.5 px-3">Sàn Định Giá</th>
-                  <th class="py-2.5 px-2 text-center">24h</th>
-                  <th class="py-2.5 px-2 text-center">7 Ngày</th>
-                  <th class="py-2.5 px-2 text-center">1 Tháng</th>
-                  <th class="py-2.5 px-2 text-center">6 Tháng</th>
-                  <th class="py-2.5 px-2 text-center">1 Năm</th>
-                  <th class="py-2.5 px-3 text-right">Tác Vụ</th>
+                  <th class="py-2.5 px-3 whitespace-nowrap">Quốc Gia</th>
+                  <th class="py-2.5 px-3 whitespace-nowrap">Tên Sản Phẩm & Mã HS</th>
+                  <th class="py-2.5 px-3 whitespace-nowrap">Quy Mô / Sản Lượng / Doanh Thu</th>
+                  <th class="py-2.5 px-3 whitespace-nowrap">Giá Tham Chiếu</th>
+                  <th class="py-2.5 px-3 whitespace-nowrap">Sàn Định Giá</th>
+                  <th class="py-2.5 px-2 text-center whitespace-nowrap">24h</th>
+                  <th class="py-2.5 px-2 text-center whitespace-nowrap">7 Ngày</th>
+                  <th class="py-2.5 px-2 text-center whitespace-nowrap">1 Tháng</th>
+                  <th class="py-2.5 px-2 text-center whitespace-nowrap">6 Tháng</th>
+                  <th class="py-2.5 px-2 text-center whitespace-nowrap">1 Năm</th>
+                  <th class="py-2.5 px-3 text-right whitespace-nowrap">Tác Vụ</th>
                 </tr>
               </thead>
               <tbody id="countryTopProductsTableBody" class="divide-y divide-white/5">
@@ -920,12 +920,12 @@
                 </div>
               </div>
             </td>
-            <td class="py-2.5 px-3 font-mono font-bold text-cyan-300">${b.contract_code}</td>
-            <td class="py-2.5 px-3 font-mono font-extrabold text-white">${b.price_original}</td>
-            <td class="py-2.5 px-3 font-mono font-bold text-emerald-400">$${Number(b.price_usd_mt).toLocaleString()}/MT</td>
-            <td class="py-2.5 px-3 font-mono ${getChangeColorClass(b.change_24h)}">${b.change_24h}</td>
-            <td class="py-2.5 px-3 font-mono ${getChangeColorClass(b.change_7d)}">${b.change_7d}</td>
-            <td class="py-2.5 px-3 text-right">${chartButton}</td>
+            <td class="py-2.5 px-3 font-mono font-bold text-cyan-300 whitespace-nowrap">${b.contract_code}</td>
+            <td class="py-2.5 px-3 font-mono font-extrabold text-white whitespace-nowrap">${b.price_original}</td>
+            <td class="py-2.5 px-3 font-mono font-bold text-emerald-400 whitespace-nowrap">$${Number(b.price_usd_mt).toLocaleString()}/MT</td>
+            <td class="py-2.5 px-3 font-mono whitespace-nowrap ${getChangeColorClass(b.change_24h)}">${b.change_24h}</td>
+            <td class="py-2.5 px-3 font-mono whitespace-nowrap ${getChangeColorClass(b.change_7d)}">${b.change_7d}</td>
+            <td class="py-2.5 px-3 text-right whitespace-nowrap">${chartButton}</td>
           </tr>
         `;
       }).join('');
@@ -1616,11 +1616,11 @@
             <td class="py-3 px-3">
               <div class="text-[11px] font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'}">${p.exchange_name}</div>
             </td>
-            <td class="py-3 px-2 text-center font-bold ${getChangeColorClass(p.change_24h)}">${p.change_24h}</td>
-            <td class="py-3 px-2 text-center font-bold ${getChangeColorClass(p.change_7d)}">${p.change_7d}</td>
-            <td class="py-3 px-2 text-center font-bold ${getChangeColorClass(p.change_1m)}">${p.change_1m}</td>
-            <td class="py-3 px-2 text-center font-bold ${getChangeColorClass(p.change_6m)}">${p.change_6m}</td>
-            <td class="py-3 px-2 text-center font-bold ${getChangeColorClass(p.change_1y)}">${p.change_1y}</td>
+            <td class="py-3 px-2 text-center font-bold whitespace-nowrap ${getChangeColorClass(p.change_24h)}">${p.change_24h}</td>
+            <td class="py-3 px-2 text-center font-bold whitespace-nowrap ${getChangeColorClass(p.change_7d)}">${p.change_7d}</td>
+            <td class="py-3 px-2 text-center font-bold whitespace-nowrap ${getChangeColorClass(p.change_1m)}">${p.change_1m}</td>
+            <td class="py-3 px-2 text-center font-bold whitespace-nowrap ${getChangeColorClass(p.change_6m)}">${p.change_6m}</td>
+            <td class="py-3 px-2 text-center font-bold whitespace-nowrap ${getChangeColorClass(p.change_1y)}">${p.change_1y}</td>
             <td class="py-3 px-3 text-right">
               <div class="flex items-center justify-end gap-1.5">
                 <button type="button" onclick="inspectCountryProductInChart('${p.id}', '${p.product_name.replace(/'/g, "\\'")}', '${p.hs_code}', ${p.price_usd_mt})" class="px-2 py-1 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/30 text-[10px] font-bold flex items-center gap-1 cursor-pointer transition-all active:scale-95" title="Soi Biểu Đồ Giá">

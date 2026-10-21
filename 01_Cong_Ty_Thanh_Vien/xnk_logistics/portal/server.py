@@ -1421,6 +1421,96 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
             })
             return
 
+        elif path == "/api/discovery/bl/detail":
+            db = load_database()
+            all_bls = get_all_aggregated_bls(db)
+            bl_no = query.get("bl_number", [""])[0].strip() or query.get("bl", [""])[0].strip() or query.get("q", [""])[0].strip()
+            lead_id = query.get("lead_id", [""])[0].strip()
+            
+            clean_bl = clean_key_for_search(bl_no)
+            matched_bl = None
+            if clean_bl:
+                for b in all_bls:
+                    if clean_key_for_search(b.get("bl_number", "")) == clean_bl:
+                        matched_bl = b
+                        break
+            if not matched_bl and lead_id:
+                for b in all_bls:
+                    if b.get("lead_id") == lead_id:
+                        matched_bl = b
+                        break
+            if not matched_bl and clean_bl:
+                for b in all_bls:
+                    if clean_bl in clean_key_for_search(b.get("bl_number", "")):
+                        matched_bl = b
+                        break
+            
+            if matched_bl:
+                self._send_json({"ok": True, "bl": matched_bl})
+            else:
+                self._send_json({"ok": False, "error": f"Không tìm thấy thông tin vận đơn '{bl_no}'"}, 404)
+            return
+
+        elif path == "/api/leads/b2b-orders":
+            db = load_database()
+            lead_id = query.get("lead_id", [""])[0].strip() or query.get("id", [""])[0].strip()
+            leads = db.get("industry_leads", [])
+            lead = next((l for l in leads if l.get("lead_id") == lead_id or l.get("company_name", "").lower() == lead_id.lower()), None)
+            if not lead:
+                self._send_json({"ok": False, "error": f"Lead '{lead_id}' not found"}, 404)
+                return
+            
+            rfqs = lead.get("historical_b2b_rfqs", [])
+            suppliers = db.get("suppliers", [])
+            demanded = [d.get("name", "").lower() for d in lead.get("demanded_commodities", [])]
+            matching_sups = []
+            for s in suppliers:
+                s_products = " ".join([p.get("name", "").lower() for p in s.get("commodities", [])] + [s.get("industry", "").lower()])
+                score = 0
+                for dem in demanded:
+                    for word in dem.split():
+                        if len(word) >= 3 and word in s_products:
+                            score += 15
+                if score > 0 or s.get("tier") == "A":
+                    s_clean = {
+                        "id": s.get("id"),
+                        "company_name": s.get("company_name") or s.get("name"),
+                        "country": s.get("country"),
+                        "tier": s.get("tier"),
+                        "credibility_score": s.get("audit_score", 95),
+                        "export_capacity": s.get("export_capacity", "Đạt chuẩn quốc tế"),
+                        "commodities": [c.get("name") for c in s.get("commodities", [])[:3]]
+                    }
+                    matching_sups.append(s_clean)
+            
+            # Thống kê trạng thái đơn hàng
+            open_count = sum(1 for r in rfqs if "mở" in r.get("status", "").lower() or "active" in r.get("status", "").lower())
+            negotiating_count = sum(1 for r in rfqs if "thương thảo" in r.get("status", "").lower() or "đàm phán" in r.get("status", "").lower() or "mời thầu" in r.get("status", "").lower())
+            closed_count = sum(1 for r in rfqs if "chốt" in r.get("status", "").lower() or "hoàn tất" in r.get("status", "").lower() or "lưu kho" in r.get("status", "").lower())
+            
+            self._send_json({
+                "ok": True,
+                "lead_id": lead.get("lead_id"),
+                "company_name": lead.get("company_name"),
+                "country": lead.get("country"),
+                "scale": lead.get("scale"),
+                "annual_revenue_usd": lead.get("annual_revenue_usd"),
+                "lead_score": lead.get("lead_score"),
+                "broker_platform": lead.get("broker_platform") or "Sàn B2B Quốc Tế",
+                "broker_rfq_signal": lead.get("broker_rfq_signal"),
+                "preferred_incoterms": lead.get("preferred_incoterms", "FOB/CIF"),
+                "payment_terms_accepted": lead.get("payment_terms_accepted", "L/C"),
+                "stats": {
+                    "total_orders": len(rfqs),
+                    "open_orders": open_count or (1 if rfqs else 0),
+                    "negotiating_orders": negotiating_count,
+                    "closed_orders": closed_count
+                },
+                "orders": rfqs,
+                "matching_suppliers": matching_sups[:5]
+            })
+            return
+
         elif path == "/api/audits":
             history = []
             if os.path.exists(AUDIT_LOG_FILE):

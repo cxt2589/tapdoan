@@ -170,6 +170,17 @@ def run_all_tests():
         assert code_verify == 200
         assert verify_orimi["country"] == "Russia"
         assert "INN" in verify_orimi["registration_no"]
+        assert "$" in verify_orimi["annual_revenue_usd"] and "USD" in verify_orimi["annual_revenue_usd"]
+
+        # Thẩm định 4 Tầng RusAgro Sourcing Ltd: Xác thực Doanh thu ước tính cụ thể & Đối soát thực chứng 6 B/L
+        code_rus, verify_rusagro = http_post("/api/verify/buyer", {"query": "RusAgro Sourcing Ltd"})
+        assert code_rus == 200
+        assert "18.5M" in verify_rusagro["annual_revenue_usd"]
+        assert verify_rusagro["customs_bl_summary"]["has_customs_bl"] == True
+        assert verify_rusagro["customs_bl_summary"]["total_bl"] >= 6
+        assert verify_rusagro["capital_leverage"]["leverage_level"] == 3
+        assert verify_rusagro["humanitarian_exemption"]["is_exempt"] == True
+
         # Sinh thư chào hàng tiếng Nga
         code_outreach, outreach_ru = http_post("/api/leads/generate-outreach", {
             "lead_id": "LEAD-AGRI-RU-001",

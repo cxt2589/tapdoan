@@ -1022,7 +1022,24 @@ def run_all_tests():
             assert 'function lockBodyScroll(modalId)' in html_text
             assert 'resetModalScroll(modalId)' in html_text
             assert 'allModalIds.forEach(id => resetModalScroll(id))' in html_text
-        print(f"✅ Test 50/50: Cơ Chế Tự Động Khôi Phục Vị Trí Cuộn Lên Đầu (Universal Modal Scroll Reset to Top) chuẩn 100%")
+
+            # 5. Phân hệ Kiểm toán SOP-02: Popup Modal Tạo Phiếu Mới (auditFormModal) độc lập & mở chuẩn xác
+            assert 'id="auditFormModal"' in html_text
+            assert 'id="auditFormScrollBody"' in html_text
+            assert 'openAuditModal()' in html_text
+            assert 'function openAuditModal(' in html_text
+            assert 'function closeAuditModal(' in html_text
+            assert 'id="af_name"' in html_text
+            assert 'id="af_tax"' in html_text
+            assert 'id="c1_range"' in html_text
+            assert 'id="audit_total_score"' in html_text
+            idx_radar = html_text.find('id="regulatoryRadarModal"')
+            idx_audit = html_text.find('id="auditFormModal"')
+            start_radar = html_text.rfind('<div', 0, idx_radar)
+            start_audit = html_text.rfind('<div', 0, idx_audit)
+            radar_slice = html_text[start_radar:start_audit]
+            assert radar_slice.count('<div') == radar_slice.count('</div>')
+        print(f"✅ Test 50/50: Cơ Chế Tự Động Khôi Phục Vị Trí Cuộn Lên Đầu & Popup Kiểm Toán Xưởng (SOP-02) chuẩn 100%")
         passed_count += 1
 
     finally:

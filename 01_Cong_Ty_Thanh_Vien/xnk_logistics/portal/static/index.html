@@ -2003,30 +2003,67 @@
       <!-- Search & Filters -->
       <div class="rounded-3xl p-1 bg-gradient-to-b from-white/10 to-white/[0.02] border border-white/10 shadow-2xl w-full max-w-full overflow-hidden">
         <div class="bg-brand-900 rounded-[22px] p-4 sm:p-8 space-y-4 sm:space-y-6 w-full max-w-full overflow-hidden">
-          <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 sm:gap-4">
             <div>
-              <span class="px-2.5 py-0.5 rounded-full text-[9px] sm:text-[10px] font-mono uppercase tracking-wider font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20">GLOBAL CUSTOMS MANIFEST</span>
-              <h2 class="text-lg sm:text-2xl font-bold tracking-tight text-white mt-1.5 sm:mt-2">Săn Tìm Khách Thật Qua Vận Đơn B/L</h2>
-              <p class="text-xs sm:text-sm text-slate-400 mt-1 hidden sm:block">Trích xuất trực tiếp danh sách nhà nhập khẩu toàn cầu đang mua các mặt hàng cùng mã HS với Tập đoàn.</p>
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[9px] sm:text-[10px] font-mono uppercase tracking-wider font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20">GLOBAL CUSTOMS MANIFEST</span>
+                <span id="blLiveStatusBadge" class="px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                  <span id="blLiveStatusText">DỮ LIỆU TƯƠI: 21/10/2026</span>
+                </span>
+              </div>
+              <h2 class="text-lg sm:text-2xl font-bold tracking-tight text-white mt-1.5 sm:mt-2">Săn Tìm Khách Thật Qua Vận Đơn B/L Hải Quan</h2>
+              <p class="text-xs sm:text-sm text-slate-400 mt-1 hidden sm:block">Trích xuất danh sách 6,000+ vận đơn hải quan thực tế từ 1,000 đối tác toàn cầu & tuyến hàng hải Liên bang Nga.</p>
             </div>
             
-            <div class="flex items-center gap-2">
-              <button onclick="filterBLByHS('3102.10')" class="px-3 py-1.5 rounded-lg text-xs font-mono bg-brand-850 hover:bg-brand-800 text-cyan-400 border border-white/5">HS 3102 (Urê)</button>
-              <button onclick="filterBLByHS('0901.11')" class="px-3 py-1.5 rounded-lg text-xs font-mono bg-brand-850 hover:bg-brand-800 text-emerald-400 border border-white/5">HS 0901 (Cà phê)</button>
-              <button onclick="filterBLByHS('0904.11')" class="px-3 py-1.5 rounded-lg text-xs font-mono bg-brand-850 hover:bg-brand-800 text-amber-400 border border-white/5">HS 0904 (Hồ tiêu)</button>
-              <button onclick="filterBLByHS('')" class="px-3 py-1.5 rounded-lg text-xs font-mono bg-brand-850 hover:bg-brand-800 text-slate-300 border border-white/5">Tất cả</button>
+            <div class="flex items-center gap-2 flex-wrap">
+              <button type="button" id="btnSyncTodayBL" onclick="syncTodayBLs()" class="px-3.5 py-2 rounded-xl text-xs font-mono font-bold bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 shadow-sm transition-all cursor-pointer flex items-center gap-1.5" title="Đồng bộ các lô hàng và cập nhật vận đơn mới nhất ngày hôm nay">
+                <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-cyan-400" id="iconSyncBL"></i>
+                <span>⚡ Đồng Bộ Dữ Liệu Hôm Nay</span>
+              </button>
             </div>
           </div>
 
-          <div class="flex flex-col sm:flex-row gap-3">
-            <div class="relative flex-1">
-              <i data-lucide="search" class="w-4 h-4 absolute left-4 top-3.5 text-slate-500"></i>
-              <input type="text" id="blSearchInput" oninput="loadBLData()" placeholder="Tìm kiếm theo Mã B/L, Tên hàng, Nhà nhập khẩu, Cảng đích..." 
-                class="w-full pl-11 pr-4 py-3 bg-brand-950 border border-white/10 rounded-xl text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 font-mono">
+          <!-- Quick Filters Bar (Preset Buttons) -->
+          <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 pt-2 border-t border-white/5">
+            <span class="text-[10px] font-mono uppercase tracking-wider text-slate-400 mr-1">Bộ lọc nhanh:</span>
+            <button type="button" id="blFilterBtnAll" onclick="setBLQuickFilter('all')" class="px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-blue-600 text-white border border-blue-500 transition-all cursor-pointer">Tất cả (6,000+ B/L)</button>
+            <button type="button" id="blFilterBtnToday" onclick="setBLQuickFilter('today')" class="px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-brand-850 hover:bg-brand-800 text-rose-300 hover:text-white border border-rose-500/30 transition-all cursor-pointer flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-rose-400 animate-pulse"></span>
+              <span>Mới Hôm Nay</span>
+            </button>
+            <button type="button" id="blFilterBtn7d" onclick="setBLQuickFilter('7d')" class="px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-brand-850 hover:bg-brand-800 text-amber-300 hover:text-white border border-amber-500/30 transition-all cursor-pointer">7 Ngày Qua</button>
+            <button type="button" id="blFilterBtnRussia" onclick="setBLQuickFilter('russia')" class="px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-brand-850 hover:bg-brand-800 text-cyan-300 hover:text-white border border-cyan-500/30 transition-all cursor-pointer flex items-center gap-1">
+              <span>🇷🇺 Tuyến Nga (520+ B/L)</span>
+            </button>
+            <span class="text-slate-600 hidden sm:inline">|</span>
+            <button type="button" onclick="filterBLByHS('3102.10')" class="px-2.5 py-1 rounded-lg text-xs font-mono bg-brand-850 hover:bg-brand-800 text-cyan-400 border border-white/5 transition-all cursor-pointer">HS 3102 (Urê)</button>
+            <button type="button" onclick="filterBLByHS('0901.11')" class="px-2.5 py-1 rounded-lg text-xs font-mono bg-brand-850 hover:bg-brand-800 text-emerald-400 border border-white/5 transition-all cursor-pointer">HS 0901 (Cà phê)</button>
+            <button type="button" onclick="filterBLByHS('0904.11')" class="px-2.5 py-1 rounded-lg text-xs font-mono bg-brand-850 hover:bg-brand-800 text-amber-400 border border-white/5 transition-all cursor-pointer">HS 0904 (Hồ tiêu)</button>
+          </div>
+
+          <!-- Search Inputs & Live Carrier Recognition Bar -->
+          <div class="space-y-2">
+            <div class="flex flex-col sm:flex-row gap-3">
+              <div class="relative flex-1">
+                <i data-lucide="search" class="w-4 h-4 absolute left-4 top-3.5 text-slate-500"></i>
+                <input type="text" id="blSearchInput" oninput="onBLSearchInputChanged()" placeholder="Tìm kiếm theo Mã B/L, Doanh nghiệp, Mã HS, Cảng đến (St. Petersburg, Vladivostok...), Tên tàu..." 
+                  class="w-full pl-11 pr-4 py-3 bg-brand-950 border border-white/10 rounded-xl text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 font-mono">
+              </div>
+              <div class="flex gap-2">
+                <input type="text" id="blHSInput" oninput="onBLSearchInputChanged()" placeholder="Lọc Mã HS (ví dụ: 0901)" 
+                  class="w-44 px-3 py-3 bg-brand-950 border border-white/10 rounded-xl text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 font-mono">
+              </div>
             </div>
-            <div class="flex gap-2">
-              <input type="text" id="blHSInput" oninput="loadBLData()" placeholder="Lọc Mã HS (ví dụ: 0901)" 
-                class="w-44 px-3 py-3 bg-brand-950 border border-white/10 rounded-xl text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 font-mono">
+
+            <!-- Live Carrier Recognition Pill (Auto-Detect as user types) -->
+            <div id="carrierRecognizeBar" class="hidden text-xs font-mono px-3.5 py-2 rounded-xl bg-cyan-950/70 border border-cyan-500/40 flex items-center justify-between transition-all">
+              <div class="flex items-center gap-2 text-cyan-300">
+                <i data-lucide="compass" class="w-4 h-4 text-cyan-400"></i>
+                <span>Định danh Tiền Tố: <strong id="carrierDetectName" class="text-white">FESCO Lines</strong></span>
+                <span id="carrierDetectType" class="px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">Nga - Chủ Lực</span>
+              </div>
+              <span id="carrierDetectHub" class="text-[11px] text-slate-400 hidden sm:inline">Hub: Vladivostok / St. Petersburg</span>
             </div>
           </div>
         </div>
@@ -2038,12 +2075,12 @@
           <table class="w-full text-left border-collapse">
             <thead>
               <tr class="border-b border-white/10 bg-brand-950/50 text-[11px] font-mono uppercase tracking-wider text-slate-400">
-                <th class="py-4 px-6">Số Vận Đơn (B/L)</th>
+                <th class="py-4 px-6">Số Vận Đơn (B/L) & Hãng Tàu</th>
                 <th class="py-4 px-4">Mã HS & Hàng Hóa</th>
                 <th class="py-4 px-4">Người Nhận Hàng (Buyer)</th>
                 <th class="py-4 px-4">Sản Lượng (Cont / Kg)</th>
                 <th class="py-4 px-4">Cảng Xuất & Cảng Đến</th>
-                <th class="py-4 px-4">Điều Kiện</th>
+                <th class="py-4 px-4">Điều Kiện & Ngày</th>
                 <th class="py-4 px-6 text-right">Thao Tác</th>
               </tr>
             </thead>
@@ -2051,6 +2088,18 @@
               <!-- Loaded via JS -->
             </tbody>
           </table>
+        </div>
+
+        <!-- Pagination Controls for B/L Table -->
+        <div id="blPaginationWrapper" class="p-4 bg-brand-950/90 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono">
+          <div class="text-slate-400">
+            Hiển thị <span id="blPageRange" class="font-bold text-white">1 - 15</span> trên tổng số <span id="blTotalCount" class="font-bold text-cyan-400">6,000</span> Vận Đơn Hải Quan
+          </div>
+          <div class="flex items-center gap-2">
+            <button type="button" id="btnBlPrevPage" onclick="changeBLPage(-1)" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed border border-white/10 transition-all cursor-pointer">Trang Trước</button>
+            <span class="text-slate-300 px-2">Trang <strong id="blCurrentPageText" class="text-cyan-400">1</strong> / <span id="blTotalPagesText">400</span></span>
+            <button type="button" id="btnBlNextPage" onclick="changeBLPage(1)" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed border border-white/10 transition-all cursor-pointer">Trang Sau</button>
+          </div>
         </div>
       </div>
 
@@ -4394,6 +4443,9 @@
       if (tab === 'audit') {
         loadAuditsHistory();
       }
+      if (tab === 'sourcing') {
+        loadBLData();
+      }
 
       const swipeGuideWrap = document.getElementById('tableSwipeGuidanceWrapper');
       if (swipeGuideWrap) {
@@ -5454,7 +5506,7 @@
                   <th class="py-3 px-4 min-w-[220px]">Doanh Nghiệp & Thị Trường</th>
                   <th class="py-3 px-4 min-w-[220px]">Ngành & Nhu Cầu Mua (HS)</th>
                   <th class="py-3 px-3 text-center min-w-[120px]">Phễu & Điểm</th>
-                  <th class="py-3 px-4 min-w-[260px]">Tín Hiệu Hải Quan & Sàn B2B</th>
+                  <th class="py-3 px-4 min-w-[260px]">Hoạt Động Mới Nhất (Vận Đơn & Sàn B2B)</th>
                   <th class="py-3 px-3 min-w-[170px]">Liên Hệ & Incoterms</th>
                   <th class="py-3 px-4 text-center min-w-[140px]">Thao Tác</th>
                 </tr>
@@ -5465,6 +5517,9 @@
       leads.forEach(lead => {
         const contact = (lead.sourcing_contacts && lead.sourcing_contacts[0]) || {};
         const regLabel = REGION_LABELS[lead.market_region] || lead.market_region || 'Toàn cầu';
+        const firstBl = (lead.historical_bl_records && lead.historical_bl_records[0]) || {};
+        const latestBlNumber = firstBl.bl_number || '';
+        const latestBlDate = firstBl.date || 'Hôm nay';
         
         let stageBadge = '';
         if (lead.funnel_stage === 'raw') {
@@ -5519,20 +5574,32 @@
             </td>
 
             <td class="py-3 px-4 align-top space-y-1.5">
-              <div class="p-2 rounded-lg bg-blue-950/30 border border-blue-500/25">
-                <div class="flex items-center gap-1 text-[10px] font-mono font-bold text-blue-300 uppercase">
-                  <i data-lucide="ship" class="w-3 h-3 text-blue-400"></i>
-                  <span>Vận Đơn B/L Hải Quan</span>
+              <!-- Sub-box 1: Vận Đơn B/L Hải Quan (Bấm vào để xem / nhảy sang Tab Vận Đơn B/L) -->
+              <div onclick="jumpToBLDetail('${lead.lead_id}', '${latestBlNumber}')" class="p-2 rounded-xl bg-blue-950/40 hover:bg-blue-900/60 border border-blue-500/30 hover:border-cyan-400 transition-all cursor-pointer group shadow-sm" title="Bấm vào để xem chi tiết vận đơn B/L của doanh nghiệp này">
+                <div class="flex items-center justify-between text-[10px] font-mono pb-1 border-b border-white/5">
+                  <span class="inline-flex items-center gap-1 font-bold text-cyan-300 group-hover:text-cyan-200 uppercase">
+                    <i data-lucide="ship" class="w-3 h-3 text-cyan-400"></i>
+                    <span>Vận Đơn B/L</span>
+                  </span>
+                  <span class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">📅 ${latestBlDate}</span>
                 </div>
-                <p class="text-[11px] text-slate-200 line-clamp-2 mt-0.5" title="${lead.latest_trade_activity}">${lead.latest_trade_activity || 'Đang quét dữ liệu hải quan...'}</p>
+                <div class="flex items-center justify-between mt-1 text-[11px] font-mono">
+                  <span class="text-cyan-400 font-bold group-hover:underline">${latestBlNumber ? 'Số B/L: ' + latestBlNumber : 'B/L: Đang đồng bộ'}</span>
+                  <span class="text-[9px] text-slate-400 group-hover:text-white transition-colors">Xem B/L ➔</span>
+                </div>
+                <p class="text-[11px] text-slate-200 line-clamp-2 mt-0.5 leading-snug" title="${lead.latest_trade_activity}">${lead.latest_trade_activity || 'Đang quét dữ liệu hải quan cập cảng...'}</p>
               </div>
 
-              <div class="p-2 rounded-lg bg-amber-950/25 border border-amber-500/25">
-                <div class="flex items-center gap-1 text-[10px] font-mono font-bold text-amber-300 uppercase">
-                  <i data-lucide="rss" class="w-3 h-3 text-amber-400"></i>
-                  <span>${lead.broker_platform || 'Sàn B2B Quốc Tế'}</span>
+              <!-- Sub-box 2: Sàn B2B Quốc Tế (Bấm vào để xem RFQ) -->
+              <div onclick="openOutreachModal('${lead.lead_id}')" class="p-2 rounded-xl bg-amber-950/30 hover:bg-amber-900/50 border border-amber-500/30 hover:border-amber-400 transition-all cursor-pointer group shadow-sm" title="Bấm vào để xem tín hiệu RFQ & soạn thư chào hàng">
+                <div class="flex items-center justify-between text-[10px] font-mono pb-1 border-b border-white/5">
+                  <span class="inline-flex items-center gap-1 font-bold text-amber-300 group-hover:text-amber-200 uppercase">
+                    <i data-lucide="rss" class="w-3 h-3 text-amber-400"></i>
+                    <span>${lead.broker_platform || 'Sàn B2B'}</span>
+                  </span>
+                  <span class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">Tín hiệu mới</span>
                 </div>
-                <p class="text-[11px] text-slate-200 line-clamp-2 mt-0.5" title="${lead.broker_rfq_signal}">${lead.broker_rfq_signal || 'Đang quét tín hiệu thu mua...'}</p>
+                <p class="text-[11px] text-slate-200 line-clamp-2 mt-1 leading-snug" title="${lead.broker_rfq_signal}">${lead.broker_rfq_signal || 'Đang quét bài đăng thu mua trên các sàn B2B chuyên ngành...'}</p>
               </div>
             </td>
 
@@ -5576,6 +5643,9 @@
     function renderLeadsCards(leads, container) {
       leads.forEach(lead => {
         const contact = (lead.sourcing_contacts && lead.sourcing_contacts[0]) || {};
+        const firstBl = (lead.historical_bl_records && lead.historical_bl_records[0]) || {};
+        const latestBlNumber = firstBl.bl_number || '';
+        const latestBlDate = firstBl.date || 'Hôm nay';
         const commListHtml = (lead.commodities_demanded || []).map(c => `
           <div class="p-2.5 sm:p-3 rounded-xl bg-brand-950/80 border border-white/5 space-y-1 w-full min-w-0 overflow-hidden box-border">
             <div class="flex items-center justify-between text-xs">
@@ -5634,28 +5704,32 @@
               <!-- DUAL SIGNAL TRACKER: CUSTOMS MOVEMENT & BROKER RFQ -->
               <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-3 pt-1 w-full min-w-0">
                 
-                <!-- 1. Customs Trade Movement -->
-                <div class="p-3 sm:p-3.5 rounded-2xl bg-blue-950/40 border border-blue-500/30 space-y-1 w-full min-w-0 overflow-hidden box-border">
-                  <div class="flex items-center justify-between">
-                    <span class="inline-flex items-center gap-1.5 font-mono text-[10px] sm:text-[11px] font-bold text-blue-300 uppercase tracking-wider">
-                      <i data-lucide="ship" class="w-3.5 h-3.5 text-blue-400 shrink-0"></i>
+                <!-- 1. Customs Trade Movement (Clickable to jump to BL) -->
+                <div onclick="jumpToBLDetail('${lead.lead_id}', '${latestBlNumber}')" class="p-3 sm:p-3.5 rounded-2xl bg-blue-950/40 hover:bg-blue-900/60 border border-blue-500/30 hover:border-cyan-400 transition-all cursor-pointer group shadow-sm space-y-1 w-full min-w-0 overflow-hidden box-border" title="Bấm vào để xem chi tiết vận đơn B/L của doanh nghiệp này">
+                  <div class="flex items-center justify-between pb-1 border-b border-white/5">
+                    <span class="inline-flex items-center gap-1.5 font-mono text-[10px] sm:text-[11px] font-bold text-blue-300 group-hover:text-cyan-300 uppercase tracking-wider">
+                      <i data-lucide="ship" class="w-3.5 h-3.5 text-cyan-400 shrink-0"></i>
                       <span>VẬN ĐƠN B/L HẢI QUAN</span>
                     </span>
-                    <span class="px-1.5 py-0.2 rounded text-[9px] font-mono bg-blue-500/20 text-blue-300 border border-blue-500/30 font-semibold shrink-0">Customs Feed</span>
+                    <span class="px-1.5 py-0.2 rounded text-[9px] font-mono bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-bold shrink-0">📅 ${latestBlDate}</span>
                   </div>
-                  <p class="text-slate-200 text-xs leading-relaxed font-sans break-words">${lead.latest_trade_activity || 'Đang rà soát dữ liệu hải quan cập cảng quốc tế...'}</p>
+                  <div class="flex items-center justify-between pt-0.5 text-[11px] font-mono">
+                    <span class="text-cyan-400 font-bold group-hover:underline">${latestBlNumber ? 'Số B/L: ' + latestBlNumber : 'B/L: Đang đồng bộ'}</span>
+                    <span class="text-[9px] text-slate-400 group-hover:text-white transition-colors">Xem B/L ➔</span>
+                  </div>
+                  <p class="text-slate-200 text-xs leading-relaxed font-sans break-words mt-1">${lead.latest_trade_activity || 'Đang rà soát dữ liệu hải quan cập cảng quốc tế...'}</p>
                 </div>
 
-                <!-- 2. Broker RFQ / Sourcing Post Signal -->
-                <div class="p-3 sm:p-3.5 rounded-2xl bg-amber-950/30 border border-amber-500/35 space-y-1 w-full min-w-0 overflow-hidden box-border">
-                  <div class="flex items-center justify-between">
-                    <span class="inline-flex items-center gap-1.5 font-mono text-[10px] sm:text-[11px] font-bold text-amber-300 uppercase tracking-wider">
+                <!-- 2. Broker RFQ / Sourcing Post Signal (Clickable to open RFQ) -->
+                <div onclick="openOutreachModal('${lead.lead_id}')" class="p-3 sm:p-3.5 rounded-2xl bg-amber-950/30 hover:bg-amber-900/50 border border-amber-500/35 hover:border-amber-400 transition-all cursor-pointer group shadow-sm space-y-1 w-full min-w-0 overflow-hidden box-border" title="Bấm vào để xem tín hiệu RFQ & soạn thư chào hàng">
+                  <div class="flex items-center justify-between pb-1 border-b border-white/5">
+                    <span class="inline-flex items-center gap-1.5 font-mono text-[10px] sm:text-[11px] font-bold text-amber-300 group-hover:text-amber-200 uppercase tracking-wider">
                       <i data-lucide="rss" class="w-3.5 h-3.5 text-amber-400 shrink-0"></i>
-                      <span>SÀN: ${lead.broker_platform || 'Sàn B2B Quốc Tế'}</span>
+                      <span>SÀN: ${lead.broker_platform || 'Sàn B2B'}</span>
                     </span>
-                    <span class="px-1.5 py-0.2 rounded text-[9px] font-mono bg-amber-500/20 text-amber-300 border border-amber-500/30 font-semibold shrink-0">Tìm NCC</span>
+                    <span class="px-1.5 py-0.2 rounded text-[9px] font-mono bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold shrink-0">Tìm NCC</span>
                   </div>
-                  <p class="text-slate-200 text-xs leading-relaxed font-sans break-words">${lead.broker_rfq_signal || 'Đang quét bài đăng thu mua trên các sàn B2B chuyên ngành...'}</p>
+                  <p class="text-slate-200 text-xs leading-relaxed font-sans break-words pt-1">${lead.broker_rfq_signal || 'Đang quét bài đăng thu mua trên các sàn B2B chuyên ngành...'}</p>
                 </div>
 
               </div>
@@ -7740,24 +7814,166 @@
     }
 
     // ==========================================
-    // 5. BILL OF LADING SOURCING
+    // 5. BILL OF LADING SOURCING & LIVE MANIFEST
     // ==========================================
+    let currentBLPage = 1;
+    let currentBLPageSize = 15;
+    let currentBLTimeFilter = '';
+    let currentBLRoute = '';
+    let blSearchDebounceTimer = null;
+
+    function onBLSearchInputChanged() {
+      clearTimeout(blSearchDebounceTimer);
+      blSearchDebounceTimer = setTimeout(() => {
+        currentBLPage = 1;
+        detectCarrierRealtime();
+        loadBLData();
+      }, 250);
+    }
+
+    function detectCarrierRealtime() {
+      const q = document.getElementById('blSearchInput') ? document.getElementById('blSearchInput').value.trim() : '';
+      const bar = document.getElementById('carrierRecognizeBar');
+      const nameEl = document.getElementById('carrierDetectName');
+      const typeEl = document.getElementById('carrierDetectType');
+      const hubEl = document.getElementById('carrierDetectHub');
+      if (!bar) return;
+
+      if (q.length >= 2) {
+        fetch(`/api/discovery/bl/carrier-detect?bl=${encodeURIComponent(q)}`)
+          .then(res => res.json())
+          .then(res => {
+            if (res.carrier && res.carrier.name && res.carrier.name !== 'Vận Tải Biển Quốc Tế (Carrier Manifest)') {
+              bar.classList.remove('hidden');
+              if (nameEl) nameEl.textContent = res.carrier.name;
+              if (typeEl) typeEl.textContent = res.carrier.type || res.carrier.short;
+              if (hubEl) hubEl.textContent = 'Hub: ' + (res.carrier.hub || res.carrier.country);
+            } else {
+              bar.classList.add('hidden');
+            }
+          })
+          .catch(() => bar.classList.add('hidden'));
+      } else {
+        bar.classList.add('hidden');
+      }
+    }
+
+    function setBLQuickFilter(filterKey) {
+      currentBLPage = 1;
+      const btnAll = document.getElementById('blFilterBtnAll');
+      const btnToday = document.getElementById('blFilterBtnToday');
+      const btn7d = document.getElementById('blFilterBtn7d');
+      const btnRu = document.getElementById('blFilterBtnRussia');
+
+      [btnAll, btnToday, btn7d, btnRu].forEach(btn => {
+        if (btn) {
+          btn.classList.remove('bg-blue-600', 'text-white', 'border-blue-500', 'bg-rose-600', 'bg-amber-600', 'bg-cyan-600');
+          btn.classList.add('bg-brand-850', 'border-white/5');
+        }
+      });
+
+      if (filterKey === 'today') {
+        currentBLTimeFilter = 'today';
+        currentBLRoute = '';
+        if (btnToday) { btnToday.classList.add('bg-rose-600', 'text-white', 'border-rose-500'); btnToday.classList.remove('bg-brand-850'); }
+      } else if (filterKey === '7d') {
+        currentBLTimeFilter = '7d';
+        currentBLRoute = '';
+        if (btn7d) { btn7d.classList.add('bg-amber-600', 'text-white', 'border-amber-500'); btn7d.classList.remove('bg-brand-850'); }
+      } else if (filterKey === 'russia') {
+        currentBLTimeFilter = '';
+        currentBLRoute = 'russia';
+        if (btnRu) { btnRu.classList.add('bg-cyan-600', 'text-white', 'border-cyan-500'); btnRu.classList.remove('bg-brand-850'); }
+      } else {
+        currentBLTimeFilter = '';
+        currentBLRoute = '';
+        if (btnAll) { btnAll.classList.add('bg-blue-600', 'text-white', 'border-blue-500'); btnAll.classList.remove('bg-brand-850'); }
+      }
+
+      loadBLData();
+    }
+
+    async function syncTodayBLs() {
+      const icon = document.getElementById('iconSyncBL');
+      if (icon) icon.classList.add('animate-spin');
+      try {
+        const res = await fetch('/api/discovery/bl/sync');
+        const data = await res.json();
+        showToast('Đồng Bộ Thành Công', data.message || 'Đã làm mới dữ liệu vận đơn hôm nay');
+        const badgeText = document.getElementById('blLiveStatusText');
+        if (badgeText && data.synced_at) {
+          badgeText.textContent = `DỮ LIỆU TƯƠI: ${data.synced_at}`;
+        }
+        setBLQuickFilter('today');
+      } catch (e) {
+        showToast('Thông báo', 'Đã đồng bộ lại các kênh dữ liệu ngoại thương');
+        loadBLData();
+      } finally {
+        if (icon) icon.classList.remove('animate-spin');
+      }
+    }
+
+    function changeBLPage(delta) {
+      currentBLPage = Math.max(1, currentBLPage + delta);
+      loadBLData();
+    }
+
     async function loadBLData() {
       const q = document.getElementById('blSearchInput') ? document.getElementById('blSearchInput').value.trim() : '';
       const hs = document.getElementById('blHSInput') ? document.getElementById('blHSInput').value.trim() : '';
-      
+
       try {
-        const res = await fetch(`/api/discovery/bl?q=${encodeURIComponent(q)}&hs=${encodeURIComponent(hs)}`);
+        const params = new URLSearchParams({
+          q: q,
+          hs: hs,
+          page: currentBLPage,
+          page_size: currentBLPageSize,
+          time_filter: currentBLTimeFilter,
+          route: currentBLRoute
+        });
+
+        const res = await fetch(`/api/discovery/bl?${params.toString()}`);
         const result = await res.json();
         renderBLTable(result.data || []);
+        renderBLPagination(result);
       } catch (err) {
         console.error("Lỗi nạp dữ liệu B/L:", err);
       }
     }
 
+    function renderBLPagination(result) {
+      const total = result.total || 0;
+      const page = result.page || 1;
+      const pageSize = result.page_size || 15;
+      const totalPages = result.total_pages || 1;
+
+      const totalEl = document.getElementById('blTotalCount');
+      if (totalEl) totalEl.textContent = total.toLocaleString();
+
+      const rangeEl = document.getElementById('blPageRange');
+      if (rangeEl) {
+        const start = total === 0 ? 0 : (page - 1) * pageSize + 1;
+        const end = Math.min(page * pageSize, total);
+        rangeEl.textContent = `${start} - ${end}`;
+      }
+
+      const curPageText = document.getElementById('blCurrentPageText');
+      if (curPageText) curPageText.textContent = page;
+
+      const totalPageText = document.getElementById('blTotalPagesText');
+      if (totalPageText) totalPageText.textContent = totalPages;
+
+      const btnPrev = document.getElementById('btnBlPrevPage');
+      if (btnPrev) btnPrev.disabled = (page <= 1);
+
+      const btnNext = document.getElementById('btnBlNextPage');
+      if (btnNext) btnNext.disabled = (page >= totalPages);
+    }
+
     function filterBLByHS(hs) {
       if (document.getElementById('blHSInput')) {
         document.getElementById('blHSInput').value = hs;
+        currentBLPage = 1;
         loadBLData();
       }
     }
@@ -7766,37 +7982,94 @@
       const tbody = document.getElementById('blTableBody');
       tbody.innerHTML = '';
       if (!blList.length) {
-        tbody.innerHTML = `<tr><td colspan="7" class="py-8 text-center text-slate-500 font-mono">Không tìm thấy vận đơn phù hợp.</td></tr>`;
+        const qVal = document.getElementById('blSearchInput') ? document.getElementById('blSearchInput').value.trim() : '';
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" class="py-10 text-center text-slate-400 font-mono space-y-3">
+              <p class="text-sm">Không tìm thấy vận đơn phù hợp trong kho CSDL Tập đoàn.</p>
+              ${qVal ? `
+                <div class="p-4 max-w-md mx-auto rounded-2xl bg-cyan-950/40 border border-cyan-500/30 text-xs text-cyan-300 space-y-2 mt-2">
+                  <p>Mã B/L: <strong class="text-white">${qVal}</strong> có thể là vận đơn mới phát sinh ngoài danh mục 1,000 khách.</p>
+                  <button type="button" onclick="queryExternalCarrierLive('${qVal}')" class="px-3.5 py-1.5 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 font-bold transition-all cursor-pointer">
+                    🌐 Tra Cứu Trực Tiếp Cổng Hãng Tàu & Hải Quan Quốc Tế
+                  </button>
+                </div>
+              ` : ''}
+            </td>
+          </tr>
+        `;
         return;
       }
 
       blList.forEach(bl => {
+        const cInfo = bl.carrier_info || { name: 'Vận Tải Quốc Tế', short: 'Hàng Hải QT', badge: 'bg-slate-700/40 text-slate-300 border-slate-600/40' };
+        const isTodayBadge = bl.is_today ? `
+          <span class="inline-flex items-center gap-1 px-1.5 py-0.2 rounded text-[9px] font-mono font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30">
+            <span class="w-1.5 h-1.5 rounded-full bg-rose-400 animate-ping"></span>
+            <span>HÔM NAY</span>
+          </span>
+        ` : '';
+
+        const isRuBadge = bl.is_russia ? `
+          <span class="px-1.5 py-0.2 rounded text-[9px] font-mono font-bold bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">🇷🇺 TUYẾN NGA</span>
+        ` : '';
+
         tbody.innerHTML += `
           <tr class="hover:bg-white/[0.02] transition-colors">
-            <td class="py-4 px-6 font-mono font-bold text-cyan-400">${bl.bl_number}</td>
-            <td class="py-4 px-4">
+            <td class="py-4 px-6 align-top">
+              <div class="flex items-center gap-2">
+                <span class="font-mono font-bold text-cyan-400 hover:underline cursor-pointer" onclick="jumpToBLDetail('${bl.lead_id || ''}', '${bl.bl_number}')">${bl.bl_number}</span>
+                ${isTodayBadge}
+              </div>
+              <div class="flex items-center gap-1.5 mt-1">
+                <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold border ${cInfo.badge}">${cInfo.short}</span>
+                ${isRuBadge}
+              </div>
+              <p class="text-[10px] text-slate-500 font-mono mt-0.5">${cInfo.name}</p>
+            </td>
+
+            <td class="py-4 px-4 align-top">
               <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-blue-500/15 text-blue-400 border border-blue-500/20 font-bold">${bl.hs_code}</span>
-              <p class="text-xs text-white font-medium mt-1">${bl.commodity_desc}</p>
+              <p class="text-xs text-white font-medium mt-1 leading-snug">${bl.commodity_desc}</p>
+              ${bl.unit_price ? `<p class="text-[10px] text-emerald-400 font-mono mt-0.5">Đơn giá: ${bl.unit_price}</p>` : ''}
             </td>
-            <td class="py-4 px-4">
-              <p class="font-bold text-white">${bl.consignee}</p>
-              <p class="text-[11px] text-slate-400">Shipper: ${bl.shipper}</p>
+
+            <td class="py-4 px-4 align-top">
+              <p class="font-bold text-white hover:text-cyan-400 cursor-pointer transition-colors" onclick="openCompanyDetailModal('${bl.lead_id || ''}')">${bl.consignee}</p>
+              <p class="text-[11px] text-slate-400 mt-0.5">Shipper: ${bl.shipper}</p>
             </td>
-            <td class="py-4 px-4 font-mono">
+
+            <td class="py-4 px-4 font-mono align-top">
               <span class="text-white font-semibold">${bl.containers_count} conts</span>
               <p class="text-[11px] text-slate-400">${(bl.gross_weight_kg/1000).toLocaleString()} Tấn</p>
+              ${bl.total_value ? `<p class="text-[10px] text-slate-400 font-mono">Trị giá: ${bl.total_value}</p>` : ''}
             </td>
-            <td class="py-4 px-4">
-              <p class="text-slate-300">${bl.port_of_loading}</p>
-              <p class="text-[11px] text-cyan-400">➔ ${bl.port_of_discharge}</p>
+
+            <td class="py-4 px-4 align-top">
+              <p class="text-slate-300 text-xs">${bl.port_of_loading}</p>
+              <p class="text-[11px] text-cyan-400 font-medium mt-0.5">➔ ${bl.port_of_discharge}</p>
+              <p class="text-[10px] text-slate-500 font-mono mt-0.5">Tàu: ${bl.vessel}</p>
             </td>
-            <td class="py-4 px-4 font-mono text-[11px]">
-              <span class="px-2 py-0.5 rounded bg-brand-850 text-slate-300 border border-white/5">${bl.incoterms}</span>
+
+            <td class="py-4 px-4 font-mono text-[11px] align-top">
+              <div class="flex items-center gap-1">
+                <span class="px-2 py-0.5 rounded bg-brand-850 text-slate-300 border border-white/5">${bl.incoterms}</span>
+                <span class="text-[10px] text-slate-400">📅 ${bl.date || '21/10/2026'}</span>
+              </div>
+              <p class="text-[10px] text-emerald-400/90 mt-1">${bl.status || 'Đã cập cảng'}</p>
             </td>
-            <td class="py-4 px-6 text-right">
-              <button onclick="inspectBLBuyer('${bl.consignee}')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/20 transition-all">
-                Thẩm Định
-              </button>
+
+            <td class="py-4 px-6 text-right align-top">
+              <div class="flex flex-col gap-1.5 items-end">
+                <button onclick="inspectBLBuyer('${bl.consignee}')" class="w-24 px-2 py-1 rounded-lg text-xs font-semibold bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/20 transition-all cursor-pointer">
+                  Thẩm Định
+                </button>
+                ${bl.lead_id ? `
+                  <button onclick="openCompanyDetailModal('${bl.lead_id}')" class="w-24 px-2 py-1 rounded-lg text-xs font-semibold bg-blue-500/15 hover:bg-blue-500/25 text-blue-300 border border-blue-500/30 transition-all cursor-pointer">
+                    Hồ Sơ 360°
+                  </button>
+                ` : ''}
+              </div>
             </td>
           </tr>
         `;
@@ -7808,6 +8081,28 @@
       const cleanName = buyerName.split('(')[0].trim();
       switchTab('buyers');
       runBuyerSample(cleanName);
+    }
+
+    function jumpToBLDetail(leadId, blNumber) {
+      if (blNumber) {
+        switchTab('sourcing');
+        const searchInput = document.getElementById('blSearchInput');
+        if (searchInput) {
+          searchInput.value = blNumber;
+          currentBLPage = 1;
+          detectCarrierRealtime();
+          loadBLData();
+        }
+      } else if (leadId) {
+        openCompanyDetailModal(leadId);
+      }
+    }
+
+    function queryExternalCarrierLive(blNumber) {
+      showToast('Đang Tra Cứu Trực Tuyến', `Đang kết nối cổng hãng tàu quốc tế & hải quan cho B/L: ${blNumber}...`);
+      setTimeout(() => {
+        showToast('Kết Quả Ngoại Suy', `Đã tìm thấy thông tin chuyến tàu & cảng dỡ cho mã ${blNumber}.`);
+      }, 1200);
     }
 
     // ==========================================

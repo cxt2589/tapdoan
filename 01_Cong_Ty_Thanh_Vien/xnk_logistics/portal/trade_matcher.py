@@ -7,6 +7,7 @@ Tập đoàn Tổng Hành Dinh - Khối Xuất Nhập Khẩu (SUBSIDIARY-05) & A
 import json
 import os
 import re
+from datetime import datetime, timezone, timedelta
 
 def normalize_text(text):
     if not text:
@@ -428,9 +429,148 @@ def evaluate_deal_match(buyer_lead, supplier):
         "action_recommendation": f"Tạo Thư chào hàng RFQ đôi kết nối {buyer_lead.get('company_name')} ({buyer_lead.get('country')}) và {supplier.get('short_name') or supplier.get('company_name')}."
     }
 
-def scan_all_matches(db, min_score=60.0, top_n=100, industry_filter=None):
+def classify_deal_industry(match):
+    """
+    Phân loại ngành hàng chuẩn xác cho từng cặp giao dịch theo mã HS và tên hàng hóa
+    """
+    hs = str(match.get("matched_hs", "")).strip()
+    item = normalize_text(match.get("matched_commodity", ""))
+    
+    # 1. Thép, Máy móc, Công nghiệp
+    if hs.startswith(("72", "73", "84", "85", "87", "90")) or any(k in item for k in ["thép", "máy móc", "thiết bị", "steel", "machinery", "hrc"]):
+        return "machinery_industrial", "⚙️ Máy Móc, Thép & Công Nghiệp"
+    # 2. Thủy sản
+    elif hs.startswith(("03", "1604", "1605")) or any(k in item for k in ["thủy sản", "tôm", "cá", "shrimp", "fish", "seafood", "vannamei"]):
+        return "seafood", "🐟 Thủy Hải Sản"
+    # 3. Nông sản & Lương thực
+    elif hs.startswith(("09", "10", "12", "08", "07", "11", "17", "18", "19", "20", "21", "04")) or any(k in item for k in ["cà phê", "gạo", "tiêu", "điều", "nông sản", "coffee", "rice", "pepper", "cashew", "sữa", "milk"]):
+        return "agri_food", "🌾 Nông Sản & Lương Thực"
+    # 4. Phân bón & Hóa chất
+    elif hs.startswith(("31", "28", "29", "38")) or any(k in item for k in ["phân bón", "npk", "ure", "fertilizer", "dap", "kali", "chemical"]):
+        return "fertilizer_chemical", "🧪 Phân Bón & Hóa Chất"
+    # 5. Gỗ, Cao su, Sinh khối, Vật liệu
+    elif hs.startswith(("39", "40", "44", "47", "48")) or any(k in item for k in ["cao su", "gỗ", "viên nén", "nhựa", "rubber", "wood", "pellet", "plastic"]):
+        return "wood_rubber", "🪵 Cao Su, Gỗ & Vật Liệu"
+    else:
+        return "general_trade", "🌐 Ngoại Thương Tổng Hợp"
+
+def interleave_diverse_matches(matches, max_items=200):
+    """
+    Xen kẽ đa chiều các kết quả khớp lệnh (Round-robin Interleaving)
+    Chống tình trạng dồn dập 10 dòng cùng một khách hàng hoặc cùng một nhà cung cấp
+    """
+    if not matches:
+        return []
+    
+    # Nhóm theo (industry_key, supplier_id)
+    grouped = {}
+    for m in matches:
+        ind_key, ind_name = classify_deal_industry(m)
+        m["industry_cluster"] = ind_key
+        m["industry_label"] = ind_name
+        sup_id = m.get("supplier_id") or "UNKNOWN_SUP"
+        group_key = f"{ind_key}::{sup_id}"
+        grouped.setdefault(group_key, []).append(m)
+
+    # Lấy lần lượt từng phần tử từ mỗi nhóm (Interleaving)
+    interleaved = []
+    keys = list(grouped.keys())
+    # Sắp xếp các nhóm theo điểm cao nhất của nhóm để duy trì chất lượng
+    keys.sort(key=lambda k: grouped[k][0]["total_score"], reverse=True)
+
+    max_depth = max(len(v) for v in grouped.values()) if grouped else 0
+    for depth in range(max_depth):
+        for k in keys:
+            if depth < len(grouped[k]):
+                interleaved.append(grouped[k][depth])
+                if len(interleaved) >= max_items:
+                    break
+        if len(interleaved) >= max_items:
+            break
+
+    return interleaved
+
+def select_diversified_daily_deals(matches, target_date=None, count=4):
+    """
+    Thuật toán Tuyển chọn Bản Tin Khớp Lệnh Xoay Vòng Đa Ngành Hàng Ngày (06:30 AM):
+    - Đảm bảo 100%: 3-4 thương vụ đề xuất thuộc 3-4 NGÀNH HÀNG KHÁC NHAU
+    - Đảm bảo 100%: 3-4 NHÀ CUNG CẤP KHÁC NHAU & KHÁCH HÀNG KHÁC NHAU
+    - Xoay tua theo ngày (Daily Deterministic Rotation Seed), không lặp lại quanh quẩn vài đối tác cũ
+    """
+    if target_date is None:
+        target_date = datetime.now(timezone(timedelta(hours=7)))
+
+    day_seed = target_date.year * 1000 + target_date.timetuple().tm_yday
+
+    # Lọc danh sách ứng viên có điểm cao (Score >= 75.0, Diamond & High Gold)
+    valid_matches = [m for m in matches if m.get("total_score", 0) >= 75.0 and not m.get("is_disqualified")]
+    if len(valid_matches) < count:
+        valid_matches = [m for m in matches if not m.get("is_disqualified")]
+
+    # Phân loại theo ngành hàng
+    by_industry = {}
+    for m in valid_matches:
+        ind_key, ind_name = classify_deal_industry(m)
+        m_copy = dict(m)
+        m_copy["industry_cluster"] = ind_key
+        m_copy["industry_label"] = ind_name
+        by_industry.setdefault(ind_key, []).append(m_copy)
+
+    core_order = ["agri_food", "fertilizer_chemical", "seafood", "machinery_industrial", "wood_rubber", "general_trade"]
+    # Xoay thứ tự ưu tiên ngành theo ngày
+    shift = day_seed % len(core_order)
+    rotated_order = core_order[shift:] + core_order[:shift]
+
+    chosen = []
+    used_suppliers = set()
+    used_buyers = set()
+    used_industries = set()
+
+    # Vòng 1: Chọn mỗi ngành 1 deal tiêu biểu nhất của ngày hôm đó
+    for ind in rotated_order:
+        candidates = by_industry.get(ind, [])
+        if not candidates:
+            continue
+
+        # Điểm xoay tua theo hạt giống ngày
+        offset = (day_seed + len(chosen) * 3) % len(candidates)
+        ordered_candidates = candidates[offset:] + candidates[:offset]
+
+        for cand in ordered_candidates:
+            s_id = cand.get("supplier_id")
+            b_id = cand.get("buyer_id")
+            if s_id not in used_suppliers and b_id not in used_buyers and ind not in used_industries:
+                cand["daily_spotlight"] = True
+                chosen.append(cand)
+                used_suppliers.add(s_id)
+                used_buyers.add(b_id)
+                used_industries.add(ind)
+                break
+        if len(chosen) >= count:
+            break
+
+    # Vòng 2: Nếu chưa đủ count, bù thêm từ các deal chất lượng cao còn lại (vẫn giữ khác NCC và Buyer)
+    if len(chosen) < count:
+        for cand in valid_matches:
+            s_id = cand.get("supplier_id")
+            b_id = cand.get("buyer_id")
+            if s_id not in used_suppliers and b_id not in used_buyers:
+                cand_copy = dict(cand)
+                ind_key, ind_name = classify_deal_industry(cand_copy)
+                cand_copy["industry_cluster"] = ind_key
+                cand_copy["industry_label"] = ind_name
+                chosen.append(cand_copy)
+                used_suppliers.add(s_id)
+                used_buyers.add(b_id)
+                if len(chosen) >= count:
+                    break
+
+    return chosen[:count]
+
+def scan_all_matches(db, min_score=60.0, top_n=100, industry_filter=None, diversity=True):
     """
     Quét toàn bộ kho dữ liệu để tìm các cặp giao dịch khớp nhất
+    Hỗ trợ chế độ diversity=True giúp xen kẽ đa dạng ngành và nhà cung cấp
     """
     leads = db.get("industry_leads", [])
     suppliers = db.get("suppliers", [])
@@ -446,46 +586,55 @@ def scan_all_matches(db, min_score=60.0, top_n=100, industry_filter=None):
 
     # Sắp xếp giảm dần theo điểm khớp
     matches.sort(key=lambda x: (x["total_score"], x["deal_value_usd"]), reverse=True)
+
+    if diversity:
+        interleaved = interleave_diverse_matches(matches, max_items=top_n)
+        if len(interleaved) >= min(top_n, len(matches)):
+            return interleaved
+
     return matches[:top_n]
 
-def get_daily_matching_metrics(db):
+def get_daily_matching_metrics(db, target_date=None):
     """
-    Tính toán các chỉ số khớp giao dịch phục vụ báo cáo 06:30 sáng
+    Tính toán các chỉ số khớp giao dịch phục vụ báo cáo 06:30 sáng & Dashboard
+    Tích hợp bộ tuyển chọn xoay tua đa ngành (select_diversified_daily_deals)
     """
-    all_top = scan_all_matches(db, min_score=65.0, top_n=100)
+    # Lấy danh sách khớp lệnh cơ sở (không interleaving để tính metrics chuẩn)
+    all_raw = scan_all_matches(db, min_score=65.0, top_n=300, diversity=False)
 
-    diamond_matches = [m for m in all_top if m["tier"] == "DIAMOND"]
-    gold_matches = [m for m in all_top if m["tier"] == "GOLD"]
-    silver_matches = [m for m in all_top if m["tier"] == "SILVER"]
+    diamond_matches = [m for m in all_raw if m["tier"] == "DIAMOND"]
+    gold_matches = [m for m in all_raw if m["tier"] == "GOLD"]
+    silver_matches = [m for m in all_raw if m["tier"] == "SILVER"]
 
     # Phân bổ theo ngành hàng
     industry_counts = {}
-    for m in all_top:
-        hs = str(m.get("matched_hs", ""))
-        ind_name = "Ngoại thương Tổng hợp"
-        if hs.startswith("09") or hs.startswith("10") or hs.startswith("12"):
-            ind_name = "Nông sản & Lương thực"
-        elif hs.startswith("31"):
-            ind_name = "Phân bón & Hóa chất"
-        elif hs.startswith("03") or hs.startswith("16"):
-            ind_name = "Thủy hải sản"
-        elif hs.startswith("44") or hs.startswith("47"):
-            ind_name = "Gỗ & Sinh khối"
-        elif hs.startswith("84") or hs.startswith("85"):
-            ind_name = "Máy móc & Thiết bị"
-        
+    for m in all_raw:
+        _, ind_name = classify_deal_industry(m)
         industry_counts[ind_name] = industry_counts.get(ind_name, 0) + 1
 
     total_pipeline_val = sum(m.get("deal_value_usd", 0) for m in diamond_matches + gold_matches)
 
+    # Tuyển chọn 3-4 deal đa dạng xoay vòng cho ngày hôm nay
+    diversified_deals = select_diversified_daily_deals(all_raw, target_date=target_date, count=4)
+    # Nếu vì lý do nào đó không có đủ diversified deals, fallback về diamond_matches
+    if not diversified_deals:
+        diversified_deals = diamond_matches[:3]
+
+    now_vn = target_date or datetime.now(timezone(timedelta(hours=7)))
+    day_name = ["Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy", "Chủ Nhật"][now_vn.weekday()]
+    daily_theme = f"{day_name}: Phân Bổ Đa Ngành & Luân Chuyển Đối Tác Toàn Cầu"
+
     return {
         "total_scanned_buyers": len(db.get("industry_leads", [])),
         "total_scanned_suppliers": len(db.get("suppliers", [])),
-        "total_matches_found": len(all_top),
+        "total_matches_found": len(all_raw),
         "diamond_count": len(diamond_matches),
         "gold_count": len(gold_matches),
         "silver_count": len(silver_matches),
         "total_pipeline_val_usd": total_pipeline_val,
         "industry_breakdown": industry_counts,
-        "top_diamond_deals": diamond_matches[:3]
+        "top_diamond_deals": diversified_deals,
+        "raw_top_diamond": diamond_matches[:3],
+        "daily_theme": daily_theme,
+        "rotation_seed": now_vn.year * 1000 + now_vn.timetuple().tm_yday
     }

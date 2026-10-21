@@ -89,10 +89,13 @@ def run_morning_dispatch(force=False, dry_run=False):
         ind_parts.append(f"{icon} {s_ind}: <b>{count}</b>")
     ind_summary = " • ".join(ind_parts) if ind_parts else "Đa ngành ngoại thương"
 
+    daily_theme = metrics.get("daily_theme") or f"Chiến Lược Luân Chuyển Đối Tác Toàn Cầu • {date_str}"
+    top_deals = metrics.get("top_diamond_deals", [])
+
     # 2. Xây dựng nội dung HTML phân cấp thị giác tinh gọn, chống rối mắt trên di động
     lines = [
         "🏛️ <b>TỔNG HÀNH DINH // BẢN TIN KHỚP GIAO DỊCH 06:30</b>",
-        f"<i>Tình báo Đối soát Ma trận Ngoại thương • {date_str}</i>",
+        f"<i>{daily_theme}</i>",
         "────────────────────────────",
         "📊 <b>TỔNG QUAN PIPELINE HÔM NAY:</b>",
         f"• 💎 <b>Khớp Kim Cương (≥85đ):</b> <b>{metrics['diamond_count']}</b> thương vụ <i>(Xác suất chốt &gt;90%)</i>",
@@ -100,11 +103,11 @@ def run_morning_dispatch(force=False, dry_run=False):
         f"• 💰 <b>Tổng giá trị Pipeline:</b> <b>${pipe_millions}M USD</b> <i>({metrics.get('total_scanned_suppliers', 20)} NCC / 12 Nước)</i>",
         f"• 🌐 <b>Cơ cấu ngành:</b> {ind_summary}",
         "",
-        "⭐ <b>TOP 3 THƯƠNG VỤ KIM CƯƠNG TRỌNG ĐIỂM:</b>",
+        f"⭐ <b>GIAO DỊCH ĐA NGÀNH TIÊU BIỂU HÔM NAY ({len(top_deals[:4])} NGÀNH XOAY VÒNG):</b>",
         ""
     ]
 
-    for idx, d in enumerate(metrics.get("top_diamond_deals", [])[:3]):
+    for idx, d in enumerate(top_deals[:4]):
         b_name = d.get("buyer_name", "")
         b_c = d.get("buyer_country", "")
         s_name = d.get("supplier_short_name", "") or d.get("supplier_name", "")
@@ -112,16 +115,19 @@ def run_morning_dispatch(force=False, dry_run=False):
         item = d.get("matched_commodity", "")
         hs = d.get("matched_hs", "")
         score = d.get("total_score", 0)
+        tier_vi = d.get("tier_vi", "Khớp Kim Cương")
         val_m = round(d.get("deal_value_usd", 0) / 1_000_000, 2)
+        ind_lbl = d.get("industry_label") or d.get("_industry_name") or "🌐 Ngoại thương"
 
         # Lấy 3 tag quy chuẩn trọng tâm, lược bỏ mã HS thô
         raw_tags = [t.replace('#', '').replace('_', ' ') for t in d.get("matched_tags", []) if not t.startswith('#HS_')]
         tags_str = " • ".join(raw_tags[:3]) if raw_tags else "Mã HS & Quy cách chuẩn"
 
-        lines.append(f"<b>{idx+1}️⃣ {b_name} ({b_c}) ⇄ {s_name} ({s_c})</b>")
+        lines.append(f"<b>{idx+1}️⃣ [{ind_lbl}]</b>")
+        lines.append(f"<b>{b_name} ({b_c}) ⇄ {s_name} ({s_c})</b>")
         lines.append(f"• 📦 Mặt hàng: <b>{item}</b> (Mã HS: {hs})")
-        lines.append(f"• 🎯 Điểm ma trận 6 chiều: <b>{score}/100</b> <i>(Khớp Kim Cương)</i>")
-        lines.append(f"• 💰 Giá trị hợp đồng: ~<b>${val_m}M USD</b>")
+        lines.append(f"• 🎯 Điểm ma trận 6 chiều: <b>{score}/100</b> <i>({tier_vi})</i>")
+        lines.append(f"• 💰 Giá trị thương vụ: ~<b>${val_m}M USD</b>")
         lines.append(f"• ⚡ Quy chuẩn khớp: <code>{tags_str}</code>")
         lines.append("")
 

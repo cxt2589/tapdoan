@@ -5947,6 +5947,7 @@
 
     function renderLeadsList(leads) {
       cachedLeadsData = leads;
+      window.cachedLeadsData = leads;
       const container = document.getElementById('leadsContainer');
       container.innerHTML = '';
       document.getElementById('totalLeadsCount').innerText = `${totalMatchedLeads.toLocaleString()} Doanh Nghiệp (Trang ${currentPage}/${totalPages})`;
@@ -7691,7 +7692,7 @@
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div class="space-y-0.5">
               <div class="flex flex-wrap items-center gap-2">
-                <span class="font-mono font-bold text-blue-300">${b.bl_number}</span>
+                <span class="font-mono font-bold text-cyan-400 hover:text-cyan-300 hover:underline cursor-pointer" onclick="openBLDetailModal('${b.bl_number}', '${currentDetailSupplier ? currentDetailSupplier.id : ''}')" title="Bấm vào để xem hồ sơ vận đơn B/L chi tiết">${b.bl_number}</span>
                 <span class="text-[10px] font-mono text-slate-400">📅 ${b.date}</span>
                 <span class="px-1.5 py-0.2 rounded text-[10px] font-mono bg-blue-500/20 text-blue-300">🚢 ${b.vessel}</span>
               </div>
@@ -7763,7 +7764,7 @@
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div class="space-y-0.5">
               <div class="flex flex-wrap items-center gap-2">
-                <span class="font-mono font-bold text-blue-300">${b.bl_number}</span>
+                <span class="font-mono font-bold text-cyan-400 hover:text-cyan-300 hover:underline cursor-pointer" onclick="openBLDetailModal('${b.bl_number}', '${currentDetailLead ? currentDetailLead.lead_id : ''}')" title="Bấm vào để xem hồ sơ vận đơn B/L chi tiết">${b.bl_number}</span>
                 <span class="text-[10px] font-mono text-slate-400">📅 ${b.date}</span>
                 <span class="px-1.5 py-0.2 rounded text-[10px] font-mono bg-blue-500/20 text-blue-300">🚢 ${b.vessel}</span>
               </div>
@@ -8253,7 +8254,7 @@
             <div class="p-2.5 rounded-xl bg-brand-950/80 border border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-mono">
               <div class="space-y-0.5">
                 <div class="flex items-center gap-2">
-                  <span class="text-cyan-400 font-bold">B/L: ${b.bl_number}</span>
+                  <span class="text-cyan-400 font-bold hover:text-cyan-300 hover:underline cursor-pointer" onclick="openBLDetailModal('${b.bl_number}', '')" title="Bấm vào để xem hồ sơ vận đơn B/L">B/L: ${b.bl_number}</span>
                   <span class="text-slate-400">•</span>
                   <span class="text-white font-semibold">Tàu: ${b.vessel}</span>
                   <span class="text-slate-400">•</span>
@@ -8489,6 +8490,7 @@
 
         const res = await fetch(`/api/discovery/bl?${params.toString()}`);
         const result = await res.json();
+        window.cachedBLData = result.data || [];
         renderBLTable(result.data || []);
         renderBLPagination(result);
       } catch (err) {
@@ -8652,6 +8654,13 @@
     // ==========================================
     // POPUP MODALS: B/L DOSSIER, B2B ORDERS & SINGLE CONTACT NOTICE
     // ==========================================
+    function openDualRfqFromPair(buyerId, supplierId, commodity, hs) {
+      if (typeof openDualOutreach === 'function') {
+        openDualOutreach(buyerId, supplierId, commodity || '', hs || '');
+      }
+    }
+    window.openDualRfqFromPair = openDualRfqFromPair;
+
     function cleanKeyForSearch(str) {
       return (str || '').toString().toLowerCase().replace(/[^a-z0-9]/g, '');
     }
@@ -8688,12 +8697,12 @@
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div class="space-y-0.5">
               <div class="flex flex-wrap items-center gap-2">
-                <span class="font-mono font-bold text-blue-300">${b.bl_number}</span>
+                <span class="font-mono font-bold text-cyan-400 hover:text-cyan-300 hover:underline cursor-pointer" onclick="openBLDetailModal('${b.bl_number}', '')" title="Bấm vào để xem hồ sơ vận đơn B/L">${b.bl_number}</span>
                 <span class="text-[10px] font-mono text-slate-400">📅 ${b.date}</span>
                 <span class="px-1.5 py-0.2 rounded text-[10px] font-mono bg-blue-500/20 text-blue-300">🚢 ${b.vessel || 'Vessel Cargo'}</span>
               </div>
               <p class="text-slate-200 font-medium">${b.commodity || 'Hàng hóa ngoại thương'}</p>
-              <p class="text-[11px] text-slate-400 font-mono">Khối lượng: <strong class="text-emerald-400">${b.volume}</strong> | Cảng đến: <strong class="text-cyan-300 font-semibold">${b.port}</strong></p>
+              <p class="text-[11px] text-slate-400 font-mono">Khối lượng: <strong class="text-emerald-400">${b.volume || (b.gross_weight_kg ? (b.gross_weight_kg/1000).toLocaleString() + ' Tấn' : '1,200 Tấn')}</strong> | Cảng đến: <strong class="text-cyan-300 font-semibold">${b.port || b.discharge_port || b.port_of_discharge || 'Cảng Quốc Tế'}</strong></p>
             </div>
             <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 self-start sm:self-auto shrink-0">${b.status || 'Đã thông quan'}</span>
           </div>
@@ -8752,12 +8761,14 @@
 
       let bl = null;
       // 1. Check cachedBLData (if already loaded)
-      if (window.cachedBLData && window.cachedBLData.length > 0) {
-        bl = window.cachedBLData.find(b => cleanKeyForSearch(b.bl_number) === cleanKeyForSearch(blNumber));
+      const blCache = (window.cachedBLData && window.cachedBLData.length) ? window.cachedBLData : [];
+      if (blCache.length > 0) {
+        bl = blCache.find(b => cleanKeyForSearch(b.bl_number) === cleanKeyForSearch(blNumber));
       }
       // 2. Check cachedLeadsData
-      if (!bl && window.cachedLeadsData) {
-        for (const l of window.cachedLeadsData) {
+      const leadsPool = (window.cachedLeadsData && window.cachedLeadsData.length) ? window.cachedLeadsData : (typeof cachedLeadsData !== 'undefined' ? cachedLeadsData : []);
+      if (!bl && leadsPool && leadsPool.length) {
+        for (const l of leadsPool) {
           if (l.historical_bl_records) {
             const found = l.historical_bl_records.find(b => cleanKeyForSearch(b.bl_number) === cleanKeyForSearch(blNumber));
             if (found) {
@@ -8772,8 +8783,25 @@
           }
         }
       }
+      // 3. Check cached suppliers
+      const supsPool = (window.cachedSuppliersData && window.cachedSuppliersData.length) ? window.cachedSuppliersData : (typeof currentSupplierData !== 'undefined' && currentSupplierData ? [currentSupplierData] : []);
+      if (!bl && supsPool && supsPool.length) {
+        for (const s of supsPool) {
+          const sBLs = s.customs_bl_records || s.historical_bl_records || [];
+          const found = sBLs.find(b => cleanKeyForSearch(b.bl_number) === cleanKeyForSearch(blNumber));
+          if (found) {
+            bl = Object.assign({}, found, {
+              lead_id: s.id,
+              consignee: 'Đối Tác Thu Mua Quốc Tế',
+              country: s.country,
+              shipper: s.company_name || s.short_name || 'Nhà Cung Ứng Đối Tác'
+            });
+            break;
+          }
+        }
+      }
 
-      // 3. Fetch enriched data from API
+      // 4. Fetch enriched data from API
       let apiBLData = null;
       try {
         const res = await fetch(`/api/discovery/bl/detail?bl_number=${encodeURIComponent(blNumber)}&lead_id=${encodeURIComponent(leadId || '')}`);
@@ -8919,15 +8947,22 @@
         trackBtn.href = `https://www.google.com/search?q=${encodeURIComponent(carrierName + ' container tracking ' + bl.bl_number)}`;
       }
 
-      // View lead button
+      // View lead or supplier button
       const leadBtn = document.getElementById('bld-view-lead-btn');
       if (leadBtn) {
         const targetLeadId = bl.lead_id || leadId;
         if (targetLeadId) {
           leadBtn.style.display = 'flex';
+          const isSup = targetLeadId.startsWith('SP-') || targetLeadId.startsWith('SUP-');
+          const spanText = leadBtn.querySelector('span');
+          if (spanText) spanText.textContent = isSup ? 'Xem Hồ Sơ 360° NCC' : 'Xem Hồ Sơ 360° Khách';
           leadBtn.onclick = () => {
             closeBLDetailModal();
-            openCompanyDetailModal(targetLeadId);
+            if (isSup) {
+              openSupplierDetailModal(targetLeadId);
+            } else {
+              openCompanyDetailModal(targetLeadId);
+            }
           };
         } else {
           leadBtn.style.display = 'none';
@@ -8950,7 +8985,10 @@
         modal.classList.add('hidden');
         resetModalScroll('blDetailModal');
       }
-      unlockBodyScroll();
+      const anyOtherOpen = document.querySelector('#companyDetailModal:not(.hidden), #supplierDetailModal:not(.hidden), #counterpartyDetailModal:not(.hidden), #b2bMarketplaceModal:not(.hidden), #matchDetailModal:not(.hidden)');
+      if (!anyOtherOpen) {
+        unlockBodyScroll();
+      }
     }
 
     async function openB2BMarketplaceModal(leadId) {

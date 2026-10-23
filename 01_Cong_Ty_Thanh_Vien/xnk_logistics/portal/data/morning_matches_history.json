@@ -359,5 +359,3599 @@
       ]
     },
     "telegram_sent": true
+  },
+  {
+    "timestamp": "2026-10-21T13:57:14.367808+07:00",
+    "date": "21/10/2026",
+    "metrics": {
+      "total_scanned_buyers": 1000,
+      "total_scanned_suppliers": 20,
+      "total_matches_found": 300,
+      "diamond_count": 8,
+      "gold_count": 292,
+      "silver_count": 0,
+      "total_pipeline_val_usd": 633465000.0,
+      "industry_breakdown": {
+        "🌾 Nông Sản & Lương Thực": 9,
+        "🧪 Phân Bón & Hóa Chất": 210,
+        "🐟 Thủy Hải Sản": 1,
+        "🪵 Cao Su, Gỗ & Vật Liệu": 58,
+        "⚙️ Máy Móc, Thép & Công Nghiệp": 22
+      },
+      "top_diamond_deals": [
+        {
+          "match_id": "MATCH-LEAD-AUTO-0396-SUP-GLB-009",
+          "buyer_id": "LEAD-AUTO-0396",
+          "buyer_name": "Nordic Australia Nhựa, Commodities Ltd",
+          "buyer_country": "Australia",
+          "buyer_country_code": "AU",
+          "buyer_tier": "A",
+          "supplier_id": "SUP-GLB-009",
+          "supplier_name": "Sinochem Group Co., Ltd.",
+          "supplier_short_name": "Sinochem China",
+          "supplier_country": "Trung Quốc",
+          "supplier_country_code": "CN",
+          "supplier_type": "👑 Đại Lý Cấp 1 Toàn Cầu (Tier-1 Trading House)",
+          "matched_commodity": "Hạt nhựa nguyên sinh PE/PP tỷ trọng thấp",
+          "matched_hs": "3901.10",
+          "deal_value_usd": 1690000.0,
+          "total_score": 84.0,
+          "tier": "GOLD",
+          "tier_vi": "Khớp Tiềm Năng (Khả Quan)",
+          "badge_color": "amber",
+          "is_disqualified": false,
+          "disqualify_reason": "",
+          "trade_tags": {
+            "buyer_tags": [
+              "#CE_Europe",
+              "#HS_3901",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#Inco_FOB_CaiMep",
+              "#Inco_FOB_CatLai",
+              "#LC_AtSight",
+              "#TT_Deposit_30_70"
+            ],
+            "supplier_tags": [
+              "#HS_2835",
+              "#HS_3102",
+              "#HS_3901",
+              "#ISO22000",
+              "#ISO9001",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#LC_AtSight",
+              "#REACH_EU",
+              "#TT_Deposit_30_70"
+            ],
+            "matched_tags": [
+              "#HS_3901",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#LC_AtSight",
+              "#TT_Deposit_30_70"
+            ],
+            "missing_tags": [
+              "#CE_Europe",
+              "#Inco_FOB_CaiMep",
+              "#Inco_FOB_CatLai"
+            ],
+            "tag_match_rate": 66.7
+          },
+          "matched_tags": [
+            "#HS_3901",
+            "#ISO22000",
+            "#Inco_CIF",
+            "#Inco_FOB",
+            "#LC_AtSight",
+            "#TT_Deposit_30_70"
+          ],
+          "missing_tags": [
+            "#CE_Europe",
+            "#Inco_FOB_CaiMep",
+            "#Inco_FOB_CatLai"
+          ],
+          "tag_match_rate": 66.7,
+          "dimensions": {
+            "d1_hs_and_specs": {
+              "name": "Mã HS & Quy Cách Hàng Hóa",
+              "weight": 30,
+              "score": 100,
+              "desc": "Trùng khớp chính xác 6 số HS (Subheading)",
+              "match_details": {
+                "buyer_hs": "3901.10",
+                "buyer_item": "Hạt nhựa nguyên sinh PE/PP tỷ trọng thấp",
+                "supplier_hs": "3901.10",
+                "supplier_item": "Hạt nhựa Polyethylene (PE) nguyên sinh",
+                "match_type": "Trùng khớp chính xác 6 số HS (Subheading)"
+              }
+            },
+            "d2_quality_certifications": {
+              "name": "Tiêu Chuẩn & Chứng Chỉ",
+              "weight": 20,
+              "score": 50.0,
+              "desc": "Đáp ứng 1/2 chứng chỉ yêu cầu",
+              "matched_certs": [
+                "iso 9001"
+              ],
+              "missing_certs": [
+                "certificate of origin form e/eav/eur1"
+              ]
+            },
+            "d3_capacity_and_moq": {
+              "name": "Năng Lực & MOQ",
+              "weight": 15,
+              "score": 90,
+              "desc": "Nhu cầu mua hàng vừa vặn với công suất sản xuất của nhà máy"
+            },
+            "d4_payment_terms": {
+              "name": "Phương Thức Thanh Toán",
+              "weight": 15,
+              "score": 100,
+              "desc": "Phương thức thanh toán đồng thuận cao: , g, h, a, r, c, t, /, b, e, i, s, l",
+              "matched_methods": [
+                "",
+                "g",
+                "h",
+                "a",
+                "r",
+                "c",
+                "t",
+                "/",
+                "b",
+                "e",
+                "i",
+                "s",
+                "l"
+              ]
+            },
+            "d5_incoterms_logistics": {
+              "name": "Incoterms & Vận Tải",
+              "weight": 10,
+              "score": 65,
+              "desc": "Cần chuyên viên Logistics của Khối XNK tư vấn lộ trình vận tải tối ưu",
+              "matched_incoterms": [
+                "",
+                "ả",
+                "b",
+                "s",
+                "m",
+                "á",
+                "ặ",
+                "g",
+                "t",
+                "n",
+                "i",
+                "h",
+                "d",
+                "y",
+                "f",
+                "l",
+                "o",
+                "c",
+                "p",
+                "/",
+                "e",
+                "é"
+              ]
+            },
+            "d6_compliance_and_risk": {
+              "name": "Tín Nhiệm & Pháp Lý",
+              "weight": 10,
+              "score": 89.5,
+              "desc": "Hồ sơ pháp lý, lịch sử thông quan và xếp hạng tín nhiệm hai đầu an toàn tuyệt đối"
+            }
+          },
+          "action_recommendation": "Tạo Thư chào hàng RFQ đôi kết nối Nordic Australia Nhựa, Commodities Ltd (Australia) và Sinochem China.",
+          "industry_cluster": "wood_rubber",
+          "industry_label": "🪵 Cao Su, Gỗ & Vật Liệu",
+          "daily_spotlight": true
+        },
+        {
+          "match_id": "MATCH-LEAD-AGRI-003-SP-002",
+          "buyer_id": "LEAD-AGRI-003",
+          "buyer_name": "Al Jameel International Food Corp",
+          "buyer_country": "Saudi Arabia",
+          "buyer_country_code": "SA",
+          "buyer_tier": "A",
+          "supplier_id": "SP-002",
+          "supplier_name": "Công Ty TNHH Xuất Nhập Khẩu Nông Sản Đắk Lắk",
+          "supplier_short_name": "Daklak Agri Products Ltd",
+          "supplier_country": "Việt Nam",
+          "supplier_country_code": "VN",
+          "supplier_type": "🏭 Nhà Sản Xuất & Chế Biến Nông Sản",
+          "matched_commodity": "Hồ tiêu đen hạt 550 g/l & Tiêu sọ trắng",
+          "matched_hs": "0904.11",
+          "deal_value_usd": 5000000.0,
+          "total_score": 87.6,
+          "tier": "DIAMOND",
+          "tier_vi": "Khớp Kim Cương (Xác Suất Chốt Rất Cao)",
+          "badge_color": "emerald",
+          "is_disqualified": false,
+          "disqualify_reason": "",
+          "trade_tags": {
+            "buyer_tags": [
+              "#CE_Europe",
+              "#FDA_US",
+              "#HACCP",
+              "#HS_0904",
+              "#HS_1006",
+              "#Halal_JAKIM",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#LC_AtSight",
+              "#Moist_Max12.5%",
+              "#TT_Deposit_30_70"
+            ],
+            "supplier_tags": [
+              "#CAD_Payment",
+              "#CE_Europe",
+              "#Clean_FAQ",
+              "#HACCP",
+              "#HS_0901",
+              "#HS_0904",
+              "#ISO22000",
+              "#ISO9001",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#Inco_FOB_CatLai",
+              "#LC_AtSight",
+              "#Moist_Max12.5%",
+              "#Rainforest_Alliance",
+              "#Screen_S16",
+              "#Screen_S18",
+              "#TT_Deposit_30_70"
+            ],
+            "matched_tags": [
+              "#CE_Europe",
+              "#HACCP",
+              "#HS_0904",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#LC_AtSight",
+              "#Moist_Max12.5%",
+              "#TT_Deposit_30_70"
+            ],
+            "missing_tags": [
+              "#FDA_US",
+              "#HS_1006",
+              "#Halal_JAKIM"
+            ],
+            "tag_match_rate": 72.7
+          },
+          "matched_tags": [
+            "#CE_Europe",
+            "#HACCP",
+            "#HS_0904",
+            "#ISO22000",
+            "#Inco_CIF",
+            "#LC_AtSight",
+            "#Moist_Max12.5%",
+            "#TT_Deposit_30_70"
+          ],
+          "missing_tags": [
+            "#FDA_US",
+            "#HS_1006",
+            "#Halal_JAKIM"
+          ],
+          "tag_match_rate": 72.7,
+          "dimensions": {
+            "d1_hs_and_specs": {
+              "name": "Mã HS & Quy Cách Hàng Hóa",
+              "weight": 30,
+              "score": 100,
+              "desc": "Trùng khớp chính xác 6 số HS (Subheading)",
+              "match_details": {
+                "buyer_hs": "0904.11",
+                "buyer_item": "Hồ tiêu đen hạt 550 g/l & Tiêu sọ trắng",
+                "supplier_hs": "0904.11",
+                "supplier_item": "Hồ tiêu đen sạch FAQ 500-550 g/l",
+                "match_type": "Trùng khớp chính xác 6 số HS (Subheading)"
+              }
+            },
+            "d2_quality_certifications": {
+              "name": "Tiêu Chuẩn & Chứng Chỉ",
+              "weight": 20,
+              "score": 66.7,
+              "desc": "Đáp ứng 2/3 chứng chỉ yêu cầu",
+              "matched_certs": [
+                "iso 22000",
+                "haccp"
+              ],
+              "missing_certs": [
+                "halal certified (sfda approved)"
+              ]
+            },
+            "d3_capacity_and_moq": {
+              "name": "Năng Lực & MOQ",
+              "weight": 15,
+              "score": 90,
+              "desc": "Nhu cầu mua hàng vừa vặn với công suất sản xuất của nhà máy"
+            },
+            "d4_payment_terms": {
+              "name": "Phương Thức Thanh Toán",
+              "weight": 15,
+              "score": 100,
+              "desc": "Phương thức thanh toán đồng thuận cao: , g, h, a, d, c, t, /, i, s, 0, l",
+              "matched_methods": [
+                "",
+                "g",
+                "h",
+                "a",
+                "d",
+                "c",
+                "t",
+                "/",
+                "i",
+                "s",
+                "0",
+                "l"
+              ]
+            },
+            "d5_incoterms_logistics": {
+              "name": "Incoterms & Vận Tải",
+              "weight": 10,
+              "score": 65,
+              "desc": "Cần chuyên viên Logistics của Khối XNK tư vấn lộ trình vận tải tối ưu",
+              "matched_incoterms": [
+                "",
+                "a",
+                "h",
+                "j",
+                "d",
+                "c",
+                "o",
+                "r",
+                "p",
+                "t",
+                "e",
+                "i",
+                "s",
+                "ặ",
+                "f",
+                "m",
+                "l"
+              ]
+            },
+            "d6_compliance_and_risk": {
+              "name": "Tín Nhiệm & Pháp Lý",
+              "weight": 10,
+              "score": 92.5,
+              "desc": "Hồ sơ pháp lý, lịch sử thông quan và xếp hạng tín nhiệm hai đầu an toàn tuyệt đối"
+            }
+          },
+          "action_recommendation": "Tạo Thư chào hàng RFQ đôi kết nối Al Jameel International Food Corp (Saudi Arabia) và Daklak Agri Products Ltd.",
+          "industry_cluster": "agri_food",
+          "industry_label": "🌾 Nông Sản & Lương Thực",
+          "daily_spotlight": true
+        },
+        {
+          "match_id": "MATCH-LEAD-AUTO-0720-SP-001",
+          "buyer_id": "LEAD-AUTO-0720",
+          "buyer_name": "Global Switzerland Phân Holdings Inc",
+          "buyer_country": "Switzerland",
+          "buyer_country_code": "CH",
+          "buyer_tier": "A",
+          "supplier_id": "SP-001",
+          "supplier_name": "Công Ty Cổ Phần Phân Bón Bình Điền",
+          "supplier_short_name": "Bình Điền Fertilizer (Đầu Trâu)",
+          "supplier_country": "Việt Nam",
+          "supplier_country_code": "VN",
+          "supplier_type": "🏭 Nhà Sản Xuất Trực Tiếp Nội Địa",
+          "matched_commodity": "Phân đạm Urê hạt đục & hạt trong 46% N",
+          "matched_hs": "3102.10",
+          "deal_value_usd": 315000.0,
+          "total_score": 84.5,
+          "tier": "GOLD",
+          "tier_vi": "Khớp Tiềm Năng (Khả Quan)",
+          "badge_color": "amber",
+          "is_disqualified": false,
+          "disqualify_reason": "",
+          "trade_tags": {
+            "buyer_tags": [
+              "#CE_Europe",
+              "#HS_3102",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#Inco_FOB_CaiMep",
+              "#Inco_FOB_CatLai",
+              "#LC_AtSight",
+              "#TT_Deposit_30_70"
+            ],
+            "supplier_tags": [
+              "#Granular",
+              "#HS_3102",
+              "#HS_3105",
+              "#ISO22000",
+              "#ISO9001",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#Inco_FOB_CatLai",
+              "#LC_AtSight",
+              "#Prilled",
+              "#Urea_N46%"
+            ],
+            "matched_tags": [
+              "#HS_3102",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#Inco_FOB_CatLai",
+              "#LC_AtSight"
+            ],
+            "missing_tags": [
+              "#CE_Europe",
+              "#Inco_FOB_CaiMep",
+              "#TT_Deposit_30_70"
+            ],
+            "tag_match_rate": 66.7
+          },
+          "matched_tags": [
+            "#HS_3102",
+            "#ISO22000",
+            "#Inco_CIF",
+            "#Inco_FOB",
+            "#Inco_FOB_CatLai",
+            "#LC_AtSight"
+          ],
+          "missing_tags": [
+            "#CE_Europe",
+            "#Inco_FOB_CaiMep",
+            "#TT_Deposit_30_70"
+          ],
+          "tag_match_rate": 66.7,
+          "dimensions": {
+            "d1_hs_and_specs": {
+              "name": "Mã HS & Quy Cách Hàng Hóa",
+              "weight": 30,
+              "score": 100,
+              "desc": "Trùng khớp chính xác 6 số HS (Subheading)",
+              "match_details": {
+                "buyer_hs": "3102.10",
+                "buyer_item": "Phân đạm Urê hạt đục & hạt trong 46% N",
+                "supplier_hs": "3102.10",
+                "supplier_item": "Urea bọc vi sinh & Phân đạm hạt đục cải tiến",
+                "match_type": "Trùng khớp chính xác 6 số HS (Subheading)"
+              }
+            },
+            "d2_quality_certifications": {
+              "name": "Tiêu Chuẩn & Chứng Chỉ",
+              "weight": 20,
+              "score": 50.0,
+              "desc": "Đáp ứng 1/2 chứng chỉ yêu cầu",
+              "matched_certs": [
+                "iso 9001"
+              ],
+              "missing_certs": [
+                "certificate of origin form e/eav/eur1"
+              ]
+            },
+            "d3_capacity_and_moq": {
+              "name": "Năng Lực & MOQ",
+              "weight": 15,
+              "score": 90,
+              "desc": "Nhu cầu mua hàng vừa vặn với công suất sản xuất của nhà máy"
+            },
+            "d4_payment_terms": {
+              "name": "Phương Thức Thanh Toán",
+              "weight": 15,
+              "score": 100,
+              "desc": "Phương thức thanh toán đồng thuận cao: , g, h, a, o, c, t, /, đ, i, s, l",
+              "matched_methods": [
+                "",
+                "g",
+                "h",
+                "a",
+                "o",
+                "c",
+                "t",
+                "/",
+                "đ",
+                "i",
+                "s",
+                "l"
+              ]
+            },
+            "d5_incoterms_logistics": {
+              "name": "Incoterms & Vận Tải",
+              "weight": 10,
+              "score": 65,
+              "desc": "Cần chuyên viên Logistics của Khối XNK tư vấn lộ trình vận tải tối ưu",
+              "matched_incoterms": [
+                "",
+                "ả",
+                "w",
+                "b",
+                "m",
+                "á",
+                "ặ",
+                "g",
+                "t",
+                "n",
+                "i",
+                "h",
+                "r",
+                "f",
+                "l",
+                "a",
+                "o",
+                "c",
+                "p",
+                "/",
+                "e",
+                "é"
+              ]
+            },
+            "d6_compliance_and_risk": {
+              "name": "Tín Nhiệm & Pháp Lý",
+              "weight": 10,
+              "score": 94.5,
+              "desc": "Hồ sơ pháp lý, lịch sử thông quan và xếp hạng tín nhiệm hai đầu an toàn tuyệt đối"
+            }
+          },
+          "action_recommendation": "Tạo Thư chào hàng RFQ đôi kết nối Global Switzerland Phân Holdings Inc (Switzerland) và Bình Điền Fertilizer (Đầu Trâu).",
+          "industry_cluster": "fertilizer_chemical",
+          "industry_label": "🧪 Phân Bón & Hóa Chất",
+          "daily_spotlight": true
+        },
+        {
+          "match_id": "MATCH-LEAD-SEAF-001-SUP-GLB-011",
+          "buyer_id": "LEAD-SEAF-001",
+          "buyer_name": "High Liner Foods, Inc.",
+          "buyer_country": "Canada & USA",
+          "buyer_country_code": "CA",
+          "buyer_tier": "A+",
+          "supplier_id": "SUP-GLB-011",
+          "supplier_name": "Charoen Pokphand Group (CP Group)",
+          "supplier_short_name": "CP Group Thailand",
+          "supplier_country": "Thái Lan",
+          "supplier_country_code": "TH",
+          "supplier_type": "👑 Đại Lý Cấp 1 Toàn Cầu (Tier-1 Trading House)",
+          "matched_commodity": "Frozen Vannamei White Shrimp PD/PTO IQF",
+          "matched_hs": "0306.17",
+          "deal_value_usd": 5000000.0,
+          "total_score": 86.0,
+          "tier": "DIAMOND",
+          "tier_vi": "Khớp Kim Cương (Xác Suất Chốt Rất Cao)",
+          "badge_color": "emerald",
+          "is_disqualified": false,
+          "disqualify_reason": "",
+          "trade_tags": {
+            "buyer_tags": [
+              "#FDA_US",
+              "#Glazing_10-20%",
+              "#HACCP",
+              "#HS_0304",
+              "#HS_0306",
+              "#Inco_CFR",
+              "#Inco_CIF",
+              "#LC_AtSight",
+              "#Urea_N46%"
+            ],
+            "supplier_tags": [
+              "#GlobalGAP",
+              "#HACCP",
+              "#HS_0306",
+              "#HS_2309",
+              "#Halal_JAKIM",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#LC_AtSight",
+              "#TT_Deposit_30_70"
+            ],
+            "matched_tags": [
+              "#HACCP",
+              "#HS_0306",
+              "#Inco_CIF",
+              "#LC_AtSight"
+            ],
+            "missing_tags": [
+              "#FDA_US",
+              "#Glazing_10-20%",
+              "#HS_0304",
+              "#Inco_CFR",
+              "#Urea_N46%"
+            ],
+            "tag_match_rate": 44.4
+          },
+          "matched_tags": [
+            "#HACCP",
+            "#HS_0306",
+            "#Inco_CIF",
+            "#LC_AtSight"
+          ],
+          "missing_tags": [
+            "#FDA_US",
+            "#Glazing_10-20%",
+            "#HS_0304",
+            "#Inco_CFR",
+            "#Urea_N46%"
+          ],
+          "tag_match_rate": 44.4,
+          "dimensions": {
+            "d1_hs_and_specs": {
+              "name": "Mã HS & Quy Cách Hàng Hóa",
+              "weight": 30,
+              "score": 100,
+              "desc": "Trùng khớp chính xác 6 số HS (Subheading)",
+              "match_details": {
+                "buyer_hs": "0306.17",
+                "buyer_item": "Frozen Vannamei White Shrimp PD/PTO IQF",
+                "supplier_hs": "0306.17",
+                "supplier_item": "Tôm thẻ chân trắng đông lạnh tiêu chuẩn BRC",
+                "match_type": "Trùng khớp chính xác 6 số HS (Subheading)"
+              }
+            },
+            "d2_quality_certifications": {
+              "name": "Tiêu Chuẩn & Chứng Chỉ",
+              "weight": 20,
+              "score": 75.0,
+              "desc": "Đáp ứng 3/4 chứng chỉ yêu cầu",
+              "matched_certs": [
+                "brc food",
+                "haccp fda",
+                "bap 4-star"
+              ],
+              "missing_certs": [
+                "asc (aquaculture stewardship council)"
+              ]
+            },
+            "d3_capacity_and_moq": {
+              "name": "Năng Lực & MOQ",
+              "weight": 15,
+              "score": 70,
+              "desc": "Quy mô Buyer lớn, NCC cần hợp tác cùng các đơn vị vệ tinh để gom đủ sản lượng"
+            },
+            "d4_payment_terms": {
+              "name": "Phương Thức Thanh Toán",
+              "weight": 15,
+              "score": 100,
+              "desc": "Phương thức thanh toán đồng thuận cao: , g, h, a, c, t, /, i, s, 0, l",
+              "matched_methods": [
+                "",
+                "g",
+                "h",
+                "a",
+                "c",
+                "t",
+                "/",
+                "i",
+                "s",
+                "0",
+                "l"
+              ]
+            },
+            "d5_incoterms_logistics": {
+              "name": "Incoterms & Vận Tải",
+              "weight": 10,
+              "score": 65,
+              "desc": "Cần chuyên viên Logistics của Khối XNK tư vấn lộ trình vận tải tối ưu",
+              "matched_incoterms": [
+                "",
+                "w",
+                "b",
+                "s",
+                "m",
+                "ặ",
+                "t",
+                "n",
+                "i",
+                "h",
+                "r",
+                "k",
+                "y",
+                "f",
+                "l",
+                "a",
+                "o",
+                "c",
+                "e",
+                ","
+              ]
+            },
+            "d6_compliance_and_risk": {
+              "name": "Tín Nhiệm & Pháp Lý",
+              "weight": 10,
+              "score": 90.5,
+              "desc": "Hồ sơ pháp lý, lịch sử thông quan và xếp hạng tín nhiệm hai đầu an toàn tuyệt đối"
+            }
+          },
+          "action_recommendation": "Tạo Thư chào hàng RFQ đôi kết nối High Liner Foods, Inc. (Canada & USA) và CP Group Thailand.",
+          "industry_cluster": "seafood",
+          "industry_label": "🐟 Thủy Hải Sản",
+          "daily_spotlight": true
+        }
+      ],
+      "raw_top_diamond": [
+        {
+          "match_id": "MATCH-LEAD-AGRI-001-SP-002",
+          "buyer_id": "LEAD-AGRI-001",
+          "buyer_name": "Neumann Kaffee Gruppe (NKG)",
+          "buyer_country": "Germany",
+          "buyer_country_code": "DE",
+          "buyer_tier": "A+",
+          "supplier_id": "SP-002",
+          "supplier_name": "Công Ty TNHH Xuất Nhập Khẩu Nông Sản Đắk Lắk",
+          "supplier_short_name": "Daklak Agri Products Ltd",
+          "supplier_country": "Việt Nam",
+          "supplier_country_code": "VN",
+          "supplier_type": "🏭 Nhà Sản Xuất & Chế Biến Nông Sản",
+          "matched_commodity": "Robusta FAQ Screen 18 & Screen 16 Clean Wet Polished",
+          "matched_hs": "0901.11",
+          "deal_value_usd": 5000000.0,
+          "total_score": 91.5,
+          "tier": "DIAMOND",
+          "tier_vi": "Khớp Kim Cương (Xác Suất Chốt Rất Cao)",
+          "badge_color": "emerald",
+          "is_disqualified": false,
+          "disqualify_reason": "",
+          "trade_tags": {
+            "buyer_tags": [
+              "#CE_Europe",
+              "#HS_0901",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_CIF_Hamburg",
+              "#Inco_FOB",
+              "#Inco_FOB_CatLai",
+              "#LC_AtSight",
+              "#Moist_Max12.5%",
+              "#REACH_EU",
+              "#Rainforest_Alliance"
+            ],
+            "supplier_tags": [
+              "#CAD_Payment",
+              "#CE_Europe",
+              "#Clean_FAQ",
+              "#HACCP",
+              "#HS_0901",
+              "#HS_0904",
+              "#ISO22000",
+              "#ISO9001",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#Inco_FOB_CatLai",
+              "#LC_AtSight",
+              "#Moist_Max12.5%",
+              "#Rainforest_Alliance",
+              "#Screen_S16",
+              "#Screen_S18",
+              "#TT_Deposit_30_70"
+            ],
+            "matched_tags": [
+              "#CE_Europe",
+              "#HS_0901",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#Inco_FOB_CatLai",
+              "#LC_AtSight",
+              "#Moist_Max12.5%",
+              "#Rainforest_Alliance"
+            ],
+            "missing_tags": [
+              "#Inco_CIF_Hamburg",
+              "#REACH_EU"
+            ],
+            "tag_match_rate": 81.8
+          },
+          "matched_tags": [
+            "#CE_Europe",
+            "#HS_0901",
+            "#ISO22000",
+            "#Inco_CIF",
+            "#Inco_FOB",
+            "#Inco_FOB_CatLai",
+            "#LC_AtSight",
+            "#Moist_Max12.5%",
+            "#Rainforest_Alliance"
+          ],
+          "missing_tags": [
+            "#Inco_CIF_Hamburg",
+            "#REACH_EU"
+          ],
+          "tag_match_rate": 81.8,
+          "dimensions": {
+            "d1_hs_and_specs": {
+              "name": "Mã HS & Quy Cách Hàng Hóa",
+              "weight": 30,
+              "score": 100,
+              "desc": "Trùng khớp chính xác 6 số HS (Subheading)",
+              "match_details": {
+                "buyer_hs": "0901.11",
+                "buyer_item": "Robusta FAQ Screen 18 & Screen 16 Clean Wet Polished",
+                "supplier_hs": "0901.11",
+                "supplier_item": "Cà phê Robusta nhân sống Grade 1 & 2 (Rainforest/4C)",
+                "match_type": "Trùng khớp chính xác 6 số HS (Subheading)"
+              }
+            },
+            "d2_quality_certifications": {
+              "name": "Tiêu Chuẩn & Chứng Chỉ",
+              "weight": 20,
+              "score": 100.0,
+              "desc": "Đáp ứng 3/3 chứng chỉ yêu cầu",
+              "matched_certs": [
+                "iso 22000",
+                "4c code of conduct",
+                "rainforest alliance"
+              ],
+              "missing_certs": []
+            },
+            "d3_capacity_and_moq": {
+              "name": "Năng Lực & MOQ",
+              "weight": 15,
+              "score": 70,
+              "desc": "Quy mô Buyer lớn, NCC cần hợp tác cùng các đơn vị vệ tinh để gom đủ sản lượng"
+            },
+            "d4_payment_terms": {
+              "name": "Phương Thức Thanh Toán",
+              "weight": 15,
+              "score": 100,
+              "desc": "Phương thức thanh toán đồng thuận cao: , g, h, a, d, c, t, /, i, s, 0, l",
+              "matched_methods": [
+                "",
+                "g",
+                "h",
+                "a",
+                "d",
+                "c",
+                "t",
+                "/",
+                "i",
+                "s",
+                "0",
+                "l"
+              ]
+            },
+            "d5_incoterms_logistics": {
+              "name": "Incoterms & Vận Tải",
+              "weight": 10,
+              "score": 65,
+              "desc": "Cần chuyên viên Logistics của Khối XNK tư vấn lộ trình vận tải tối ưu",
+              "matched_incoterms": [
+                "",
+                "a",
+                "h",
+                "g",
+                "o",
+                "c",
+                "r",
+                "t",
+                "b",
+                "i",
+                "ặ",
+                "f",
+                "m",
+                "u",
+                "á",
+                "l"
+              ]
+            },
+            "d6_compliance_and_risk": {
+              "name": "Tín Nhiệm & Pháp Lý",
+              "weight": 10,
+              "score": 94.5,
+              "desc": "Hồ sơ pháp lý, lịch sử thông quan và xếp hạng tín nhiệm hai đầu an toàn tuyệt đối"
+            }
+          },
+          "action_recommendation": "Tạo Thư chào hàng RFQ đôi kết nối Neumann Kaffee Gruppe (NKG) (Germany) và Daklak Agri Products Ltd."
+        },
+        {
+          "match_id": "MATCH-LEAD-CHEM-RU-001-SUP-GLB-007",
+          "buyer_id": "LEAD-CHEM-RU-001",
+          "buyer_name": "PhosAgro Trading Commercial Desk (ФосАгро)",
+          "buyer_country": "Russia",
+          "buyer_country_code": "RU",
+          "buyer_tier": "A",
+          "supplier_id": "SUP-GLB-007",
+          "supplier_name": "PJSC PhosAgro",
+          "supplier_short_name": "PhosAgro Russia",
+          "supplier_country": "Liên Bang Nga",
+          "supplier_country_code": "RU",
+          "supplier_type": "🏭 Nhà Máy Sản Xuất Trực Tiếp (Direct Manufacturer)",
+          "matched_commodity": "Phân bón NPK chuyên dùng cho khí hậu nhiệt đới",
+          "matched_hs": "3105.20",
+          "deal_value_usd": 5000000.0,
+          "total_score": 91.0,
+          "tier": "DIAMOND",
+          "tier_vi": "Khớp Kim Cương (Xác Suất Chốt Rất Cao)",
+          "badge_color": "emerald",
+          "is_disqualified": false,
+          "disqualify_reason": "",
+          "trade_tags": {
+            "buyer_tags": [
+              "#HS_2503",
+              "#HS_3105",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_CIF_StPetersburg",
+              "#Inco_FOB",
+              "#Inco_FOB_CaiMep"
+            ],
+            "supplier_tags": [
+              "#Granular",
+              "#HS_3105",
+              "#ISO22000",
+              "#ISO9001",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#LC_AtSight",
+              "#Prilled",
+              "#Urea_N46%"
+            ],
+            "matched_tags": [
+              "#HS_3105",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_FOB"
+            ],
+            "missing_tags": [
+              "#HS_2503",
+              "#Inco_CIF_StPetersburg",
+              "#Inco_FOB_CaiMep"
+            ],
+            "tag_match_rate": 57.1
+          },
+          "matched_tags": [
+            "#HS_3105",
+            "#ISO22000",
+            "#Inco_CIF",
+            "#Inco_FOB"
+          ],
+          "missing_tags": [
+            "#HS_2503",
+            "#Inco_CIF_StPetersburg",
+            "#Inco_FOB_CaiMep"
+          ],
+          "tag_match_rate": 57.1,
+          "dimensions": {
+            "d1_hs_and_specs": {
+              "name": "Mã HS & Quy Cách Hàng Hóa",
+              "weight": 30,
+              "score": 100,
+              "desc": "Trùng khớp chính xác 6 số HS (Subheading)",
+              "match_details": {
+                "buyer_hs": "3105.20",
+                "buyer_item": "Phân bón NPK chuyên dùng cho khí hậu nhiệt đới",
+                "supplier_hs": "3105.20",
+                "supplier_item": "Phân bón phức hợp NPK chất lượng cao",
+                "match_type": "Trùng khớp chính xác 6 số HS (Subheading)"
+              }
+            },
+            "d2_quality_certifications": {
+              "name": "Tiêu Chuẩn & Chứng Chỉ",
+              "weight": 20,
+              "score": 100.0,
+              "desc": "Đáp ứng 2/2 chứng chỉ yêu cầu",
+              "matched_certs": [
+                "gost r",
+                "iso 9001"
+              ],
+              "missing_certs": []
+            },
+            "d3_capacity_and_moq": {
+              "name": "Năng Lực & MOQ",
+              "weight": 15,
+              "score": 70,
+              "desc": "Quy mô Buyer lớn, NCC cần hợp tác cùng các đơn vị vệ tinh để gom đủ sản lượng"
+            },
+            "d4_payment_terms": {
+              "name": "Phương Thức Thanh Toán",
+              "weight": 15,
+              "score": 100,
+              "desc": "Phương thức thanh toán đồng thuận cao: , ằ, g, h, a, r, o, c, v, t, n, b, s, q, â, u, á, l",
+              "matched_methods": [
+                "",
+                "ằ",
+                "g",
+                "h",
+                "a",
+                "r",
+                "o",
+                "c",
+                "v",
+                "t",
+                "n",
+                "b",
+                "s",
+                "q",
+                "â",
+                "u",
+                "á",
+                "l"
+              ]
+            },
+            "d5_incoterms_logistics": {
+              "name": "Incoterms & Vận Tải",
+              "weight": 10,
+              "score": 65,
+              "desc": "Cần chuyên viên Logistics của Khối XNK tư vấn lộ trình vận tải tối ưu",
+              "matched_incoterms": [
+                "",
+                "ả",
+                ".",
+                "b",
+                "s",
+                "m",
+                "u",
+                "á",
+                "ặ",
+                "g",
+                "t",
+                "n",
+                "i",
+                "h",
+                "r",
+                "f",
+                "o",
+                "c",
+                "p",
+                "e",
+                "é"
+              ]
+            },
+            "d6_compliance_and_risk": {
+              "name": "Tín Nhiệm & Pháp Lý",
+              "weight": 10,
+              "score": 89.5,
+              "desc": "Hồ sơ pháp lý, lịch sử thông quan và xếp hạng tín nhiệm hai đầu an toàn tuyệt đối"
+            }
+          },
+          "action_recommendation": "Tạo Thư chào hàng RFQ đôi kết nối PhosAgro Trading Commercial Desk (ФосАгро) (Russia) và PhosAgro Russia."
+        },
+        {
+          "match_id": "MATCH-LEAD-CHEM-RU-001-SUP-GLB-008",
+          "buyer_id": "LEAD-CHEM-RU-001",
+          "buyer_name": "PhosAgro Trading Commercial Desk (ФосАгро)",
+          "buyer_country": "Russia",
+          "buyer_country_code": "RU",
+          "buyer_tier": "A",
+          "supplier_id": "SUP-GLB-008",
+          "supplier_name": "JSC Acron",
+          "supplier_short_name": "Acron Group",
+          "supplier_country": "Liên Bang Nga",
+          "supplier_country_code": "RU",
+          "supplier_type": "🏭 Nhà Máy Sản Xuất Trực Tiếp (Direct Manufacturer)",
+          "matched_commodity": "Phân bón NPK chuyên dùng cho khí hậu nhiệt đới",
+          "matched_hs": "3105.20",
+          "deal_value_usd": 5000000.0,
+          "total_score": 91.0,
+          "tier": "DIAMOND",
+          "tier_vi": "Khớp Kim Cương (Xác Suất Chốt Rất Cao)",
+          "badge_color": "emerald",
+          "is_disqualified": false,
+          "disqualify_reason": "",
+          "trade_tags": {
+            "buyer_tags": [
+              "#HS_2503",
+              "#HS_3105",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_CIF_StPetersburg",
+              "#Inco_FOB",
+              "#Inco_FOB_CaiMep"
+            ],
+            "supplier_tags": [
+              "#Granular",
+              "#HS_3102",
+              "#HS_3105",
+              "#ISO22000",
+              "#ISO9001",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#LC_AtSight",
+              "#Prilled",
+              "#Urea_N46%"
+            ],
+            "matched_tags": [
+              "#HS_3105",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_FOB"
+            ],
+            "missing_tags": [
+              "#HS_2503",
+              "#Inco_CIF_StPetersburg",
+              "#Inco_FOB_CaiMep"
+            ],
+            "tag_match_rate": 57.1
+          },
+          "matched_tags": [
+            "#HS_3105",
+            "#ISO22000",
+            "#Inco_CIF",
+            "#Inco_FOB"
+          ],
+          "missing_tags": [
+            "#HS_2503",
+            "#Inco_CIF_StPetersburg",
+            "#Inco_FOB_CaiMep"
+          ],
+          "tag_match_rate": 57.1,
+          "dimensions": {
+            "d1_hs_and_specs": {
+              "name": "Mã HS & Quy Cách Hàng Hóa",
+              "weight": 30,
+              "score": 100,
+              "desc": "Trùng khớp chính xác 6 số HS (Subheading)",
+              "match_details": {
+                "buyer_hs": "3105.20",
+                "buyer_item": "Phân bón NPK chuyên dùng cho khí hậu nhiệt đới",
+                "supplier_hs": "3105.20",
+                "supplier_item": "Phân NPK 16-16-16 cao cấp",
+                "match_type": "Trùng khớp chính xác 6 số HS (Subheading)"
+              }
+            },
+            "d2_quality_certifications": {
+              "name": "Tiêu Chuẩn & Chứng Chỉ",
+              "weight": 20,
+              "score": 100.0,
+              "desc": "Đáp ứng 2/2 chứng chỉ yêu cầu",
+              "matched_certs": [
+                "gost r",
+                "iso 9001"
+              ],
+              "missing_certs": []
+            },
+            "d3_capacity_and_moq": {
+              "name": "Năng Lực & MOQ",
+              "weight": 15,
+              "score": 70,
+              "desc": "Quy mô Buyer lớn, NCC cần hợp tác cùng các đơn vị vệ tinh để gom đủ sản lượng"
+            },
+            "d4_payment_terms": {
+              "name": "Phương Thức Thanh Toán",
+              "weight": 15,
+              "score": 100,
+              "desc": "Phương thức thanh toán đồng thuận cao: , ằ, g, h, a, r, o, c, t, n, b, s, y, u, á, l",
+              "matched_methods": [
+                "",
+                "ằ",
+                "g",
+                "h",
+                "a",
+                "r",
+                "o",
+                "c",
+                "t",
+                "n",
+                "b",
+                "s",
+                "y",
+                "u",
+                "á",
+                "l"
+              ]
+            },
+            "d5_incoterms_logistics": {
+              "name": "Incoterms & Vận Tải",
+              "weight": 10,
+              "score": 65,
+              "desc": "Cần chuyên viên Logistics của Khối XNK tư vấn lộ trình vận tải tối ưu",
+              "matched_incoterms": [
+                "",
+                "ả",
+                ".",
+                "b",
+                "s",
+                "m",
+                "u",
+                "á",
+                "ặ",
+                "g",
+                "t",
+                "n",
+                "i",
+                "h",
+                "r",
+                "f",
+                "o",
+                "c",
+                "p",
+                "e",
+                "é"
+              ]
+            },
+            "d6_compliance_and_risk": {
+              "name": "Tín Nhiệm & Pháp Lý",
+              "weight": 10,
+              "score": 89.5,
+              "desc": "Hồ sơ pháp lý, lịch sử thông quan và xếp hạng tín nhiệm hai đầu an toàn tuyệt đối"
+            }
+          },
+          "action_recommendation": "Tạo Thư chào hàng RFQ đôi kết nối PhosAgro Trading Commercial Desk (ФосАгро) (Russia) và Acron Group."
+        }
+      ],
+      "daily_theme": "Thứ Tư: Phân Bổ Đa Ngành & Luân Chuyển Đối Tác Toàn Cầu",
+      "rotation_seed": 2026294
+    },
+    "telegram_sent": true
+  },
+  {
+    "timestamp": "2026-10-22T06:31:01.324247+07:00",
+    "date": "22/10/2026",
+    "metrics": {
+      "total_scanned_buyers": 1000,
+      "total_scanned_suppliers": 20,
+      "total_matches_found": 300,
+      "diamond_count": 8,
+      "gold_count": 292,
+      "silver_count": 0,
+      "total_pipeline_val_usd": 633465000.0,
+      "industry_breakdown": {
+        "🌾 Nông Sản & Lương Thực": 9,
+        "🧪 Phân Bón & Hóa Chất": 210,
+        "🐟 Thủy Hải Sản": 1,
+        "🪵 Cao Su, Gỗ & Vật Liệu": 58,
+        "⚙️ Máy Móc, Thép & Công Nghiệp": 22
+      },
+      "top_diamond_deals": [
+        {
+          "match_id": "MATCH-LEAD-AGRI-RU-002-SUP-GLB-015",
+          "buyer_id": "LEAD-AGRI-RU-002",
+          "buyer_name": "X5 Retail Group (Пятёрочка, Перекрёсток)",
+          "buyer_country": "Russia",
+          "buyer_country_code": "RU",
+          "buyer_tier": "A+",
+          "supplier_id": "SUP-GLB-015",
+          "supplier_name": "Tập đoàn Lộc Trời",
+          "supplier_short_name": "Lộc Trời Group",
+          "supplier_country": "Việt Nam",
+          "supplier_country_code": "VN",
+          "supplier_type": "🌾 Hợp Tác Xã & Vùng Nguyên Liệu (Cooperative / Hub)",
+          "matched_commodity": "Gạo thơm ST25 & Gạo Jasmine đóng túi bán lẻ 1kg, 5kg",
+          "matched_hs": "1006.30",
+          "deal_value_usd": 5000000.0,
+          "total_score": 84.4,
+          "tier": "GOLD",
+          "tier_vi": "Khớp Tiềm Năng (Khả Quan)",
+          "badge_color": "amber",
+          "is_disqualified": false,
+          "disqualify_reason": "",
+          "trade_tags": {
+            "buyer_tags": [
+              "#CE_Europe",
+              "#HACCP",
+              "#HS_0801",
+              "#HS_1006",
+              "#Inco_CIF",
+              "#Inco_CIF_StPetersburg",
+              "#TT_Deposit_30_70",
+              "#Usance_LC"
+            ],
+            "supplier_tags": [
+              "#GlobalGAP",
+              "#HACCP",
+              "#HS_1006",
+              "#ISO22000",
+              "#ISO9001",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#Inco_FOB_CatLai",
+              "#LC_AtSight",
+              "#TT_Deposit_30_70"
+            ],
+            "matched_tags": [
+              "#HACCP",
+              "#HS_1006",
+              "#Inco_CIF",
+              "#TT_Deposit_30_70"
+            ],
+            "missing_tags": [
+              "#CE_Europe",
+              "#HS_0801",
+              "#Inco_CIF_StPetersburg",
+              "#Usance_LC"
+            ],
+            "tag_match_rate": 50.0
+          },
+          "matched_tags": [
+            "#HACCP",
+            "#HS_1006",
+            "#Inco_CIF",
+            "#TT_Deposit_30_70"
+          ],
+          "missing_tags": [
+            "#CE_Europe",
+            "#HS_0801",
+            "#Inco_CIF_StPetersburg",
+            "#Usance_LC"
+          ],
+          "tag_match_rate": 50.0,
+          "dimensions": {
+            "d1_hs_and_specs": {
+              "name": "Mã HS & Quy Cách Hàng Hóa",
+              "weight": 30,
+              "score": 100,
+              "desc": "Trùng khớp chính xác 6 số HS (Subheading)",
+              "match_details": {
+                "buyer_hs": "1006.30",
+                "buyer_item": "Gạo thơm ST25 & Gạo Jasmine đóng túi bán lẻ 1kg, 5kg",
+                "supplier_hs": "1006.30",
+                "supplier_item": "Gạo Jasmine, gạo thơm ST24/ST25 đạt chuẩn SRP",
+                "match_type": "Trùng khớp chính xác 6 số HS (Subheading)"
+              }
+            },
+            "d2_quality_certifications": {
+              "name": "Tiêu Chuẩn & Chứng Chỉ",
+              "weight": 20,
+              "score": 66.7,
+              "desc": "Đáp ứng 2/3 chứng chỉ yêu cầu",
+              "matched_certs": [
+                "brc / ifs",
+                "haccp"
+              ],
+              "missing_certs": [
+                "eac certificate"
+              ]
+            },
+            "d3_capacity_and_moq": {
+              "name": "Năng Lực & MOQ",
+              "weight": 15,
+              "score": 70,
+              "desc": "Quy mô Buyer lớn, NCC cần hợp tác cùng các đơn vị vệ tinh để gom đủ sản lượng"
+            },
+            "d4_payment_terms": {
+              "name": "Phương Thức Thanh Toán",
+              "weight": 15,
+              "score": 100,
+              "desc": "Phương thức thanh toán đồng thuận cao: , t, 0, c, i, l, s, /, a, h, g",
+              "matched_methods": [
+                "",
+                "t",
+                "0",
+                "c",
+                "i",
+                "l",
+                "s",
+                "/",
+                "a",
+                "h",
+                "g"
+              ]
+            },
+            "d5_incoterms_logistics": {
+              "name": "Incoterms & Vận Tải",
+              "weight": 10,
+              "score": 65,
+              "desc": "Cần chuyên viên Logistics của Khối XNK tư vấn lộ trình vận tải tối ưu",
+              "matched_incoterms": [
+                "",
+                "s",
+                "h",
+                "y",
+                "p",
+                "r",
+                "v",
+                "f",
+                "k",
+                "t",
+                ".",
+                "e",
+                "n",
+                "g",
+                "o",
+                "c",
+                "i",
+                "b",
+                "ặ",
+                "u"
+              ]
+            },
+            "d6_compliance_and_risk": {
+              "name": "Tín Nhiệm & Pháp Lý",
+              "weight": 10,
+              "score": 91.0,
+              "desc": "Hồ sơ pháp lý, lịch sử thông quan và xếp hạng tín nhiệm hai đầu an toàn tuyệt đối"
+            }
+          },
+          "action_recommendation": "Tạo Thư chào hàng RFQ đôi kết nối X5 Retail Group (Пятёрочка, Перекрёсток) (Russia) và Lộc Trời Group.",
+          "industry_cluster": "agri_food",
+          "industry_label": "🌾 Nông Sản & Lương Thực",
+          "daily_spotlight": true
+        },
+        {
+          "match_id": "MATCH-LEAD-AUTO-0850-SP-001",
+          "buyer_id": "LEAD-AUTO-0850",
+          "buyer_name": "Eastern Japan Phân Importers LLC",
+          "buyer_country": "Japan",
+          "buyer_country_code": "JP",
+          "buyer_tier": "A",
+          "supplier_id": "SP-001",
+          "supplier_name": "Công Ty Cổ Phần Phân Bón Bình Điền",
+          "supplier_short_name": "Bình Điền Fertilizer (Đầu Trâu)",
+          "supplier_country": "Việt Nam",
+          "supplier_country_code": "VN",
+          "supplier_type": "🏭 Nhà Sản Xuất Trực Tiếp Nội Địa",
+          "matched_commodity": "Phân đạm Urê hạt đục & hạt trong 46% N",
+          "matched_hs": "3102.10",
+          "deal_value_usd": 2865000.0,
+          "total_score": 84.5,
+          "tier": "GOLD",
+          "tier_vi": "Khớp Tiềm Năng (Khả Quan)",
+          "badge_color": "amber",
+          "is_disqualified": false,
+          "disqualify_reason": "",
+          "trade_tags": {
+            "buyer_tags": [
+              "#CE_Europe",
+              "#HS_3102",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#Inco_FOB_CaiMep",
+              "#Inco_FOB_CatLai",
+              "#LC_AtSight",
+              "#TT_Deposit_30_70"
+            ],
+            "supplier_tags": [
+              "#Granular",
+              "#HS_3102",
+              "#HS_3105",
+              "#ISO22000",
+              "#ISO9001",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#Inco_FOB_CatLai",
+              "#LC_AtSight",
+              "#Prilled",
+              "#Urea_N46%"
+            ],
+            "matched_tags": [
+              "#HS_3102",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#Inco_FOB_CatLai",
+              "#LC_AtSight"
+            ],
+            "missing_tags": [
+              "#CE_Europe",
+              "#Inco_FOB_CaiMep",
+              "#TT_Deposit_30_70"
+            ],
+            "tag_match_rate": 66.7
+          },
+          "matched_tags": [
+            "#HS_3102",
+            "#ISO22000",
+            "#Inco_CIF",
+            "#Inco_FOB",
+            "#Inco_FOB_CatLai",
+            "#LC_AtSight"
+          ],
+          "missing_tags": [
+            "#CE_Europe",
+            "#Inco_FOB_CaiMep",
+            "#TT_Deposit_30_70"
+          ],
+          "tag_match_rate": 66.7,
+          "dimensions": {
+            "d1_hs_and_specs": {
+              "name": "Mã HS & Quy Cách Hàng Hóa",
+              "weight": 30,
+              "score": 100,
+              "desc": "Trùng khớp chính xác 6 số HS (Subheading)",
+              "match_details": {
+                "buyer_hs": "3102.10",
+                "buyer_item": "Phân đạm Urê hạt đục & hạt trong 46% N",
+                "supplier_hs": "3102.10",
+                "supplier_item": "Urea bọc vi sinh & Phân đạm hạt đục cải tiến",
+                "match_type": "Trùng khớp chính xác 6 số HS (Subheading)"
+              }
+            },
+            "d2_quality_certifications": {
+              "name": "Tiêu Chuẩn & Chứng Chỉ",
+              "weight": 20,
+              "score": 50.0,
+              "desc": "Đáp ứng 1/2 chứng chỉ yêu cầu",
+              "matched_certs": [
+                "iso 9001"
+              ],
+              "missing_certs": [
+                "certificate of origin form e/eav/eur1"
+              ]
+            },
+            "d3_capacity_and_moq": {
+              "name": "Năng Lực & MOQ",
+              "weight": 15,
+              "score": 90,
+              "desc": "Nhu cầu mua hàng vừa vặn với công suất sản xuất của nhà máy"
+            },
+            "d4_payment_terms": {
+              "name": "Phương Thức Thanh Toán",
+              "weight": 15,
+              "score": 100,
+              "desc": "Phương thức thanh toán đồng thuận cao: , t, đ, c, i, l, s, /, a, h, g, o",
+              "matched_methods": [
+                "",
+                "t",
+                "đ",
+                "c",
+                "i",
+                "l",
+                "s",
+                "/",
+                "a",
+                "h",
+                "g",
+                "o"
+              ]
+            },
+            "d5_incoterms_logistics": {
+              "name": "Incoterms & Vận Tải",
+              "weight": 10,
+              "score": 65,
+              "desc": "Cần chuyên viên Logistics của Khối XNK tư vấn lộ trình vận tải tối ưu",
+              "matched_incoterms": [
+                "",
+                "ả",
+                "h",
+                "y",
+                "m",
+                "l",
+                "p",
+                "f",
+                "k",
+                "t",
+                "á",
+                "n",
+                "g",
+                "o",
+                "é",
+                "c",
+                "i",
+                "/",
+                "b",
+                "ặ"
+              ]
+            },
+            "d6_compliance_and_risk": {
+              "name": "Tín Nhiệm & Pháp Lý",
+              "weight": 10,
+              "score": 95.0,
+              "desc": "Hồ sơ pháp lý, lịch sử thông quan và xếp hạng tín nhiệm hai đầu an toàn tuyệt đối"
+            }
+          },
+          "action_recommendation": "Tạo Thư chào hàng RFQ đôi kết nối Eastern Japan Phân Importers LLC (Japan) và Bình Điền Fertilizer (Đầu Trâu).",
+          "industry_cluster": "fertilizer_chemical",
+          "industry_label": "🧪 Phân Bón & Hóa Chất",
+          "daily_spotlight": true
+        },
+        {
+          "match_id": "MATCH-LEAD-SEAF-001-SUP-GLB-011",
+          "buyer_id": "LEAD-SEAF-001",
+          "buyer_name": "High Liner Foods, Inc.",
+          "buyer_country": "Canada & USA",
+          "buyer_country_code": "CA",
+          "buyer_tier": "A+",
+          "supplier_id": "SUP-GLB-011",
+          "supplier_name": "Charoen Pokphand Group (CP Group)",
+          "supplier_short_name": "CP Group Thailand",
+          "supplier_country": "Thái Lan",
+          "supplier_country_code": "TH",
+          "supplier_type": "👑 Đại Lý Cấp 1 Toàn Cầu (Tier-1 Trading House)",
+          "matched_commodity": "Frozen Vannamei White Shrimp PD/PTO IQF",
+          "matched_hs": "0306.17",
+          "deal_value_usd": 5000000.0,
+          "total_score": 86.0,
+          "tier": "DIAMOND",
+          "tier_vi": "Khớp Kim Cương (Xác Suất Chốt Rất Cao)",
+          "badge_color": "emerald",
+          "is_disqualified": false,
+          "disqualify_reason": "",
+          "trade_tags": {
+            "buyer_tags": [
+              "#FDA_US",
+              "#Glazing_10-20%",
+              "#HACCP",
+              "#HS_0304",
+              "#HS_0306",
+              "#Inco_CFR",
+              "#Inco_CIF",
+              "#LC_AtSight",
+              "#Urea_N46%"
+            ],
+            "supplier_tags": [
+              "#GlobalGAP",
+              "#HACCP",
+              "#HS_0306",
+              "#HS_2309",
+              "#Halal_JAKIM",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#LC_AtSight",
+              "#TT_Deposit_30_70"
+            ],
+            "matched_tags": [
+              "#HACCP",
+              "#HS_0306",
+              "#Inco_CIF",
+              "#LC_AtSight"
+            ],
+            "missing_tags": [
+              "#FDA_US",
+              "#Glazing_10-20%",
+              "#HS_0304",
+              "#Inco_CFR",
+              "#Urea_N46%"
+            ],
+            "tag_match_rate": 44.4
+          },
+          "matched_tags": [
+            "#HACCP",
+            "#HS_0306",
+            "#Inco_CIF",
+            "#LC_AtSight"
+          ],
+          "missing_tags": [
+            "#FDA_US",
+            "#Glazing_10-20%",
+            "#HS_0304",
+            "#Inco_CFR",
+            "#Urea_N46%"
+          ],
+          "tag_match_rate": 44.4,
+          "dimensions": {
+            "d1_hs_and_specs": {
+              "name": "Mã HS & Quy Cách Hàng Hóa",
+              "weight": 30,
+              "score": 100,
+              "desc": "Trùng khớp chính xác 6 số HS (Subheading)",
+              "match_details": {
+                "buyer_hs": "0306.17",
+                "buyer_item": "Frozen Vannamei White Shrimp PD/PTO IQF",
+                "supplier_hs": "0306.17",
+                "supplier_item": "Tôm thẻ chân trắng đông lạnh tiêu chuẩn BRC",
+                "match_type": "Trùng khớp chính xác 6 số HS (Subheading)"
+              }
+            },
+            "d2_quality_certifications": {
+              "name": "Tiêu Chuẩn & Chứng Chỉ",
+              "weight": 20,
+              "score": 75.0,
+              "desc": "Đáp ứng 3/4 chứng chỉ yêu cầu",
+              "matched_certs": [
+                "haccp fda",
+                "brc food",
+                "bap 4-star"
+              ],
+              "missing_certs": [
+                "asc (aquaculture stewardship council)"
+              ]
+            },
+            "d3_capacity_and_moq": {
+              "name": "Năng Lực & MOQ",
+              "weight": 15,
+              "score": 70,
+              "desc": "Quy mô Buyer lớn, NCC cần hợp tác cùng các đơn vị vệ tinh để gom đủ sản lượng"
+            },
+            "d4_payment_terms": {
+              "name": "Phương Thức Thanh Toán",
+              "weight": 15,
+              "score": 100,
+              "desc": "Phương thức thanh toán đồng thuận cao: , t, 0, c, i, l, s, /, a, h, g",
+              "matched_methods": [
+                "",
+                "t",
+                "0",
+                "c",
+                "i",
+                "l",
+                "s",
+                "/",
+                "a",
+                "h",
+                "g"
+              ]
+            },
+            "d5_incoterms_logistics": {
+              "name": "Incoterms & Vận Tải",
+              "weight": 10,
+              "score": 65,
+              "desc": "Cần chuyên viên Logistics của Khối XNK tư vấn lộ trình vận tải tối ưu",
+              "matched_incoterms": [
+                "",
+                "s",
+                "h",
+                "y",
+                "m",
+                "l",
+                "r",
+                "f",
+                "k",
+                "t",
+                "e",
+                "n",
+                ",",
+                "w",
+                "o",
+                "c",
+                "i",
+                "b",
+                "a",
+                "ặ"
+              ]
+            },
+            "d6_compliance_and_risk": {
+              "name": "Tín Nhiệm & Pháp Lý",
+              "weight": 10,
+              "score": 90.5,
+              "desc": "Hồ sơ pháp lý, lịch sử thông quan và xếp hạng tín nhiệm hai đầu an toàn tuyệt đối"
+            }
+          },
+          "action_recommendation": "Tạo Thư chào hàng RFQ đôi kết nối High Liner Foods, Inc. (Canada & USA) và CP Group Thailand.",
+          "industry_cluster": "seafood",
+          "industry_label": "🐟 Thủy Hải Sản",
+          "daily_spotlight": true
+        },
+        {
+          "match_id": "MATCH-LEAD-AUTO-0925-SUP-GLB-016",
+          "buyer_id": "LEAD-AUTO-0925",
+          "buyer_name": "Pacific Belarus Sắt Holdings Inc",
+          "buyer_country": "Belarus",
+          "buyer_country_code": "BY",
+          "buyer_tier": "C",
+          "supplier_id": "SUP-GLB-016",
+          "supplier_name": "Công ty Cổ phần Thép Hòa Phát Dung Quất",
+          "supplier_short_name": "Hòa Phát Group",
+          "supplier_country": "Việt Nam",
+          "supplier_country_code": "VN",
+          "supplier_type": "🏭 Nhà Máy Sản Xuất Trực Tiếp (Direct Manufacturer)",
+          "matched_commodity": "Thép cuộn cán nóng HRC không hợp kim",
+          "matched_hs": "7208.39",
+          "deal_value_usd": 2615000.0,
+          "total_score": 82.5,
+          "tier": "GOLD",
+          "tier_vi": "Khớp Tiềm Năng (Khả Quan)",
+          "badge_color": "amber",
+          "is_disqualified": false,
+          "disqualify_reason": "",
+          "trade_tags": {
+            "buyer_tags": [
+              "#CE_Europe",
+              "#HS_7208",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_CIF_StPetersburg",
+              "#Inco_FOB",
+              "#Inco_FOB_CaiMep",
+              "#Inco_FOB_CatLai"
+            ],
+            "supplier_tags": [
+              "#ASTM_A500",
+              "#CE_Europe",
+              "#HS_7208",
+              "#HS_7213",
+              "#ISO22000",
+              "#ISO9001",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#LC_AtSight",
+              "#TT_Deposit_30_70",
+              "#Zinc_Z275"
+            ],
+            "matched_tags": [
+              "#CE_Europe",
+              "#HS_7208",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_FOB"
+            ],
+            "missing_tags": [
+              "#Inco_CIF_StPetersburg",
+              "#Inco_FOB_CaiMep",
+              "#Inco_FOB_CatLai"
+            ],
+            "tag_match_rate": 62.5
+          },
+          "matched_tags": [
+            "#CE_Europe",
+            "#HS_7208",
+            "#ISO22000",
+            "#Inco_CIF",
+            "#Inco_FOB"
+          ],
+          "missing_tags": [
+            "#Inco_CIF_StPetersburg",
+            "#Inco_FOB_CaiMep",
+            "#Inco_FOB_CatLai"
+          ],
+          "tag_match_rate": 62.5,
+          "dimensions": {
+            "d1_hs_and_specs": {
+              "name": "Mã HS & Quy Cách Hàng Hóa",
+              "weight": 30,
+              "score": 100,
+              "desc": "Trùng khớp chính xác 6 số HS (Subheading)",
+              "match_details": {
+                "buyer_hs": "7208.39",
+                "buyer_item": "Thép cuộn cán nóng HRC không hợp kim",
+                "supplier_hs": "7208.39",
+                "supplier_item": "Thép cuộn cán nóng HRC mác SAE1006 / SS400",
+                "match_type": "Trùng khớp chính xác 6 số HS (Subheading)"
+              }
+            },
+            "d2_quality_certifications": {
+              "name": "Tiêu Chuẩn & Chứng Chỉ",
+              "weight": 20,
+              "score": 50.0,
+              "desc": "Đáp ứng 1/2 chứng chỉ yêu cầu",
+              "matched_certs": [
+                "iso 9001"
+              ],
+              "missing_certs": [
+                "certificate of origin form e/eav/eur1"
+              ]
+            },
+            "d3_capacity_and_moq": {
+              "name": "Năng Lực & MOQ",
+              "weight": 15,
+              "score": 90,
+              "desc": "Nhu cầu mua hàng vừa vặn với công suất sản xuất của nhà máy"
+            },
+            "d4_payment_terms": {
+              "name": "Phương Thức Thanh Toán",
+              "weight": 15,
+              "score": 100,
+              "desc": "Phương thức thanh toán đồng thuận cao: , t, c, i, s, a, h, g",
+              "matched_methods": [
+                "",
+                "t",
+                "c",
+                "i",
+                "s",
+                "a",
+                "h",
+                "g"
+              ]
+            },
+            "d5_incoterms_logistics": {
+              "name": "Incoterms & Vận Tải",
+              "weight": 10,
+              "score": 65,
+              "desc": "Cần chuyên viên Logistics của Khối XNK tư vấn lộ trình vận tải tối ưu",
+              "matched_incoterms": [
+                "",
+                "ả",
+                "s",
+                "h",
+                "m",
+                "l",
+                "p",
+                "r",
+                "f",
+                "t",
+                ".",
+                "e",
+                "á",
+                "n",
+                "g",
+                "o",
+                "é",
+                "c",
+                "i",
+                "/",
+                "b",
+                "ặ",
+                "u"
+              ]
+            },
+            "d6_compliance_and_risk": {
+              "name": "Tín Nhiệm & Pháp Lý",
+              "weight": 10,
+              "score": 75.5,
+              "desc": "Hồ sơ pháp lý, lịch sử thông quan và xếp hạng tín nhiệm hai đầu an toàn tuyệt đối"
+            }
+          },
+          "action_recommendation": "Tạo Thư chào hàng RFQ đôi kết nối Pacific Belarus Sắt Holdings Inc (Belarus) và Hòa Phát Group.",
+          "industry_cluster": "machinery_industrial",
+          "industry_label": "⚙️ Máy Móc, Thép & Công Nghiệp",
+          "daily_spotlight": true
+        }
+      ],
+      "raw_top_diamond": [
+        {
+          "match_id": "MATCH-LEAD-AGRI-001-SP-002",
+          "buyer_id": "LEAD-AGRI-001",
+          "buyer_name": "Neumann Kaffee Gruppe (NKG)",
+          "buyer_country": "Germany",
+          "buyer_country_code": "DE",
+          "buyer_tier": "A+",
+          "supplier_id": "SP-002",
+          "supplier_name": "Công Ty TNHH Xuất Nhập Khẩu Nông Sản Đắk Lắk",
+          "supplier_short_name": "Daklak Agri Products Ltd",
+          "supplier_country": "Việt Nam",
+          "supplier_country_code": "VN",
+          "supplier_type": "🏭 Nhà Sản Xuất & Chế Biến Nông Sản",
+          "matched_commodity": "Robusta FAQ Screen 18 & Screen 16 Clean Wet Polished",
+          "matched_hs": "0901.11",
+          "deal_value_usd": 5000000.0,
+          "total_score": 91.5,
+          "tier": "DIAMOND",
+          "tier_vi": "Khớp Kim Cương (Xác Suất Chốt Rất Cao)",
+          "badge_color": "emerald",
+          "is_disqualified": false,
+          "disqualify_reason": "",
+          "trade_tags": {
+            "buyer_tags": [
+              "#CE_Europe",
+              "#HS_0901",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_CIF_Hamburg",
+              "#Inco_FOB",
+              "#Inco_FOB_CatLai",
+              "#LC_AtSight",
+              "#Moist_Max12.5%",
+              "#REACH_EU",
+              "#Rainforest_Alliance"
+            ],
+            "supplier_tags": [
+              "#CAD_Payment",
+              "#CE_Europe",
+              "#Clean_FAQ",
+              "#HACCP",
+              "#HS_0901",
+              "#HS_0904",
+              "#ISO22000",
+              "#ISO9001",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#Inco_FOB_CatLai",
+              "#LC_AtSight",
+              "#Moist_Max12.5%",
+              "#Rainforest_Alliance",
+              "#Screen_S16",
+              "#Screen_S18",
+              "#TT_Deposit_30_70"
+            ],
+            "matched_tags": [
+              "#CE_Europe",
+              "#HS_0901",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#Inco_FOB_CatLai",
+              "#LC_AtSight",
+              "#Moist_Max12.5%",
+              "#Rainforest_Alliance"
+            ],
+            "missing_tags": [
+              "#Inco_CIF_Hamburg",
+              "#REACH_EU"
+            ],
+            "tag_match_rate": 81.8
+          },
+          "matched_tags": [
+            "#CE_Europe",
+            "#HS_0901",
+            "#ISO22000",
+            "#Inco_CIF",
+            "#Inco_FOB",
+            "#Inco_FOB_CatLai",
+            "#LC_AtSight",
+            "#Moist_Max12.5%",
+            "#Rainforest_Alliance"
+          ],
+          "missing_tags": [
+            "#Inco_CIF_Hamburg",
+            "#REACH_EU"
+          ],
+          "tag_match_rate": 81.8,
+          "dimensions": {
+            "d1_hs_and_specs": {
+              "name": "Mã HS & Quy Cách Hàng Hóa",
+              "weight": 30,
+              "score": 100,
+              "desc": "Trùng khớp chính xác 6 số HS (Subheading)",
+              "match_details": {
+                "buyer_hs": "0901.11",
+                "buyer_item": "Robusta FAQ Screen 18 & Screen 16 Clean Wet Polished",
+                "supplier_hs": "0901.11",
+                "supplier_item": "Cà phê Robusta nhân sống Grade 1 & 2 (Rainforest/4C)",
+                "match_type": "Trùng khớp chính xác 6 số HS (Subheading)"
+              }
+            },
+            "d2_quality_certifications": {
+              "name": "Tiêu Chuẩn & Chứng Chỉ",
+              "weight": 20,
+              "score": 100.0,
+              "desc": "Đáp ứng 3/3 chứng chỉ yêu cầu",
+              "matched_certs": [
+                "4c code of conduct",
+                "rainforest alliance",
+                "iso 22000"
+              ],
+              "missing_certs": []
+            },
+            "d3_capacity_and_moq": {
+              "name": "Năng Lực & MOQ",
+              "weight": 15,
+              "score": 70,
+              "desc": "Quy mô Buyer lớn, NCC cần hợp tác cùng các đơn vị vệ tinh để gom đủ sản lượng"
+            },
+            "d4_payment_terms": {
+              "name": "Phương Thức Thanh Toán",
+              "weight": 15,
+              "score": 100,
+              "desc": "Phương thức thanh toán đồng thuận cao: , t, 0, c, i, l, d, s, /, a, h, g",
+              "matched_methods": [
+                "",
+                "t",
+                "0",
+                "c",
+                "i",
+                "l",
+                "d",
+                "s",
+                "/",
+                "a",
+                "h",
+                "g"
+              ]
+            },
+            "d5_incoterms_logistics": {
+              "name": "Incoterms & Vận Tải",
+              "weight": 10,
+              "score": 65,
+              "desc": "Cần chuyên viên Logistics của Khối XNK tư vấn lộ trình vận tải tối ưu",
+              "matched_incoterms": [
+                "",
+                "t",
+                "m",
+                "c",
+                "i",
+                "l",
+                "á",
+                "g",
+                "ặ",
+                "b",
+                "a",
+                "h",
+                "r",
+                "u",
+                "f",
+                "o"
+              ]
+            },
+            "d6_compliance_and_risk": {
+              "name": "Tín Nhiệm & Pháp Lý",
+              "weight": 10,
+              "score": 94.5,
+              "desc": "Hồ sơ pháp lý, lịch sử thông quan và xếp hạng tín nhiệm hai đầu an toàn tuyệt đối"
+            }
+          },
+          "action_recommendation": "Tạo Thư chào hàng RFQ đôi kết nối Neumann Kaffee Gruppe (NKG) (Germany) và Daklak Agri Products Ltd."
+        },
+        {
+          "match_id": "MATCH-LEAD-CHEM-RU-001-SUP-GLB-007",
+          "buyer_id": "LEAD-CHEM-RU-001",
+          "buyer_name": "PhosAgro Trading Commercial Desk (ФосАгро)",
+          "buyer_country": "Russia",
+          "buyer_country_code": "RU",
+          "buyer_tier": "A",
+          "supplier_id": "SUP-GLB-007",
+          "supplier_name": "PJSC PhosAgro",
+          "supplier_short_name": "PhosAgro Russia",
+          "supplier_country": "Liên Bang Nga",
+          "supplier_country_code": "RU",
+          "supplier_type": "🏭 Nhà Máy Sản Xuất Trực Tiếp (Direct Manufacturer)",
+          "matched_commodity": "Phân bón NPK chuyên dùng cho khí hậu nhiệt đới",
+          "matched_hs": "3105.20",
+          "deal_value_usd": 5000000.0,
+          "total_score": 91.0,
+          "tier": "DIAMOND",
+          "tier_vi": "Khớp Kim Cương (Xác Suất Chốt Rất Cao)",
+          "badge_color": "emerald",
+          "is_disqualified": false,
+          "disqualify_reason": "",
+          "trade_tags": {
+            "buyer_tags": [
+              "#HS_2503",
+              "#HS_3105",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_CIF_StPetersburg",
+              "#Inco_FOB",
+              "#Inco_FOB_CaiMep"
+            ],
+            "supplier_tags": [
+              "#Granular",
+              "#HS_3105",
+              "#ISO22000",
+              "#ISO9001",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#LC_AtSight",
+              "#Prilled",
+              "#Urea_N46%"
+            ],
+            "matched_tags": [
+              "#HS_3105",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_FOB"
+            ],
+            "missing_tags": [
+              "#HS_2503",
+              "#Inco_CIF_StPetersburg",
+              "#Inco_FOB_CaiMep"
+            ],
+            "tag_match_rate": 57.1
+          },
+          "matched_tags": [
+            "#HS_3105",
+            "#ISO22000",
+            "#Inco_CIF",
+            "#Inco_FOB"
+          ],
+          "missing_tags": [
+            "#HS_2503",
+            "#Inco_CIF_StPetersburg",
+            "#Inco_FOB_CaiMep"
+          ],
+          "tag_match_rate": 57.1,
+          "dimensions": {
+            "d1_hs_and_specs": {
+              "name": "Mã HS & Quy Cách Hàng Hóa",
+              "weight": 30,
+              "score": 100,
+              "desc": "Trùng khớp chính xác 6 số HS (Subheading)",
+              "match_details": {
+                "buyer_hs": "3105.20",
+                "buyer_item": "Phân bón NPK chuyên dùng cho khí hậu nhiệt đới",
+                "supplier_hs": "3105.20",
+                "supplier_item": "Phân bón phức hợp NPK chất lượng cao",
+                "match_type": "Trùng khớp chính xác 6 số HS (Subheading)"
+              }
+            },
+            "d2_quality_certifications": {
+              "name": "Tiêu Chuẩn & Chứng Chỉ",
+              "weight": 20,
+              "score": 100.0,
+              "desc": "Đáp ứng 2/2 chứng chỉ yêu cầu",
+              "matched_certs": [
+                "iso 9001",
+                "gost r"
+              ],
+              "missing_certs": []
+            },
+            "d3_capacity_and_moq": {
+              "name": "Năng Lực & MOQ",
+              "weight": 15,
+              "score": 70,
+              "desc": "Quy mô Buyer lớn, NCC cần hợp tác cùng các đơn vị vệ tinh để gom đủ sản lượng"
+            },
+            "d4_payment_terms": {
+              "name": "Phương Thức Thanh Toán",
+              "weight": 15,
+              "score": 100,
+              "desc": "Phương thức thanh toán đồng thuận cao: , t, o, a, c, l, q, á, n, s, r, b, h, g, u, v, â, ằ",
+              "matched_methods": [
+                "",
+                "t",
+                "o",
+                "a",
+                "c",
+                "l",
+                "q",
+                "á",
+                "n",
+                "s",
+                "r",
+                "b",
+                "h",
+                "g",
+                "u",
+                "v",
+                "â",
+                "ằ"
+              ]
+            },
+            "d5_incoterms_logistics": {
+              "name": "Incoterms & Vận Tải",
+              "weight": 10,
+              "score": 65,
+              "desc": "Cần chuyên viên Logistics của Khối XNK tư vấn lộ trình vận tải tối ưu",
+              "matched_incoterms": [
+                "",
+                "ả",
+                "s",
+                "h",
+                "m",
+                "p",
+                "r",
+                "f",
+                "t",
+                ".",
+                "e",
+                "á",
+                "n",
+                "g",
+                "o",
+                "é",
+                "c",
+                "i",
+                "b",
+                "ặ",
+                "u"
+              ]
+            },
+            "d6_compliance_and_risk": {
+              "name": "Tín Nhiệm & Pháp Lý",
+              "weight": 10,
+              "score": 89.5,
+              "desc": "Hồ sơ pháp lý, lịch sử thông quan và xếp hạng tín nhiệm hai đầu an toàn tuyệt đối"
+            }
+          },
+          "action_recommendation": "Tạo Thư chào hàng RFQ đôi kết nối PhosAgro Trading Commercial Desk (ФосАгро) (Russia) và PhosAgro Russia."
+        },
+        {
+          "match_id": "MATCH-LEAD-CHEM-RU-001-SUP-GLB-008",
+          "buyer_id": "LEAD-CHEM-RU-001",
+          "buyer_name": "PhosAgro Trading Commercial Desk (ФосАгро)",
+          "buyer_country": "Russia",
+          "buyer_country_code": "RU",
+          "buyer_tier": "A",
+          "supplier_id": "SUP-GLB-008",
+          "supplier_name": "JSC Acron",
+          "supplier_short_name": "Acron Group",
+          "supplier_country": "Liên Bang Nga",
+          "supplier_country_code": "RU",
+          "supplier_type": "🏭 Nhà Máy Sản Xuất Trực Tiếp (Direct Manufacturer)",
+          "matched_commodity": "Phân bón NPK chuyên dùng cho khí hậu nhiệt đới",
+          "matched_hs": "3105.20",
+          "deal_value_usd": 5000000.0,
+          "total_score": 91.0,
+          "tier": "DIAMOND",
+          "tier_vi": "Khớp Kim Cương (Xác Suất Chốt Rất Cao)",
+          "badge_color": "emerald",
+          "is_disqualified": false,
+          "disqualify_reason": "",
+          "trade_tags": {
+            "buyer_tags": [
+              "#HS_2503",
+              "#HS_3105",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_CIF_StPetersburg",
+              "#Inco_FOB",
+              "#Inco_FOB_CaiMep"
+            ],
+            "supplier_tags": [
+              "#Granular",
+              "#HS_3102",
+              "#HS_3105",
+              "#ISO22000",
+              "#ISO9001",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#LC_AtSight",
+              "#Prilled",
+              "#Urea_N46%"
+            ],
+            "matched_tags": [
+              "#HS_3105",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_FOB"
+            ],
+            "missing_tags": [
+              "#HS_2503",
+              "#Inco_CIF_StPetersburg",
+              "#Inco_FOB_CaiMep"
+            ],
+            "tag_match_rate": 57.1
+          },
+          "matched_tags": [
+            "#HS_3105",
+            "#ISO22000",
+            "#Inco_CIF",
+            "#Inco_FOB"
+          ],
+          "missing_tags": [
+            "#HS_2503",
+            "#Inco_CIF_StPetersburg",
+            "#Inco_FOB_CaiMep"
+          ],
+          "tag_match_rate": 57.1,
+          "dimensions": {
+            "d1_hs_and_specs": {
+              "name": "Mã HS & Quy Cách Hàng Hóa",
+              "weight": 30,
+              "score": 100,
+              "desc": "Trùng khớp chính xác 6 số HS (Subheading)",
+              "match_details": {
+                "buyer_hs": "3105.20",
+                "buyer_item": "Phân bón NPK chuyên dùng cho khí hậu nhiệt đới",
+                "supplier_hs": "3105.20",
+                "supplier_item": "Phân NPK 16-16-16 cao cấp",
+                "match_type": "Trùng khớp chính xác 6 số HS (Subheading)"
+              }
+            },
+            "d2_quality_certifications": {
+              "name": "Tiêu Chuẩn & Chứng Chỉ",
+              "weight": 20,
+              "score": 100.0,
+              "desc": "Đáp ứng 2/2 chứng chỉ yêu cầu",
+              "matched_certs": [
+                "iso 9001",
+                "gost r"
+              ],
+              "missing_certs": []
+            },
+            "d3_capacity_and_moq": {
+              "name": "Năng Lực & MOQ",
+              "weight": 15,
+              "score": 70,
+              "desc": "Quy mô Buyer lớn, NCC cần hợp tác cùng các đơn vị vệ tinh để gom đủ sản lượng"
+            },
+            "d4_payment_terms": {
+              "name": "Phương Thức Thanh Toán",
+              "weight": 15,
+              "score": 100,
+              "desc": "Phương thức thanh toán đồng thuận cao: , t, o, c, l, á, n, s, r, b, h, y, u, a, g, ằ",
+              "matched_methods": [
+                "",
+                "t",
+                "o",
+                "c",
+                "l",
+                "á",
+                "n",
+                "s",
+                "r",
+                "b",
+                "h",
+                "y",
+                "u",
+                "a",
+                "g",
+                "ằ"
+              ]
+            },
+            "d5_incoterms_logistics": {
+              "name": "Incoterms & Vận Tải",
+              "weight": 10,
+              "score": 65,
+              "desc": "Cần chuyên viên Logistics của Khối XNK tư vấn lộ trình vận tải tối ưu",
+              "matched_incoterms": [
+                "",
+                "ả",
+                "s",
+                "h",
+                "m",
+                "p",
+                "r",
+                "f",
+                "t",
+                ".",
+                "e",
+                "á",
+                "n",
+                "g",
+                "o",
+                "é",
+                "c",
+                "i",
+                "b",
+                "ặ",
+                "u"
+              ]
+            },
+            "d6_compliance_and_risk": {
+              "name": "Tín Nhiệm & Pháp Lý",
+              "weight": 10,
+              "score": 89.5,
+              "desc": "Hồ sơ pháp lý, lịch sử thông quan và xếp hạng tín nhiệm hai đầu an toàn tuyệt đối"
+            }
+          },
+          "action_recommendation": "Tạo Thư chào hàng RFQ đôi kết nối PhosAgro Trading Commercial Desk (ФосАгро) (Russia) và Acron Group."
+        }
+      ],
+      "daily_theme": "Thứ Năm: Phân Bổ Đa Ngành & Luân Chuyển Đối Tác Toàn Cầu",
+      "rotation_seed": 2026295
+    },
+    "telegram_sent": true
+  },
+  {
+    "timestamp": "2026-10-23T06:31:01.890295+07:00",
+    "date": "23/10/2026",
+    "metrics": {
+      "total_scanned_buyers": 1000,
+      "total_scanned_suppliers": 20,
+      "total_matches_found": 300,
+      "diamond_count": 8,
+      "gold_count": 292,
+      "silver_count": 0,
+      "total_pipeline_val_usd": 633465000.0,
+      "industry_breakdown": {
+        "🌾 Nông Sản & Lương Thực": 9,
+        "🧪 Phân Bón & Hóa Chất": 210,
+        "🐟 Thủy Hải Sản": 1,
+        "🪵 Cao Su, Gỗ & Vật Liệu": 58,
+        "⚙️ Máy Móc, Thép & Công Nghiệp": 22
+      },
+      "top_diamond_deals": [
+        {
+          "match_id": "MATCH-LEAD-AGRI-001-SP-002",
+          "buyer_id": "LEAD-AGRI-001",
+          "buyer_name": "Neumann Kaffee Gruppe (NKG)",
+          "buyer_country": "Germany",
+          "buyer_country_code": "DE",
+          "buyer_tier": "A+",
+          "supplier_id": "SP-002",
+          "supplier_name": "Công Ty TNHH Xuất Nhập Khẩu Nông Sản Đắk Lắk",
+          "supplier_short_name": "Daklak Agri Products Ltd",
+          "supplier_country": "Việt Nam",
+          "supplier_country_code": "VN",
+          "supplier_type": "🏭 Nhà Sản Xuất & Chế Biến Nông Sản",
+          "matched_commodity": "Robusta FAQ Screen 18 & Screen 16 Clean Wet Polished",
+          "matched_hs": "0901.11",
+          "deal_value_usd": 5000000.0,
+          "total_score": 91.5,
+          "tier": "DIAMOND",
+          "tier_vi": "Khớp Kim Cương (Xác Suất Chốt Rất Cao)",
+          "badge_color": "emerald",
+          "is_disqualified": false,
+          "disqualify_reason": "",
+          "trade_tags": {
+            "buyer_tags": [
+              "#CE_Europe",
+              "#HS_0901",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_CIF_Hamburg",
+              "#Inco_FOB",
+              "#Inco_FOB_CatLai",
+              "#LC_AtSight",
+              "#Moist_Max12.5%",
+              "#REACH_EU",
+              "#Rainforest_Alliance"
+            ],
+            "supplier_tags": [
+              "#CAD_Payment",
+              "#CE_Europe",
+              "#Clean_FAQ",
+              "#HACCP",
+              "#HS_0901",
+              "#HS_0904",
+              "#ISO22000",
+              "#ISO9001",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#Inco_FOB_CatLai",
+              "#LC_AtSight",
+              "#Moist_Max12.5%",
+              "#Rainforest_Alliance",
+              "#Screen_S16",
+              "#Screen_S18",
+              "#TT_Deposit_30_70"
+            ],
+            "matched_tags": [
+              "#CE_Europe",
+              "#HS_0901",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#Inco_FOB_CatLai",
+              "#LC_AtSight",
+              "#Moist_Max12.5%",
+              "#Rainforest_Alliance"
+            ],
+            "missing_tags": [
+              "#Inco_CIF_Hamburg",
+              "#REACH_EU"
+            ],
+            "tag_match_rate": 81.8
+          },
+          "matched_tags": [
+            "#CE_Europe",
+            "#HS_0901",
+            "#ISO22000",
+            "#Inco_CIF",
+            "#Inco_FOB",
+            "#Inco_FOB_CatLai",
+            "#LC_AtSight",
+            "#Moist_Max12.5%",
+            "#Rainforest_Alliance"
+          ],
+          "missing_tags": [
+            "#Inco_CIF_Hamburg",
+            "#REACH_EU"
+          ],
+          "tag_match_rate": 81.8,
+          "dimensions": {
+            "d1_hs_and_specs": {
+              "name": "Mã HS & Quy Cách Hàng Hóa",
+              "weight": 30,
+              "score": 100,
+              "desc": "Trùng khớp chính xác 6 số HS (Subheading)",
+              "match_details": {
+                "buyer_hs": "0901.11",
+                "buyer_item": "Robusta FAQ Screen 18 & Screen 16 Clean Wet Polished",
+                "supplier_hs": "0901.11",
+                "supplier_item": "Cà phê Robusta nhân sống Grade 1 & 2 (Rainforest/4C)",
+                "match_type": "Trùng khớp chính xác 6 số HS (Subheading)"
+              }
+            },
+            "d2_quality_certifications": {
+              "name": "Tiêu Chuẩn & Chứng Chỉ",
+              "weight": 20,
+              "score": 100.0,
+              "desc": "Đáp ứng 3/3 chứng chỉ yêu cầu",
+              "matched_certs": [
+                "iso 22000",
+                "4c code of conduct",
+                "rainforest alliance"
+              ],
+              "missing_certs": []
+            },
+            "d3_capacity_and_moq": {
+              "name": "Năng Lực & MOQ",
+              "weight": 15,
+              "score": 70,
+              "desc": "Quy mô Buyer lớn, NCC cần hợp tác cùng các đơn vị vệ tinh để gom đủ sản lượng"
+            },
+            "d4_payment_terms": {
+              "name": "Phương Thức Thanh Toán",
+              "weight": 15,
+              "score": 100,
+              "desc": "Phương thức thanh toán đồng thuận cao: , 0, t, g, h, s, i, /, c, d, l, a",
+              "matched_methods": [
+                "",
+                "0",
+                "t",
+                "g",
+                "h",
+                "s",
+                "i",
+                "/",
+                "c",
+                "d",
+                "l",
+                "a"
+              ]
+            },
+            "d5_incoterms_logistics": {
+              "name": "Incoterms & Vận Tải",
+              "weight": 10,
+              "score": 65,
+              "desc": "Cần chuyên viên Logistics của Khối XNK tư vấn lộ trình vận tải tối ưu",
+              "matched_incoterms": [
+                "",
+                "u",
+                "t",
+                "h",
+                "m",
+                "á",
+                "g",
+                "f",
+                "i",
+                "r",
+                "c",
+                "b",
+                "ặ",
+                "l",
+                "o",
+                "a"
+              ]
+            },
+            "d6_compliance_and_risk": {
+              "name": "Tín Nhiệm & Pháp Lý",
+              "weight": 10,
+              "score": 94.5,
+              "desc": "Hồ sơ pháp lý, lịch sử thông quan và xếp hạng tín nhiệm hai đầu an toàn tuyệt đối"
+            }
+          },
+          "action_recommendation": "Tạo Thư chào hàng RFQ đôi kết nối Neumann Kaffee Gruppe (NKG) (Germany) và Daklak Agri Products Ltd.",
+          "industry_cluster": "agri_food",
+          "industry_label": "🌾 Nông Sản & Lương Thực",
+          "daily_spotlight": true
+        },
+        {
+          "match_id": "MATCH-LEAD-AUTO-0220-SP-001",
+          "buyer_id": "LEAD-AUTO-0220",
+          "buyer_name": "Eastern Australia Phân Supply Chain Group",
+          "buyer_country": "Australia",
+          "buyer_country_code": "AU",
+          "buyer_tier": "A",
+          "supplier_id": "SP-001",
+          "supplier_name": "Công Ty Cổ Phần Phân Bón Bình Điền",
+          "supplier_short_name": "Bình Điền Fertilizer (Đầu Trâu)",
+          "supplier_country": "Việt Nam",
+          "supplier_country_code": "VN",
+          "supplier_type": "🏭 Nhà Sản Xuất Trực Tiếp Nội Địa",
+          "matched_commodity": "Phân bón phức hợp khoáng NPK cao cấp",
+          "matched_hs": "3105.20",
+          "deal_value_usd": 2255000.0,
+          "total_score": 84.5,
+          "tier": "GOLD",
+          "tier_vi": "Khớp Tiềm Năng (Khả Quan)",
+          "badge_color": "amber",
+          "is_disqualified": false,
+          "disqualify_reason": "",
+          "trade_tags": {
+            "buyer_tags": [
+              "#CE_Europe",
+              "#HS_3105",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#Inco_FOB_CaiMep",
+              "#Inco_FOB_CatLai",
+              "#LC_AtSight",
+              "#TT_Deposit_30_70"
+            ],
+            "supplier_tags": [
+              "#Granular",
+              "#HS_3102",
+              "#HS_3105",
+              "#ISO22000",
+              "#ISO9001",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#Inco_FOB_CatLai",
+              "#LC_AtSight",
+              "#Prilled",
+              "#Urea_N46%"
+            ],
+            "matched_tags": [
+              "#HS_3105",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#Inco_FOB_CatLai",
+              "#LC_AtSight"
+            ],
+            "missing_tags": [
+              "#CE_Europe",
+              "#Inco_FOB_CaiMep",
+              "#TT_Deposit_30_70"
+            ],
+            "tag_match_rate": 66.7
+          },
+          "matched_tags": [
+            "#HS_3105",
+            "#ISO22000",
+            "#Inco_CIF",
+            "#Inco_FOB",
+            "#Inco_FOB_CatLai",
+            "#LC_AtSight"
+          ],
+          "missing_tags": [
+            "#CE_Europe",
+            "#Inco_FOB_CaiMep",
+            "#TT_Deposit_30_70"
+          ],
+          "tag_match_rate": 66.7,
+          "dimensions": {
+            "d1_hs_and_specs": {
+              "name": "Mã HS & Quy Cách Hàng Hóa",
+              "weight": 30,
+              "score": 100,
+              "desc": "Trùng khớp chính xác 6 số HS (Subheading)",
+              "match_details": {
+                "buyer_hs": "3105.20",
+                "buyer_item": "Phân bón phức hợp khoáng NPK cao cấp",
+                "supplier_hs": "3105.20",
+                "supplier_item": "Phân bón NPK cao cấp Đầu Trâu (16-16-8, 20-20-15)",
+                "match_type": "Trùng khớp chính xác 6 số HS (Subheading)"
+              }
+            },
+            "d2_quality_certifications": {
+              "name": "Tiêu Chuẩn & Chứng Chỉ",
+              "weight": 20,
+              "score": 50.0,
+              "desc": "Đáp ứng 1/2 chứng chỉ yêu cầu",
+              "matched_certs": [
+                "iso 9001"
+              ],
+              "missing_certs": [
+                "certificate of origin form e/eav/eur1"
+              ]
+            },
+            "d3_capacity_and_moq": {
+              "name": "Năng Lực & MOQ",
+              "weight": 15,
+              "score": 90,
+              "desc": "Nhu cầu mua hàng vừa vặn với công suất sản xuất của nhà máy"
+            },
+            "d4_payment_terms": {
+              "name": "Phương Thức Thanh Toán",
+              "weight": 15,
+              "score": 100,
+              "desc": "Phương thức thanh toán đồng thuận cao: , t, g, h, đ, s, i, /, c, l, o, a",
+              "matched_methods": [
+                "",
+                "t",
+                "g",
+                "h",
+                "đ",
+                "s",
+                "i",
+                "/",
+                "c",
+                "l",
+                "o",
+                "a"
+              ]
+            },
+            "d5_incoterms_logistics": {
+              "name": "Incoterms & Vận Tải",
+              "weight": 10,
+              "score": 65,
+              "desc": "Cần chuyên viên Logistics của Khối XNK tư vấn lộ trình vận tải tối ưu",
+              "matched_incoterms": [
+                "",
+                "/",
+                "c",
+                "l",
+                "á",
+                "f",
+                "é",
+                "m",
+                "s",
+                "ả",
+                "o",
+                "g",
+                "t",
+                "h",
+                "n",
+                "i",
+                "p",
+                "b",
+                "ặ",
+                "a"
+              ]
+            },
+            "d6_compliance_and_risk": {
+              "name": "Tín Nhiệm & Pháp Lý",
+              "weight": 10,
+              "score": 94.5,
+              "desc": "Hồ sơ pháp lý, lịch sử thông quan và xếp hạng tín nhiệm hai đầu an toàn tuyệt đối"
+            }
+          },
+          "action_recommendation": "Tạo Thư chào hàng RFQ đôi kết nối Eastern Australia Phân Supply Chain Group (Australia) và Bình Điền Fertilizer (Đầu Trâu).",
+          "industry_cluster": "fertilizer_chemical",
+          "industry_label": "🧪 Phân Bón & Hóa Chất",
+          "daily_spotlight": true
+        },
+        {
+          "match_id": "MATCH-LEAD-SEAF-001-SUP-GLB-011",
+          "buyer_id": "LEAD-SEAF-001",
+          "buyer_name": "High Liner Foods, Inc.",
+          "buyer_country": "Canada & USA",
+          "buyer_country_code": "CA",
+          "buyer_tier": "A+",
+          "supplier_id": "SUP-GLB-011",
+          "supplier_name": "Charoen Pokphand Group (CP Group)",
+          "supplier_short_name": "CP Group Thailand",
+          "supplier_country": "Thái Lan",
+          "supplier_country_code": "TH",
+          "supplier_type": "👑 Đại Lý Cấp 1 Toàn Cầu (Tier-1 Trading House)",
+          "matched_commodity": "Frozen Vannamei White Shrimp PD/PTO IQF",
+          "matched_hs": "0306.17",
+          "deal_value_usd": 5000000.0,
+          "total_score": 86.0,
+          "tier": "DIAMOND",
+          "tier_vi": "Khớp Kim Cương (Xác Suất Chốt Rất Cao)",
+          "badge_color": "emerald",
+          "is_disqualified": false,
+          "disqualify_reason": "",
+          "trade_tags": {
+            "buyer_tags": [
+              "#FDA_US",
+              "#Glazing_10-20%",
+              "#HACCP",
+              "#HS_0304",
+              "#HS_0306",
+              "#Inco_CFR",
+              "#Inco_CIF",
+              "#LC_AtSight",
+              "#Urea_N46%"
+            ],
+            "supplier_tags": [
+              "#GlobalGAP",
+              "#HACCP",
+              "#HS_0306",
+              "#HS_2309",
+              "#Halal_JAKIM",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#LC_AtSight",
+              "#TT_Deposit_30_70"
+            ],
+            "matched_tags": [
+              "#HACCP",
+              "#HS_0306",
+              "#Inco_CIF",
+              "#LC_AtSight"
+            ],
+            "missing_tags": [
+              "#FDA_US",
+              "#Glazing_10-20%",
+              "#HS_0304",
+              "#Inco_CFR",
+              "#Urea_N46%"
+            ],
+            "tag_match_rate": 44.4
+          },
+          "matched_tags": [
+            "#HACCP",
+            "#HS_0306",
+            "#Inco_CIF",
+            "#LC_AtSight"
+          ],
+          "missing_tags": [
+            "#FDA_US",
+            "#Glazing_10-20%",
+            "#HS_0304",
+            "#Inco_CFR",
+            "#Urea_N46%"
+          ],
+          "tag_match_rate": 44.4,
+          "dimensions": {
+            "d1_hs_and_specs": {
+              "name": "Mã HS & Quy Cách Hàng Hóa",
+              "weight": 30,
+              "score": 100,
+              "desc": "Trùng khớp chính xác 6 số HS (Subheading)",
+              "match_details": {
+                "buyer_hs": "0306.17",
+                "buyer_item": "Frozen Vannamei White Shrimp PD/PTO IQF",
+                "supplier_hs": "0306.17",
+                "supplier_item": "Tôm thẻ chân trắng đông lạnh tiêu chuẩn BRC",
+                "match_type": "Trùng khớp chính xác 6 số HS (Subheading)"
+              }
+            },
+            "d2_quality_certifications": {
+              "name": "Tiêu Chuẩn & Chứng Chỉ",
+              "weight": 20,
+              "score": 75.0,
+              "desc": "Đáp ứng 3/4 chứng chỉ yêu cầu",
+              "matched_certs": [
+                "bap 4-star",
+                "brc food",
+                "haccp fda"
+              ],
+              "missing_certs": [
+                "asc (aquaculture stewardship council)"
+              ]
+            },
+            "d3_capacity_and_moq": {
+              "name": "Năng Lực & MOQ",
+              "weight": 15,
+              "score": 70,
+              "desc": "Quy mô Buyer lớn, NCC cần hợp tác cùng các đơn vị vệ tinh để gom đủ sản lượng"
+            },
+            "d4_payment_terms": {
+              "name": "Phương Thức Thanh Toán",
+              "weight": 15,
+              "score": 100,
+              "desc": "Phương thức thanh toán đồng thuận cao: , 0, t, g, h, s, i, /, c, l, a",
+              "matched_methods": [
+                "",
+                "0",
+                "t",
+                "g",
+                "h",
+                "s",
+                "i",
+                "/",
+                "c",
+                "l",
+                "a"
+              ]
+            },
+            "d5_incoterms_logistics": {
+              "name": "Incoterms & Vận Tải",
+              "weight": 10,
+              "score": 65,
+              "desc": "Cần chuyên viên Logistics của Khối XNK tư vấn lộ trình vận tải tối ưu",
+              "matched_incoterms": [
+                "",
+                "c",
+                ",",
+                "l",
+                "f",
+                "e",
+                "m",
+                "s",
+                "o",
+                "t",
+                "w",
+                "h",
+                "n",
+                "i",
+                "r",
+                "b",
+                "ặ",
+                "k",
+                "a",
+                "y"
+              ]
+            },
+            "d6_compliance_and_risk": {
+              "name": "Tín Nhiệm & Pháp Lý",
+              "weight": 10,
+              "score": 90.5,
+              "desc": "Hồ sơ pháp lý, lịch sử thông quan và xếp hạng tín nhiệm hai đầu an toàn tuyệt đối"
+            }
+          },
+          "action_recommendation": "Tạo Thư chào hàng RFQ đôi kết nối High Liner Foods, Inc. (Canada & USA) và CP Group Thailand.",
+          "industry_cluster": "seafood",
+          "industry_label": "🐟 Thủy Hải Sản",
+          "daily_spotlight": true
+        },
+        {
+          "match_id": "MATCH-LEAD-AUTO-0875-SUP-GLB-016",
+          "buyer_id": "LEAD-AUTO-0875",
+          "buyer_name": "Pacific Philippines Sắt Holdings Inc",
+          "buyer_country": "Philippines",
+          "buyer_country_code": "PH",
+          "buyer_tier": "C",
+          "supplier_id": "SUP-GLB-016",
+          "supplier_name": "Công ty Cổ phần Thép Hòa Phát Dung Quất",
+          "supplier_short_name": "Hòa Phát Group",
+          "supplier_country": "Việt Nam",
+          "supplier_country_code": "VN",
+          "supplier_type": "🏭 Nhà Máy Sản Xuất Trực Tiếp (Direct Manufacturer)",
+          "matched_commodity": "Thép cuộn cán nóng HRC không hợp kim",
+          "matched_hs": "7208.39",
+          "deal_value_usd": 455000.0,
+          "total_score": 82.5,
+          "tier": "GOLD",
+          "tier_vi": "Khớp Tiềm Năng (Khả Quan)",
+          "badge_color": "amber",
+          "is_disqualified": false,
+          "disqualify_reason": "",
+          "trade_tags": {
+            "buyer_tags": [
+              "#CE_Europe",
+              "#HS_7208",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#Inco_FOB_CaiMep",
+              "#Inco_FOB_CatLai"
+            ],
+            "supplier_tags": [
+              "#ASTM_A500",
+              "#CE_Europe",
+              "#HS_7208",
+              "#HS_7213",
+              "#ISO22000",
+              "#ISO9001",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#LC_AtSight",
+              "#TT_Deposit_30_70",
+              "#Zinc_Z275"
+            ],
+            "matched_tags": [
+              "#CE_Europe",
+              "#HS_7208",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_FOB"
+            ],
+            "missing_tags": [
+              "#Inco_FOB_CaiMep",
+              "#Inco_FOB_CatLai"
+            ],
+            "tag_match_rate": 71.4
+          },
+          "matched_tags": [
+            "#CE_Europe",
+            "#HS_7208",
+            "#ISO22000",
+            "#Inco_CIF",
+            "#Inco_FOB"
+          ],
+          "missing_tags": [
+            "#Inco_FOB_CaiMep",
+            "#Inco_FOB_CatLai"
+          ],
+          "tag_match_rate": 71.4,
+          "dimensions": {
+            "d1_hs_and_specs": {
+              "name": "Mã HS & Quy Cách Hàng Hóa",
+              "weight": 30,
+              "score": 100,
+              "desc": "Trùng khớp chính xác 6 số HS (Subheading)",
+              "match_details": {
+                "buyer_hs": "7208.39",
+                "buyer_item": "Thép cuộn cán nóng HRC không hợp kim",
+                "supplier_hs": "7208.39",
+                "supplier_item": "Thép cuộn cán nóng HRC mác SAE1006 / SS400",
+                "match_type": "Trùng khớp chính xác 6 số HS (Subheading)"
+              }
+            },
+            "d2_quality_certifications": {
+              "name": "Tiêu Chuẩn & Chứng Chỉ",
+              "weight": 20,
+              "score": 50.0,
+              "desc": "Đáp ứng 1/2 chứng chỉ yêu cầu",
+              "matched_certs": [
+                "iso 9001"
+              ],
+              "missing_certs": [
+                "certificate of origin form e/eav/eur1"
+              ]
+            },
+            "d3_capacity_and_moq": {
+              "name": "Năng Lực & MOQ",
+              "weight": 15,
+              "score": 90,
+              "desc": "Nhu cầu mua hàng vừa vặn với công suất sản xuất của nhà máy"
+            },
+            "d4_payment_terms": {
+              "name": "Phương Thức Thanh Toán",
+              "weight": 15,
+              "score": 100,
+              "desc": "Phương thức thanh toán đồng thuận cao: , t, h, g, s, i, c, a",
+              "matched_methods": [
+                "",
+                "t",
+                "h",
+                "g",
+                "s",
+                "i",
+                "c",
+                "a"
+              ]
+            },
+            "d5_incoterms_logistics": {
+              "name": "Incoterms & Vận Tải",
+              "weight": 10,
+              "score": 65,
+              "desc": "Cần chuyên viên Logistics của Khối XNK tư vấn lộ trình vận tải tối ưu",
+              "matched_incoterms": [
+                "",
+                "/",
+                "c",
+                "l",
+                "á",
+                "f",
+                "e",
+                "é",
+                "m",
+                "s",
+                "ả",
+                "o",
+                "g",
+                "h",
+                "t",
+                "n",
+                "i",
+                "p",
+                "r",
+                "b",
+                "ặ",
+                "a"
+              ]
+            },
+            "d6_compliance_and_risk": {
+              "name": "Tín Nhiệm & Pháp Lý",
+              "weight": 10,
+              "score": 74.5,
+              "desc": "Hồ sơ pháp lý, lịch sử thông quan và xếp hạng tín nhiệm hai đầu an toàn tuyệt đối"
+            }
+          },
+          "action_recommendation": "Tạo Thư chào hàng RFQ đôi kết nối Pacific Philippines Sắt Holdings Inc (Philippines) và Hòa Phát Group.",
+          "industry_cluster": "machinery_industrial",
+          "industry_label": "⚙️ Máy Móc, Thép & Công Nghiệp",
+          "daily_spotlight": true
+        }
+      ],
+      "raw_top_diamond": [
+        {
+          "match_id": "MATCH-LEAD-AGRI-001-SP-002",
+          "buyer_id": "LEAD-AGRI-001",
+          "buyer_name": "Neumann Kaffee Gruppe (NKG)",
+          "buyer_country": "Germany",
+          "buyer_country_code": "DE",
+          "buyer_tier": "A+",
+          "supplier_id": "SP-002",
+          "supplier_name": "Công Ty TNHH Xuất Nhập Khẩu Nông Sản Đắk Lắk",
+          "supplier_short_name": "Daklak Agri Products Ltd",
+          "supplier_country": "Việt Nam",
+          "supplier_country_code": "VN",
+          "supplier_type": "🏭 Nhà Sản Xuất & Chế Biến Nông Sản",
+          "matched_commodity": "Robusta FAQ Screen 18 & Screen 16 Clean Wet Polished",
+          "matched_hs": "0901.11",
+          "deal_value_usd": 5000000.0,
+          "total_score": 91.5,
+          "tier": "DIAMOND",
+          "tier_vi": "Khớp Kim Cương (Xác Suất Chốt Rất Cao)",
+          "badge_color": "emerald",
+          "is_disqualified": false,
+          "disqualify_reason": "",
+          "trade_tags": {
+            "buyer_tags": [
+              "#CE_Europe",
+              "#HS_0901",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_CIF_Hamburg",
+              "#Inco_FOB",
+              "#Inco_FOB_CatLai",
+              "#LC_AtSight",
+              "#Moist_Max12.5%",
+              "#REACH_EU",
+              "#Rainforest_Alliance"
+            ],
+            "supplier_tags": [
+              "#CAD_Payment",
+              "#CE_Europe",
+              "#Clean_FAQ",
+              "#HACCP",
+              "#HS_0901",
+              "#HS_0904",
+              "#ISO22000",
+              "#ISO9001",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#Inco_FOB_CatLai",
+              "#LC_AtSight",
+              "#Moist_Max12.5%",
+              "#Rainforest_Alliance",
+              "#Screen_S16",
+              "#Screen_S18",
+              "#TT_Deposit_30_70"
+            ],
+            "matched_tags": [
+              "#CE_Europe",
+              "#HS_0901",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#Inco_FOB_CatLai",
+              "#LC_AtSight",
+              "#Moist_Max12.5%",
+              "#Rainforest_Alliance"
+            ],
+            "missing_tags": [
+              "#Inco_CIF_Hamburg",
+              "#REACH_EU"
+            ],
+            "tag_match_rate": 81.8
+          },
+          "matched_tags": [
+            "#CE_Europe",
+            "#HS_0901",
+            "#ISO22000",
+            "#Inco_CIF",
+            "#Inco_FOB",
+            "#Inco_FOB_CatLai",
+            "#LC_AtSight",
+            "#Moist_Max12.5%",
+            "#Rainforest_Alliance"
+          ],
+          "missing_tags": [
+            "#Inco_CIF_Hamburg",
+            "#REACH_EU"
+          ],
+          "tag_match_rate": 81.8,
+          "dimensions": {
+            "d1_hs_and_specs": {
+              "name": "Mã HS & Quy Cách Hàng Hóa",
+              "weight": 30,
+              "score": 100,
+              "desc": "Trùng khớp chính xác 6 số HS (Subheading)",
+              "match_details": {
+                "buyer_hs": "0901.11",
+                "buyer_item": "Robusta FAQ Screen 18 & Screen 16 Clean Wet Polished",
+                "supplier_hs": "0901.11",
+                "supplier_item": "Cà phê Robusta nhân sống Grade 1 & 2 (Rainforest/4C)",
+                "match_type": "Trùng khớp chính xác 6 số HS (Subheading)"
+              }
+            },
+            "d2_quality_certifications": {
+              "name": "Tiêu Chuẩn & Chứng Chỉ",
+              "weight": 20,
+              "score": 100.0,
+              "desc": "Đáp ứng 3/3 chứng chỉ yêu cầu",
+              "matched_certs": [
+                "iso 22000",
+                "4c code of conduct",
+                "rainforest alliance"
+              ],
+              "missing_certs": []
+            },
+            "d3_capacity_and_moq": {
+              "name": "Năng Lực & MOQ",
+              "weight": 15,
+              "score": 70,
+              "desc": "Quy mô Buyer lớn, NCC cần hợp tác cùng các đơn vị vệ tinh để gom đủ sản lượng"
+            },
+            "d4_payment_terms": {
+              "name": "Phương Thức Thanh Toán",
+              "weight": 15,
+              "score": 100,
+              "desc": "Phương thức thanh toán đồng thuận cao: , 0, t, g, h, s, i, /, c, d, l, a",
+              "matched_methods": [
+                "",
+                "0",
+                "t",
+                "g",
+                "h",
+                "s",
+                "i",
+                "/",
+                "c",
+                "d",
+                "l",
+                "a"
+              ]
+            },
+            "d5_incoterms_logistics": {
+              "name": "Incoterms & Vận Tải",
+              "weight": 10,
+              "score": 65,
+              "desc": "Cần chuyên viên Logistics của Khối XNK tư vấn lộ trình vận tải tối ưu",
+              "matched_incoterms": [
+                "",
+                "u",
+                "t",
+                "h",
+                "m",
+                "á",
+                "g",
+                "f",
+                "i",
+                "r",
+                "c",
+                "b",
+                "ặ",
+                "l",
+                "o",
+                "a"
+              ]
+            },
+            "d6_compliance_and_risk": {
+              "name": "Tín Nhiệm & Pháp Lý",
+              "weight": 10,
+              "score": 94.5,
+              "desc": "Hồ sơ pháp lý, lịch sử thông quan và xếp hạng tín nhiệm hai đầu an toàn tuyệt đối"
+            }
+          },
+          "action_recommendation": "Tạo Thư chào hàng RFQ đôi kết nối Neumann Kaffee Gruppe (NKG) (Germany) và Daklak Agri Products Ltd."
+        },
+        {
+          "match_id": "MATCH-LEAD-CHEM-RU-001-SUP-GLB-007",
+          "buyer_id": "LEAD-CHEM-RU-001",
+          "buyer_name": "PhosAgro Trading Commercial Desk (ФосАгро)",
+          "buyer_country": "Russia",
+          "buyer_country_code": "RU",
+          "buyer_tier": "A",
+          "supplier_id": "SUP-GLB-007",
+          "supplier_name": "PJSC PhosAgro",
+          "supplier_short_name": "PhosAgro Russia",
+          "supplier_country": "Liên Bang Nga",
+          "supplier_country_code": "RU",
+          "supplier_type": "🏭 Nhà Máy Sản Xuất Trực Tiếp (Direct Manufacturer)",
+          "matched_commodity": "Phân bón NPK chuyên dùng cho khí hậu nhiệt đới",
+          "matched_hs": "3105.20",
+          "deal_value_usd": 5000000.0,
+          "total_score": 91.0,
+          "tier": "DIAMOND",
+          "tier_vi": "Khớp Kim Cương (Xác Suất Chốt Rất Cao)",
+          "badge_color": "emerald",
+          "is_disqualified": false,
+          "disqualify_reason": "",
+          "trade_tags": {
+            "buyer_tags": [
+              "#HS_2503",
+              "#HS_3105",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_CIF_StPetersburg",
+              "#Inco_FOB",
+              "#Inco_FOB_CaiMep"
+            ],
+            "supplier_tags": [
+              "#Granular",
+              "#HS_3105",
+              "#ISO22000",
+              "#ISO9001",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#LC_AtSight",
+              "#Prilled",
+              "#Urea_N46%"
+            ],
+            "matched_tags": [
+              "#HS_3105",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_FOB"
+            ],
+            "missing_tags": [
+              "#HS_2503",
+              "#Inco_CIF_StPetersburg",
+              "#Inco_FOB_CaiMep"
+            ],
+            "tag_match_rate": 57.1
+          },
+          "matched_tags": [
+            "#HS_3105",
+            "#ISO22000",
+            "#Inco_CIF",
+            "#Inco_FOB"
+          ],
+          "missing_tags": [
+            "#HS_2503",
+            "#Inco_CIF_StPetersburg",
+            "#Inco_FOB_CaiMep"
+          ],
+          "tag_match_rate": 57.1,
+          "dimensions": {
+            "d1_hs_and_specs": {
+              "name": "Mã HS & Quy Cách Hàng Hóa",
+              "weight": 30,
+              "score": 100,
+              "desc": "Trùng khớp chính xác 6 số HS (Subheading)",
+              "match_details": {
+                "buyer_hs": "3105.20",
+                "buyer_item": "Phân bón NPK chuyên dùng cho khí hậu nhiệt đới",
+                "supplier_hs": "3105.20",
+                "supplier_item": "Phân bón phức hợp NPK chất lượng cao",
+                "match_type": "Trùng khớp chính xác 6 số HS (Subheading)"
+              }
+            },
+            "d2_quality_certifications": {
+              "name": "Tiêu Chuẩn & Chứng Chỉ",
+              "weight": 20,
+              "score": 100.0,
+              "desc": "Đáp ứng 2/2 chứng chỉ yêu cầu",
+              "matched_certs": [
+                "iso 9001",
+                "gost r"
+              ],
+              "missing_certs": []
+            },
+            "d3_capacity_and_moq": {
+              "name": "Năng Lực & MOQ",
+              "weight": 15,
+              "score": 70,
+              "desc": "Quy mô Buyer lớn, NCC cần hợp tác cùng các đơn vị vệ tinh để gom đủ sản lượng"
+            },
+            "d4_payment_terms": {
+              "name": "Phương Thức Thanh Toán",
+              "weight": 15,
+              "score": 100,
+              "desc": "Phương thức thanh toán đồng thuận cao: , u, t, h, g, á, v, n, s, r, c, q, ằ, b, â, l, o, a",
+              "matched_methods": [
+                "",
+                "u",
+                "t",
+                "h",
+                "g",
+                "á",
+                "v",
+                "n",
+                "s",
+                "r",
+                "c",
+                "q",
+                "ằ",
+                "b",
+                "â",
+                "l",
+                "o",
+                "a"
+              ]
+            },
+            "d5_incoterms_logistics": {
+              "name": "Incoterms & Vận Tải",
+              "weight": 10,
+              "score": 65,
+              "desc": "Cần chuyên viên Logistics của Khối XNK tư vấn lộ trình vận tải tối ưu",
+              "matched_incoterms": [
+                "",
+                "c",
+                "á",
+                "f",
+                "é",
+                "e",
+                "u",
+                "m",
+                "s",
+                "ả",
+                "o",
+                "g",
+                "h",
+                "t",
+                "n",
+                ".",
+                "i",
+                "p",
+                "r",
+                "b",
+                "ặ"
+              ]
+            },
+            "d6_compliance_and_risk": {
+              "name": "Tín Nhiệm & Pháp Lý",
+              "weight": 10,
+              "score": 89.5,
+              "desc": "Hồ sơ pháp lý, lịch sử thông quan và xếp hạng tín nhiệm hai đầu an toàn tuyệt đối"
+            }
+          },
+          "action_recommendation": "Tạo Thư chào hàng RFQ đôi kết nối PhosAgro Trading Commercial Desk (ФосАгро) (Russia) và PhosAgro Russia."
+        },
+        {
+          "match_id": "MATCH-LEAD-CHEM-RU-001-SUP-GLB-008",
+          "buyer_id": "LEAD-CHEM-RU-001",
+          "buyer_name": "PhosAgro Trading Commercial Desk (ФосАгро)",
+          "buyer_country": "Russia",
+          "buyer_country_code": "RU",
+          "buyer_tier": "A",
+          "supplier_id": "SUP-GLB-008",
+          "supplier_name": "JSC Acron",
+          "supplier_short_name": "Acron Group",
+          "supplier_country": "Liên Bang Nga",
+          "supplier_country_code": "RU",
+          "supplier_type": "🏭 Nhà Máy Sản Xuất Trực Tiếp (Direct Manufacturer)",
+          "matched_commodity": "Phân bón NPK chuyên dùng cho khí hậu nhiệt đới",
+          "matched_hs": "3105.20",
+          "deal_value_usd": 5000000.0,
+          "total_score": 91.0,
+          "tier": "DIAMOND",
+          "tier_vi": "Khớp Kim Cương (Xác Suất Chốt Rất Cao)",
+          "badge_color": "emerald",
+          "is_disqualified": false,
+          "disqualify_reason": "",
+          "trade_tags": {
+            "buyer_tags": [
+              "#HS_2503",
+              "#HS_3105",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_CIF_StPetersburg",
+              "#Inco_FOB",
+              "#Inco_FOB_CaiMep"
+            ],
+            "supplier_tags": [
+              "#Granular",
+              "#HS_3102",
+              "#HS_3105",
+              "#ISO22000",
+              "#ISO9001",
+              "#Inco_CIF",
+              "#Inco_FOB",
+              "#LC_AtSight",
+              "#Prilled",
+              "#Urea_N46%"
+            ],
+            "matched_tags": [
+              "#HS_3105",
+              "#ISO22000",
+              "#Inco_CIF",
+              "#Inco_FOB"
+            ],
+            "missing_tags": [
+              "#HS_2503",
+              "#Inco_CIF_StPetersburg",
+              "#Inco_FOB_CaiMep"
+            ],
+            "tag_match_rate": 57.1
+          },
+          "matched_tags": [
+            "#HS_3105",
+            "#ISO22000",
+            "#Inco_CIF",
+            "#Inco_FOB"
+          ],
+          "missing_tags": [
+            "#HS_2503",
+            "#Inco_CIF_StPetersburg",
+            "#Inco_FOB_CaiMep"
+          ],
+          "tag_match_rate": 57.1,
+          "dimensions": {
+            "d1_hs_and_specs": {
+              "name": "Mã HS & Quy Cách Hàng Hóa",
+              "weight": 30,
+              "score": 100,
+              "desc": "Trùng khớp chính xác 6 số HS (Subheading)",
+              "match_details": {
+                "buyer_hs": "3105.20",
+                "buyer_item": "Phân bón NPK chuyên dùng cho khí hậu nhiệt đới",
+                "supplier_hs": "3105.20",
+                "supplier_item": "Phân NPK 16-16-16 cao cấp",
+                "match_type": "Trùng khớp chính xác 6 số HS (Subheading)"
+              }
+            },
+            "d2_quality_certifications": {
+              "name": "Tiêu Chuẩn & Chứng Chỉ",
+              "weight": 20,
+              "score": 100.0,
+              "desc": "Đáp ứng 2/2 chứng chỉ yêu cầu",
+              "matched_certs": [
+                "iso 9001",
+                "gost r"
+              ],
+              "missing_certs": []
+            },
+            "d3_capacity_and_moq": {
+              "name": "Năng Lực & MOQ",
+              "weight": 15,
+              "score": 70,
+              "desc": "Quy mô Buyer lớn, NCC cần hợp tác cùng các đơn vị vệ tinh để gom đủ sản lượng"
+            },
+            "d4_payment_terms": {
+              "name": "Phương Thức Thanh Toán",
+              "weight": 15,
+              "score": 100,
+              "desc": "Phương thức thanh toán đồng thuận cao: , u, t, h, g, á, n, s, r, c, ằ, b, l, o, a, y",
+              "matched_methods": [
+                "",
+                "u",
+                "t",
+                "h",
+                "g",
+                "á",
+                "n",
+                "s",
+                "r",
+                "c",
+                "ằ",
+                "b",
+                "l",
+                "o",
+                "a",
+                "y"
+              ]
+            },
+            "d5_incoterms_logistics": {
+              "name": "Incoterms & Vận Tải",
+              "weight": 10,
+              "score": 65,
+              "desc": "Cần chuyên viên Logistics của Khối XNK tư vấn lộ trình vận tải tối ưu",
+              "matched_incoterms": [
+                "",
+                "c",
+                "á",
+                "f",
+                "é",
+                "e",
+                "u",
+                "m",
+                "s",
+                "ả",
+                "o",
+                "g",
+                "h",
+                "t",
+                "n",
+                ".",
+                "i",
+                "p",
+                "r",
+                "b",
+                "ặ"
+              ]
+            },
+            "d6_compliance_and_risk": {
+              "name": "Tín Nhiệm & Pháp Lý",
+              "weight": 10,
+              "score": 89.5,
+              "desc": "Hồ sơ pháp lý, lịch sử thông quan và xếp hạng tín nhiệm hai đầu an toàn tuyệt đối"
+            }
+          },
+          "action_recommendation": "Tạo Thư chào hàng RFQ đôi kết nối PhosAgro Trading Commercial Desk (ФосАгро) (Russia) và Acron Group."
+        }
+      ],
+      "daily_theme": "Thứ Sáu: Phân Bổ Đa Ngành & Luân Chuyển Đối Tác Toàn Cầu",
+      "rotation_seed": 2026296
+    },
+    "telegram_sent": true
   }
 ]

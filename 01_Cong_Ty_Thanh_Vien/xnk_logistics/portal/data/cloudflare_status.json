@@ -1,8 +1,9 @@
 {
-  "status": "ONLINE",
-  "provider": "Cloudflare Tunnel",
-  "public_url": "https://specifics-enquiries-epson-drilling.trycloudflare.com",
-  "local_target": "http://127.0.0.1:8088",
-  "connected_at": "2026-10-16T18:47:02Z",
-  "ssl": "Cloudflare Universal SSL"
+  status: ONLINE,
+  provider: Cloudflare Tunnel (VPS 1),
+  public_url: https://roots-point-pearl-incomplete.trycloudflare.com,
+  local_target: http://127.0.0.1:8088,
+  direct_ip_url: http://103.228.74.58/,
+  connected_at: 2026-10-19T02:33:52Z,
+  ssl: Cloudflare Universal SSL
 }

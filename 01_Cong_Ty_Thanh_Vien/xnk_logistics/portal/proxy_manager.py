@@ -17,9 +17,11 @@ import sys
 import json
 import random
 import time
+import socket
 import urllib.request
 import urllib.error
 from datetime import datetime
+from concurrent.futures import ThreadPoolExecutor
 
 # Đảm bảo UTF-8 cho Windows console
 if hasattr(sys.stdout, 'reconfigure'):
@@ -198,6 +200,186 @@ def test_proxy_connectivity(proxy_url=None):
         "checked_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     }
 
+def check_single_proxy_alive(proxy_item, timeout_seconds=1.2):
+    """Kiểm tra socket TCP nhanh để xác thực proxy có phản hồi và đo độ trễ ms"""
+    host = proxy_item.get("host")
+    port = proxy_item.get("port")
+    if not host or not port:
+        return None
+    t0 = time.time()
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.settimeout(timeout_seconds)
+        s.connect((host, int(port)))
+        s.close()
+        latency_ms = int((time.time() - t0) * 1000)
+        c_code = proxy_item.get("geolocation", {}).get("country", {}).get("iso_code", "GLOBAL").upper()
+        proto = proxy_item.get("protocol", "http").lower()
+        if proto not in ["http", "https"]:
+            proto = "http"
+        return {
+            "proxy": f"{proto}://{host}:{port}",
+            "raw_ip_port": f"{host}:{port}",
+            "country": c_code,
+            "latency_ms": latency_ms,
+            "protocol": proto
+        }
+    except Exception:
+        return None
+
+def auto_harvest_and_verify_proxies(force=False, max_candidates=60, timeout_per_proxy=1.2):
+    """
+    Tự động thu hoạch và kiểm định proxy trước mỗi chu kỳ quét:
+    1. Kéo danh sách proxy tươi từ nguồn mở GitHub (monosans, TheSpeedX).
+    2. Lọc ứng viên từ các quốc gia mục tiêu: US, EU (DE, FR, NL), CN, VN, RU, JP, KR, IN, SG.
+    3. Kiểm định đa luồng (multi-threaded ping test) trong < 2.5 giây.
+    4. Cập nhật tự động vào proxy_config.json với country_routing và static pool.
+    5. Tự động fallback về DIRECT nếu không có proxy sống.
+    """
+    cfg = load_proxy_config()
+    
+    # Kiểm tra cache (nếu đã quét cách đây < 30 phút và không ép buộc thì tái sử dụng)
+    last_harvest = cfg.get("last_harvested_at")
+    if not force and last_harvest:
+        try:
+            last_dt = datetime.strptime(last_harvest, "%Y-%m-%dT%H:%M:%SZ")
+            if (datetime.now() - last_dt).total_seconds() < 1800 and cfg.get("proxies_pool"):
+                return {
+                    "ok": True,
+                    "cached": True,
+                    "mode": cfg.get("mode", "DIRECT"),
+                    "alive_count": len(cfg.get("proxies_pool", [])),
+                    "harvest_stats": cfg.get("harvest_stats", {}),
+                    "message": "Sử dụng dải proxy sống vừa được kiểm định trong vòng 30 phút qua."
+                }
+        except Exception:
+            pass
+            
+    print("🔍 [AUTO-HARVEST] Đang kéo dải proxy tươi từ GitHub và kiểm định kết nối...")
+    
+    raw_candidates = []
+    # Nguồn 1: monosans/proxy-list (có Geolocation 76 quốc gia)
+    try:
+        url = "https://raw.githubusercontent.com/monosans/proxy-list/main/proxies_pretty.json"
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=5) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            
+        target_countries = {"US", "DE", "FR", "NL", "CN", "VN", "RU", "IN", "SG", "JP", "KR", "AE", "GB"}
+        by_country = {}
+        for p in data:
+            c = p.get("geolocation", {}).get("country", {}).get("iso_code", "")
+            if c in target_countries:
+                by_country.setdefault(c, []).append(p)
+                
+        # Lấy tối đa 5 proxy mỗi quốc gia mục tiêu
+        for c, plist in by_country.items():
+            raw_candidates.extend(plist[:5])
+    except Exception as e:
+        print(f"⚠️ [AUTO-HARVEST] Không thể kéo từ monosans ({e}), thử nguồn TheSpeedX...")
+        try:
+            url_fallback = "https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/http.txt"
+            req = urllib.request.Request(url_fallback, headers={"User-Agent": "Mozilla/5.0"})
+            with urllib.request.urlopen(req, timeout=4) as resp:
+                lines = resp.read().decode("utf-8").splitlines()
+                for line in lines[:40]:
+                    if ":" in line:
+                        h, pt = line.strip().split(":")
+                        raw_candidates.append({
+                            "host": h,
+                            "port": pt,
+                            "protocol": "http",
+                            "geolocation": {"country": {"iso_code": "GLOBAL"}}
+                        })
+        except Exception as e2:
+            print(f"⚠️ [AUTO-HARVEST] Không thể kéo fallback: {e2}")
+
+    if not raw_candidates:
+        print("ℹ️ [AUTO-HARVEST] Không lấy được ứng viên proxy mới, duy trì kết nối Direct Singapore an toàn.")
+        return {
+            "ok": True,
+            "mode": "DIRECT",
+            "alive_count": 0,
+            "message": "Không có ứng viên proxy, hệ thống tự động chạy DIRECT từ Node Singapore."
+        }
+
+    # Kiểm định đa luồng siêu tốc
+    t_start = time.time()
+    alive_results = []
+    with ThreadPoolExecutor(max_workers=20) as executor:
+        for res in executor.map(lambda p: check_single_proxy_alive(p, timeout_per_proxy), raw_candidates[:max_candidates]):
+            if res:
+                alive_results.append(res)
+
+    duration = round(time.time() - t_start, 2)
+    print(f"⏱️ [AUTO-HARVEST] Kiểm định hoàn tất trong {duration}s: {len(alive_results)}/{len(raw_candidates[:max_candidates])} IP phản hồi tốt.")
+
+    if alive_results:
+        # Sắp xếp theo ping nhanh nhất
+        alive_results.sort(key=lambda x: x["latency_ms"])
+        
+        # Cập nhật Country Routing
+        country_routing = dict(cfg.get("country_routing", {}))
+        for item in alive_results:
+            c = item["country"].lower()
+            if c == "us" and not country_routing.get("us"):
+                country_routing["us"] = item["proxy"]
+            elif c in ["de", "fr", "nl", "gb"] and not country_routing.get("eu"):
+                country_routing["eu"] = item["proxy"]
+            elif c == "cn" and not country_routing.get("cn"):
+                country_routing["cn"] = item["proxy"]
+            elif c == "vn" and not country_routing.get("vn"):
+                country_routing["vn"] = item["proxy"]
+            elif c == "ru" and not country_routing.get("ru"):
+                country_routing["ru"] = item["proxy"]
+            elif c == "jp" and not country_routing.get("jp"):
+                country_routing["jp"] = item["proxy"]
+            elif c == "kr" and not country_routing.get("kr"):
+                country_routing["kr"] = item["proxy"]
+            elif c == "ae" and not country_routing.get("ae"):
+                country_routing["ae"] = item["proxy"]
+
+        pool = [item["proxy"] for item in alive_results[:20]]
+        avg_lat = int(sum(item["latency_ms"] for item in alive_results) / len(alive_results))
+        countries_cov = list(set(item["country"] for item in alive_results))
+
+        now_iso = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
+        cfg["enabled"] = True
+        cfg["mode"] = "STATIC_POOL"
+        cfg["proxies_pool"] = pool
+        cfg["country_routing"] = country_routing
+        cfg["last_harvested_at"] = now_iso
+        cfg["harvest_stats"] = {
+            "total_candidates": len(raw_candidates[:max_candidates]),
+            "alive_count": len(alive_results),
+            "countries_covered": countries_cov,
+            "avg_latency_ms": avg_lat,
+            "duration_seconds": duration,
+            "tested_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        }
+        save_proxy_config(cfg)
+
+        return {
+            "ok": True,
+            "mode": "STATIC_POOL",
+            "alive_count": len(alive_results),
+            "countries_covered": countries_cov,
+            "avg_latency_ms": avg_lat,
+            "duration_seconds": duration,
+            "message": f"Tự động kích hoạt {len(alive_results)} Proxy sống, phủ {len(countries_cov)} quốc gia (Ping TB {avg_lat}ms)."
+        }
+    else:
+        # Không có proxy sống -> Tự động chuyển DIRECT
+        cfg["enabled"] = False
+        cfg["mode"] = "DIRECT"
+        save_proxy_config(cfg)
+        return {
+            "ok": True,
+            "mode": "DIRECT",
+            "alive_count": 0,
+            "message": "Không có proxy miễn phí đạt chuẩn ping, tự động chuyển chế độ DIRECT Node Singapore an toàn."
+        }
+
 def get_public_status():
     """Lấy thông tin trạng thái công khai (ẩn mật khẩu) để hiển thị Dashboard"""
     cfg = load_proxy_config()
@@ -215,7 +397,9 @@ def get_public_status():
         "api_endpoint_configured": bool(cfg.get("api_endpoint")),
         "auth_configured": bool(safe_auth.get("username")),
         "timeout_seconds": cfg.get("timeout_seconds", 12),
-        "last_updated": cfg.get("last_updated")
+        "last_updated": cfg.get("last_updated"),
+        "last_harvested_at": cfg.get("last_harvested_at"),
+        "auto_harvest_stats": cfg.get("harvest_stats", {})
     }
 
 if __name__ == "__main__":

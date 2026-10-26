@@ -3084,6 +3084,15 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
             self._send_json(test_res)
             return
 
+        elif path == "/api/proxy/auto-harvest":
+            if not proxy_manager:
+                self._send_json({"ok": False, "error": "Proxy manager not loaded"}, 500)
+                return
+            force = params.get("force", True)
+            harvest_res = proxy_manager.auto_harvest_and_verify_proxies(force=force)
+            self._send_json({"ok": True, "result": harvest_res})
+            return
+
         elif path == "/api/customs/daily-ingest":
             if not daily_trade_ingestion_daemon:
                 self._send_json({"ok": False, "error": "Ingestion daemon not loaded"}, 500)

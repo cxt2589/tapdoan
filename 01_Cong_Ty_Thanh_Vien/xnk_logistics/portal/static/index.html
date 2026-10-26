@@ -4045,6 +4045,25 @@
             </div>
             <span class="text-[10px] font-mono text-slate-400">Hỗ trợ Rotating / Residential / Datacenter</span>
           </div>
+
+          <!-- Automated Pre-Flight Proxy Banner (Tự động kiểm định trước khi quét) -->
+          <div class="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+            <div class="flex items-center gap-2.5">
+              <span class="relative flex h-2 w-2 shrink-0">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              <div>
+                <span class="text-xs font-bold text-emerald-300 block">Tự Động Kiểm Định & Thu Hoạch Proxy Trước Khi Quét: ĐANG BẬT (Zero-Touch)</span>
+                <span class="text-[11px] text-slate-300 block font-mono mt-0.5" id="daemonProxyAutoHarvestStatus">Hệ thống sẽ tự động quét ping và chọn lọc IP sống theo quốc gia trước mỗi chu kỳ quét</span>
+              </div>
+            </div>
+            <button onclick="triggerAutoHarvestFromUI()" id="btnTriggerAutoHarvest" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 transition-all flex items-center justify-center gap-1.5 cursor-pointer shrink-0">
+              <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+              <span>Kiểm Định Tức Thì</span>
+            </button>
+          </div>
+
           <p class="text-xs text-slate-400 leading-relaxed">
             Hệ thống đang hoạt động tối ưu ở chế độ <strong>DIRECT</strong> từ Node Singapore với Stealth Headers chống nhận diện bot. Khi cần mở rộng lượng quét sang các trang hạn chế IP, chỉ cần nhập cấu hình vào bên dưới — hệ thống kích hoạt xoay vòng tức thì mà không cần khởi động lại.
           </p>
@@ -12372,13 +12391,51 @@
         const data = await res.json();
         if (data.ok && data.config) {
           const cfg = data.config;
+          const status = data.status || {};
           const modeSelect = document.getElementById('cfgProxyMode');
           if (modeSelect) modeSelect.value = cfg.mode || 'DIRECT';
           const epInput = document.getElementById('cfgProxyEndpoint');
           if (epInput) epInput.value = cfg.api_endpoint || '';
+
+          const harvestEl = document.getElementById('daemonProxyAutoHarvestStatus');
+          if (harvestEl) {
+            const hStats = status.auto_harvest_stats || {};
+            if (hStats.tested_at) {
+              const countries = (hStats.countries_covered || []).slice(0, 8).join(', ');
+              harvestEl.innerHTML = `Lần kiểm định gần nhất: <strong>${hStats.tested_at}</strong> • <strong class="text-emerald-400">${hStats.alive_count || 0} IP sống</strong> (Phủ: ${countries}) • Ping TB: <strong>${hStats.avg_latency_ms || 0}ms</strong>`;
+            } else {
+              harvestEl.innerHTML = `Chế độ tự động sẵn sàng: Sẽ tự kiểm tra và chọn lọc IP sống trước chu kỳ quét kế tiếp.`;
+            }
+          }
         }
       } catch (e) {
         console.warn('Lỗi đọc proxy config:', e);
+      }
+    }
+
+    async function triggerAutoHarvestFromUI() {
+      const btn = document.getElementById('btnTriggerAutoHarvest');
+      if (btn) btn.innerHTML = '<i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin"></i><span>Đang kiểm định dải IP...</span>';
+      try {
+        const res = await fetch('/api/proxy/auto-harvest', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({force: true})
+        });
+        const data = await res.json();
+        if (data.ok && data.result) {
+          const r = data.result;
+          showToast('Kiểm Định Hoàn Tất', r.message || 'Dải proxy đã sẵn sàng.');
+          loadProxyConfigToUI();
+          fetchCustomsIngestionStatus();
+        } else {
+          showToast('Lỗi Kiểm Định', data.error || 'Vui lòng thử lại', true);
+        }
+      } catch (e) {
+        showToast('Lỗi Kết Nối', e.message, true);
+      } finally {
+        if (btn) btn.innerHTML = '<i data-lucide="zap" class="w-3.5 h-3.5"></i><span>Kiểm Định Tức Thì</span>';
+        if (window.lucide) lucide.createIcons();
       }
     }
 

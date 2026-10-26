@@ -258,7 +258,19 @@ def run_daily_trade_ingestion(force=False, max_leads_update=80):
     print(f"\n=======================================================")
     print(f"🚀 KHỞI ĐỘNG ROBOT QUÉT DỮ LIỆU XNK & GÓI THẦU HÀNG NGÀY")
     print(f"⏰ Thời gian thực thi: {now.strftime('%H:%M:%S %d/%m/%Y')}")
-    print(f"🌐 Trạng thái mạng: {proxy_manager.load_proxy_config().get('mode', 'DIRECT')}")
+    # BƯỚC 0 (PRE-FLIGHT): TỰ ĐỘNG THU HOẠCH & KIỂM ĐỊNH PROXY TRƯỚC KHI QUÉT
+    harvest_info = {}
+    if proxy_manager:
+        print("🛡️ [PRE-FLIGHT] Tự động kiểm tra và làm mới dải Proxy sống trước khi quét...")
+        try:
+            harvest_info = proxy_manager.auto_harvest_and_verify_proxies(force=force)
+            print(f"✅ [PRE-FLIGHT READY] {harvest_info.get('message', 'Proxy sẵn sàng.')}")
+        except Exception as e:
+            print(f"⚠️ [PRE-FLIGHT WARNING] Lỗi kiểm định proxy ({e}), tự động duy trì Direct Node Singapore an toàn.")
+            harvest_info = {"ok": False, "mode": "DIRECT", "error": str(e)}
+
+    current_mode = proxy_manager.load_proxy_config().get("mode", "DIRECT") if proxy_manager else "DIRECT"
+    print(f"🌐 Trạng thái mạng tác chiến: {current_mode}")
     print(f"=======================================================\n")
 
     db = load_database()
@@ -327,6 +339,7 @@ def run_daily_trade_ingestion(force=False, max_leads_update=80):
         "new_rfq_count_24h": new_rfq_count,
         "leads_updated_count": len(updated_lead_ids),
         "network_mode": proxy_manager.load_proxy_config().get("mode", "DIRECT"),
+        "preflight_proxy_audit": harvest_info,
         "recent_sample_tenders": [
             {
                 "lead_id": sample_leads[i].get("lead_id"),

@@ -789,9 +789,13 @@
       scrollbar-width: none;
     }
 
+    html {
+      scrollbar-gutter: stable;
+    }
+
     /* Universal Modal Body Lock & Overscroll Containment */
-    body.modal-open, html.modal-open {
-      overflow: hidden !important;
+    body.modal-open {
+      overflow-y: hidden !important;
       touch-action: none !important;
     }
     .modal-scroll-container {
@@ -6734,7 +6738,6 @@
 
     function lockBodyScroll(modalId) {
       document.body.classList.add('modal-open');
-      document.documentElement.classList.add('modal-open');
       if (modalId) {
         resetModalScroll(modalId);
         requestAnimationFrame(() => resetModalScroll(modalId));
@@ -6744,12 +6747,10 @@
 
     function unlockBodyScroll() {
       setTimeout(() => {
-        const openModals = document.querySelectorAll('#companyDetailModal:not(.hidden), #supplierDetailModal:not(.hidden), #hsCatalogModal:not(.hidden), #outreachModal:not(.hidden), #dualRfqModal:not(.hidden), #matchDetailModal:not(.hidden), #companyContactsModal:not(.hidden), #counterpartyDetailModal:not(.hidden), #regulatoryRadarModal:not(.hidden), #crossExchangePricesModal:not(.hidden), #auditFormModal:not(.hidden), #blDetailModal:not(.hidden), #b2bMarketplaceModal:not(.hidden), #singleContactNoticeModal:not(.hidden)');
+        const openModals = document.querySelectorAll('#companyDetailModal:not(.hidden), #supplierDetailModal:not(.hidden), #hsCatalogModal:not(.hidden), #outreachModal:not(.hidden), #dualRfqModal:not(.hidden), #matchDetailModal:not(.hidden), #companyContactsModal:not(.hidden), #counterpartyDetailModal:not(.hidden), #regulatoryRadarModal:not(.hidden), #crossExchangePricesModal:not(.hidden), #auditFormModal:not(.hidden), #blDetailModal:not(.hidden), #b2bMarketplaceModal:not(.hidden), #singleContactNoticeModal:not(.hidden), #customsDaemonModal:not(.hidden)');
         if (openModals.length === 0) {
           document.body.classList.remove('modal-open');
-          document.documentElement.classList.remove('modal-open');
           document.body.style.overflow = '';
-          document.documentElement.style.overflow = '';
         }
       }, 50);
     }
@@ -6821,9 +6822,13 @@
         showToast('Thông Báo', 'Chưa có thông tin định danh cho doanh nghiệp này.', true);
         return;
       }
-      triggerModalSpringAnimation('companyDetailModal');
-      lockBodyScroll('companyDetailModal');
-      resetModalScroll('companyDetailModal');
+      const modal = document.getElementById('companyDetailModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        triggerModalSpringAnimation('companyDetailModal');
+        lockBodyScroll('companyDetailModal');
+        resetModalScroll('companyDetailModal');
+      }
       
       const cleanName = leadId.replace(/\s*\([^)]*\)/g, '').trim();
       let lead = (cachedLeadsData || []).find(l => 
@@ -6833,6 +6838,12 @@
         (l.company_name && l.company_name.toLowerCase().includes(cleanName.toLowerCase()))
       );
       if (!lead) {
+        if (document.getElementById('cd-company-name')) {
+          document.getElementById('cd-company-name').innerHTML = `<span>${cleanName}</span> <span class="text-xs px-2.5 py-0.5 rounded-full font-mono bg-cyan-500/20 text-cyan-300 font-semibold border border-cyan-500/30 animate-pulse">Đang nạp hồ sơ hải quan...</span>`;
+        }
+        if (document.getElementById('cd-location-sub')) {
+          document.getElementById('cd-location-sub').innerText = 'Đang truy vấn dữ liệu vận đơn & cơ sở dữ liệu đối tác thương mại...';
+        }
         try {
           const res = await fetch(`/api/leads/detail?id=${encodeURIComponent(leadId)}&name=${encodeURIComponent(cleanName)}`);
           const resData = await res.json();
@@ -6844,7 +6855,7 @@
         }
       }
       if (!lead) {
-        unlockBodyScroll();
+        closeCompanyDetailModal();
         showToast('Điều Hướng', `Đang mở hồ sơ thẩm định cho ${cleanName}...`);
         inspectBLBuyer(cleanName);
         return;
@@ -7947,10 +7958,22 @@
     let currentDetailSupplier = null;
 
     async function openSupplierDetailModal(supId) {
-      lockBodyScroll('supplierDetailModal');
-      resetModalScroll('supplierDetailModal');
+      if (!supId) return;
+      const modal = document.getElementById('supplierDetailModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        triggerModalSpringAnimation('supplierDetailModal');
+        lockBodyScroll('supplierDetailModal');
+        resetModalScroll('supplierDetailModal');
+      }
       let sup = (cachedSuppliersList || []).find(s => s.id === supId);
       if (!sup) {
+        if (document.getElementById('supd-company-name')) {
+          document.getElementById('supd-company-name').innerHTML = `<span>${supId}</span> <span class="text-xs px-2.5 py-0.5 rounded-full font-mono bg-cyan-500/20 text-cyan-300 font-semibold border border-cyan-500/30 animate-pulse">Đang nạp hồ sơ nhà cung cấp...</span>`;
+        }
+        if (document.getElementById('supd-location-sub')) {
+          document.getElementById('supd-location-sub').innerText = 'Đang truy vấn hồ sơ năng lực sản xuất và xuất khẩu...';
+        }
         try {
           const res = await fetch(`/api/suppliers/detail?id=${encodeURIComponent(supId)}`);
           const data = await res.json();
@@ -7963,7 +7986,7 @@
       }
 
       if (!sup) {
-        unlockBodyScroll();
+        closeSupplierDetailModal();
         showToast('Thông báo', 'Không tìm thấy hồ sơ nhà cung cấp này.', true);
         return;
       }
@@ -9210,8 +9233,13 @@
         showToast('Thông Báo Vận Đơn', 'Chưa có thông tin số vận đơn của đối tác này.');
         return;
       }
-      lockBodyScroll('blDetailModal');
-      resetModalScroll('blDetailModal');
+      const modal = document.getElementById('blDetailModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        triggerModalSpringAnimation('blDetailModal');
+        lockBodyScroll('blDetailModal');
+        resetModalScroll('blDetailModal');
+      }
       const scBody = document.getElementById('blDetailScrollBody');
       if (scBody) scBody.scrollTop = 0;
 
@@ -9431,9 +9459,7 @@
         }
       }
 
-      const modal = document.getElementById('blDetailModal');
       if (modal) {
-        modal.classList.remove('hidden');
         if (window.lucide) {
           try { lucide.createIcons({ root: modal }); } catch (e) {}
         }
@@ -9455,8 +9481,13 @@
 
     async function openB2BMarketplaceModal(leadId) {
       if (!leadId) return;
-      lockBodyScroll('b2bMarketplaceModal');
-      resetModalScroll('b2bMarketplaceModal');
+      const modal = document.getElementById('b2bMarketplaceModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        triggerModalSpringAnimation('b2bMarketplaceModal');
+        lockBodyScroll('b2bMarketplaceModal');
+        resetModalScroll('b2bMarketplaceModal');
+      }
       const scBody = document.getElementById('b2bMarketplaceScrollBody');
       if (scBody) scBody.scrollTop = 0;
 
@@ -9720,9 +9751,7 @@
         };
       }
 
-      const modal = document.getElementById('b2bMarketplaceModal');
       if (modal) {
-        modal.classList.remove('hidden');
         if (window.lucide) {
           try { lucide.createIcons({ root: modal }); } catch (e) {}
         }
@@ -10627,6 +10656,19 @@
     }
 
     async function openMatchDetailModal(buyerId, supplierId) {
+      const modal = document.getElementById('matchDetailModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        triggerModalSpringAnimation('matchDetailModal');
+        lockBodyScroll('matchDetailModal');
+        resetModalScroll('matchDetailModal');
+      }
+      if (document.getElementById('md-parties-title')) {
+        document.getElementById('md-parties-title').textContent = 'Đang Phân Tích Ma Trận Đối Soát AI...';
+      }
+      if (document.getElementById('md-commodity-sub')) {
+        document.getElementById('md-commodity-sub').textContent = 'Đang tính toán điểm tương thích 6 chiều...';
+      }
       try {
         const res = await fetch('/api/matches/analyze', {
           method: 'POST',
@@ -10637,10 +10679,7 @@
         if (result.ok && result.match) {
           currentDetailMatch = result.match;
           renderMatchDetailModalContent(result.match);
-          const modal = document.getElementById('matchDetailModal');
           if (modal) {
-            modal.classList.remove('hidden');
-            lockBodyScroll('matchDetailModal');
             resetModalScroll('matchDetailModal');
             requestAnimationFrame(() => resetModalScroll('matchDetailModal'));
           }
@@ -12940,7 +12979,6 @@
     document.addEventListener('DOMContentLoaded', () => {
       setTimeout(initCultSpotlights, 300);
       document.body.classList.remove('modal-open');
-      document.documentElement.classList.remove('modal-open');
       fetchCustomsIngestionStatus();
     });
   </script>

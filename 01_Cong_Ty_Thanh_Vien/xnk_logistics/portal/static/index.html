@@ -904,6 +904,13 @@
           <span class="md:hidden">Giá Sàn</span>
         </button>
 
+        <!-- Proxy & Customs Daemon Quick Button (Cổng Proxy & Quét 24h) -->
+        <button id="customsDaemonQuickBtn" onclick="openCustomsDaemonModal()" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-mono font-bold transition-all cursor-pointer bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 shadow-sm" title="Quản lý Cổng Proxy Chờ & Robot Quét Tờ Khai 24/7">
+          <i data-lucide="radio" class="w-3.5 h-3.5 text-rose-400 animate-pulse"></i>
+          <span class="hidden md:inline">Cổng Proxy & Quét 24h</span>
+          <span class="md:hidden">Proxy 24h</span>
+        </button>
+
         <!-- API Documentation Button (Tài Liệu API / Swagger) -->
         <a id="apiDocsBtn" href="/api/docs" target="_blank" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-mono font-bold transition-all cursor-pointer bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 border border-purple-500/30 shadow-sm" title="Xem Toàn Bộ Tài Liệu API & OpenAPI 3.1.0 Interactive Swagger" style="text-decoration: none;">
           <i data-lucide="code-2" class="w-3.5 h-3.5 text-purple-400"></i>
@@ -1038,6 +1045,16 @@
                   <div>
                     <span class="text-xs font-bold text-white block">Vận Đơn Hải Quan (Customs B/L Manifest)</span>
                     <span class="text-[11px] text-slate-400 block mt-0.5">Truy vết dữ liệu thông quan thực tế theo mã HS và cảng biển</span>
+                  </div>
+                </button>
+                <button onclick="openCustomsDaemonModal(); toggleAllModulesHub(false);" class="w-full p-2.5 rounded-xl bg-brand-900 hover:bg-rose-500/10 border border-rose-500/30 hover:border-rose-500/50 text-left transition-all flex items-start gap-2.5 cursor-pointer">
+                  <i data-lucide="radio" class="w-4 h-4 text-rose-400 mt-0.5 shrink-0 animate-pulse"></i>
+                  <div>
+                    <div class="flex items-center gap-1.5">
+                      <span class="text-xs font-bold text-white block">Robot Hải Quan 24/7 & Cổng Proxy</span>
+                      <span class="px-1.5 py-0.2 rounded text-[9px] font-mono font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30">CẮM-LÀ-CHẠY</span>
+                    </div>
+                    <span class="text-[11px] text-slate-400 block mt-0.5">Giám sát tờ khai 27 nước, đo ping IP, điều phối Proxy tĩnh/xoay vòng</span>
                   </div>
                 </button>
               </div>

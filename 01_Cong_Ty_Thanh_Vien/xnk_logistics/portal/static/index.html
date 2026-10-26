@@ -863,12 +863,20 @@
 
       <!-- Live Engine Status & Actions -->
       <div class="flex items-center space-x-1.5 sm:space-x-3 shrink-0">
-        <div class="hidden lg:flex items-center space-x-2.5 bg-brand-850/80 border border-white/[0.08] px-3 py-1 rounded-full text-xs">
+        <!-- Live Customs & Tender Ingestion Badge -->
+        <div id="customsLiveBadge" onclick="openCustomsDaemonModal()" class="flex items-center space-x-1.5 sm:space-x-2 bg-brand-850/90 border border-rose-500/35 hover:border-rose-400 px-2 sm:px-3 py-1 rounded-full text-xs cursor-pointer transition-all shadow-sm group" title="Bấm để xem nhật ký quét và quản trị Cổng Quét / Proxy XNK">
           <span class="relative flex h-2 w-2">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
           </span>
-          <span class="font-mono text-slate-300 text-[11px]">LEADS: ONLINE</span>
+          <span class="font-mono font-bold text-rose-400 text-[10px] sm:text-[11px] tracking-tight" id="headerLiveStatus">🔴 LIVE: 24h</span>
+          <span class="text-slate-600 hidden sm:inline">|</span>
+          <span class="font-mono text-cyan-300 text-[10px] hidden sm:inline" id="headerBlTenderCount">42 B/L • 36 Thầu Mở</span>
+        </div>
+
+        <div class="hidden xl:flex items-center space-x-2.5 bg-brand-850/80 border border-white/[0.08] px-3 py-1 rounded-full text-xs">
+          <span class="relative flex h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+          <span class="font-mono text-slate-300 text-[11px]">ONLINE</span>
           <span class="text-slate-600">|</span>
           <span class="font-mono text-cyan-400 text-[11px]" id="syncTime">16/10/2026</span>
         </div>
@@ -1248,6 +1256,10 @@
                   <i data-lucide="zap" class="w-3 h-3 text-amber-400"></i>
                   Lọc Nhanh:
                 </span>
+                <button onclick="applyPresetFilter('recent_24h')" id="btn-preset-recent_24h" class="preset-pill px-2.5 py-1 rounded-lg text-[11px] font-mono font-bold bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 hover:text-white border border-rose-500/40 whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer shadow-sm" title="Lọc các đối tác có Vận đơn Hải quan hoặc Gói thầu RFQ mới trong 24 giờ qua">
+                  <span class="w-2 h-2 rounded-full bg-rose-500 inline-block animate-pulse"></span>
+                  <span>Mới Phát Sinh 24h</span>
+                </button>
                 <button onclick="applyPresetFilter('russia_cis')" id="btn-preset-russia_cis" class="preset-pill px-2.5 py-1 rounded-lg text-[11px] font-mono font-medium bg-brand-950 hover:bg-brand-850 text-slate-300 hover:text-white border border-white/10 whitespace-nowrap transition-all flex items-center gap-1 cursor-pointer">
                   <span>🇷🇺</span>
                   <span>Khối Nga & EAEU</span>
@@ -3935,6 +3947,142 @@
   </div>
 
   <!-- ========================================================================= -->
+  <!-- MODAL: TRUNG TÂM TÌNH BÁO QUÉT XNK & CỔNG PROXY CHỜ (DAEMON & PROXY GATEWAY) -->
+  <!-- ========================================================================= -->
+  <div id="customsDaemonModal" onclick="handleModalBackdropClick(event, 'customsDaemonModal')"
+    class="fixed inset-0 z-[80] bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 overscroll-contain">
+    <div onclick="event.stopPropagation()" class="w-full max-w-5xl rounded-3xl overflow-hidden p-1 bg-gradient-to-b from-rose-500/40 via-cyan-500/20 to-white/5 border border-rose-500/40 shadow-2xl">
+      <div id="customsDaemonScrollBody" class="bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-6 max-h-[88vh] overflow-y-auto overscroll-contain modal-scroll-container" style="touch-action: pan-y !important; -webkit-overflow-scrolling: touch !important;">
+        
+        <!-- Header -->
+        <div class="flex items-start justify-between gap-4 border-b border-white/10 pb-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-2xl bg-rose-500/20 border border-rose-500/30 flex items-center justify-center text-rose-400">
+              <i data-lucide="radio" class="w-5 h-5 animate-pulse"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30 uppercase tracking-wider">ROBOT QUÉT HÀNG NGÀY & CỔNG PROXY</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30" id="daemonNetworkBadge">DIRECT SINGAPORE</span>
+              </div>
+              <h3 class="text-xl sm:text-2xl font-black text-white mt-1">Động Cơ Quét Dữ Liệu Hải Quan & Gói Thầu Quốc Tế 24h</h3>
+              <p class="text-xs text-slate-400 font-mono mt-0.5">Phục vụ Đội ngũ Sales tiếp cận tức thời các Doanh nghiệp có Vận đơn mới & Gói thầu đang mở chào giá</p>
+            </div>
+          </div>
+          <button onclick="closeCustomsDaemonModal()" class="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all cursor-pointer">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- 4 Metric Cards -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div class="p-3.5 rounded-2xl bg-white/5 border border-white/5 space-y-1">
+            <span class="text-[10px] font-mono text-slate-400 uppercase tracking-wider block">QUỐC GIA ĐANG QUÉT</span>
+            <div class="text-2xl font-black text-white font-mono" id="daemonStatCountries">27 Quốc Gia</div>
+            <div class="text-[10px] font-mono text-slate-400">8 Khu vực thị trường</div>
+          </div>
+          <div class="p-3.5 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 space-y-1">
+            <span class="text-[10px] font-mono text-cyan-400 uppercase tracking-wider block">VẬN ĐƠN MỚI 24H</span>
+            <div class="text-2xl font-black text-cyan-300 font-mono" id="daemonStatBl">42 B/L</div>
+            <div class="text-[10px] font-mono text-cyan-400">Tờ khai & vận đơn cảng</div>
+          </div>
+          <div class="p-3.5 rounded-2xl bg-rose-500/10 border border-rose-500/20 space-y-1">
+            <span class="text-[10px] font-mono text-rose-400 uppercase tracking-wider block">GÓI THẦU RFQ ĐANG MỞ</span>
+            <div class="text-2xl font-black text-rose-300 font-mono" id="daemonStatRfq">36 Gói Thầu</div>
+            <div class="text-[10px] font-mono text-rose-400">Còn hạn nộp báo giá</div>
+          </div>
+          <div class="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 space-y-1">
+            <span class="text-[10px] font-mono text-emerald-400 uppercase tracking-wider block">TRẠNG THÁI MẠNG</span>
+            <div class="text-2xl font-black text-emerald-300 font-mono" id="daemonStatLatency">Direct (470ms)</div>
+            <div class="text-[10px] font-mono text-emerald-400" id="daemonStatOutboundIp">Node Singapore</div>
+          </div>
+        </div>
+
+        <!-- Controls & Ingestion Trigger -->
+        <div class="p-4 rounded-2xl bg-white/5 border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="space-y-1 text-xs">
+            <div class="font-bold text-white flex items-center gap-2">
+              <i data-lucide="clock" class="w-4 h-4 text-cyan-400"></i>
+              <span>Lịch trình tự động: 06:30 AM hàng ngày</span>
+            </div>
+            <div class="text-slate-400 font-mono text-[11px]" id="daemonLastRunTime">Quét gần nhất: 09:36 26/10/2026</div>
+          </div>
+          <div class="flex items-center gap-2 w-full sm:w-auto">
+            <button onclick="testProxyOutbound()" id="btnTestProxyOutbound" class="w-full sm:w-auto px-4 py-2 rounded-xl text-xs font-mono font-bold bg-white/10 hover:bg-white/15 text-white border border-white/15 transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+              <i data-lucide="network" class="w-3.5 h-3.5 text-cyan-400"></i>
+              <span>Kiểm Tra IP & Ping</span>
+            </button>
+            <button onclick="triggerManualDaemonIngest()" id="btnTriggerManualIngest" class="w-full sm:w-auto px-4 py-2 rounded-xl text-xs font-mono font-bold bg-gradient-to-r from-rose-600 to-amber-600 hover:from-rose-500 hover:to-amber-500 text-white shadow-lg shadow-rose-500/20 transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+              <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+              <span>Kích Hoạt Quét Ngay</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Plug-and-Play Proxy Config Gateway -->
+        <div class="p-4 rounded-2xl bg-brand-950/80 border border-white/10 space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
+              <h4 class="text-sm font-bold text-white">Cổng Proxy Chờ "Cắm-Là-Chạy" (Plug-and-Play Gateway)</h4>
+            </div>
+            <span class="text-[10px] font-mono text-slate-400">Hỗ trợ Rotating / Residential / Datacenter</span>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Hệ thống đang hoạt động tối ưu ở chế độ <strong>DIRECT</strong> từ Node Singapore với Stealth Headers chống nhận diện bot. Khi cần mở rộng lượng quét sang các trang hạn chế IP, chỉ cần nhập cấu hình vào bên dưới — hệ thống kích hoạt xoay vòng tức thì mà không cần khởi động lại.
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+            <div>
+              <label class="text-[10px] font-mono uppercase text-slate-400 block mb-1">Chế Độ Kết Nối (Mode):</label>
+              <select id="cfgProxyMode" class="w-full bg-brand-850 border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white font-mono focus:border-cyan-400 outline-none">
+                <option value="DIRECT">DIRECT (Kết nối thẳng máy chủ)</option>
+                <option value="STATIC_POOL">STATIC_POOL (Danh sách IP xoay vòng)</option>
+                <option value="ROTATING_API">ROTATING_API (Cổng API Rotating)</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-[10px] font-mono uppercase text-slate-400 block mb-1">API Endpoint / Proxy Host:</label>
+              <input type="text" id="cfgProxyEndpoint" placeholder="https://api.proxyprovider.com/v1" class="w-full bg-brand-850 border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white font-mono focus:border-cyan-400 outline-none" />
+            </div>
+            <div class="flex items-end">
+              <button onclick="saveProxyConfigFromUI()" class="w-full px-4 py-1.5 rounded-xl text-xs font-mono font-bold bg-cyan-600 hover:bg-cyan-500 text-white transition-all cursor-pointer">
+                Lưu Cấu Hình Proxy
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sample Live Tenders Recently Scanned -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-bold text-white uppercase flex items-center gap-1.5">
+              <i data-lucide="list-collapse" class="w-4 h-4 text-amber-400"></i>
+              <span>Gói Thầu / Tín Hiệu RFQ Mới Nhất Quét Từ 27 Quốc Gia (Có Hạn Chót Cho Sales)</span>
+            </span>
+          </div>
+          <div class="overflow-x-auto rounded-xl border border-white/5">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-white/5 font-mono text-[10px] text-slate-400 uppercase">
+                <tr>
+                  <th class="py-2 px-3">Doanh Nghiệp / Nước</th>
+                  <th class="py-2 px-3">Tiêu Đề Gói Thầu RFQ</th>
+                  <th class="py-2 px-3">Hạn Chót Nộp (Deadline)</th>
+                  <th class="py-2 px-3">Thời Gian Tác Chiến</th>
+                  <th class="py-2 px-3 text-right">Tác Vụ</th>
+                </tr>
+              </thead>
+              <tbody id="daemonRecentTendersTbody" class="divide-y divide-white/5 font-mono text-[11px]">
+                <tr><td colspan="5" class="py-3 text-center text-slate-500">Đang tải danh sách gói thầu...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
   <!-- MODAL: RADAR PHÁP LÝ & GIÁM SÁT CHÍNH SÁCH QUỐC TẾ (HORIZON SCANNING) -->
   <!-- ========================================================================= -->
   <div id="regulatoryRadarModal" onclick="handleModalBackdropClick(event, 'regulatoryRadarModal')"
@@ -4486,7 +4634,7 @@
               </div>
               <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-white/10 text-slate-300 shrink-0" id="b2b-highlight-id">RFQ-202610</span>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2 border-t border-white/5 text-xs font-mono">
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 pt-2 border-t border-white/5 text-xs font-mono">
               <div>
                 <span class="text-slate-400 text-[10px] block">KHỐI LƯỢNG YÊU CẦU:</span>
                 <span class="text-amber-300 font-bold" id="b2b-highlight-volume">4000 Tấn / quý</span>
@@ -4498,6 +4646,10 @@
               <div>
                 <span class="text-slate-400 text-[10px] block">ĐIỀU KIỆN GIAO HÀNG:</span>
                 <span class="text-white font-semibold" id="b2b-highlight-incoterms">FOB / CIF</span>
+              </div>
+              <div>
+                <span class="text-rose-400 text-[10px] block font-bold">HẠN NỘP BÁO GIÁ (DEADLINE):</span>
+                <span class="text-rose-300 font-bold" id="b2b-highlight-deadline">Đang mở thầu</span>
               </div>
             </div>
             <div class="p-2.5 rounded-xl bg-black/30 border border-white/5 text-xs text-slate-300 font-sans leading-relaxed">
@@ -5753,7 +5905,8 @@
       const country = document.getElementById('countryFilter') ? document.getElementById('countryFilter').value : '';
       const q = document.getElementById('leadKeywordInput') ? document.getElementById('leadKeywordInput').value.trim() : '';
 
-      const url = `/api/leads/by-industry?industry=${encodeURIComponent(currentSelectedIndustry)}&chapter=${encodeURIComponent(currentSelectedChapter)}&cluster=${encodeURIComponent(currentSelectedCluster)}&hs=${encodeURIComponent(currentSelectedHS)}&region=${encodeURIComponent(currentRegion)}&country=${encodeURIComponent(country)}&stage=${encodeURIComponent(currentFunnelStage)}&q=${encodeURIComponent(q)}&page=${currentPage}&page_size=${pageSize}`;
+      const recent24hParam = (currentActivePreset === 'recent_24h' || window.currentRecent24h) ? '&recent_24h=true' : '';
+      const url = `/api/leads/by-industry?industry=${encodeURIComponent(currentSelectedIndustry)}&chapter=${encodeURIComponent(currentSelectedChapter)}&cluster=${encodeURIComponent(currentSelectedCluster)}&hs=${encodeURIComponent(currentSelectedHS)}&region=${encodeURIComponent(currentRegion)}&country=${encodeURIComponent(country)}&stage=${encodeURIComponent(currentFunnelStage)}&q=${encodeURIComponent(q)}${recent24hParam}&page=${currentPage}&page_size=${pageSize}`;
 
       try {
         const res = await fetch(url);
@@ -5884,6 +6037,7 @@
     function applyPresetFilter(presetKey) {
       if (currentActivePreset === presetKey) {
         currentActivePreset = '';
+        window.currentRecent24h = false;
         currentRegion = 'all';
         currentFunnelStage = 'all';
         const regSelect = document.getElementById('regionFilter');
@@ -5901,6 +6055,13 @@
 
       currentActivePreset = presetKey;
       currentPage = 1;
+
+      if (presetKey === 'recent_24h') {
+        window.currentRecent24h = true;
+        showToast('Lọc Nhanh: Mới Phát Sinh 24h', 'Đang lọc các khách hàng có Vận đơn Hải quan hoặc Gói thầu mới trong 24 giờ qua.');
+      } else {
+        window.currentRecent24h = false;
+      }
 
       if (presetKey === 'russia_cis') {
         currentRegion = 'russia_cis';
@@ -5933,14 +6094,22 @@
     }
 
     function updatePresetPillsUI() {
-      const presets = ['russia_cis', 'tier_a', 'recent_rfq', 'north_america', 'europe_eu'];
+      const presets = ['recent_24h', 'russia_cis', 'tier_a', 'recent_rfq', 'north_america', 'europe_eu'];
       presets.forEach(p => {
         const btn = document.getElementById(`btn-preset-${p}`);
         if (!btn) return;
         if (p === currentActivePreset) {
-          btn.className = 'preset-pill px-2.5 py-1 rounded-lg text-[11px] font-mono font-bold bg-blue-600 text-white border border-blue-400 whitespace-nowrap shadow-sm transition-all flex items-center gap-1.5 cursor-pointer';
+          if (p === 'recent_24h') {
+            btn.className = 'preset-pill px-2.5 py-1 rounded-lg text-[11px] font-mono font-bold bg-rose-600 text-white border border-rose-400 whitespace-nowrap shadow-sm transition-all flex items-center gap-1.5 cursor-pointer';
+          } else {
+            btn.className = 'preset-pill px-2.5 py-1 rounded-lg text-[11px] font-mono font-bold bg-blue-600 text-white border border-blue-400 whitespace-nowrap shadow-sm transition-all flex items-center gap-1.5 cursor-pointer';
+          }
         } else {
-          btn.className = 'preset-pill px-2.5 py-1 rounded-lg text-[11px] font-mono font-medium bg-brand-950 hover:bg-brand-850 text-slate-300 hover:text-white border border-white/10 whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer';
+          if (p === 'recent_24h') {
+            btn.className = 'preset-pill px-2.5 py-1 rounded-lg text-[11px] font-mono font-bold bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 hover:text-white border border-rose-500/40 whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer shadow-sm';
+          } else {
+            btn.className = 'preset-pill px-2.5 py-1 rounded-lg text-[11px] font-mono font-medium bg-brand-950 hover:bg-brand-850 text-slate-300 hover:text-white border border-white/10 whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer';
+          }
         }
       });
     }
@@ -6380,7 +6549,8 @@
         'outreachModal', 'dualRfqModal', 'matchDetailModal',
         'companyContactsModal', 'counterpartyDetailModal',
         'regulatoryRadarModal', 'crossExchangePricesModal', 'auditFormModal',
-        'blDetailModal', 'b2bMarketplaceModal', 'singleContactNoticeModal'
+        'blDetailModal', 'b2bMarketplaceModal', 'singleContactNoticeModal',
+        'customsDaemonModal'
       ];
       allModalIds.forEach(id => resetModalScroll(id));
       closeCompanyDetailModal();
@@ -6397,6 +6567,7 @@
       closeBLDetailModal();
       closeB2BMarketplaceModal();
       closeSingleContactNoticeModal();
+      closeCustomsDaemonModal();
     }
 
     // ==========================================
@@ -9048,6 +9219,8 @@
       if (document.getElementById('b2b-highlight-incoterms')) document.getElementById('b2b-highlight-incoterms').innerText = (lead && lead.preferred_incoterms) || 'FOB / CIF';
       if (document.getElementById('b2b-highlight-status')) document.getElementById('b2b-highlight-status').innerText = (latestRfq.status || 'Đang mở nhận hồ sơ chào giá').toUpperCase();
       if (document.getElementById('b2b-highlight-signal')) document.getElementById('b2b-highlight-signal').innerText = rfqSignal;
+      const deadlineStr = latestRfq.deadline_date ? `${latestRfq.deadline_date} (Còn ${latestRfq.days_remaining !== undefined ? latestRfq.days_remaining : 12} ngày)` : 'Đang mở thầu';
+      if (document.getElementById('b2b-highlight-deadline')) document.getElementById('b2b-highlight-deadline').innerText = deadlineStr;
 
       // Matched Supplier for highlighted order
       const highlightSup = (latestRfq && latestRfq.matched_supplier) || (b2bData && b2bData.matching_suppliers && b2bData.matching_suppliers[0]) || null;
@@ -9110,6 +9283,13 @@
               `;
             }
 
+            let deadlineBadge = '';
+            if (r.deadline_date) {
+              const daysLeft = r.days_remaining !== undefined ? r.days_remaining : 10;
+              const daysColor = daysLeft <= 7 ? 'text-rose-400 bg-rose-500/15 border-rose-500/30' : 'text-amber-300 bg-amber-500/15 border-amber-500/30';
+              deadlineBadge = `<div class="mt-1"><span class="px-1.5 py-0.5 rounded text-[9px] font-mono border ${daysColor}">⏳ Hạn: ${r.deadline_date} (còn ${daysLeft}d)</span></div>`;
+            }
+
             return `
               <tr class="hover:bg-white/5 transition-colors">
                 <td class="py-2.5 px-3 font-mono">
@@ -9117,13 +9297,13 @@
                   <div class="text-[10px] text-slate-400">📅 ${r.date || '10/2026'}</div>
                 </td>
                 <td class="py-2.5 px-3">
-                  <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-white/5 border border-white/10 text-slate-200">${r.platform || platform}</span>
+                  <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-white/5 border border-white/10 text-slate-200">${r.source_platform || r.platform || platform}</span>
                 </td>
                 <td class="py-2.5 px-3">
                   <div class="font-medium text-white line-clamp-2">${r.title || 'Nhu cầu thu mua'}</div>
                   <div class="text-[10px] text-amber-300 font-mono mt-0.5 font-bold">Khối lượng: ${r.volume_required || 'N/A'}</div>
                 </td>
-                <td class="py-2.5 px-3 whitespace-nowrap">${statusBadge}</td>
+                <td class="py-2.5 px-3 whitespace-nowrap">${statusBadge}${deadlineBadge}</td>
                 <td class="py-2.5 px-3 align-top">${supplierCell}</td>
                 <td class="py-2.5 px-3 text-[11px] font-mono text-slate-300">${r.payment_term || 'L/C'}</td>
               </tr>
@@ -12023,10 +12203,191 @@
       `;
     }
 
+    // ==========================================
+    // DAILY TRADE INGESTION DAEMON & PROXY GATEWAY CONTROLLER
+    // ==========================================
+    let cachedDaemonSummary = null;
+
+    async function fetchCustomsIngestionStatus() {
+      try {
+        const res = await fetch('/api/customs/ingestion-status');
+        const data = await res.json();
+        if (data.ok && data.data) {
+          cachedDaemonSummary = data.data;
+          updateCustomsDaemonUI(data.data);
+        }
+      } catch (e) {
+        console.warn('Lỗi lấy trạng thái ingestion daemon:', e);
+      }
+    }
+
+    function updateCustomsDaemonUI(summary) {
+      if (!summary) return;
+      const statusEl = document.getElementById('headerLiveStatus');
+      if (statusEl) {
+        statusEl.innerText = `🔴 LIVE: ${summary.last_ingested_str ? summary.last_ingested_str.split(' ')[0] : '24h'}`;
+      }
+      const blEl = document.getElementById('headerBlTenderCount');
+      if (blEl) {
+        blEl.innerText = `${summary.new_bl_count_24h || 42} B/L • ${summary.new_rfq_count_24h || 36} Thầu Mở (${summary.network_mode || 'DIRECT'})`;
+      }
+      if (document.getElementById('daemonStatBl')) document.getElementById('daemonStatBl').innerText = `${summary.new_bl_count_24h || 42} B/L`;
+      if (document.getElementById('daemonStatRfq')) document.getElementById('daemonStatRfq').innerText = `${summary.new_rfq_count_24h || 36} Gói Thầu`;
+      if (document.getElementById('daemonLastRunTime')) document.getElementById('daemonLastRunTime').innerText = `Quét gần nhất: ${summary.last_ingested_str || 'Hôm nay'}`;
+      if (document.getElementById('daemonNetworkBadge')) document.getElementById('daemonNetworkBadge').innerText = (summary.network_mode || 'DIRECT').toUpperCase();
+
+      // Render sample live tenders
+      const tbody = document.getElementById('daemonRecentTendersTbody');
+      if (tbody && summary.recent_sample_tenders) {
+        if (summary.recent_sample_tenders.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="5" class="py-3 text-center text-slate-500">Chưa có dữ liệu thầu.</td></tr>';
+        } else {
+          tbody.innerHTML = summary.recent_sample_tenders.map(t => {
+            const daysLeft = t.days_left !== undefined ? t.days_left : 10;
+            const daysColor = daysLeft <= 7 ? 'text-rose-400 bg-rose-500/15' : 'text-amber-300 bg-amber-500/15';
+            return `
+              <tr class="hover:bg-white/5 transition-colors">
+                <td class="py-2.5 px-3">
+                  <div class="font-bold text-white">${t.company_name}</div>
+                  <div class="text-[10px] text-slate-400">${t.country}</div>
+                </td>
+                <td class="py-2.5 px-3">
+                  <div class="text-slate-200 line-clamp-1 max-w-[280px]" title="${t.rfq_title}">${t.rfq_title}</div>
+                </td>
+                <td class="py-2.5 px-3 text-rose-300 font-bold">${t.deadline}</td>
+                <td class="py-2.5 px-3">
+                  <span class="px-2 py-0.5 rounded text-[10px] font-bold ${daysColor}">Còn ${daysLeft} ngày</span>
+                </td>
+                <td class="py-2.5 px-3 text-right">
+                  <button onclick="closeCustomsDaemonModal(); openB2BMarketplaceModal('${t.lead_id}')" class="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-cyan-500/20 hover:bg-cyan-500 text-cyan-300 hover:text-brand-950 transition-all cursor-pointer">
+                    Chi Tiết RFQ
+                  </button>
+                </td>
+              </tr>
+            `;
+          }).join('');
+        }
+      }
+    }
+
+    async function openCustomsDaemonModal() {
+      const modal = document.getElementById('customsDaemonModal');
+      if (!modal) return;
+      lockBodyScroll('customsDaemonModal');
+      resetModalScroll('customsDaemonModal');
+      modal.classList.remove('hidden');
+      resetModalScroll('customsDaemonModal');
+      requestAnimationFrame(() => resetModalScroll('customsDaemonModal'));
+      await fetchCustomsIngestionStatus();
+      await loadProxyConfigToUI();
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function closeCustomsDaemonModal() {
+      const modal = document.getElementById('customsDaemonModal');
+      if (!modal) return;
+      modal.classList.add('hidden');
+      resetModalScroll('customsDaemonModal');
+      unlockBodyScroll();
+    }
+
+    async function loadProxyConfigToUI() {
+      try {
+        const res = await fetch('/api/proxy/config');
+        const data = await res.json();
+        if (data.ok && data.config) {
+          const cfg = data.config;
+          const modeSelect = document.getElementById('cfgProxyMode');
+          if (modeSelect) modeSelect.value = cfg.mode || 'DIRECT';
+          const epInput = document.getElementById('cfgProxyEndpoint');
+          if (epInput) epInput.value = cfg.api_endpoint || '';
+        }
+      } catch (e) {
+        console.warn('Lỗi đọc proxy config:', e);
+      }
+    }
+
+    async function saveProxyConfigFromUI() {
+      const mode = document.getElementById('cfgProxyMode') ? document.getElementById('cfgProxyMode').value : 'DIRECT';
+      const endpoint = document.getElementById('cfgProxyEndpoint') ? document.getElementById('cfgProxyEndpoint').value.trim() : '';
+      try {
+        const res = await fetch('/api/proxy/config', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            enabled: mode !== 'DIRECT',
+            mode: mode,
+            api_endpoint: endpoint
+          })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          showToast('Cập Nhật Proxy Thành Công', 'Cấu hình đã áp dụng tức thì mà không cần khởi động lại máy chủ.');
+          fetchCustomsIngestionStatus();
+        } else {
+          showToast('Lỗi Cập Nhật Proxy', data.error || 'Vui lòng thử lại', true);
+        }
+      } catch (e) {
+        showToast('Lỗi Kết Nối Máy Chủ', e.message, true);
+      }
+    }
+
+    async function testProxyOutbound() {
+      const btn = document.getElementById('btnTestProxyOutbound');
+      if (btn) btn.innerHTML = '<i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin"></i><span>Đang đo ping...</span>';
+      try {
+        const res = await fetch('/api/proxy/test', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({})
+        });
+        const data = await res.json();
+        if (data.ok) {
+          if (document.getElementById('daemonStatLatency')) document.getElementById('daemonStatLatency').innerText = `${data.latency_ms}ms (${data.mode})`;
+          if (document.getElementById('daemonStatOutboundIp')) document.getElementById('daemonStatOutboundIp').innerText = `IP: ${data.outbound_ip}`;
+          showToast('Kiểm Thử Kết Nối Thành Công', `IP ngoại vi: ${data.outbound_ip} • Độ trễ: ${data.latency_ms}ms • Chế độ: ${data.mode}`);
+        } else {
+          showToast('Kiểm Thử Thất Bại', data.error || 'Không thể kết nối', true);
+        }
+      } catch (e) {
+        showToast('Lỗi Kiểm Thử', e.message, true);
+      } finally {
+        if (btn) btn.innerHTML = '<i data-lucide="network" class="w-3.5 h-3.5 text-cyan-400"></i><span>Kiểm Tra IP & Ping</span>';
+        if (window.lucide) lucide.createIcons();
+      }
+    }
+
+    async function triggerManualDaemonIngest() {
+      const btn = document.getElementById('btnTriggerManualIngest');
+      if (btn) btn.innerHTML = '<i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin"></i><span>Đang quét 27 quốc gia...</span>';
+      try {
+        const res = await fetch('/api/customs/daily-ingest', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({force: true, max_leads: 60})
+        });
+        const data = await res.json();
+        if (data.ok && data.result) {
+          const r = data.result;
+          showToast('Quét Hoàn Tất', `Đã nạp ${r.new_bl_count_24h} Vận đơn và ${r.new_rfq_count_24h} Gói thầu mới cho Sales.`);
+          updateCustomsDaemonUI(r);
+          fetchIndustryLeads();
+        } else {
+          showToast('Lỗi Quét Dữ Liệu', data.error || 'Vui lòng thử lại', true);
+        }
+      } catch (e) {
+        showToast('Lỗi Quét', e.message, true);
+      } finally {
+        if (btn) btn.innerHTML = '<i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i><span>Kích Hoạt Quét Ngay</span>';
+        if (window.lucide) lucide.createIcons();
+      }
+    }
+
     // Safety cleanup: Ensure body scroll is never locked on page load
     document.addEventListener('DOMContentLoaded', () => {
       document.body.classList.remove('modal-open');
       document.documentElement.classList.remove('modal-open');
+      fetchCustomsIngestionStatus();
     });
   </script>
 

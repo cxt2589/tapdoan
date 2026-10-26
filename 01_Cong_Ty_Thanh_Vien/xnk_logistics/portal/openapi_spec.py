@@ -808,6 +808,54 @@ def get_openapi_spec(server_url="http://103.228.74.58"):
                         "400": {"$ref": "#/components/responses/BadRequest"}
                     }
                 }
+            },
+            "/api/proxy/config": {
+                "get": {
+                    "tags": ["Proxy & Data Ingestion"],
+                    "summary": "Lấy cấu hình cổng Proxy chờ và trạng thái kết nối mạng hiện tại",
+                    "operationId": "getProxyConfig",
+                    "responses": {
+                        "200": {"description": "Thông tin cấu hình proxy an toàn (mật khẩu đã ẩn)"}
+                    }
+                },
+                "post": {
+                    "tags": ["Proxy & Data Ingestion"],
+                    "summary": "Cập nhật cấu hình Proxy (Cắm-là-chạy, tự động áp dụng không cần khởi động lại)",
+                    "operationId": "updateProxyConfig",
+                    "responses": {
+                        "200": {"description": "Cập nhật thành công"}
+                    }
+                }
+            },
+            "/api/proxy/test": {
+                "post": {
+                    "tags": ["Proxy & Data Ingestion"],
+                    "summary": "Kiểm thử kết nối IP ngoại mạng và đo độ trễ của Proxy",
+                    "operationId": "testProxyConnectivity",
+                    "responses": {
+                        "200": {"description": "Kết quả đo kiểm IP ngoại mạng và độ trễ"}
+                    }
+                }
+            },
+            "/api/customs/ingestion-status": {
+                "get": {
+                    "tags": ["Proxy & Data Ingestion"],
+                    "summary": "Lấy nhật ký và số liệu quét dữ liệu hải quan và gói thầu 24h",
+                    "operationId": "getCustomsIngestionStatus",
+                    "responses": {
+                        "200": {"description": "Nhật ký quét dữ liệu hải quan & gói thầu RFQ 24h"}
+                    }
+                }
+            },
+            "/api/customs/daily-ingest": {
+                "post": {
+                    "tags": ["Proxy & Data Ingestion"],
+                    "summary": "Kích hoạt chu trình quét dữ liệu hải quan và sàn B2B theo yêu cầu",
+                    "operationId": "triggerDailyCustomsIngest",
+                    "responses": {
+                        "200": {"description": "Hoàn tất chu trình nạp dữ liệu"}
+                    }
+                }
             }
         },
         "components": {

@@ -1,0 +1,25 @@
+{
+  "enabled": false,
+  "mode": "DIRECT",
+  "api_endpoint": "",
+  "api_key": "",
+  "proxies_pool": [],
+  "auth": {
+    "username": "",
+    "password": ""
+  },
+  "country_routing": {
+    "us": "",
+    "eu": "",
+    "cn": "",
+    "ru": "",
+    "kr": "",
+    "jp": "",
+    "ae": "",
+    "vn": ""
+  },
+  "rotation_strategy": "round_robin",
+  "max_retries": 3,
+  "timeout_seconds": 15,
+  "last_updated": "2026-10-26T09:48:51Z"
+}

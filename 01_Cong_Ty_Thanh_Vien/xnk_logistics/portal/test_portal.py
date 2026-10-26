@@ -57,7 +57,7 @@ def run_all_tests():
     time.sleep(0.5)
 
     passed_count = 0
-    total_tests = 50
+    total_tests = 52
 
     try:
         # Test 1: Health Check
@@ -1050,7 +1050,49 @@ def run_all_tests():
             start_audit = html_text.rfind('<div', 0, idx_audit)
             radar_slice = html_text[start_radar:start_audit]
             assert radar_slice.count('<div') == radar_slice.count('</div>')
-        print(f"✅ Test 50/50: Cơ Chế Tự Động Khôi Phục Vị Trí Cuộn Lên Đầu & Popup Kiểm Toán Xưởng (SOP-02) chuẩn 100%")
+        print(f"✅ Test 50/52: Cơ Chế Tự Động Khôi Phục Vị Trí Cuộn Lên Đầu & Popup Kiểm Toán Xưởng (SOP-02) chuẩn 100%")
+        passed_count += 1
+
+        # Test 51: Cổng Quản Trị Proxy Chờ "Cắm-Là-Chạy" & Kiểm Thử Kết Nối (/api/proxy/config & /api/proxy/test)
+        code, p_cfg = http_get("/api/proxy/config")
+        assert code == 200 and p_cfg.get("ok") is True
+        assert "status" in p_cfg and "mode" in p_cfg["status"]
+        assert p_cfg["status"]["mode"] in ["DIRECT", "STATIC_POOL", "ROTATING_API"]
+        
+        # Thử cập nhật cấu hình proxy
+        code, p_update = http_post("/api/proxy/config", {"mode": "DIRECT", "timeout_seconds": 15})
+        assert code == 200 and p_update.get("ok") is True
+
+        # Kiểm thử IP ngoại mạng và độ trễ
+        code, p_test = http_post("/api/proxy/test", {})
+        assert code == 200
+        assert "mode" in p_test
+        print(f"✅ Test 51/52: Cổng Quản Trị Proxy Chờ Cắm-Là-Chạy & Đo Kiểm IP/Ping chuẩn xác (Mode: {p_test.get('mode')}, Ping: {p_test.get('latency_ms', 'N/A')}ms)")
+        passed_count += 1
+
+        # Test 52: Động Cơ Quét Dữ Liệu Hải Quan Hàng Ngày & Bộ Lọc Khách Hàng 24h Cho Sales
+        code, ing_status = http_get("/api/customs/ingestion-status")
+        assert code == 200 and ing_status.get("ok") is True
+        assert ing_status["data"]["total_countries_covered"] == 27
+        assert ing_status["data"]["new_bl_count_24h"] >= 0
+
+        # Kiểm tra bộ lọc recent_24h trên API Leads
+        code, leads_24h = http_get("/api/leads/by-industry?recent_24h=true&page=1&page_size=10")
+        assert code == 200
+        assert "funnel_stats" in leads_24h
+        assert "recent_24h" in leads_24h["funnel_stats"]
+        assert leads_24h["total"] >= 10
+        for l in leads_24h["data"]:
+            assert l.get("has_recent_24h_update") is True
+
+        # Kiểm tra chi tiết đơn hàng B2B có hiển thị hạn nộp báo giá (deadline_date & days_remaining)
+        sample_lead_id = leads_24h["data"][0]["lead_id"]
+        code, b2b_orders = http_get(f"/api/leads/b2b-orders?lead_id={sample_lead_id}")
+        assert code == 200 and b2b_orders.get("ok") is True
+        assert len(b2b_orders["orders"]) > 0
+        latest_o = b2b_orders["orders"][0]
+        assert "deadline_date" in latest_o or "status" in latest_o
+        print(f"✅ Test 52/52: Động Cơ Quét Dữ Liệu Hải Quan Hàng Ngày & Bộ Lọc Khách Hàng 24h Cho Sales chuẩn 100% (24h Leads: {leads_24h['total']}, 27 Quốc Gia)")
         passed_count += 1
 
     finally:

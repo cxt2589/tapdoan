@@ -1,0 +1,53 @@
+{
+  "status": "SUCCESS",
+  "last_ingested_at": "2026-10-26T09:36:18Z",
+  "last_ingested_str": "09:36:18 26/10/2026",
+  "total_sources_scanned": 7,
+  "total_countries_covered": 27,
+  "new_bl_count_24h": 42,
+  "new_rfq_count_24h": 36,
+  "leads_updated_count": 60,
+  "network_mode": "DIRECT",
+  "recent_sample_tenders": [
+    {
+      "lead_id": "LEAD-AUTO-0072",
+      "company_name": "United Spain Thủy Trading Corp",
+      "country": "Spain",
+      "rfq_title": "Cần tìm nguồn cung cấp số lượng lớn Cá tra Pangasius fillet đông lạnh mạ băng 10-20% (HS 0304.62)",
+      "deadline": "",
+      "days_left": 0
+    },
+    {
+      "lead_id": "LEAD-AUTO-0303",
+      "company_name": "Sino United States Máy International Sourcing",
+      "country": "United States",
+      "rfq_title": "Cần tìm nguồn cung cấp dài hạn Băng chuyền con lăn & Thiết bị tự động hóa đạt chuẩn kiểm định SGS/Intertek",
+      "deadline": "08/11/2026",
+      "days_left": 13
+    },
+    {
+      "lead_id": "LEAD-AUTO-0435",
+      "company_name": "Vostok Malaysia Sắt Holdings Inc",
+      "country": "Malaysia",
+      "rfq_title": "Cần tìm nguồn cung cấp số lượng lớn Nhôm thanh định hình kiến trúc cửa kính (HS 7604.21)",
+      "deadline": "",
+      "days_left": 0
+    },
+    {
+      "lead_id": "LEAD-AUTO-0460",
+      "company_name": "Eastern Australia Phân Trading Corp",
+      "country": "Australia",
+      "rfq_title": "Thông báo mời thầu thu mua định kỳ Lưu huỳnh công nghiệp dạng hạt đóng bao bì xuất khẩu tiêu chuẩn",
+      "deadline": "11/11/2026",
+      "days_left": 16
+    },
+    {
+      "lead_id": "LEAD-AUTO-0832",
+      "company_name": "Sino France Thủy Commodities Ltd",
+      "country": "France",
+      "rfq_title": "Thông báo mời thầu thu mua định kỳ Cá tra Pangasius fillet đông lạnh mạ băng 10-20% đóng bao bì xuất khẩu tiêu chuẩn",
+      "deadline": "22/11/2026",
+      "days_left": 27
+    }
+  ]
+}

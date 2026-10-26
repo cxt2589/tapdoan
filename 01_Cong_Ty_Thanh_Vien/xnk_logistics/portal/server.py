@@ -106,6 +106,16 @@ except ImportError:
     detect_carrier_info = lambda x: None
     clean_key_for_search = lambda x: str(x).lower()
 
+try:
+    import proxy_manager
+except ImportError:
+    proxy_manager = None
+
+try:
+    import daily_trade_ingestion_daemon
+except ImportError:
+    daily_trade_ingestion_daemon = None
+
 def generate_chart_history_series(base_price, time_range="1y", existing_history=None, commodity_id=None, metrics=None):
     """
     Tạo chuỗi dữ liệu nến/giá lịch sử cho biểu đồ theo các khung thời gian:
@@ -899,13 +909,14 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                 "status": "OPERATIONAL",
                 "docs_url": "/api/docs",
                 "openapi_url": "/api/openapi.json",
-                "endpoints_count": 40,
+                "endpoints_count": 44,
                 "categories": [
                     "Leads & Prospecting",
                     "Due Diligence & Verification",
                     "Suppliers & Counterparties",
                     "Trade Matchmaker & Dual RFQ",
                     "Customs & Bill of Lading",
+                    "Proxy & Data Ingestion",
                     "Factory Audit (SOP-XNK-02)",
                     "HS Catalog & Strategic Products",
                     "Regulatory Radar & Policy Horizon",
@@ -958,6 +969,27 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                     "tracked_bls": len(db.get("bill_of_ladings", []))
                 }
             })
+            return
+
+        elif path == "/api/proxy/config":
+            if proxy_manager:
+                status = proxy_manager.get_public_status()
+                cfg = proxy_manager.load_proxy_config()
+                safe_cfg = dict(cfg)
+                if "auth" in safe_cfg and isinstance(safe_cfg["auth"], dict):
+                    safe_cfg["auth"] = dict(safe_cfg["auth"])
+                    safe_cfg["auth"]["password"] = "******" if safe_cfg["auth"].get("password") else ""
+                self._send_json({"ok": True, "status": status, "config": safe_cfg})
+            else:
+                self._send_json({"ok": False, "error": "Proxy manager module not loaded"}, 500)
+            return
+
+        elif path == "/api/customs/ingestion-status":
+            if daily_trade_ingestion_daemon:
+                summary = daily_trade_ingestion_daemon.get_ingestion_summary()
+                self._send_json({"ok": True, "data": summary})
+            else:
+                self._send_json({"ok": False, "error": "Ingestion daemon module not loaded"}, 500)
             return
 
         elif path == "/api/industries":
@@ -1124,6 +1156,7 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
             country = query.get("country", [""])[0].strip().lower()
             region = query.get("region", [""])[0].strip().lower()
             stage = query.get("stage", [""])[0].strip().lower()
+            recent_24h = query.get("recent_24h", [""])[0].strip().lower()
             q = query.get("q", [""])[0].strip().lower()
             export_fmt = query.get("export", [""])[0].strip().lower()
 
@@ -1170,6 +1203,9 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                 if stage and stage != "all":
                     if item.get("funnel_stage") != stage:
                         match = False
+                if recent_24h in ["true", "1", "yes"]:
+                    if not item.get("has_recent_24h_update"):
+                        match = False
                 if q:
                     searchable = f"{item.get('company_name','')} {item.get('country','')} {item.get('city','')} {item.get('broker_platform','')} {item.get('latest_trade_activity','')} {item.get('broker_rfq_signal','')} {json.dumps(item.get('commodities_demanded',[]))}".lower()
                     bl_numbers_str = " ".join(b.get("bl_number", "") for b in item.get("historical_bl_records", [])).lower()
@@ -1195,6 +1231,7 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
             total_raw = sum(1 for l in leads if l.get("funnel_stage") == "raw")
             total_tier_b = sum(1 for l in leads if l.get("funnel_stage") == "tier_b")
             total_tier_a = sum(1 for l in leads if l.get("funnel_stage") == "tier_a")
+            total_recent_24h = sum(1 for l in leads if l.get("has_recent_24h_update"))
 
             total_matched = len(filtered)
             total_pages = max(1, (total_matched + page_size - 1) // page_size)
@@ -1211,7 +1248,8 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                     "total": len(leads),
                     "raw": total_raw,
                     "tier_b": total_tier_b,
-                    "tier_a": total_tier_a
+                    "tier_a": total_tier_a,
+                    "recent_24h": total_recent_24h
                 },
                 "data": page_items
             })
@@ -2994,6 +3032,46 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
             arb_res = commodity_calculator.calculate_arbitrage_spread(comm_id, buy_tier, sell_tier, freight)
             status_code = 200 if arb_res.get("ok") else 400
             self._send_json(arb_res, status_code)
+            return
+
+        elif path == "/api/proxy/config":
+            if not proxy_manager:
+                self._send_json({"ok": False, "error": "Proxy manager not loaded"}, 500)
+                return
+            current_cfg = proxy_manager.load_proxy_config()
+            for k, v in params.items():
+                if k == "auth" and isinstance(v, dict):
+                    if "username" in v:
+                        current_cfg["auth"]["username"] = v["username"]
+                    if "password" in v and v["password"] != "******":
+                        current_cfg["auth"]["password"] = v["password"]
+                elif k in current_cfg:
+                    current_cfg[k] = v
+            proxy_manager.save_proxy_config(current_cfg)
+            self._send_json({
+                "ok": True,
+                "message": "Cấu hình proxy đã được cập nhật thành công (Áp dụng ngay tức thì không cần restart máy chủ)",
+                "status": proxy_manager.get_public_status()
+            })
+            return
+
+        elif path == "/api/proxy/test":
+            if not proxy_manager:
+                self._send_json({"ok": False, "error": "Proxy manager not loaded"}, 500)
+                return
+            target_proxy = params.get("proxy_url")
+            test_res = proxy_manager.test_proxy_connectivity(target_proxy)
+            self._send_json(test_res)
+            return
+
+        elif path == "/api/customs/daily-ingest":
+            if not daily_trade_ingestion_daemon:
+                self._send_json({"ok": False, "error": "Ingestion daemon not loaded"}, 500)
+                return
+            force = params.get("force", True)
+            max_leads = params.get("max_leads", 60)
+            log_res = daily_trade_ingestion_daemon.run_daily_trade_ingestion(force=force, max_leads_update=max_leads)
+            self._send_json({"ok": True, "message": "Đã quét và nạp dữ liệu hải quan & gói thầu RFQ thành công", "result": log_res})
             return
 
         self._send_json({"error": "Endpoint not found"}, 404)

@@ -9216,7 +9216,7 @@
       if (document.getElementById('b2b-highlight-id')) document.getElementById('b2b-highlight-id').innerText = latestRfq.rfq_id || 'RFQ-202610';
       if (document.getElementById('b2b-highlight-volume')) document.getElementById('b2b-highlight-volume').innerText = latestRfq.volume_required || 'Theo đợt tàu';
       if (document.getElementById('b2b-highlight-payment')) document.getElementById('b2b-highlight-payment').innerText = latestRfq.payment_term || 'L/C At Sight / T/T';
-      if (document.getElementById('b2b-highlight-incoterms')) document.getElementById('b2b-highlight-incoterms').innerText = (lead && lead.preferred_incoterms) || 'FOB / CIF';
+      if (document.getElementById('b2b-highlight-incoterms')) document.getElementById('b2b-highlight-incoterms').innerText = latestRfq.incoterms || (lead && lead.preferred_incoterms) || 'FOB / CIF';
       if (document.getElementById('b2b-highlight-status')) document.getElementById('b2b-highlight-status').innerText = (latestRfq.status || 'Đang mở nhận hồ sơ chào giá').toUpperCase();
       if (document.getElementById('b2b-highlight-signal')) document.getElementById('b2b-highlight-signal').innerText = rfqSignal;
       const deadlineStr = latestRfq.deadline_date ? `${latestRfq.deadline_date} (Còn ${latestRfq.days_remaining !== undefined ? latestRfq.days_remaining : 12} ngày)` : 'Đang mở thầu';
@@ -9339,7 +9339,10 @@
                 </td>
                 <td class="py-2.5 px-3 whitespace-nowrap">${statusBadge}${deadlineBadge}</td>
                 <td class="py-2.5 px-3 align-top">${supplierCell}</td>
-                <td class="py-2.5 px-3 text-[11px] font-mono text-slate-300">${r.payment_term || 'L/C'}</td>
+                <td class="py-2.5 px-3 text-[11px] font-mono text-slate-300">
+                  <div class="text-cyan-300 font-semibold">${r.payment_term || 'L/C'}</div>
+                  <div class="text-[10px] text-amber-300 font-bold mt-1">📦 ${r.incoterms || (lead && lead.preferred_incoterms) || 'FOB / CIF'}</div>
+                </td>
               </tr>
             `;
           }).join('');

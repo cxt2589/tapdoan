@@ -11824,29 +11824,62 @@
         const activeClass = isActive 
           ? "bg-emerald-500 text-brand-950 font-bold border-emerald-400 shadow-md shadow-emerald-500/20" 
           : "bg-brand-900 text-slate-300 hover:text-white hover:bg-white/5 border-white/10";
+        const cleanName = (sec.commodity_name || '').split(' (')[0].split(' FAQ')[0].slice(0, 20);
         return `
-          <button type="button" onclick="selectCommodityPrice('${sec.commodity_id}', true)" 
+          <button type="button" onclick="selectCommodityPrice('${sec.commodity_id}', false)" 
                   class="px-3 py-1.5 rounded-xl text-xs font-mono shrink-0 border transition-all flex items-center gap-1.5 cursor-pointer ${activeClass}">
-            <span>${sec.commodity_name.split(' ')[0]}</span>
+            <span>${cleanName}</span>
             <span class="text-[10px] opacity-80">(${sec.hs_code})</span>
           </button>
         `;
       }).join('');
     }
 
-    function navigateToPriceHistoryChart() {
+    function navigateToPriceHistoryChart(forceScroll = false) {
       const chartCard = document.getElementById('priceHistoryChartCard') || 
                         document.getElementById('commodityPriceCanvas');
-      if (chartCard) {
-        chartCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (!chartCard) return;
+
+      if (!forceScroll) {
+        const rect = chartCard.getBoundingClientRect();
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        // Nếu phần biểu đồ vẫn nằm trong cùng màn hình (viewport), KHÔNG trôi / không nhảy màn hình
+        const isComfortablyVisible = (rect.top >= -60 && rect.top <= vh * 0.75 && rect.bottom >= 120);
+        if (isComfortablyVisible) {
+          return;
+        }
       }
+      chartCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
     function selectCommodityPrice(commodityId, shouldScroll = false) {
       if (!cachedCommodityPricesData || !cachedCommodityPricesData.sectors) return;
-      currentSelectedCommodityId = commodityId;
-      const commodity = cachedCommodityPricesData.sectors.find(s => s.commodity_id === commodityId) || cachedCommodityPricesData.sectors[0];
+      
+      const aliasMap = {
+        "rice_white_5pct": "rice_5pct",
+        "rice_st25": "rice_5pct",
+        "vn-rice-st25": "rice_5pct",
+        "vn-coffee-robusta": "coffee_robusta",
+        "br-coffee-arabica": "coffee_arabica",
+        "vn-black-pepper": "black_pepper",
+        "vn-natural-rubber": "natural_rubber",
+        "vn-urea-fertilizer": "fertilizer_urea",
+        "vn-shrimp-seafood": "seafood_shrimp"
+      };
+      const targetId = aliasMap[commodityId] || commodityId;
+
+      const commodity = cachedCommodityPricesData.sectors.find(s => 
+        s.commodity_id === targetId || 
+        s.commodity_id === commodityId || 
+        s.alt_commodity_id === targetId || 
+        s.alt_commodity_id === commodityId || 
+        s.hs_code === commodityId || 
+        s.hs_code === targetId ||
+        (s.id && (s.id === commodityId || s.id === targetId))
+      ) || cachedCommodityPricesData.sectors[0];
+
       if (!commodity) return;
+      currentSelectedCommodityId = commodity.commodity_id;
 
       // Ensure currentChartSourceId belongs to current commodity
       const benchmarkExists = commodity.benchmarks && commodity.benchmarks.some(b => b.source_id === currentChartSourceId);
@@ -11864,7 +11897,7 @@
       if (window.lucide) lucide.createIcons();
 
       if (shouldScroll) {
-        navigateToPriceHistoryChart();
+        navigateToPriceHistoryChart(false);
       }
     }
 
@@ -12106,18 +12139,22 @@
 
     async function updateChartForCurrentCommodityAndSource() {
       try {
-        const res = await fetch(`/api/prices/chart?commodity_id=${encodeURIComponent(currentSelectedCommodityId)}&source_id=${encodeURIComponent(currentChartSourceId)}&range=${encodeURIComponent(currentChartRange)}`);
+        const badgeEl = document.getElementById('chartSourceBadge');
+        const titleEl = document.getElementById('chartTitle');
+        const contractEl = document.getElementById('chartContractCode');
+        const change7dEl = document.getElementById('chart7dChange');
+        const subtitleEl = document.getElementById('chartSubtitle');
+
+        // Phản hồi tức thì trạng thái đang tải
+        if (titleEl) titleEl.textContent = `Đang đồng bộ biểu đồ giá...`;
+        
+        const timestamp = Date.now();
+        const res = await fetch(`/api/prices/chart?commodity_id=${encodeURIComponent(currentSelectedCommodityId)}&source_id=${encodeURIComponent(currentChartSourceId)}&range=${encodeURIComponent(currentChartRange)}&_t=${timestamp}`);
         const data = await res.json();
         if (data && data.ok) {
           currentChartPoints = data.history || [];
           currentChartMetadata = data;
           
-          const badgeEl = document.getElementById('chartSourceBadge');
-          const titleEl = document.getElementById('chartTitle');
-          const contractEl = document.getElementById('chartContractCode');
-          const change7dEl = document.getElementById('chart7dChange');
-          const subtitleEl = document.getElementById('chartSubtitle');
-
           if (badgeEl) badgeEl.textContent = data.source_name || data.source_id;
           if (titleEl) titleEl.textContent = `Biểu Đồ Lịch Sử Giá (${data.range.toUpperCase()}) - ${data.commodity_name}`;
           if (contractEl) contractEl.textContent = `${data.contract_code} • ${data.price_original}`;
@@ -12151,9 +12188,9 @@
         canvas.width = width * dpr;
         canvas.height = height * dpr;
       }
-      ctx.resetTransform();
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.scale(dpr, dpr);
-      ctx.clearRect(0, 0, width, height);
 
       const points = currentChartPoints;
       if (!points || points.length === 0) {
@@ -12252,10 +12289,16 @@
         }
       }
 
-      // 4. Fill Gradient (Cult UI Multi-stop glow)
+      // 4. Fill Gradient & Stroke with Dynamic Uptrend/Downtrend Theme
+      const isUpTrend = latestPrice >= (prices[0] || latestPrice);
+      const strokeColor = isUpTrend ? '#10b981' : '#f43f5e';
+      const shadowColor = isUpTrend ? 'rgba(16, 185, 129, 0.65)' : 'rgba(244, 63, 94, 0.65)';
+      const gradStart = isUpTrend ? 'rgba(16, 185, 129, 0.35)' : 'rgba(244, 63, 94, 0.35)';
+      const gradMid = isUpTrend ? 'rgba(6, 182, 212, 0.14)' : 'rgba(251, 146, 60, 0.14)';
+
       const fillGradient = ctx.createLinearGradient(0, paddingTop, 0, paddingTop + plotH);
-      fillGradient.addColorStop(0, 'rgba(16, 185, 129, 0.35)');
-      fillGradient.addColorStop(0.5, 'rgba(6, 182, 212, 0.14)');
+      fillGradient.addColorStop(0, gradStart);
+      fillGradient.addColorStop(0.5, gradMid);
       fillGradient.addColorStop(1, 'rgba(6, 182, 212, 0.0)');
 
       ctx.beginPath();
@@ -12269,11 +12312,11 @@
 
       // 5. Line Stroke with Neon Ambient Shadow Glow
       ctx.save();
-      ctx.shadowColor = 'rgba(16, 185, 129, 0.65)';
+      ctx.shadowColor = shadowColor;
       ctx.shadowBlur = 12;
       ctx.beginPath();
       traceSmoothCurve(ctx, coords);
-      ctx.strokeStyle = '#10b981';
+      ctx.strokeStyle = strokeColor;
       ctx.lineWidth = 2.8;
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';

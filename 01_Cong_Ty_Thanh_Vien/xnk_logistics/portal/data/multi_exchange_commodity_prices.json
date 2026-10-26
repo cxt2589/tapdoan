@@ -142,7 +142,10 @@
               "low": 4680,
               "close": 4785
             }
-          ]
+          ],
+          "change_1m": "+5.8%",
+          "change_6m": "+32.5%",
+          "change_1y": "+78.2%"
         },
         {
           "source_id": "CAT_LAI_FOB",
@@ -207,7 +210,10 @@
               "date": "10/2026",
               "price_usd_mt": 4640
             }
-          ]
+          ],
+          "change_1m": "+5.8%",
+          "change_6m": "+32.5%",
+          "change_1y": "+78.2%"
         },
         {
           "source_id": "ROTTERDAM_CIF",
@@ -272,7 +278,10 @@
               "date": "10/2026",
               "price_usd_mt": 4960
             }
-          ]
+          ],
+          "change_1m": "+5.8%",
+          "change_6m": "+32.5%",
+          "change_1y": "+78.2%"
         },
         {
           "source_id": "TAY_NGUYEN_SPOT",
@@ -337,7 +346,10 @@
               "date": "10/2026",
               "price_usd_mt": 4580
             }
-          ]
+          ],
+          "change_1m": "+5.8%",
+          "change_6m": "+32.5%",
+          "change_1y": "+78.2%"
         }
       ],
       "arbitrage_analysis": {
@@ -419,7 +431,10 @@
               "date": "10/2026",
               "price_usd_mt": 6735
             }
-          ]
+          ],
+          "change_1m": "+4.2%",
+          "change_6m": "+28.4%",
+          "change_1y": "+54.8%"
         },
         {
           "source_id": "LAM_DONG_ARABICA",
@@ -484,7 +499,10 @@
               "date": "10/2026",
               "price_usd_mt": 5980
             }
-          ]
+          ],
+          "change_1m": "+4.2%",
+          "change_6m": "+28.4%",
+          "change_1y": "+54.8%"
         }
       ],
       "arbitrage_analysis": {
@@ -566,7 +584,10 @@
               "date": "10/2026",
               "price_usd_mt": 402
             }
-          ]
+          ],
+          "change_1m": "-1.2%",
+          "change_6m": "+8.2%",
+          "change_1y": "+4.5%"
         },
         {
           "source_id": "BALTIC_RUSSIA",
@@ -631,7 +652,10 @@
               "date": "10/2026",
               "price_usd_mt": 345
             }
-          ]
+          ],
+          "change_1m": "-1.2%",
+          "change_6m": "+8.2%",
+          "change_1y": "+4.5%"
         },
         {
           "source_id": "ARAB_GULF",
@@ -696,7 +720,10 @@
               "date": "10/2026",
               "price_usd_mt": 372
             }
-          ]
+          ],
+          "change_1m": "-1.2%",
+          "change_6m": "+8.2%",
+          "change_1y": "+4.5%"
         },
         {
           "source_id": "VN_DOMESTIC_FERTILIZER",
@@ -761,7 +788,10 @@
               "date": "10/2026",
               "price_usd_mt": 425
             }
-          ]
+          ],
+          "change_1m": "-1.2%",
+          "change_6m": "+8.2%",
+          "change_1y": "+4.5%"
         }
       ],
       "arbitrage_analysis": {
@@ -843,7 +873,10 @@
               "date": "10/2026",
               "price_usd_mt": 535
             }
-          ]
+          ],
+          "change_1m": "-2.4%",
+          "change_6m": "-9.5%",
+          "change_1y": "-15.2%"
         },
         {
           "source_id": "TREA_THAILAND",
@@ -908,7 +941,10 @@
               "date": "10/2026",
               "price_usd_mt": 560
             }
-          ]
+          ],
+          "change_1m": "-2.4%",
+          "change_6m": "-9.5%",
+          "change_1y": "-15.2%"
         },
         {
           "source_id": "CBOT_RICE",
@@ -973,7 +1009,10 @@
               "date": "10/2026",
               "price_usd_mt": 327
             }
-          ]
+          ],
+          "change_1m": "-2.4%",
+          "change_6m": "-9.5%",
+          "change_1y": "-15.2%"
         },
         {
           "source_id": "MEKONG_RICE_SPOT",
@@ -1038,7 +1077,10 @@
               "date": "10/2026",
               "price_usd_mt": 315
             }
-          ]
+          ],
+          "change_1m": "-2.4%",
+          "change_6m": "-9.5%",
+          "change_1y": "-15.2%"
         }
       ],
       "arbitrage_analysis": {
@@ -1120,7 +1162,10 @@
               "date": "10/2026",
               "price_usd_mt": 6500
             }
-          ]
+          ],
+          "change_1m": "+1.5%",
+          "change_6m": "+18.2%",
+          "change_1y": "+66.7%"
         },
         {
           "source_id": "IPC_PEPPER",
@@ -1185,7 +1230,10 @@
               "date": "10/2026",
               "price_usd_mt": 6700
             }
-          ]
+          ],
+          "change_1m": "+1.5%",
+          "change_6m": "+18.2%",
+          "change_1y": "+66.7%"
         },
         {
           "source_id": "CHU_SE_SPOT",
@@ -1250,7 +1298,10 @@
               "date": "10/2026",
               "price_usd_mt": 5820
             }
-          ]
+          ],
+          "change_1m": "+1.5%",
+          "change_6m": "+18.2%",
+          "change_1y": "+66.7%"
         }
       ],
       "arbitrage_analysis": {
@@ -1332,7 +1383,10 @@
               "date": "10/2026",
               "price_usd_mt": 1820
             }
-          ]
+          ],
+          "change_1m": "+3.1%",
+          "change_6m": "+12.4%",
+          "change_1y": "+22.9%"
         },
         {
           "source_id": "SVR_CAT_LAI",
@@ -1397,7 +1451,10 @@
               "date": "10/2026",
               "price_usd_mt": 1980
             }
-          ]
+          ],
+          "change_1m": "+3.1%",
+          "change_6m": "+12.4%",
+          "change_1y": "+22.9%"
         },
         {
           "source_id": "BINH_PHUOC_LATEX",
@@ -1462,7 +1519,10 @@
               "date": "10/2026",
               "price_usd_mt": 1650
             }
-          ]
+          ],
+          "change_1m": "+3.1%",
+          "change_6m": "+12.4%",
+          "change_1y": "+22.9%"
         }
       ],
       "arbitrage_analysis": {
@@ -1544,7 +1604,10 @@
               "date": "10/2026",
               "price_usd_mt": 8800
             }
-          ]
+          ],
+          "change_1m": "+3.8%",
+          "change_6m": "+14.2%",
+          "change_1y": "-6.4%"
         },
         {
           "source_id": "URNER_BARRY_NY",
@@ -1609,7 +1672,10 @@
               "date": "10/2026",
               "price_usd_mt": 10250
             }
-          ]
+          ],
+          "change_1m": "+3.8%",
+          "change_6m": "+14.2%",
+          "change_1y": "-6.4%"
         },
         {
           "source_id": "CAMAU_SHRIMP",
@@ -1674,7 +1740,10 @@
               "date": "10/2026",
               "price_usd_mt": 6490
             }
-          ]
+          ],
+          "change_1m": "+3.8%",
+          "change_6m": "+14.2%",
+          "change_1y": "-6.4%"
         }
       ],
       "arbitrage_analysis": {

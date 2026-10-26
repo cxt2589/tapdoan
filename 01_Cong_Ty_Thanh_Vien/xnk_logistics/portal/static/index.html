@@ -12639,7 +12639,8 @@
       }
     }
 
-    function openCustomsDaemonModal() {
+    async function openCustomsDaemonModal() {
+      triggerModalSpringAnimation("customsDaemonModal");
       const modal = document.getElementById('customsDaemonModal');
       if (!modal) return;
       lockBodyScroll('customsDaemonModal');

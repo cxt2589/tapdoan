@@ -837,6 +837,179 @@
       -webkit-user-select: none;
       touch-action: manipulation;
     }
+
+    /* ========================================================================= */
+    /* 🌟 CULT UI & ANIMATE UI - DESIGN SYSTEM EXTENSION (HIGH-END AGENCY TIER)  */
+    /* Inspired by nolly-studio/cult-ui & imskyleen/animate-ui                   */
+    /* Features: Conic Border Beams, Interactive Spotlight, Shimmer CTAs,        */
+    /* Spring Modal Physics & Kinetic Micro-Interactions                         */
+    /* ========================================================================= */
+
+    /* 1. Cult UI Border Beam (Conic Laser Trailing Perimeter) */
+    .cult-border-beam-wrap {
+      position: relative;
+      overflow: hidden;
+      border-radius: inherit;
+    }
+    .cult-border-beam-wrap::before {
+      content: "";
+      position: absolute;
+      inset: -150%;
+      background: conic-gradient(
+        from 0deg at 50% 50%,
+        transparent 0deg,
+        transparent 280deg,
+        rgba(6, 182, 212, 0.95) 325deg,
+        rgba(236, 72, 153, 0.95) 350deg,
+        transparent 360deg
+      );
+      animation: cultRotateBeam 6s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .cult-border-beam-rose::before {
+      background: conic-gradient(
+        from 0deg at 50% 50%,
+        transparent 0deg,
+        transparent 270deg,
+        rgba(244, 63, 94, 0.9) 320deg,
+        rgba(245, 158, 11, 0.9) 350deg,
+        transparent 360deg
+      );
+      animation-duration: 4.5s;
+    }
+    .cult-border-beam-emerald::before {
+      background: conic-gradient(
+        from 0deg at 50% 50%,
+        transparent 0deg,
+        transparent 270deg,
+        rgba(16, 185, 129, 0.9) 320deg,
+        rgba(6, 182, 212, 0.9) 350deg,
+        transparent 360deg
+      );
+      animation-duration: 5s;
+    }
+    @keyframes cultRotateBeam {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .cult-beam-core {
+      position: relative;
+      z-index: 1;
+      border-radius: inherit;
+    }
+
+    /* 2. Cult UI Spotlight Card (Mouse Tracking Ambient Radial Glow) */
+    .cult-spotlight {
+      position: relative;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+    }
+    .cult-spotlight:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.5), 0 0 20px -4px rgba(6, 182, 212, 0.18);
+    }
+    .cult-spotlight::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1.5px;
+      background: radial-gradient(
+        320px circle at var(--mouse-x, -999px) var(--mouse-y, -999px),
+        rgba(6, 182, 212, 0.45),
+        transparent 75%
+      );
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      -webkit-mask-composite: xor;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 2;
+    }
+    .cult-spotlight:hover::before {
+      opacity: 1;
+    }
+
+    /* 3. Cult UI Shimmer Button (Liquid Light Sweep) */
+    .cult-shimmer-btn {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .cult-shimmer-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 25px -4px rgba(6, 182, 212, 0.35);
+    }
+    .cult-shimmer-btn:active {
+      transform: translateY(0) scale(0.98);
+    }
+    .cult-shimmer-btn::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(
+        110deg,
+        transparent 25%,
+        rgba(255, 255, 255, 0.32) 50%,
+        transparent 75%
+      );
+      transform: translateX(-160%);
+      animation: cultShimmerSweep 3.8s infinite cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+    @keyframes cultShimmerSweep {
+      0% { transform: translateX(-160%); }
+      35%, 100% { transform: translateX(160%); }
+    }
+
+    /* 4. Animate UI Spring Physics for Modals (Fluid Natural Elasticity) */
+    .animate-ui-modal-enter {
+      animation: animateUiSpringIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      will-change: transform, opacity, filter;
+    }
+    @keyframes animateUiSpringIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.94) translateY(14px);
+        filter: blur(4px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0);
+      }
+    }
+
+    /* 5. Animate UI Kinetic Micro-interactions */
+    .animate-ui-press {
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+    }
+    .animate-ui-press:hover {
+      transform: translateY(-1.5px);
+    }
+    .animate-ui-press:active {
+      transform: scale(0.97) translateY(0);
+    }
+
+    /* 6. Cult UI Sonar Radar Wave */
+    .cult-sonar-badge {
+      position: relative;
+    }
+    .cult-sonar-badge::after {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: inherit;
+      border: 1px solid rgba(244, 63, 94, 0.6);
+      animation: cultSonarPulse 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+      pointer-events: none;
+    }
+    @keyframes cultSonarPulse {
+      0% { transform: scale(0.96); opacity: 0.9; }
+      100% { transform: scale(1.35); opacity: 0; }
+    }
   </style>
 </head>
 <body class="bg-brand-950 text-slate-100 font-sans antialiased min-h-screen selection:bg-brand-cyan/20 selection:text-brand-cyan relative bg-mesh">
@@ -882,7 +1055,7 @@
         </div>
 
         <!-- All Features Hub Dropdown Button (Sơ Đồ Phân Hệ) -->
-        <button id="allModulesHubBtn" onclick="event.stopPropagation(); toggleAllModulesHub()" class="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-mono font-bold transition-all cursor-pointer bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 shadow-sm" title="Bấm để xem danh mục toàn bộ các phân hệ tính năng">
+        <button id="allModulesHubBtn" onclick="event.stopPropagation(); toggleAllModulesHub()" class="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-mono font-bold transition-all cursor-pointer bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 shadow-sm animate-ui-press" title="Bấm để xem danh mục toàn bộ các phân hệ tính năng">
           <i data-lucide="layout-grid" class="w-3.5 h-3.5 text-cyan-400 pointer-events-none"></i>
           <span class="hidden md:inline pointer-events-none">Sơ Đồ Phân Hệ</span>
           <span class="md:hidden pointer-events-none">Sơ Đồ</span>
@@ -890,7 +1063,7 @@
         </button>
 
         <!-- Regulatory Radar Button (Radar Pháp Lý) -->
-        <button id="regulatoryRadarBtn" onclick="openRegulatoryRadarModal()" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-mono font-bold transition-all cursor-pointer bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 shadow-sm" title="Radar Pháp Lý & Giám Sát Chính Sách Mới Toàn Cầu">
+        <button id="regulatoryRadarBtn" onclick="openRegulatoryRadarModal()" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-mono font-bold transition-all cursor-pointer bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 shadow-sm animate-ui-press" title="Radar Pháp Lý & Giám Sát Chính Sách Mới Toàn Cầu">
           <i data-lucide="scale" class="w-3.5 h-3.5 text-amber-400"></i>
           <span class="hidden md:inline">Radar Pháp Lý</span>
           <span class="md:hidden">Pháp Lý</span>
@@ -898,28 +1071,28 @@
         </button>
 
         <!-- Commodity Price & Arbitrage Board Button (Giá Đa Sàn) -->
-        <button id="crossExchangePricesBtn" onclick="openCrossExchangePricesModal()" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-mono font-bold transition-all cursor-pointer bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 shadow-sm" title="Bảng Giá Đa Sàn Quốc Tế, Bộ Chuẩn Hóa & Radar Chênh Lệch Giá (Arbitrage)">
+        <button id="crossExchangePricesBtn" onclick="openCrossExchangePricesModal()" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-mono font-bold transition-all cursor-pointer bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 shadow-sm animate-ui-press" title="Bảng Giá Đa Sàn Quốc Tế, Bộ Chuẩn Hóa & Radar Chênh Lệch Giá (Arbitrage)">
           <i data-lucide="trending-up" class="w-3.5 h-3.5 text-emerald-400"></i>
           <span class="hidden md:inline">Giá Đa Sàn</span>
           <span class="md:hidden">Giá Sàn</span>
         </button>
 
         <!-- Proxy & Customs Daemon Quick Button (Cổng Proxy & Quét 24h) -->
-        <button id="customsDaemonQuickBtn" onclick="openCustomsDaemonModal()" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-mono font-bold transition-all cursor-pointer bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 shadow-sm" title="Quản lý Cổng Proxy Chờ & Robot Quét Tờ Khai 24/7">
+        <button id="customsDaemonQuickBtn" onclick="openCustomsDaemonModal()" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-mono font-bold transition-all cursor-pointer bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 shadow-sm animate-ui-press" title="Quản lý Cổng Proxy Chờ & Robot Quét Tờ Khai 24/7">
           <i data-lucide="radio" class="w-3.5 h-3.5 text-rose-400 animate-pulse"></i>
           <span class="hidden md:inline">Cổng Proxy & Quét 24h</span>
           <span class="md:hidden">Proxy 24h</span>
         </button>
 
         <!-- API Documentation Button (Tài Liệu API / Swagger) -->
-        <a id="apiDocsBtn" href="/api/docs" target="_blank" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-mono font-bold transition-all cursor-pointer bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 border border-purple-500/30 shadow-sm" title="Xem Toàn Bộ Tài Liệu API & OpenAPI 3.1.0 Interactive Swagger" style="text-decoration: none;">
+        <a id="apiDocsBtn" href="/api/docs" target="_blank" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-mono font-bold transition-all cursor-pointer bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 border border-purple-500/30 shadow-sm animate-ui-press" title="Xem Toàn Bộ Tài Liệu API & OpenAPI 3.1.0 Interactive Swagger" style="text-decoration: none;">
           <i data-lucide="code-2" class="w-3.5 h-3.5 text-purple-400"></i>
           <span class="hidden md:inline">Tài Liệu API</span>
           <span class="md:hidden">API</span>
         </a>
 
         <!-- Theme Toggle Button (Sáng / Tối) -->
-        <button id="themeToggleBtn" onclick="toggleTheme()" class="theme-toggle-btn inline-flex items-center gap-1 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs font-mono font-semibold transition-all cursor-pointer bg-brand-850 hover:bg-brand-800 text-slate-300 hover:text-white border border-white/10 shadow-sm" title="Bấm để chuyển đổi giữa Giao diện Sáng và Tối">
+        <button id="themeToggleBtn" onclick="toggleTheme()" class="theme-toggle-btn inline-flex items-center gap-1 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs font-mono font-semibold transition-all cursor-pointer bg-brand-850 hover:bg-brand-800 text-slate-300 hover:text-white border border-white/10 shadow-sm animate-ui-press" title="Bấm để chuyển đổi giữa Giao diện Sáng và Tối">
           <i data-lucide="sun" class="w-3.5 h-3.5 text-amber-400" id="themeIcon"></i>
           <span id="themeLabel" class="text-[11px] hidden sm:inline">Sáng</span>
         </button>
@@ -997,8 +1170,8 @@
 
     <!-- ALL MODULES HUB DROPDOWN POPUP (MEGA MENU DÀNH CHO TOÀN BỘ PHÂN HỆ) -->
     <div id="allModulesHubPopover" class="hidden absolute top-full left-0 right-0 max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 pt-2 pb-4 sm:pb-6 z-50">
-      <div class="rounded-3xl p-1 bg-gradient-to-b from-cyan-500/30 via-white/10 to-white/5 border border-cyan-500/40 shadow-2xl backdrop-blur-2xl">
-        <div id="allModulesHubScrollBody" class="bg-brand-900 rounded-[22px] p-4 sm:p-7 space-y-5 max-h-[82vh] overflow-y-auto overscroll-contain modal-scroll-container" style="touch-action: pan-y !important; -webkit-overflow-scrolling: touch !important;">
+      <div class="rounded-3xl p-1 bg-gradient-to-b from-cyan-500/30 via-white/10 to-white/5 border border-cyan-500/40 shadow-2xl backdrop-blur-2xl cult-border-beam-wrap animate-ui-modal-enter">
+        <div id="allModulesHubScrollBody" class="cult-beam-core bg-brand-900 rounded-[22px] p-4 sm:p-7 space-y-5 max-h-[82vh] overflow-y-auto overscroll-contain modal-scroll-container" style="touch-action: pan-y !important; -webkit-overflow-scrolling: touch !important;">
           <div class="flex items-center justify-between border-b border-white/10 pb-3">
             <div class="flex items-center gap-2.5">
               <div class="w-8 h-8 rounded-xl bg-cyan-500/20 flex items-center justify-center text-cyan-400">
@@ -2499,7 +2672,7 @@
   <!-- ============================================================= -->
   <div id="companyDetailModal" onclick="handleModalBackdropClick(event, 'companyDetailModal')" class="fixed inset-0 z-[60] bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 overscroll-contain">
     <div onclick="event.stopPropagation()" class="w-full max-w-4xl rounded-3xl overflow-hidden p-1 bg-gradient-to-b from-cyan-500/30 via-white/10 to-white/5 border border-cyan-500/40 shadow-2xl">
-      <div id="companyDetailScrollBody" class="bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-5 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container" style="touch-action: pan-y !important; -webkit-overflow-scrolling: touch !important;">
+      <div id="companyDetailScrollBody" class="cult-beam-core bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-5 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container" style="touch-action: pan-y !important; -webkit-overflow-scrolling: touch !important;">
         
         <!-- Header -->
         <div class="flex items-start justify-between border-b border-white/10 pb-4">
@@ -3268,7 +3441,7 @@
   <!-- ============================================================= -->
   <div id="hsCatalogModal" onclick="handleModalBackdropClick(event, 'hsCatalogModal')" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 overscroll-contain">
     <div onclick="event.stopPropagation()" class="w-full max-w-4xl rounded-3xl overflow-hidden p-1 bg-gradient-to-b from-cyan-500/30 via-white/10 to-white/5 border border-cyan-500/40 shadow-2xl">
-      <div id="hsCatalogScrollBody" class="bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-5 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container" style="touch-action: pan-y !important; -webkit-overflow-scrolling: touch !important;">
+      <div id="hsCatalogScrollBody" class="cult-beam-core bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-5 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container" style="touch-action: pan-y !important; -webkit-overflow-scrolling: touch !important;">
         
         <!-- Header -->
         <div class="flex items-start justify-between border-b border-white/10 pb-4">
@@ -3805,7 +3978,7 @@
   <!-- ============================================================= -->
   <div id="matchDetailModal" onclick="handleModalBackdropClick(event, 'matchDetailModal')" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4 overscroll-contain">
     <div onclick="event.stopPropagation()" class="w-full max-w-4xl rounded-3xl overflow-hidden p-1 bg-gradient-to-b from-emerald-500/30 via-white/10 to-white/5 border border-emerald-500/40 shadow-2xl">
-      <div id="matchDetailScrollBody" class="bg-brand-900 rounded-[22px] p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container" style="touch-action: pan-y !important; -webkit-overflow-scrolling: touch !important;">
+      <div id="matchDetailScrollBody" class="cult-beam-core bg-brand-900 rounded-[22px] p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container" style="touch-action: pan-y !important; -webkit-overflow-scrolling: touch !important;">
         
         <!-- Header -->
         <div class="flex items-start justify-between border-b border-white/10 pb-4">
@@ -3969,7 +4142,7 @@
   <div id="customsDaemonModal" onclick="handleModalBackdropClick(event, 'customsDaemonModal')"
     class="fixed inset-0 z-[80] bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 overscroll-contain">
     <div onclick="event.stopPropagation()" class="w-full max-w-5xl rounded-3xl overflow-hidden p-1 bg-gradient-to-b from-rose-500/40 via-cyan-500/20 to-white/5 border border-rose-500/40 shadow-2xl">
-      <div id="customsDaemonScrollBody" class="bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-6 max-h-[88vh] overflow-y-auto overscroll-contain modal-scroll-container" style="touch-action: pan-y !important; -webkit-overflow-scrolling: touch !important;">
+      <div id="customsDaemonScrollBody" class="cult-beam-core bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-6 max-h-[88vh] overflow-y-auto overscroll-contain modal-scroll-container" style="touch-action: pan-y !important; -webkit-overflow-scrolling: touch !important;">
         
         <!-- Header -->
         <div class="flex items-start justify-between gap-4 border-b border-white/10 pb-4">
@@ -3993,22 +4166,22 @@
 
         <!-- 4 Metric Cards -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <div class="p-3.5 rounded-2xl bg-white/5 border border-white/5 space-y-1">
+          <div class="p-3.5 rounded-2xl bg-white/5 border border-white/5 space-y-1 cult-spotlight">
             <span class="text-[10px] font-mono text-slate-400 uppercase tracking-wider block">QUỐC GIA ĐANG QUÉT</span>
             <div class="text-2xl font-black text-white font-mono" id="daemonStatCountries">27 Quốc Gia</div>
             <div class="text-[10px] font-mono text-slate-400">8 Khu vực thị trường</div>
           </div>
-          <div class="p-3.5 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 space-y-1">
+          <div class="p-3.5 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 space-y-1 cult-spotlight">
             <span class="text-[10px] font-mono text-cyan-400 uppercase tracking-wider block">VẬN ĐƠN MỚI 24H</span>
             <div class="text-2xl font-black text-cyan-300 font-mono" id="daemonStatBl">42 B/L</div>
             <div class="text-[10px] font-mono text-cyan-400">Tờ khai & vận đơn cảng</div>
           </div>
-          <div class="p-3.5 rounded-2xl bg-rose-500/10 border border-rose-500/20 space-y-1">
+          <div class="p-3.5 rounded-2xl bg-rose-500/10 border border-rose-500/20 space-y-1 cult-spotlight">
             <span class="text-[10px] font-mono text-rose-400 uppercase tracking-wider block">GÓI THẦU RFQ ĐANG MỞ</span>
             <div class="text-2xl font-black text-rose-300 font-mono" id="daemonStatRfq">36 Gói Thầu</div>
             <div class="text-[10px] font-mono text-rose-400">Còn hạn nộp báo giá</div>
           </div>
-          <div class="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 space-y-1">
+          <div class="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 space-y-1 cult-spotlight">
             <span class="text-[10px] font-mono text-emerald-400 uppercase tracking-wider block">TRẠNG THÁI MẠNG</span>
             <div class="text-2xl font-black text-emerald-300 font-mono" id="daemonStatLatency">Direct (470ms)</div>
             <div class="text-[10px] font-mono text-emerald-400" id="daemonStatOutboundIp">Node Singapore</div>
@@ -4029,7 +4202,7 @@
               <i data-lucide="network" class="w-3.5 h-3.5 text-cyan-400"></i>
               <span>Kiểm Tra IP & Ping</span>
             </button>
-            <button onclick="triggerManualDaemonIngest()" id="btnTriggerManualIngest" class="w-full sm:w-auto px-4 py-2 rounded-xl text-xs font-mono font-bold bg-gradient-to-r from-rose-600 to-amber-600 hover:from-rose-500 hover:to-amber-500 text-white shadow-lg shadow-rose-500/20 transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+            <button onclick="triggerManualDaemonIngest()" id="btnTriggerManualIngest" class="w-full sm:w-auto px-4 py-2 rounded-xl text-xs font-mono font-bold bg-gradient-to-r from-rose-600 to-amber-600 hover:from-rose-500 hover:to-amber-500 text-white shadow-lg shadow-rose-500/20 transition-all flex items-center justify-center gap-1.5 cursor-pointer cult-shimmer-btn">
               <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
               <span>Kích Hoạt Quét Ngay</span>
             </button>
@@ -4058,7 +4231,7 @@
                 <span class="text-[11px] text-slate-300 block font-mono mt-0.5" id="daemonProxyAutoHarvestStatus">Hệ thống sẽ tự động quét ping và chọn lọc IP sống theo quốc gia trước mỗi chu kỳ quét</span>
               </div>
             </div>
-            <button onclick="triggerAutoHarvestFromUI()" id="btnTriggerAutoHarvest" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 transition-all flex items-center justify-center gap-1.5 cursor-pointer shrink-0">
+            <button onclick="triggerAutoHarvestFromUI()" id="btnTriggerAutoHarvest" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 transition-all flex items-center justify-center gap-1.5 cursor-pointer shrink-0 cult-shimmer-btn">
               <i data-lucide="zap" class="w-3.5 h-3.5"></i>
               <span>Kiểm Định Tức Thì</span>
             </button>
@@ -4124,7 +4297,7 @@
   <div id="regulatoryRadarModal" onclick="handleModalBackdropClick(event, 'regulatoryRadarModal')"
     class="fixed inset-0 z-[80] bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 overscroll-contain">
     <div onclick="event.stopPropagation()" class="w-full max-w-5xl rounded-3xl overflow-hidden p-1 bg-gradient-to-b from-amber-500/40 via-cyan-500/20 to-white/5 border border-amber-500/40 shadow-2xl">
-      <div id="regulatoryRadarScrollBody" class="bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-6 max-h-[88vh] overflow-y-auto overscroll-contain modal-scroll-container" style="touch-action: pan-y !important; -webkit-overflow-scrolling: touch !important;">
+      <div id="regulatoryRadarScrollBody" class="cult-beam-core bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-6 max-h-[88vh] overflow-y-auto overscroll-contain modal-scroll-container" style="touch-action: pan-y !important; -webkit-overflow-scrolling: touch !important;">
         
         <!-- Header -->
         <div class="flex items-start justify-between gap-4 border-b border-white/10 pb-4">
@@ -12325,8 +12498,10 @@
       if (blEl) {
         blEl.innerText = `${summary.new_bl_count_24h || 42} B/L • ${summary.new_rfq_count_24h || 36} Thầu Mở (${summary.network_mode || 'DIRECT'})`;
       }
-      if (document.getElementById('daemonStatBl')) document.getElementById('daemonStatBl').innerText = `${summary.new_bl_count_24h || 42} B/L`;
-      if (document.getElementById('daemonStatRfq')) document.getElementById('daemonStatRfq').innerText = `${summary.new_rfq_count_24h || 36} Gói Thầu`;
+      if (document.getElementById('daemonStatBl')) animateNumberCounter(document.getElementById('daemonStatBl'), summary.new_bl_count_24h || 42, 600, '', ' B/L');
+      if (document.getElementById('daemonStatRfq')) animateNumberCounter(document.getElementById('daemonStatRfq'), summary.new_rfq_count_24h || 36, 700, '', ' Gói Thầu');
+      if (document.getElementById('daemonStatCountries')) animateNumberCounter(document.getElementById('daemonStatCountries'), summary.total_countries_covered || 27, 500, '', ' Quốc Gia');
+      setTimeout(initCultSpotlights, 200);
       if (document.getElementById('daemonLastRunTime')) document.getElementById('daemonLastRunTime').innerText = `Quét gần nhất: ${summary.last_ingested_str || 'Hôm nay'}`;
       if (document.getElementById('daemonNetworkBadge')) document.getElementById('daemonNetworkBadge').innerText = (summary.network_mode || 'DIRECT').toUpperCase();
 
@@ -12516,7 +12691,49 @@
     }
 
     // Safety cleanup: Ensure body scroll is never locked on page load
+    
+    /* ========================================================================= */
+    /* 🌟 CULT UI & ANIMATE UI - RUNTIME INTERACTION ENGINE                      */
+    /* ========================================================================= */
+    function initCultSpotlights() {
+      const cards = document.querySelectorAll('.cult-spotlight');
+      cards.forEach(card => {
+        card.addEventListener('mousemove', e => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          card.style.setProperty('--mouse-x', `${x}px`);
+          card.style.setProperty('--mouse-y', `${y}px`);
+        });
+      });
+    }
+
+    function animateNumberCounter(el, targetNumber, duration = 800, prefix = '', suffix = '') {
+      if (!el) return;
+      const startNumber = parseInt((el.innerText || '0').replace(/[^0-9]/g, '')) || 0;
+      const range = targetNumber - startNumber;
+      if (range === 0) {
+        el.innerText = `${prefix}${targetNumber.toLocaleString()}${suffix}`;
+        return;
+      }
+      const startTime = performance.now();
+      function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const easeProgress = 1 - Math.pow(1 - progress, 3);
+        const currentVal = Math.floor(startNumber + (range * easeProgress));
+        el.innerText = `${prefix}${currentVal.toLocaleString()}${suffix}`;
+        if (progress < 1) {
+          requestAnimationFrame(update);
+        } else {
+          el.innerText = `${prefix}${targetNumber.toLocaleString()}${suffix}`;
+        }
+      }
+      requestAnimationFrame(update);
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(initCultSpotlights, 300);
       document.body.classList.remove('modal-open');
       document.documentElement.classList.remove('modal-open');
       fetchCustomsIngestionStatus();

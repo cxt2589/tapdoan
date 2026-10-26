@@ -6817,13 +6817,24 @@
     let currentDetailLead = null;
 
     async function openCompanyDetailModal(leadId) {
+      if (!leadId || leadId.trim() === '') {
+        showToast('Thông Báo', 'Chưa có thông tin định danh cho doanh nghiệp này.', true);
+        return;
+      }
       triggerModalSpringAnimation('companyDetailModal');
       lockBodyScroll('companyDetailModal');
       resetModalScroll('companyDetailModal');
-      let lead = (cachedLeadsData || []).find(l => l.lead_id === leadId);
+      
+      const cleanName = leadId.replace(/\s*\([^)]*\)/g, '').trim();
+      let lead = (cachedLeadsData || []).find(l => 
+        l.lead_id === leadId || 
+        l.id === leadId || 
+        (l.company_name && l.company_name.toLowerCase() === cleanName.toLowerCase()) ||
+        (l.company_name && l.company_name.toLowerCase().includes(cleanName.toLowerCase()))
+      );
       if (!lead) {
         try {
-          const res = await fetch(`/api/leads/detail?id=${encodeURIComponent(leadId)}`);
+          const res = await fetch(`/api/leads/detail?id=${encodeURIComponent(leadId)}&name=${encodeURIComponent(cleanName)}`);
           const resData = await res.json();
           if (resData.ok && resData.lead) {
             lead = resData.lead;
@@ -6834,7 +6845,8 @@
       }
       if (!lead) {
         unlockBodyScroll();
-        showToast('Thông báo', 'Không tìm thấy hồ sơ doanh nghiệp này.', true);
+        showToast('Điều Hướng', `Đang mở hồ sơ thẩm định cho ${cleanName}...`);
+        inspectBLBuyer(cleanName);
         return;
       }
 
@@ -9005,7 +9017,22 @@
             </td>
 
             <td class="py-4 px-4 align-top">
-              <p class="font-bold text-white hover:text-cyan-400 cursor-pointer transition-colors" onclick="openCompanyDetailModal('${bl.lead_id || ''}')">${bl.consignee}</p>
+              ${(() => {
+                const rawConsignee = bl.consignee || 'Doanh Nghiệp Thu Mua';
+                const matchCtry = rawConsignee.match(/^(.*?)(?:\s*\((.*?)\))?$/);
+                const cleanConsignee = matchCtry && matchCtry[1] ? matchCtry[1].trim() : rawConsignee;
+                const ctryText = matchCtry && matchCtry[2] ? matchCtry[2].trim() : (bl.country || '');
+                return `
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="font-bold text-white hover:text-cyan-400 cursor-pointer transition-colors underline decoration-cyan-500/30 underline-offset-2" 
+                          onclick="openBuyerDetailFromBL('${cleanConsignee.replace(/'/g, "\\'")}', '${bl.lead_id || ''}')" 
+                          title="Nhấn để xem hồ sơ thẩm định hoặc hồ sơ 360°">
+                      ${cleanConsignee}
+                    </span>
+                    ${ctryText ? `<span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-semibold bg-blue-500/15 text-blue-300 border border-blue-500/30">${ctryText}</span>` : ''}
+                  </div>
+                `;
+              })()}
               <p class="text-[11px] text-slate-400 mt-0.5">Shipper: ${bl.shipper}</p>
             </td>
 
@@ -9034,14 +9061,12 @@
                 <button onclick="openBLDetailModal('${bl.bl_number}', '${bl.lead_id || ''}')" class="w-24 px-2 py-1 rounded-lg text-xs font-semibold bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/30 transition-all cursor-pointer">
                   Chi Tiết B/L
                 </button>
-                <button onclick="inspectBLBuyer('${bl.consignee}')" class="w-24 px-2 py-1 rounded-lg text-xs font-semibold bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/20 transition-all cursor-pointer">
+                <button onclick="inspectBLBuyer('${(bl.consignee || '').replace(/'/g, "\\'")}')" class="w-24 px-2 py-1 rounded-lg text-xs font-semibold bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/20 transition-all cursor-pointer">
                   Thẩm Định
                 </button>
-                ${bl.lead_id ? `
-                  <button onclick="openCompanyDetailModal('${bl.lead_id}')" class="w-24 px-2 py-1 rounded-lg text-xs font-semibold bg-blue-500/15 hover:bg-blue-500/25 text-blue-300 border border-blue-500/30 transition-all cursor-pointer">
-                    Hồ Sơ 360°
-                  </button>
-                ` : ''}
+                <button onclick="openBuyerDetailFromBL('${(bl.consignee || '').replace(/'/g, "\\'")}', '${bl.lead_id || ''}')" class="w-24 px-2 py-1 rounded-lg text-xs font-semibold bg-blue-500/15 hover:bg-blue-500/25 text-blue-300 border border-blue-500/30 transition-all cursor-pointer">
+                  Hồ Sơ 360°
+                </button>
               </div>
             </td>
           </tr>
@@ -9051,9 +9076,33 @@
     }
 
     function inspectBLBuyer(buyerName) {
-      const cleanName = buyerName.split('(')[0].trim();
+      const cleanName = (buyerName || '').replace(/\s*\([^)]*\)/g, '').trim();
       switchTab('buyers');
       runBuyerSample(cleanName);
+    }
+
+    function openBuyerDetailFromBL(consigneeName, leadId) {
+      const cleanName = (consigneeName || '').replace(/\s*\([^)]*\)/g, '').trim();
+      
+      // 1. Nếu có lead_id cụ thể, ưu tiên mở modal 360
+      if (leadId && leadId.trim() !== '') {
+        openCompanyDetailModal(leadId);
+        return;
+      }
+      
+      // 2. Tra cứu trong danh sách cachedLeadsData nếu đã nạp
+      const foundInLeads = (window.cachedLeadsData || []).find(l => {
+        const lName = (l.company_name || '').toLowerCase();
+        const cName = cleanName.toLowerCase();
+        return lName === cName || lName.includes(cName) || cName.includes(lName);
+      });
+      if (foundInLeads && foundInLeads.lead_id) {
+        openCompanyDetailModal(foundInLeads.lead_id);
+        return;
+      }
+
+      // 3. Gọi mở modal 360 theo tên công ty sạch (API sẽ tra cứu cả database buyers)
+      openCompanyDetailModal(cleanName);
     }
 
     function jumpToBLDetail(leadId, blNumber) {

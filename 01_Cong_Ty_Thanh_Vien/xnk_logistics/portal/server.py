@@ -371,6 +371,22 @@ def get_all_aggregated_bls(db=None, force_refresh=False):
         b_copy["carrier_info"] = c_info
         b_copy["is_today"] = True
         b_copy["is_russia"] = "russia" in str(b.get("port_of_discharge","")).lower() or "nga" in str(b.get("port_of_discharge","")).lower()
+        
+        # Tự động chuẩn hóa tên người nhận hàng và quốc gia
+        consignee_raw = str(b.get("consignee", ""))
+        m_c = re.match(r"^(.*?)(?:\s*\((.*?)\))?$", consignee_raw)
+        clean_consignee = m_c.group(1).strip() if m_c and m_c.group(1) else consignee_raw
+        parsed_country = m_c.group(2).strip() if m_c and m_c.group(2) else b.get("country", "")
+        
+        b_copy["consignee"] = clean_consignee
+        b_copy["country"] = parsed_country or b.get("country", "")
+        if not b_copy.get("lead_id"):
+            for buy in db.get("buyers", []):
+                if clean_consignee.lower() in buy.get("company_name", "").lower() or buy.get("company_name", "").lower() in clean_consignee.lower():
+                    b_copy["lead_id"] = buy.get("id") or buy.get("lead_id")
+                    if not b_copy.get("country"):
+                        b_copy["country"] = buy.get("country", "")
+                    break
         bls.append(b_copy)
 
     # 2. Aggregated 6,000 BLs from industry_leads
@@ -1259,11 +1275,48 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
             db = load_database()
             lead_id = query.get("id", [""])[0].strip() or query.get("lead_id", [""])[0].strip()
             leads = db.get("industry_leads", [])
-            selected_lead = next((l for l in leads if l.get("lead_id") == lead_id), None)
+            selected_lead = next((l for l in leads if l.get("lead_id") == lead_id or l.get("id") == lead_id), None)
+            
+            # Tra cứu mở rộng trong danh bạ Buyers (người mua ngoại thương)
             if not selected_lead:
-                q_name = query.get("name", [""])[0].strip().lower()
-                if q_name:
-                    selected_lead = next((l for l in leads if q_name in l.get("company_name", "").lower()), None)
+                buyers = db.get("buyers", [])
+                matched_buyer = next((b for b in buyers if b.get("id") == lead_id or b.get("lead_id") == lead_id), None)
+                if not matched_buyer:
+                    q_name = query.get("name", [""])[0].strip().lower()
+                    if not q_name and lead_id:
+                        q_name = lead_id.split("(")[0].strip().lower()
+                    if q_name:
+                        matched_buyer = next((b for b in buyers if q_name in b.get("company_name", "").lower() or b.get("company_name", "").lower() in q_name), None)
+                        if not selected_lead:
+                            selected_lead = next((l for l in leads if q_name in l.get("company_name", "").lower()), None)
+                
+                if matched_buyer:
+                    # Chuyển đổi định dạng buyer sang cấu trúc lead tương thích 100% modal hồ sơ 360
+                    b_id = matched_buyer.get("id") or matched_buyer.get("lead_id")
+                    selected_lead = {
+                        "lead_id": b_id,
+                        "id": b_id,
+                        "company_name": matched_buyer.get("company_name"),
+                        "country": matched_buyer.get("country"),
+                        "city": matched_buyer.get("city", "Trung tâm ngoại thương"),
+                        "market_region": matched_buyer.get("country_code", "GLOBAL"),
+                        "tier": matched_buyer.get("tier", "A+"),
+                        "lead_score": matched_buyer.get("fraud_score", 95),
+                        "funnel_stage": "tier_a",
+                        "annual_revenue_usd": matched_buyer.get("annual_revenue_usd", "$100M+"),
+                        "annual_import_capacity": matched_buyer.get("annual_import_capacity", "100,000 tấn/năm"),
+                        "preferred_incoterms": "CIF / FOB",
+                        "payment_terms_accepted": matched_buyer.get("recommended_payment", "L/C At Sight"),
+                        "commodities_demanded": [{"name": c, "hs": c.split(" ")[0]} for c in matched_buyer.get("primary_commodities", [])],
+                        "contacts": matched_buyer.get("verified_contacts", []),
+                        "notes": matched_buyer.get("notes", ""),
+                        "credit_rating": matched_buyer.get("credit_rating", "AAA"),
+                        "sanctions_status": matched_buyer.get("sanctions_status", "CLEAR"),
+                        "registration_no": matched_buyer.get("registration_no", ""),
+                        "duns_number": matched_buyer.get("duns_number", ""),
+                        "historical_bl_records": [b for b in db.get("bill_of_ladings", []) if b.get("lead_id") == b_id or matched_buyer.get("company_name", "").lower() in b.get("consignee", "").lower()]
+                    }
+
             if selected_lead:
                 self._send_json({"ok": True, "lead": selected_lead})
             else:

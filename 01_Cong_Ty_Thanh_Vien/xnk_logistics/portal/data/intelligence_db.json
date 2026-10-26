@@ -814836,7 +814836,8 @@
       "recommended_payment": "Mở L/C Irrevocable At Sight hoặc T/T 30% Deposit - 70% B/L Scan (Đối tác Hạng 1)",
       "notes": "Tập đoàn thương mại phân bón và hóa chất độc lập lớn nhất thế giới. Lịch sử giao dịch uy tín 60 năm.",
       "charter_capital_usd": "$450,000,000 USD",
-      "charter_capital_vnd": "11,475,000,000,000 VND"
+      "charter_capital_vnd": "11,475,000,000,000 VND",
+      "lead_id": "BY-001"
     },
     {
       "id": "BY-002",
@@ -814873,7 +814874,8 @@
       "recommended_payment": "Irrevocable L/C At Sight phát hành bởi UBS hoặc Credit Suisse. Được phép cấp hạn mức tín dụng 30 ngày sau 3 hợp đồng thành công.",
       "notes": "Tập đoàn thương mại nông sản Thụy Sĩ, có chi nhánh văn phòng tại TP. Hồ Chí Minh.",
       "charter_capital_usd": "$650,000,000 USD",
-      "charter_capital_vnd": "16,575,000,000,000 VND"
+      "charter_capital_vnd": "16,575,000,000,000 VND",
+      "lead_id": "BY-002"
     },
     {
       "id": "BY-003",
@@ -814909,7 +814911,8 @@
       "recommended_payment": "Irrevocable L/C 60 days hoặc T/T cọc 20% - 80% B/L.",
       "notes": "Tập đoàn tiếp thị và phân phối hóa chất đa ngành hàng đầu nước Đức, thành lập năm 1900.",
       "charter_capital_usd": "$520,000,000 USD",
-      "charter_capital_vnd": "13,260,000,000,000 VND"
+      "charter_capital_vnd": "13,260,000,000,000 VND",
+      "lead_id": "BY-003"
     },
     {
       "id": "BY-004",
@@ -814945,7 +814948,8 @@
       "recommended_payment": "Bắt buộc đặt cọc tối thiểu 30% T/T trước khi sản xuất, 70% còn lại thanh toán ngay khi nhận bản scan B/L. Không chấp nhận thanh toán trả chậm D/A.",
       "notes": "Công ty thương mại tầm trung tại UAE, nhập hàng đều nhưng lịch sử thanh toán đôi khi chậm 5-7 ngày.",
       "charter_capital_usd": "$5,000,000 USD",
-      "charter_capital_vnd": "127,500,000,000 VND"
+      "charter_capital_vnd": "127,500,000,000 VND",
+      "lead_id": "BY-004"
     },
     {
       "id": "BY-005",
@@ -814980,7 +814984,8 @@
       "recommended_payment": "BÁO ĐỘNG ĐỎ: DỪNG GIAO DỊCH NGAY HOẶC THU TIỀN TRƯỚC 100% (ADVANCE T/T). Tuyệt đối không giao hàng theo điều kiện nợ D/P, D/A.",
       "notes": "Dấu hiệu điển hình của đường dây lừa đảo ngoại thương: Tên miền mới, dùng Gmail, hỏi mua sản lượng cực lớn 50 conts ngay đơn đầu và đòi điều kiện trả sau O/A 60 ngày.",
       "charter_capital_usd": "$1,300 USD (£1,000 GBP)",
-      "charter_capital_vnd": "33,000,000 VND"
+      "charter_capital_vnd": "33,000,000 VND",
+      "lead_id": "BY-005"
     },
     {
       "id": "BY-006",
@@ -815016,7 +815021,8 @@
       "recommended_payment": "Thanh toán bằng Nhân dân tệ (RMB) hoặc Đồng Rúp/VND qua Ngân hàng VCB/VRB (Vietnam - Russia Joint Venture Bank). Không dùng USD chuyển khoản qua hệ thống SWIFT liên quan tới ngân hàng Mỹ.",
       "notes": "Nhà sản xuất phân bón khoáng lớn hàng đầu nước Nga. Sản lượng ổn định, giá rất cạnh tranh.",
       "charter_capital_usd": "$380,000,000 USD",
-      "charter_capital_vnd": "9,690,000,000,000 VND"
+      "charter_capital_vnd": "9,690,000,000,000 VND",
+      "lead_id": "BY-006"
     },
     {
       "id": "BY-RU-001",
@@ -815052,7 +815058,8 @@
       "recommended_payment": "Mở L/C qua Ngân hàng Liên doanh Việt - Nga (VRB) hoặc VTB Bank bằng RUB/CNY. Thanh toán chuẩn mực, không rủi ro thu nợ.",
       "notes": "Tập đoàn sản xuất trà & cà phê lớn nhất nước Nga (Greenfield, Tess, Jardin, Jockey). Uy tín ngoại thương tuyệt đối hơn 30 năm.",
       "charter_capital_usd": "$120,000,000 USD",
-      "charter_capital_vnd": "3,060,000,000,000 VND"
+      "charter_capital_vnd": "3,060,000,000,000 VND",
+      "lead_id": "BY-RU-001"
     },
     {
       "id": "BY-RU-002",
@@ -815089,7 +815096,8 @@
       "recommended_payment": "Irrevocable L/C qua VTB Bank, hoặc T/T chuyển tiền song phương qua kênh thanh toán Ru-VND. Đảm bảo an toàn 100%.",
       "notes": "Sở hữu hơn 21,000 siêu thị Pyaterochka và Perekrestok. Đối tác mua hàng chiến lược lớn nhất khu vực Đông Âu.",
       "charter_capital_usd": "$2,100,000,000 USD",
-      "charter_capital_vnd": "53,550,000,000,000 VND"
+      "charter_capital_vnd": "53,550,000,000,000 VND",
+      "lead_id": "BY-RU-002"
     },
     {
       "id": "BY-RU-003",
@@ -815125,7 +815133,8 @@
       "recommended_payment": "Mở L/C At Sight hoặc T/T trả trước 30% - 70% scan vận đơn B/L qua VTB Bank.",
       "notes": "Nhà thu mua cá tra lớn nhất tại Đồng bằng sông Cửu Long cho thị trường Nga và Belarus.",
       "charter_capital_usd": "$65,000,000 USD",
-      "charter_capital_vnd": "1,657,500,000,000 VND"
+      "charter_capital_vnd": "1,657,500,000,000 VND",
+      "lead_id": "BY-RU-003"
     },
     {
       "id": "BY-RU-004",
@@ -815160,7 +815169,45 @@
       "recommended_payment": "CẢNH BÁO RỦI RO: Không chấp nhận thanh toán trả chậm D/A, D/P. Bắt buộc yêu cầu đặt cọc tối thiểu 30% T/T trước khi sản xuất và 70% thanh toán trước khi giao hàng (Cash Against Documents qua ngân hàng).",
       "notes": "Hồ sơ đã được đối soát thực chứng: 6 vận đơn B/L thông quan xuất khẩu gạo từ Việt Nam, tổng 16,122 tấn. Do vốn điều lệ tối thiểu (10,000 Ruble), tỷ lệ đòn bẩy vốn rất cao so với hợp đồng lớn. Bắt buộc yêu cầu thanh toán T/T cọc tối thiểu 30-50% qua VTB Bank, tuyệt đối không cấp tín dụng trả chậm O/A.",
       "charter_capital_usd": "$110 USD (10,000 Ruble)",
-      "charter_capital_vnd": "2,800,000 VND"
+      "charter_capital_vnd": "2,800,000 VND",
+      "lead_id": "BY-RU-004"
+    },
+    {
+      "id": "VN-AGENCY-01",
+      "lead_id": "VN-AGENCY-01",
+      "company_name": "Agency Global Logistics & Trade Corp",
+      "country": "Vietnam",
+      "country_code": "VN",
+      "registration_no": "0108928172",
+      "duns_number": "55-910-2849",
+      "website": "agencytrade.vn",
+      "domain_age_years": 8,
+      "email_domain": "@agencytrade.vn",
+      "is_free_email": false,
+      "sanctions_status": "CLEAR",
+      "sanctions_details": "Pháp nhân trực thuộc Tập đoàn, tuân thủ 100% quy định pháp luật Việt Nam và quốc tế.",
+      "established_year": 2018,
+      "annual_revenue_usd": "$45.0M USD / năm",
+      "credit_rating": "AAA (Tổng Doanh Nghiệp Tập Đoàn)",
+      "fraud_score": 98,
+      "tier": "A",
+      "primary_commodities": [
+        "8428.39 (Sorting Conveyor)",
+        "3102.10 (Urea)",
+        "0901.11 (Coffee)"
+      ],
+      "verified_contacts": [
+        {
+          "name": "Nguyễn Văn Hùng",
+          "title": "Giám Đốc Chuỗi Cung Ứng & Logistics",
+          "email": "hung.nv@agencytrade.vn",
+          "verified": true
+        }
+      ],
+      "recommended_payment": "Nội bộ tập đoàn / Bảo lãnh thanh toán ngân hàng VCB.",
+      "notes": "Công ty thành viên logistics & ngoại thương của tập đoàn, phụ trách nhập khẩu thiết bị băng chuyền phân loại tự động và xuất khẩu nông sản.",
+      "charter_capital_usd": "$20,000,000 USD",
+      "charter_capital_vnd": "500,000,000,000 VND"
     }
   ],
   "suppliers": [
@@ -830766,7 +830813,7 @@
       "hs_code": "0901.11",
       "commodity_desc": "Vietnam Robusta Coffee Beans Grade 1 Screen 18 Clean",
       "shipper": "Daklak Agri Products Ltd (Vietnam)",
-      "consignee": "Ameropa AG (Switzerland)",
+      "consignee": "Ameropa AG",
       "port_of_loading": "Cát Lái, Ho Chi Minh City (VNCLI)",
       "port_of_discharge": "Hamburg, Germany (DEHAM)",
       "vessel": "ONE OLYMPUS V.024W",
@@ -830777,14 +830824,16 @@
       "etd": "2026-10-02",
       "eta": "2026-11-04",
       "customs_declaration_no": "105992817290",
-      "status": "In Transit (On Sea)"
+      "status": "In Transit (On Sea)",
+      "lead_id": "BY-002",
+      "country": "Switzerland"
     },
     {
       "bl_number": "MSK-HPH-2026-44109",
       "hs_code": "3102.10",
       "commodity_desc": "Granular Urea 46% Nitrogen Mineral Fertilizer",
       "shipper": "Agency Global Logistics & Trade Corp",
-      "consignee": "Trammo, Inc. (United States)",
+      "consignee": "Trammo, Inc.",
       "port_of_loading": "Đình Vũ, Hải Phòng (VNHPH)",
       "port_of_discharge": "New Orleans, USA (USMSY)",
       "vessel": "MAERSK MC-KINNEY MOLLER",
@@ -830795,14 +830844,16 @@
       "etd": "2026-09-28",
       "eta": "2026-10-30",
       "customs_declaration_no": "105882190014",
-      "status": "In Transit (Approaching Destination)"
+      "status": "In Transit (Approaching Destination)",
+      "lead_id": "BY-001",
+      "country": "United States"
     },
     {
       "bl_number": "CMA-VUT-2026-77312",
       "hs_code": "0904.11",
       "commodity_desc": "Black Pepper 550 G/L FAQ Dried Whole",
       "shipper": "HTX Tiêu Chư Sê Gia Lai",
-      "consignee": "Gulf Agri Commodities FZE (UAE)",
+      "consignee": "Gulf Agri Commodities FZE",
       "port_of_loading": "Cái Mép, Bà Rịa Vũng Tàu (VNCMT)",
       "port_of_discharge": "Jebel Ali, Dubai (AEJEA)",
       "vessel": "CMA CGM JACQUES SAADE",
@@ -830813,14 +830864,16 @@
       "etd": "2026-10-08",
       "eta": "2026-10-24",
       "customs_declaration_no": "106001928411",
-      "status": "In Transit"
+      "status": "In Transit",
+      "lead_id": "BY-004",
+      "country": "United Arab Emirates"
     },
     {
       "bl_number": "COS-HPH-2026-11098",
       "hs_code": "8428.39",
       "commodity_desc": "Automated Industrial Sorting Conveyor System with PLC Control",
       "shipper": "Shanghai Smart Automation Co., Ltd (China)",
-      "consignee": "Agency Global Logistics & Trade Corp (Vietnam)",
+      "consignee": "Agency Global Logistics & Trade Corp",
       "port_of_loading": "Shanghai Port, China (CNSHA)",
       "port_of_discharge": "Tân Vũ, Hải Phòng (VNHPH)",
       "vessel": "COSCO SHIPPING TAURUS",
@@ -830831,14 +830884,16 @@
       "etd": "2026-10-12",
       "eta": "2026-10-18",
       "customs_declaration_no": "106110298110",
-      "status": "Customs Cleared (Green Channel)"
+      "status": "Customs Cleared (Green Channel)",
+      "lead_id": "VN-AGENCY-01",
+      "country": "Vietnam"
     },
     {
       "bl_number": "HLC-SGN-2026-33901",
       "hs_code": "1006.30",
       "commodity_desc": "Vietnam Premium Fragrant Jasmine Rice 5% Broken (ST25 Brand)",
       "shipper": "Mekong Delta Food Export JSC",
-      "consignee": "HELM AG (Germany)",
+      "consignee": "HELM AG",
       "port_of_loading": "Cát Lái, Ho Chi Minh City (VNCLI)",
       "port_of_discharge": "Rotterdam, Netherlands (NLRTM)",
       "vessel": "HAPAG-LLOYD BERLIN EXPRESS",
@@ -830849,7 +830904,9 @@
       "etd": "2026-10-05",
       "eta": "2026-11-09",
       "customs_declaration_no": "105944819230",
-      "status": "In Transit"
+      "status": "In Transit",
+      "lead_id": "BY-003",
+      "country": "Germany"
     }
   ]
 }

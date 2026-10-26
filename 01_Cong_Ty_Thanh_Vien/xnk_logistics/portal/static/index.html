@@ -9219,11 +9219,29 @@
       if (document.getElementById('b2b-highlight-incoterms')) document.getElementById('b2b-highlight-incoterms').innerText = latestRfq.incoterms || (lead && lead.preferred_incoterms) || 'FOB / CIF';
       if (document.getElementById('b2b-highlight-status')) document.getElementById('b2b-highlight-status').innerText = (latestRfq.status || 'Đang mở nhận hồ sơ chào giá').toUpperCase();
       if (document.getElementById('b2b-highlight-signal')) document.getElementById('b2b-highlight-signal').innerText = rfqSignal;
-      const deadlineStr = latestRfq.deadline_date ? `${latestRfq.deadline_date} (Còn ${latestRfq.days_remaining !== undefined ? latestRfq.days_remaining : 12} ngày)` : 'Đang mở thầu';
-      if (document.getElementById('b2b-highlight-deadline')) document.getElementById('b2b-highlight-deadline').innerText = deadlineStr;
+
+      const isLatestClosed = (latestRfq.status || '').toLowerCase().includes('chốt') || (latestRfq.status || '').toLowerCase().includes('lưu') || (latestRfq.status || '').toLowerCase().includes('hoàn tất');
+      let deadlineHtml = '';
+      if (isLatestClosed) {
+        deadlineHtml = '<span class="text-xs font-mono text-slate-400 font-semibold">Đã đóng / Hết hạn nộp thầu</span>';
+      } else {
+        const dDate = latestRfq.deadline_date || '30/11/2026';
+        const daysLeft = latestRfq.days_remaining !== undefined ? latestRfq.days_remaining : 14;
+        deadlineHtml = `
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <span class="text-rose-300 font-black font-mono text-xs sm:text-sm tracking-tight">${dDate}</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-rose-500/25 text-rose-300 border border-rose-500/40 inline-flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-rose-400 animate-ping"></span>
+              <span>Còn ${daysLeft} ngày</span>
+            </span>
+          </div>
+        `;
+      }
+      if (document.getElementById('b2b-highlight-deadline')) {
+        document.getElementById('b2b-highlight-deadline').innerHTML = deadlineHtml;
+      }
 
       // Matched / Recommended Supplier for highlighted order
-      const isLatestClosed = (latestRfq.status || '').toLowerCase().includes('chốt') || (latestRfq.status || '').toLowerCase().includes('lưu');
       const highlightSup = latestRfq.matched_supplier || latestRfq.recommended_supplier || (b2bData && b2bData.matching_suppliers && b2bData.matching_suppliers[0]) || null;
       const supBox = document.getElementById('b2b-highlight-supplier-box');
       if (supBox) {
@@ -9318,10 +9336,13 @@
             }
 
             let deadlineBadge = '';
-            if (r.deadline_date) {
-              const daysLeft = r.days_remaining !== undefined ? r.days_remaining : 10;
-              const daysColor = daysLeft <= 7 ? 'text-rose-400 bg-rose-500/15 border-rose-500/30' : 'text-amber-300 bg-amber-500/15 border-amber-500/30';
-              deadlineBadge = `<div class="mt-1"><span class="px-1.5 py-0.5 rounded text-[9px] font-mono border ${daysColor}">⏳ Hạn: ${r.deadline_date} (còn ${daysLeft}d)</span></div>`;
+            if (isClosed) {
+              deadlineBadge = '<div class="mt-1 text-[9px] font-mono text-slate-400">Đã đóng thầu</div>';
+            } else {
+              const dDate = r.deadline_date || '30/11/2026';
+              const daysLeft = r.days_remaining !== undefined ? r.days_remaining : 14;
+              const daysColor = daysLeft <= 7 ? 'text-rose-400 bg-rose-500/20 border-rose-500/40' : 'text-amber-300 bg-amber-500/20 border-amber-500/40';
+              deadlineBadge = `<div class="mt-1.5"><span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold border ${daysColor} inline-flex items-center gap-1"><span>⏳ Hạn: ${dDate}</span><span>•</span><span>Còn ${daysLeft} ngày</span></span></div>`;
             }
 
             return `

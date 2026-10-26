@@ -4660,7 +4660,7 @@
             <!-- Highlight Order Matched Supplier -->
             <div id="b2b-highlight-supplier-box" class="p-3 rounded-xl bg-emerald-950/40 border border-emerald-500/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
               <div class="space-y-0.5">
-                <span class="text-[10px] font-mono text-emerald-400 uppercase font-bold flex items-center gap-1">
+                <span class="text-[10px] font-mono text-emerald-400 uppercase font-bold flex items-center gap-1" id="b2b-highlight-sup-title">
                   <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-400"></i>
                   <span>Đối Tác Nhà Cung Cấp Ghép Cặp (Matched Supplier):</span>
                 </span>
@@ -9222,21 +9222,33 @@
       const deadlineStr = latestRfq.deadline_date ? `${latestRfq.deadline_date} (Còn ${latestRfq.days_remaining !== undefined ? latestRfq.days_remaining : 12} ngày)` : 'Đang mở thầu';
       if (document.getElementById('b2b-highlight-deadline')) document.getElementById('b2b-highlight-deadline').innerText = deadlineStr;
 
-      // Matched Supplier for highlighted order
-      const highlightSup = (latestRfq && latestRfq.matched_supplier) || (b2bData && b2bData.matching_suppliers && b2bData.matching_suppliers[0]) || null;
+      // Matched / Recommended Supplier for highlighted order
+      const isLatestClosed = (latestRfq.status || '').toLowerCase().includes('chốt') || (latestRfq.status || '').toLowerCase().includes('lưu');
+      const highlightSup = latestRfq.matched_supplier || latestRfq.recommended_supplier || (b2bData && b2bData.matching_suppliers && b2bData.matching_suppliers[0]) || null;
       const supBox = document.getElementById('b2b-highlight-supplier-box');
       if (supBox) {
         if (highlightSup) {
           supBox.style.display = 'flex';
+          const supTitleEl = document.getElementById('b2b-highlight-sup-title');
+          if (supTitleEl) {
+            supTitleEl.innerHTML = isLatestClosed
+              ? '<i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-400"></i><span>Đối Tác Nhà Cung Cấp Đã Giao Dịch:</span>'
+              : '<span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span><span class="text-amber-300 font-bold">🎯 Đề Xuất Nhà Cung Cấp Để Sales Đi Chào Thầu:</span>';
+          }
           const hName = document.getElementById('b2b-highlight-sup-name');
           if (hName) hName.textContent = `${highlightSup.company_name} (${highlightSup.country || 'Việt Nam'})`;
           const hMeta = document.getElementById('b2b-highlight-sup-meta');
           if (hMeta) hMeta.textContent = `Hạng ${highlightSup.tier || 'A'} • Điểm uy tín: ${highlightSup.credibility_score || 95}/100 • Năng lực: ${highlightSup.export_capacity || 'Đạt chuẩn quốc tế'}`;
           const hBtn = document.getElementById('b2b-highlight-sup-btn');
           if (hBtn) {
+            hBtn.textContent = isLatestClosed ? 'Xem Hồ Sơ 360° NCC' : 'Soạn Báo Giá Với NCC Này';
             hBtn.onclick = () => {
               closeB2BMarketplaceModal();
-              openSupplierDetailModal(highlightSup.id);
+              if (isLatestClosed) {
+                openSupplierDetailModal(highlightSup.id);
+              } else {
+                openDualRfqFromPair(leadId, highlightSup.id);
+              }
             };
           }
         } else {
@@ -9260,25 +9272,47 @@
               statusBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-blue-500/20 text-blue-300">Đang đàm phán</span>';
             }
 
-            // Đối tác nhà cung cấp cho mỗi đơn hàng
-            const sup = r.matched_supplier || (b2bData && b2bData.matching_suppliers && b2bData.matching_suppliers[0]) || null;
-            let supplierCell = '<span class="text-[10px] font-mono text-slate-400 italic">Đang tuyển chọn NCC</span>';
-            if (sup) {
-              const supBadgeColor = isClosed ? 'text-emerald-300' : 'text-cyan-300';
-              const iconName = isClosed ? 'check-circle' : 'clock';
+            // Phân định rõ giữa Đơn đã chốt (đã có đối tác giao dịch) và Đơn đang mở thầu (chưa có NCC - cơ hội cho Sales)
+            let supplierCell = '';
+            if (isClosed) {
+              const sup = r.matched_supplier || r.recommended_supplier || (b2bData && b2bData.matching_suppliers && b2bData.matching_suppliers[0]) || null;
+              if (sup) {
+                supplierCell = `
+                  <div class="space-y-0.5">
+                    <div class="flex items-center gap-1 font-semibold text-emerald-300 text-[11px]">
+                      <i data-lucide="check-circle" class="w-3 h-3 shrink-0"></i>
+                      <span class="truncate max-w-[150px]" title="${sup.company_name}">${sup.company_name}</span>
+                    </div>
+                    <div class="text-[9px] font-mono text-slate-400">
+                      <span>${sup.country || 'VN'}</span> • <span class="text-amber-300">Hạng ${sup.tier || 'A'}</span>
+                    </div>
+                    <button type="button" onclick="closeB2BMarketplaceModal(); openSupplierDetailModal('${sup.id}')" class="text-[9px] font-mono text-cyan-400 hover:text-cyan-200 hover:underline cursor-pointer inline-flex items-center gap-0.5">
+                      <span>Hồ sơ NCC</span>
+                      <i data-lucide="chevron-right" class="w-2.5 h-2.5"></i>
+                    </button>
+                  </div>
+                `;
+              } else {
+                supplierCell = '<span class="text-[10px] font-mono text-slate-400 italic">Đã giao dịch</span>';
+              }
+            } else {
+              // Đang mở thầu hoặc đang đàm phán: CHƯA CÓ ĐỐI TÁC TRÚNG THẦU!
+              const recSup = r.recommended_supplier || (b2bData && b2bData.matching_suppliers && b2bData.matching_suppliers[0]) || null;
               supplierCell = `
-                <div class="space-y-0.5">
-                  <div class="flex items-center gap-1 font-semibold ${supBadgeColor} text-[11px]">
-                    <i data-lucide="${iconName}" class="w-3 h-3 shrink-0"></i>
-                    <span class="truncate max-w-[150px]" title="${sup.company_name}">${sup.company_name}</span>
+                <div class="space-y-1">
+                  <div class="flex items-center gap-1 text-rose-300 font-bold text-[10px]">
+                    <span class="w-1.5 h-1.5 rounded-full bg-rose-500 inline-block animate-pulse"></span>
+                    <span>Đang tìm NCC (Chưa chốt)</span>
                   </div>
-                  <div class="text-[9px] font-mono text-slate-400">
-                    <span>${sup.country || 'VN'}</span> • <span class="text-amber-300">Hạng ${sup.tier || 'A'} (${sup.credibility_score || 95}đ)</span>
-                  </div>
-                  <button type="button" onclick="closeB2BMarketplaceModal(); openSupplierDetailModal('${sup.id}')" class="text-[9px] font-mono text-cyan-400 hover:text-cyan-200 hover:underline cursor-pointer inline-flex items-center gap-0.5">
-                    <span>Hồ sơ NCC</span>
-                    <i data-lucide="chevron-right" class="w-2.5 h-2.5"></i>
-                  </button>
+                  ${recSup ? `
+                    <div class="p-1.5 rounded-lg bg-cyan-950/40 border border-cyan-500/20 text-[9px] space-y-0.5">
+                      <span class="text-cyan-400 font-semibold block">🎯 Đề xuất Sales chào:</span>
+                      <span class="text-white font-medium truncate block max-w-[140px]" title="${recSup.company_name}">${recSup.company_name}</span>
+                      <button type="button" onclick="closeB2BMarketplaceModal(); openDualRfqFromPair('${leadId}', '${recSup.id}')" class="text-amber-400 hover:text-amber-200 underline inline-block font-mono">
+                        Soạn chào giá ngay ➔
+                      </button>
+                    </div>
+                  ` : '<span class="text-[9px] text-slate-500 font-mono">Chờ đề xuất</span>'}
                 </div>
               `;
             }

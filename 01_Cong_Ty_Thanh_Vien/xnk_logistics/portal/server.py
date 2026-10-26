@@ -1876,11 +1876,17 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                     }
                 
                 if matched_sup:
-                    r_copy["matched_supplier"] = matched_sup
-                    if is_closed and not r_copy.get("supplier_name"):
-                        r_copy["supplier_name"] = matched_sup["company_name"]
-                        r_copy["supplier_country"] = matched_sup["country"]
-                        r_copy["supplier_tier"] = matched_sup["tier"]
+                    r_copy["recommended_supplier"] = matched_sup
+                    if is_closed:
+                        r_copy["matched_supplier"] = matched_sup
+                        if not r_copy.get("supplier_name"):
+                            r_copy["supplier_name"] = matched_sup["company_name"]
+                            r_copy["supplier_country"] = matched_sup["country"]
+                            r_copy["supplier_tier"] = matched_sup["tier"]
+                    else:
+                        # Đơn đang mở thầu: Buyer CHƯA chốt NCC nào cả
+                        r_copy["matched_supplier"] = None
+                        r_copy["supplier_name"] = None
                 
                 enriched_orders.append(r_copy)
             

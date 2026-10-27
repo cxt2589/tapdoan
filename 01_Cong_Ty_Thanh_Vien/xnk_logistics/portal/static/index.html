@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi" class="dark">
+<html lang="vi" class="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +10,7 @@
     (function() {
       try {
         const savedTheme = localStorage.getItem('portal_theme');
-        if (savedTheme === 'light') {
+        if (savedTheme !== 'dark') {
           document.documentElement.classList.remove('dark');
           document.documentElement.classList.add('light');
         } else {
@@ -24,7 +24,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600;1,700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -34,7 +34,7 @@
       theme: {
         extend: {
           fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            sans: ['"Inter"', 'sans-serif'],
             mono: ['"JetBrains Mono"', 'monospace'],
           },
           colors: {
@@ -79,18 +79,18 @@
     /* Thống nhất font chữ thể chế, chuẩn xác dấu thanh tiếng Việt & số liệu    */
     /* ========================================================================= */
     html, body {
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-rendering: optimizeLegibility;
     }
 
     button, input, select, textarea, optgroup, option {
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
     }
 
     h1, h2, h3, h4, h5, h6, .font-heading {
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
       letter-spacing: -0.02em;
     }
 
@@ -1023,103 +1023,18 @@
       100% { transform: scale(1.35); opacity: 0; }
     }
   </style>
+  <link rel="stylesheet" href="/workspace.css">
 </head>
 <body class="bg-brand-950 text-slate-100 font-sans antialiased min-h-screen selection:bg-brand-cyan/20 selection:text-brand-cyan relative bg-mesh">
 
-  <!-- Top Executive Header (UNIVERSAL STICKY PINNED AT TOP ACROSS ALL DEVICES) -->
-  <header id="mainExecutiveHeader" class="executive-sticky-header border-b border-white/[0.08] bg-brand-900/95 backdrop-blur-xl shadow-md transition-colors">
-    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-12 sm:h-16 flex items-center justify-between border-b border-white/5">
-      
-      <!-- Brand & Division -->
-      <div class="flex items-center space-x-2.5 sm:space-x-3 min-w-0">
-        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-cyan-500/20 via-blue-500/20 to-emerald-500/20 border border-white/10 p-0.5 flex items-center justify-center shadow-lg shadow-cyan-500/10 shrink-0">
-          <div class="w-full h-full bg-brand-900 rounded-[10px] sm:rounded-[14px] flex items-center justify-center text-cyan-400">
-            <i data-lucide="crosshair" class="w-4 h-4 sm:w-5 sm:h-5"></i>
-          </div>
-        </div>
-        <div class="min-w-0 truncate">
-          <div class="flex items-center space-x-1.5 sm:space-x-2">
-            <span class="font-extrabold text-xs sm:text-base tracking-tight text-white truncate">TRADE INTELLIGENCE</span>
-            <span class="px-1.5 py-0.2 sm:px-2 sm:py-0.5 rounded-full text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wider bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shrink-0">PHASE 1</span>
-          </div>
-          <p class="text-[11px] text-slate-400 font-medium truncate hidden sm:block">Khối Xuất Nhập Khẩu & Thương Mại Quốc Tế Tập Đoàn</p>
-        </div>
-      </div>
 
-      <!-- Live Engine Status & Actions -->
-      <div class="flex items-center space-x-1.5 sm:space-x-3 shrink-0">
-        <!-- Live Customs & Tender Ingestion Badge -->
-        <div id="customsLiveBadge" onclick="openCustomsDaemonModal()" class="flex items-center space-x-1.5 sm:space-x-2 bg-brand-850/90 border border-rose-500/35 hover:border-rose-400 px-2 sm:px-3 py-1 rounded-full text-xs cursor-pointer transition-all shadow-sm group" title="Bấm để xem nhật ký quét và quản trị Cổng Quét / Proxy XNK">
-          <span class="relative flex h-2 w-2">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
-          </span>
-          <span class="font-mono font-bold text-rose-400 text-[10px] sm:text-[11px] tracking-tight" id="headerLiveStatus">🔴 LIVE: 24h</span>
-          <span class="text-slate-600 hidden sm:inline">|</span>
-          <span class="font-mono text-cyan-300 text-[10px] hidden sm:inline" id="headerBlTenderCount">42 B/L • 36 Thầu Mở</span>
-        </div>
+  <a class="workspace-skip" href="#workspaceMain">Đến nội dung chính</a>
+  <aside class="workspace-sidebar" aria-label="Không gian làm việc">
+    <a href="#prospecting" class="workspace-brand" aria-label="Trade Intelligence — Khách hàng"><span class="workspace-brand-icon"><i data-lucide="layers-3"></i></span><span>trade<span class="workspace-brand-accent">desk</span><small>TRADE INTELLIGENCE</small></span></a>
+    <div class="workspace-org"><span class="workspace-org-icon">XN</span><div><strong>Khối Xuất Nhập Khẩu</strong><small>Không gian làm việc</small></div><i data-lucide="chevrons-up-down"></i></div>
+    <p class="workspace-nav-label">KHÔNG GIAN LÀM VIỆC</p>
 
-        <div class="hidden xl:flex items-center space-x-2.5 bg-brand-850/80 border border-white/[0.08] px-3 py-1 rounded-full text-xs">
-          <span class="relative flex h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-          <span class="font-mono text-slate-300 text-[11px]">ONLINE</span>
-          <span class="text-slate-600">|</span>
-          <span class="font-mono text-cyan-400 text-[11px]" id="syncTime">16/10/2026</span>
-        </div>
-
-        <!-- All Features Hub Dropdown Button (Sơ Đồ Phân Hệ) -->
-        <button id="allModulesHubBtn" onclick="event.stopPropagation(); toggleAllModulesHub()" class="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-mono font-bold transition-all cursor-pointer bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 shadow-sm animate-ui-press" title="Bấm để xem danh mục toàn bộ các phân hệ tính năng">
-          <i data-lucide="layout-grid" class="w-3.5 h-3.5 text-cyan-400 pointer-events-none"></i>
-          <span class="hidden md:inline pointer-events-none">Sơ Đồ Phân Hệ</span>
-          <span class="md:hidden pointer-events-none">Sơ Đồ</span>
-          <i data-lucide="chevron-down" class="w-3 h-3 text-cyan-400 transition-transform pointer-events-none" id="modulesHubChevron"></i>
-        </button>
-
-        <!-- Regulatory Radar Button (Radar Pháp Lý) -->
-        <button id="regulatoryRadarBtn" onclick="openRegulatoryRadarModal()" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-mono font-bold transition-all cursor-pointer bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 shadow-sm animate-ui-press" title="Radar Pháp Lý & Giám Sát Chính Sách Mới Toàn Cầu">
-          <i data-lucide="scale" class="w-3.5 h-3.5 text-amber-400"></i>
-          <span class="hidden md:inline">Radar Pháp Lý</span>
-          <span class="md:hidden">Pháp Lý</span>
-          <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span>
-        </button>
-
-        <!-- Commodity Price & Arbitrage Board Button (Giá Đa Sàn) -->
-        <button id="crossExchangePricesBtn" onclick="openCrossExchangePricesModal()" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-mono font-bold transition-all cursor-pointer bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 shadow-sm animate-ui-press" title="Bảng Giá Đa Sàn Quốc Tế, Bộ Chuẩn Hóa & Radar Chênh Lệch Giá (Arbitrage)">
-          <i data-lucide="trending-up" class="w-3.5 h-3.5 text-emerald-400"></i>
-          <span class="hidden md:inline">Giá Đa Sàn</span>
-          <span class="md:hidden">Giá Sàn</span>
-        </button>
-
-        <!-- Proxy & Customs Daemon Quick Button (Cổng Proxy & Quét 24h) -->
-        <button id="customsDaemonQuickBtn" onclick="openCustomsDaemonModal()" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-mono font-bold transition-all cursor-pointer bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 shadow-sm animate-ui-press" title="Quản lý Cổng Proxy Chờ & Robot Quét Tờ Khai 24/7">
-          <i data-lucide="radio" class="w-3.5 h-3.5 text-rose-400 animate-pulse"></i>
-          <span class="hidden md:inline">Cổng Proxy & Quét 24h</span>
-          <span class="md:hidden">Proxy 24h</span>
-        </button>
-
-        <!-- API Documentation Button (Tài Liệu API / Swagger) -->
-        <a id="apiDocsBtn" href="/api/docs" target="_blank" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-mono font-bold transition-all cursor-pointer bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 border border-purple-500/30 shadow-sm animate-ui-press" title="Xem Toàn Bộ Tài Liệu API & OpenAPI 3.1.0 Interactive Swagger" style="text-decoration: none;">
-          <i data-lucide="code-2" class="w-3.5 h-3.5 text-purple-400"></i>
-          <span class="hidden md:inline">Tài Liệu API</span>
-          <span class="md:hidden">API</span>
-        </a>
-
-        <!-- Theme Toggle Button (Sáng / Tối) -->
-        <button id="themeToggleBtn" onclick="toggleTheme()" class="theme-toggle-btn inline-flex items-center gap-1 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs font-mono font-semibold transition-all cursor-pointer bg-brand-850 hover:bg-brand-800 text-slate-300 hover:text-white border border-white/10 shadow-sm animate-ui-press" title="Bấm để chuyển đổi giữa Giao diện Sáng và Tối">
-          <i data-lucide="sun" class="w-3.5 h-3.5 text-amber-400" id="themeIcon"></i>
-          <span id="themeLabel" class="text-[11px] hidden sm:inline">Sáng</span>
-        </button>
-
-        <!-- Telegram Quick Alert -->
-        <button onclick="triggerQuickTelegramAlert()" class="group relative inline-flex items-center gap-1 px-2.5 sm:px-4 py-1 sm:py-2 rounded-full text-xs font-semibold bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 hover:scale-[1.02] active:scale-[0.98] transition-all">
-          <i data-lucide="send" class="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5"></i>
-          <span class="hidden sm:inline">Telegram</span>
-        </button>
-      </div>
-
-    </div>
-
-    <!-- HORIZONTALLY SCROLLABLE NAVIGATION BAR ON MOBILE / GRID ON DESKTOP -->
-    <div class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-1.5 sm:py-2">
+    <nav class="workspace-navigation" aria-label="Điều hướng chính">
       <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto scrollbar-none xl:grid xl:grid-cols-7 w-full py-0.5" id="mainTabScrollContainer">
         
         <!-- Tab 1: Prospecting Leads -->
@@ -1159,24 +1074,35 @@
         </button>
 
         <!-- Tab 7: Multi-Exchange Commodity Prices & Charts (Bảng Giá & Biểu Đồ Đa Sàn) -->
-        <button onclick="window.location.href='/prices'" id="tab-prices" class="tab-btn shrink-0 xl:shrink px-3.5 py-2 sm:px-3 sm:py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap active:scale-95">
+        <button onclick="switchTab('prices')" id="tab-prices" class="tab-btn shrink-0 xl:shrink px-3.5 py-2 sm:px-3 sm:py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer whitespace-nowrap active:scale-95">
           <i data-lucide="trending-up" class="w-4 h-4 text-emerald-400 shrink-0"></i>
           <span class="font-bold text-xs md:text-sm tracking-tight">Giá Đa Sàn</span>
         </button>
 
       </div>
-    </div>
-
-    <!-- GUIDANCE CALLOUT: SWIPE RIGHT TO EXPLORE DATA (STICKY ĐÍNH NGAY DƯỚI MENU KHI Ở TAB KHÁCH HÀNG) -->
-    <div id="tableSwipeGuidanceWrapper" class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 pb-1.5 transition-all">
-      <div id="tableSwipeGuidance" class="rounded-xl px-3 py-1.5 bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-between gap-2 w-full max-w-full overflow-hidden text-xs text-slate-300">
-        <div class="flex items-center gap-2 min-w-0">
-          <i data-lucide="info" class="w-3.5 h-3.5 text-cyan-400 shrink-0"></i>
-          <span id="tableSwipeGuidanceText" class="text-[11px] truncate">Vuốt sang phải để xem đầy đủ: Mã HS, Sản Lượng, Phễu Điểm, Vận Đơn B/L và Đầu Mối Liên Hệ.</span>
-        </div>
+    </nav>
+    <p class="workspace-nav-label">CÔNG CỤ & DỮ LIỆU</p>
+    <nav class="workspace-tools" aria-label="Công cụ bổ trợ">
+      <button id="regulatoryRadarBtn" onclick="openRegulatoryRadarModal()"><i data-lucide="scale"></i>Radar pháp lý</button>
+      <button id="crossExchangePricesBtn" onclick="openCrossExchangePricesModal()"><i data-lucide="chart-no-axes-combined"></i>So sánh giá đa sàn</button>
+      <button id="customsDaemonQuickBtn" onclick="openCustomsDaemonModal()"><i data-lucide="radio"></i>Quản lý nguồn dữ liệu</button>
+      <a id="apiDocsBtn" href="/api/docs" target="_blank" rel="noopener"><i data-lucide="braces"></i>Tài liệu API<i data-lucide="arrow-up-right"></i></a>
+    </nav>
+    <div class="workspace-sidebar-footer"><div class="workspace-footer-symbol"><i data-lucide="globe-2"></i></div><strong>Kết nối thị trường toàn cầu</strong><p>Tìm đối tác. Hiểu thị trường.<br>Mở rộng cơ hội kinh doanh.</p><div class="workspace-sync"><span></span>Phiên làm việc local<span id="syncTime"></span></div></div>
+  </aside>
+  <!-- Top Executive Header (UNIVERSAL STICKY PINNED AT TOP ACROSS ALL DEVICES) -->
+  <header id="mainExecutiveHeader" class="executive-sticky-header border-b border-white/[0.08] bg-brand-900/95 backdrop-blur-xl shadow-md transition-colors">
+    <div class="workspace-topbar">
+      <div class="workspace-breadcrumb"><span>Workspace</span><span aria-hidden="true">/</span><strong id="workspacePageLabel">Khách hàng</strong></div>
+      <div class="workspace-actions">
+        <span class="workspace-connection"><span></span> Local workspace</span>
+        <button id="allModulesHubBtn" onclick="event.stopPropagation(); toggleAllModulesHub()" title="Tất cả công cụ" aria-label="Tất cả công cụ"><i data-lucide="layout-grid"></i><span>Công cụ</span><i data-lucide="chevron-down" id="modulesHubChevron"></i></button>
+        <button id="themeToggleBtn" onclick="toggleTheme()" aria-label="Chuyển giao diện sáng hoặc tối" title="Đổi giao diện"><i data-lucide="moon" id="themeIcon"></i><span id="themeLabel">Tối</span></button>
+        <button onclick="triggerQuickTelegramAlert()" class="workspace-send" title="Gửi cảnh báo Telegram"><i data-lucide="send"></i><span>Telegram</span></button>
+        <div class="workspace-avatar" aria-label="Không gian làm việc XNK">XN</div>
       </div>
     </div>
-
+  </header>
     <!-- ALL MODULES HUB MOBILE BACKDROP (CHỐNG LƯỚT BACKGROUND TRÊN MOBILE) -->
     <div id="allModulesHubBackdrop" onclick="toggleAllModulesHub(false)" class="hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm sm:hidden" style="touch-action: none;"></div>
 
@@ -1297,11 +1223,10 @@
         </div>
       </div>
     </div>
-  </header>
+
 
   <!-- Main Container -->
-  <main class="max-w-7xl mx-auto px-2.5 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-4 sm:space-y-8 w-full max-w-full box-border">
-
+  <main id="workspaceMain" tabindex="-1" class="max-w-7xl mx-auto px-2.5 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-4 sm:space-y-8 w-full max-w-full box-border">
     <!-- ============================================================= -->
     <!-- TAB 1: INDUSTRY BUYER PROSPECTING ENGINE (TRỌNG TÂM CỐT LÕI) -->
     <!-- ============================================================= -->
@@ -1309,27 +1234,27 @@
       
 
       <!-- Executive Banner -->
-      <div class="rounded-3xl p-1 bg-gradient-to-b from-cyan-500/20 via-white/5 to-white/[0.02] border border-cyan-500/30 shadow-2xl w-full max-w-full overflow-hidden">
+      <div class="workspace-discovery rounded-3xl p-1 bg-gradient-to-b from-cyan-500/20 via-white/5 to-white/[0.02] border border-cyan-500/30 shadow-2xl w-full max-w-full overflow-hidden">
         <div class="bg-brand-900 rounded-[22px] p-4 sm:p-8 space-y-4 sm:space-y-6 w-full max-w-full overflow-hidden">
           <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 sm:gap-4">
             <div>
               <div class="flex items-center gap-2">
-                <span class="px-2.5 py-0.5 rounded-full text-[9px] sm:text-[10px] font-mono uppercase tracking-wider font-bold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">RADAR B2B</span>
-                <span class="text-[11px] sm:text-xs text-slate-400 font-mono">1,000 KHÁCH HÀNG TOÀN CẦU</span>
+                <span class="px-2.5 py-0.5 rounded-full text-[9px] sm:text-[10px] font-mono uppercase tracking-wider font-bold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">PHÁT TRIỂN THỊ TRƯỜNG</span>
+                <span class="text-[11px] sm:text-xs text-slate-400 font-mono">DỮ LIỆU ĐỐI TÁC & THƯƠNG MẠI</span>
               </div>
-              <h2 class="text-lg sm:text-2xl lg:text-3xl font-extrabold tracking-tight text-white mt-1.5 sm:mt-2">Săn Tìm Khách Hàng Tiềm Năng & Mã HS</h2>
-              <p class="text-xs sm:text-sm text-slate-400 mt-1 max-w-3xl hidden sm:block">Tiếp cận trực tiếp các tập đoàn thu mua quốc tế hàng đầu (Tier-1 Buyers), bóc tách danh bạ Giám đốc Thu mua (Head of Sourcing), sản lượng tiêu thụ hàng năm và phát hành Thư Chào Hàng Ngoại Thương chuẩn mực.</p>
+              <h1 class="text-lg sm:text-2xl lg:text-3xl font-extrabold tracking-tight text-white mt-1.5 sm:mt-2">Khám phá khách hàng toàn cầu</h1>
+              <p class="text-xs sm:text-sm text-slate-400 mt-1 max-w-3xl hidden sm:block">Tìm đối tác phù hợp, theo dõi nhu cầu thu mua và bắt đầu cuộc trò chuyện tiếp theo.</p>
             </div>
             
             <div class="flex items-center gap-3">
               <div class="text-left sm:text-right font-mono">
-                <p class="text-[10px] sm:text-xs text-slate-400">TỔNG LEAD</p>
-                <p class="text-lg sm:text-2xl font-extrabold text-cyan-400" id="totalLeadsCount">10 Lead</p>
+                <p class="text-[10px] sm:text-xs text-slate-400">KHÁCH HÀNG PHÙ HỢP</p>
+                <p class="text-lg sm:text-2xl font-extrabold text-cyan-400" id="totalLeadsCount">—</p>
               </div>
               <div class="h-8 sm:h-10 w-[1px] bg-white/10 block"></div>
               <div class="text-left sm:text-right font-mono">
-                <p class="text-[10px] sm:text-xs text-slate-400">THỊ TRƯỜNG FTA</p>
-                <p class="text-lg sm:text-2xl font-extrabold text-emerald-400">18 Quốc Gia</p>
+                <p class="text-[10px] sm:text-xs text-slate-400">DANH MỤC HS</p>
+                <p class="text-lg sm:text-2xl font-extrabold text-emerald-400">97 chương</p>
               </div>
             </div>
           </div>
@@ -1359,7 +1284,7 @@
 
               <!-- Inline Quick Search Input with Floating Suggestions Dropdown -->
               <div class="relative flex-1 min-w-[160px] sm:max-w-xs" id="omniHsSearchWrapper">
-                <input type="text" id="omniHsSearchInput" oninput="handleQuickSearchInput(this.value)" onfocus="handleQuickSearchFocus()" placeholder="Tìm mã HS, ngành hàng..." autocomplete="off"
+                <input type="text" id="omniHsSearchInput" aria-label="Tìm mã HS hoặc ngành hàng" oninput="handleQuickSearchInput(this.value)" onfocus="handleQuickSearchFocus()" placeholder="Tìm mã HS, ngành hàng..." autocomplete="off"
                   class="w-full pl-7 pr-7 py-2 bg-brand-900 border border-white/10 hover:border-blue-500/40 rounded-xl text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 font-mono">
                 <div class="absolute left-2 top-2.5 text-slate-400 pointer-events-none">
                   <i data-lucide="search" class="w-3.5 h-3.5"></i>
@@ -1377,7 +1302,7 @@
 
               <!-- Keyword / Company / BL Search Input -->
               <div class="relative flex-1 min-w-[160px]">
-                <input type="text" id="leadKeywordInput" oninput="debounceSearch()" placeholder="Tên DN, từ khóa, B/L..." class="w-full pl-7 pr-3 py-2 bg-brand-900 border border-white/10 hover:border-blue-500/40 rounded-xl text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 font-mono">
+                <input type="text" id="leadKeywordInput" aria-label="Tìm doanh nghiệp, từ khóa hoặc vận đơn" oninput="debounceSearch()" placeholder="Tên DN, từ khóa, B/L..." class="w-full pl-7 pr-3 py-2 bg-brand-900 border border-white/10 hover:border-blue-500/40 rounded-xl text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 font-mono">
                 <div class="absolute left-2 top-2.5 text-slate-400 pointer-events-none">
                   <i data-lucide="building" class="w-3.5 h-3.5"></i>
                 </div>
@@ -1585,6 +1510,18 @@
         </div>
       </div>
 
+    <!-- GUIDANCE CALLOUT: SWIPE RIGHT TO EXPLORE DATA (STICKY ĐÍNH NGAY DƯỚI MENU KHI Ở TAB KHÁCH HÀNG) -->
+    <div id="tableSwipeGuidanceWrapper" class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 pb-1.5 transition-all">
+      <div id="tableSwipeGuidance" class="rounded-xl px-3 py-1.5 bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-between gap-2 w-full max-w-full overflow-hidden text-xs text-slate-300">
+        <div class="flex items-center gap-2 min-w-0">
+          <i data-lucide="info" class="w-3.5 h-3.5 text-cyan-400 shrink-0"></i>
+          <span id="tableSwipeGuidanceText" class="text-[11px] truncate">Cuộn ngang bảng để xem nhu cầu, hoạt động thương mại và thông tin liên hệ.</span>
+        </div>
+      </div>
+    </div>
+
+
+
       <!-- Prospective Leads Cards Grid -->
       <div id="leadsContainer" class="space-y-4">
         <!-- Rendered dynamically by JS -->
@@ -1614,7 +1551,7 @@
           <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4">
             <div>
               <span class="px-2.5 py-0.5 rounded-full text-[9px] sm:text-[10px] font-mono uppercase tracking-wider font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">FOUR-TIER FRAUD SHIELD</span>
-              <h2 class="text-lg sm:text-2xl font-bold tracking-tight text-white mt-1.5 sm:mt-2">Thẩm Định 4 Tầng & Quét Cấm Vận</h2>
+              <h1 class="text-lg sm:text-2xl font-bold tracking-tight text-white mt-1.5 sm:mt-2">Thẩm Định 4 Tầng & Quét Cấm Vận</h1>
               <p class="text-xs sm:text-sm text-slate-400 mt-1 hidden sm:block">Truy vết pháp nhân, tuổi tên miền email Whois, rà soát danh sách trừng phạt OFAC/EU và khuyến nghị điều kiện thanh toán.</p>
             </div>
             
@@ -1822,7 +1759,7 @@
                   <span class="px-2.5 py-0.5 rounded-full text-[9px] sm:text-[10px] font-mono uppercase tracking-wider font-bold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">GLOBAL SOURCING</span>
                   <span class="text-[11px] sm:text-xs text-slate-400 font-mono">12 TRUNG TÂM GIAO THƯƠNG</span>
                 </div>
-                <h2 class="text-lg sm:text-2xl font-bold tracking-tight text-white mt-1.5">Săn Tìm & Đấu Thầu NCC Cấp 1 Toàn Cầu</h2>
+                <h1 class="text-lg sm:text-2xl font-bold tracking-tight text-white mt-1.5">Săn Tìm & Đấu Thầu NCC Cấp 1 Toàn Cầu</h1>
                 <p class="text-xs sm:text-sm text-slate-400 mt-0.5 hidden sm:block">Tiếp cận trực tiếp các nhà sản xuất lớn và các hãng thương mại cấp 1 (Tier-1 Trading Houses) tại 12 quốc gia, kiểm soát điều kiện thanh toán và kiểm toán quy chuẩn hàng hóa.</p>
               </div>
               <button onclick="fetchSuppliersList()" class="px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-mono font-bold bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-500/40 flex items-center gap-2 self-start md:self-auto cursor-pointer transition-all">
@@ -2118,9 +2055,9 @@
             </span>
             <span class="text-xs text-slate-400 font-mono hidden sm:inline">• Quét tự động 1,000 Khách hàng & 20 NCC</span>
           </div>
-          <h2 class="text-lg sm:text-2xl font-bold text-white tracking-tight flex items-center gap-2">
+          <h1 class="text-lg sm:text-2xl font-bold text-white tracking-tight flex items-center gap-2">
             Bàn Khớp Giao Dịch B2B Tự Động
-          </h2>
+          </h1>
           <p class="text-xs sm:text-sm text-slate-400 max-w-3xl leading-relaxed hidden sm:block">
             Hệ thống đối soát chéo 6 chiều dữ liệu ngoại thương (Mã HS 30%, Chứng chỉ QA 20%, MOQ 15%, Thanh toán 15%, Incoterms 10%, Pháp lý 10%). Tự động loại trừ 100% rủi ro lừa đảo & cấm vận quốc tế.
           </p>
@@ -2242,7 +2179,7 @@
                   <span id="blLiveStatusText">DỮ LIỆU TƯƠI: 21/10/2026</span>
                 </span>
               </div>
-              <h2 class="text-lg sm:text-2xl font-bold tracking-tight text-white mt-1.5 sm:mt-2">Săn Tìm Khách Thật Qua Vận Đơn B/L Hải Quan</h2>
+              <h1 class="text-lg sm:text-2xl font-bold tracking-tight text-white mt-1.5 sm:mt-2">Săn Tìm Khách Thật Qua Vận Đơn B/L Hải Quan</h1>
               <p class="text-xs sm:text-sm text-slate-400 mt-1 hidden sm:block">Trích xuất danh sách 6,000+ vận đơn hải quan thực tế từ 1,000 đối tác toàn cầu & tuyến hàng hải Liên bang Nga.</p>
             </div>
             
@@ -2349,7 +2286,7 @@
                 <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider font-bold bg-blue-500/20 text-blue-300 border border-blue-500/40">SOP-XNK-02 COMPLIANCE</span>
                 <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">THẨM ĐỊNH THỰC ĐỊA 360°</span>
               </div>
-              <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-white">Kiểm Toán Thực Địa Cơ Sở & Nhà Xưởng (SOP-XNK-02)</h2>
+              <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-white">Kiểm Toán Thực Địa Cơ Sở & Nhà Xưởng (SOP-XNK-02)</h1>
               <p class="text-xs sm:text-sm text-slate-300 max-w-3xl">
                 Quy chuẩn thẩm định trực tiếp tại cơ sở sản xuất trước khi duyệt thu mua xuất khẩu. Đánh giá 5 tiêu chí trọng yếu: công suất máy móc, quy trình QA/QC, bảo quản kho bãi PCCC, truy xuất nguồn gốc và môi trường lao động.
               </p>
@@ -3631,7 +3568,7 @@
 
   <!-- Printable Executive Dossier Modal (Offscreen/Hidden until Print) -->
   <div id="printableDossier" class="hidden">
-    <div style="font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 24px 30px; color: #0f172a; max-width: 800px; margin: 0 auto; background: #ffffff;">
+    <div style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 24px 30px; color: #0f172a; max-width: 800px; margin: 0 auto; background: #ffffff;">
       
       <!-- Top Official Letterhead -->
       <div style="border-bottom: 2px solid #0f172a; padding-bottom: 12px; margin-bottom: 18px; display: flex; justify-content: space-between; align-items: flex-start;">
@@ -5110,7 +5047,7 @@
     // ☀️ THEME ENGINE: LIGHT & DARK MODE
     // ==========================================
     function initTheme() {
-      const savedTheme = localStorage.getItem('portal_theme') || 'dark';
+      const savedTheme = localStorage.getItem('portal_theme') || 'light';
       applyTheme(savedTheme, false);
     }
 
@@ -5178,23 +5115,15 @@
 
       // Khôi phục Tab đang hoạt động khi F5 hoặc mở link có hash
       const hashTab = (window.location.hash || '').replace(/^#/, '').replace(/^tab-/, '');
-      if (hashTab === 'prices') {
-        window.location.replace('/prices');
-        return;
-      }
       const storedTab = localStorage.getItem('xnk_active_tab');
-      const validTabs = ['prospecting', 'buyers', 'suppliers', 'matchmaker', 'sourcing', 'audit'];
+      const validTabs = ['prospecting', 'buyers', 'suppliers', 'matchmaker', 'sourcing', 'audit', 'prices'];
       const initialTab = validTabs.includes(hashTab) ? hashTab : (validTabs.includes(storedTab) ? storedTab : 'prospecting');
       switchTab(initialTab);
     });
 
     window.addEventListener('hashchange', () => {
       const h = (window.location.hash || '').replace(/^#/, '').replace(/^tab-/, '');
-      if (h === 'prices') {
-        window.location.replace('/prices');
-        return;
-      }
-      const validTabs = ['prospecting', 'buyers', 'suppliers', 'matchmaker', 'sourcing', 'audit'];
+      const validTabs = ['prospecting', 'buyers', 'suppliers', 'matchmaker', 'sourcing', 'audit', 'prices'];
       if (validTabs.includes(h)) switchTab(h);
     });
 
@@ -5284,6 +5213,10 @@
         }
       });
 
+      const pageNames = {prospecting: 'Khách hàng', buyers: 'Thẩm định đối tác', suppliers: 'Nhà cung cấp', matchmaker: 'Khớp giao dịch', sourcing: 'Vận đơn B/L', audit: 'Kiểm toán', prices: 'Giá đa sàn'};
+      document.getElementById('workspacePageLabel').textContent = pageNames[tab];
+      document.title = pageNames[tab] + ' · Tradedesk';
+      validTabs.forEach(t => document.getElementById(`tab-${t}`)?.setAttribute('aria-current', t === tab ? 'page' : 'false'));
       const activeSec = document.getElementById(`section-${tab}`);
       if (activeSec) activeSec.classList.remove('hidden');
       const activeBtn = document.getElementById(`tab-${tab}`);
@@ -5295,7 +5228,7 @@
           activeBtn.classList.add('text-white', 'bg-blue-600', 'border-blue-500', 'font-bold', 'shadow-md', 'shadow-blue-600/25');
         }
         try {
-          activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+          if (window.innerWidth < 1100) activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
         } catch (e) {}
       }
 
@@ -6268,9 +6201,9 @@
       const guidanceText = document.getElementById('tableSwipeGuidanceText');
       if (guidanceText) {
         if (mode === 'table') {
-          guidanceText.innerHTML = `Bảng dữ liệu nhiều cột: Hãy <strong>vuốt/lướt sang phải 👉</strong> để xem trọn vẹn <strong>Mã HS, Sản Lượng, Phễu Điểm, Vận Đơn B/L, Đầu Mối Liên Hệ</strong>.`;
+          guidanceText.innerHTML = `Cuộn ngang bảng để xem nhu cầu, hoạt động thương mại và thông tin liên hệ.`;
         } else {
-          guidanceText.innerHTML = `Chế độ Thẻ Đầy Đủ: <strong>Tối ưu 100% vừa vặn màn hình điện thoại</strong> — Cuộn dọc để duyệt nhanh hồ sơ từng doanh nghiệp.`;
+          guidanceText.innerHTML = `Chế độ thẻ hiển thị đầy đủ hồ sơ, nhu cầu thu mua và thông tin liên hệ.`;
         }
       }
 
@@ -6364,7 +6297,7 @@
       window.cachedLeadsData = leads;
       const container = document.getElementById('leadsContainer');
       container.innerHTML = '';
-      document.getElementById('totalLeadsCount').innerText = `${totalMatchedLeads.toLocaleString()} Doanh Nghiệp (Trang ${currentPage}/${totalPages})`;
+      document.getElementById('totalLeadsCount').innerText = `${totalMatchedLeads.toLocaleString()}`;
 
       if (!leads.length) {
         container.innerHTML = `
@@ -12770,7 +12703,6 @@
       }
     }
 
-    async 
     function triggerModalSpringAnimation(modalId) {
       const modal = document.getElementById(modalId);
       if (!modal) return;

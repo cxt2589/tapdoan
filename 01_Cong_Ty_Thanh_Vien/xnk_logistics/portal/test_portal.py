@@ -979,12 +979,14 @@ def run_all_tests():
             assert 'id="unitCalcQuantity"' in html_text
             assert 'id="unitCalcUnitSelect"' in html_text
 
-        # 1b. Trạm Giám Sát Giá Đa Sàn Độc Lập (/prices)
-        url_prices = f"http://127.0.0.1:{TEST_PORT}/prices"
+        # 1b. Bảng giá trong workspace dùng tab và khôi phục qua URL hash.
+        url_prices = f"http://127.0.0.1:{TEST_PORT}/#prices"
         with urllib.request.urlopen(url_prices, timeout=5) as prices_resp:
             assert prices_resp.status == 200
             prices_html = prices_resp.read().decode('utf-8')
-            assert 'Trạm Giám Sát Giá Đa Sàn' in prices_html
+            assert 'id="section-prices"' in prices_html
+            assert "onclick=\"switchTab('prices')\"" in prices_html
+            assert "window.location.replace('/prices')" not in prices_html
             assert 'id="commodityPriceCanvas"' in prices_html
             assert 'id="multiSourcePriceTableBody"' in prices_html
 

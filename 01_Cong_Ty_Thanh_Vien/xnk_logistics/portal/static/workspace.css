@@ -30,9 +30,19 @@ body button { cursor: pointer; }
 body :is(button,a,input,select,textarea):focus-visible { outline: 3px solid #3b82f6 !important; outline-offset: 3px; }
 body .font-mono { font-family: 'Inter', sans-serif !important; font-variant-numeric: tabular-nums; }
 html body :is(.shadow-lg,.shadow-xl,.shadow-2xl,.shadow-md,.animate-ui-modal-enter) { box-shadow: 0 2px 8px #152c4510 !important; }
-body :is(.cult-shimmer-btn,.cult-sonar-badge,.cult-beam-core,.cult-border-beam-wrap,.cult-spotlight)::after,
-body :is(.cult-beam-core,.cult-border-beam-wrap,.cult-spotlight)::before { display: none !important; }
-body :is(.animate-ping,.animate-pulse) { animation: none; }
+/* Cult UI & Animate UI Interactive Matching Engine (ui-matching branch) */
+body :is(.cult-shimmer-btn,.cult-sonar-badge,.cult-beam-core,.cult-border-beam-wrap,.cult-spotlight) {
+  position: relative;
+}
+body .cult-spotlight:hover {
+  box-shadow: 0 8px 24px -6px rgba(37, 99, 235, 0.2) !important;
+}
+body .animate-ping {
+  animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite !important;
+}
+body .animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite !important;
+}
 body :is(.rounded-3xl,.rounded-2xl,.rounded-\[22px\]) { border-radius: 14px; }
 body :is(.rounded-xl,.rounded-\[14px\]) { border-radius: 9px; }
 body [class*="bg-gradient-"] { background-image: none !important; }

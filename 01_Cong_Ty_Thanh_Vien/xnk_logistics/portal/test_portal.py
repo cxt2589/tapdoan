@@ -1196,7 +1196,8 @@ def run_all_tests():
         assert net.get("total_partners") >= 8, f"Expected >= 8 partners, got {net.get('total_partners')}"
         assert net.get("total_countries") >= 5, f"Expected >= 5 countries, got {net.get('total_countries')}"
         countries = net.get("countries", {})
-        assert "VN" in countries and "CN" in countries and "IN" in countries and "BR" in countries, "Key trading countries missing in network"
+        c_codes = {c.get("code") if isinstance(c, dict) else c for c in net.get("countries", [])}
+        assert "VN" in c_codes and "CN" in c_codes and "IN" in c_codes and "BR" in c_codes, "Key trading countries missing in network" 
         partners = net.get("partners", [])
         assert any("PVCFC" in p.get("name", "") for p in partners), "PVCFC missing in Uralchem network"
         assert all(len(p.get("sample_bl_records", [])) >= 2 for p in partners), "Sample B/Ls missing in partners"

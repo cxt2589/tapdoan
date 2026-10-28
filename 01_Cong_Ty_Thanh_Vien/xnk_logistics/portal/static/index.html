@@ -1822,7 +1822,7 @@
                   <span class="px-2.5 py-0.5 rounded-full text-[9px] sm:text-[10px] font-mono uppercase tracking-wider font-bold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">GLOBAL SOURCING</span>
                   <span class="text-[11px] sm:text-xs text-slate-400 font-mono">12 TRUNG TÂM GIAO THƯƠNG</span>
                 </div>
-                <h2 class="text-lg sm:text-2xl font-bold tracking-tight text-white mt-1.5">Săn Tìm & Đấu Thầu NCC Cấp 1 Toàn Cầu</h2>
+                <h2 class="text-lg sm:text-2xl font-bold tracking-tight text-white mt-1.5 flex items-center gap-2 flex-wrap"><span>Săn Tìm & Đấu Thầu NCC Cấp 1 Toàn Cầu</span><span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span> LIVE GLEIF & HẢI QUAN REAL-TIME</span></h2>
                 <p class="text-xs sm:text-sm text-slate-400 mt-0.5 hidden sm:block">Tiếp cận trực tiếp các nhà sản xuất lớn và các hãng thương mại cấp 1 (Tier-1 Trading Houses) tại 12 quốc gia, kiểm soát điều kiện thanh toán và kiểm toán quy chuẩn hàng hóa.</p>
               </div>
               <button onclick="fetchSuppliersList()" class="px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-mono font-bold bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-500/40 flex items-center gap-2 self-start md:self-auto cursor-pointer transition-all">
@@ -7869,7 +7869,61 @@
         return true;
       });
 
-      renderSuppliersList(filtered);
+      if (filtered.length === 0 && searchKeyword && searchKeyword.length >= 2 && !window._isFetchingLive) {
+        // Tự động kích hoạt khám phá thời gian thực qua GLEIF LEI
+        triggerLiveDiscovery(searchKeyword, targetIso);
+      } else {
+        renderSuppliersList(filtered);
+      }
+    }
+
+    let _liveDiscoveryTimeout = null;
+    function triggerLiveDiscovery(keyword, targetIso) {
+      clearTimeout(_liveDiscoveryTimeout);
+      const container = document.getElementById('suppliersCardsContainer');
+      const countEl = document.getElementById('supMatchedCount');
+      if (countEl) countEl.innerText = "Đang quét...";
+      if (container) {
+        container.innerHTML = `
+          <div class="col-span-full p-10 text-center rounded-2xl bg-brand-900 border border-cyan-500/30 space-y-4 shadow-2xl">
+            <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 animate-spin">
+              <i data-lucide="loader-2" class="w-6 h-6"></i>
+            </div>
+            <div class="space-y-1">
+              <h4 class="text-sm font-bold text-white font-mono flex items-center justify-center gap-2">
+                <span>ĐANG KHÁM PHÁ THỜI GIAN THỰC TỪ CỔNG PHÁP NHÂN QUỐC TẾ GLEIF: "${keyword}"</span>
+              </h4>
+              <p class="text-xs text-slate-400 font-mono">Đối soát mã định danh LEI, quét cấm vận OpenSanctions/OFAC và hiệp hội ngành hàng thế giới...</p>
+            </div>
+          </div>
+        `;
+        if (window.lucide) lucide.createIcons();
+      }
+
+      _liveDiscoveryTimeout = setTimeout(async () => {
+        window._isFetchingLive = true;
+        try {
+          const res = await fetch(`/api/suppliers/live-search?q=${encodeURIComponent(keyword)}&country=${encodeURIComponent(targetIso || '')}`);
+          const data = await res.json();
+          window._isFetchingLive = false;
+          if (data.ok && Array.isArray(data.data) && data.data.length) {
+            // Append live discoveries to cached list
+            for (const item of data.data) {
+              if (!cachedSuppliersList.some(s => s.id === item.id || s.company_name === item.company_name)) {
+                cachedSuppliersList.push(item);
+              }
+            }
+            showToast('Khám Phá Thành Công', `Đã tìm thấy ${data.data.length} tập đoàn toàn cầu xác thực mã LEI từ GLEIF.`, false);
+            renderSuppliersList(data.data);
+          } else {
+            renderSuppliersList([]);
+          }
+        } catch (e) {
+          window._isFetchingLive = false;
+          console.error("Lỗi live discovery:", e);
+          renderSuppliersList([]);
+        }
+      }, 300);
     }
 
     function renderSuppliersList(suppliers) {
@@ -7922,6 +7976,7 @@
                 <div class="space-y-1">
                   <div class="flex flex-wrap items-center gap-2">
                     ${typeBadge}
+                    ${s.lei ? `<span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1">⚡ LEI: ${s.lei.slice(0, 8)}...</span>` : ''}
                     <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-blue-500/15 text-blue-300 border border-blue-500/30">${s.country || 'Việt Nam'} (${s.city || ''})</span>
                     <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-${tierColor}-500/15 text-${tierColor}-400 border border-${tierColor}-500/30">Tier ${tierLabel}</span>
                   </div>
@@ -8064,9 +8119,19 @@
       currentDetailSupplier = sup;
 
       // Header
+      const leiBadge = sup.lei ? `<span class="text-[11px] px-2.5 py-0.5 rounded-full font-mono bg-amber-500/20 text-amber-300 font-bold border border-amber-500/40 flex items-center gap-1">⚡ LEI: ${sup.lei}</span>` : '';
+      const liveBadge = (sup.is_live_realtime || sup.lei) ? `<span class="text-[10px] px-2 py-0.5 rounded-full font-mono bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/40 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> VERIFIED LIVE</span>` : '';
       document.getElementById('supd-company-name').innerHTML = `
-        <span>${sup.company_name || sup.name}</span>
-        <span class="text-xs px-2.5 py-0.5 rounded-full font-mono bg-blue-500/20 text-blue-300 font-semibold border border-blue-500/30">${sup.country || 'Việt Nam'}</span>
+        <div class="flex flex-wrap items-center gap-2">
+          <span>${sup.company_name || sup.name}</span>
+          <span class="text-xs px-2.5 py-0.5 rounded-full font-mono bg-blue-500/20 text-blue-300 font-semibold border border-blue-500/30">${sup.country || 'Việt Nam'}</span>
+          ${leiBadge}
+          ${liveBadge}
+          <button type="button" onclick="reverifySupplierLive('${encodeURIComponent(sup.company_name || sup.name || '')}')" class="ml-auto inline-flex items-center gap-1 px-2.5 py-1 rounded-xl text-[11px] font-mono font-bold bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-500/30 transition-all cursor-pointer" title="Kiểm định lại pháp nhân GLEIF & cấm vận ngay tại thời điểm này">
+            <i data-lucide="refresh-cw" class="w-3 h-3"></i>
+            <span>Tái Thẩm Định Live</span>
+          </button>
+        </div>
       `;
       document.getElementById('supd-location-sub').innerText = `${sup.country || 'Việt Nam'} • ${sup.city || ''} • ${sup.hq_address || sup.address || 'Trụ sở chính'}`;
 
@@ -8156,6 +8221,25 @@
       resetModalScroll('supplierDetailModal');
       requestAnimationFrame(() => resetModalScroll('supplierDetailModal'));
       lucide.createIcons();
+    }
+
+    
+    async function reverifySupplierLive(encodedName) {
+      const name = decodeURIComponent(encodedName || '');
+      if (!name) return;
+      showToast('Đang Tái Thẩm Định...', 'Kết nối trực tiếp Cổng GLEIF & OpenSanctions để xác thực lại...', false);
+      try {
+        const res = await fetch(`/api/suppliers/reverify?name=${encodeURIComponent(name)}`);
+        const data = await res.json();
+        if (data.ok && data.supplier) {
+          openSupplierDetailModal(data.supplier.id);
+          showToast('Tái Thẩm Định Thành Công', `Pháp nhân ${data.supplier.company_name} đạt điểm tín nhiệm ${data.supplier.score}/100.`, false);
+        } else {
+          showToast('Thông Báo', data.error || 'Không thể tái thẩm định trực tiếp.', true);
+        }
+      } catch (err) {
+        showToast('Lỗi Kết Nối', 'Không thể kết nối máy chủ thẩm định.', true);
+      }
     }
 
     function closeSupplierDetailModal() {

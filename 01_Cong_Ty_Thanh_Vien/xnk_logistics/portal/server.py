@@ -44,6 +44,11 @@ except ImportError:
     trade_matcher = None
 
 try:
+    import realtime_sourcing_engine
+except ImportError:
+    realtime_sourcing_engine = None
+
+try:
     from hs_catalog import (
         get_catalog_by_view_mode,
         search_hs_omni,
@@ -1355,10 +1360,57 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
             db = load_database()
             suppliers = db.get("suppliers", [])
             sup = next((s for s in suppliers if s.get("id") == sup_id or s.get("company_name", "").lower() == sup_id.lower()), None)
+            
+            # Nếu chưa có trong DB tĩnh, tra cứu trong cache thời gian thực GLEIF hoặc khám phá trực tiếp
+            if not sup and realtime_sourcing_engine:
+                cache = realtime_sourcing_engine.load_cache()
+                for c_val in cache.values():
+                    if c_val.get("id") == sup_id or c_val.get("company_name", "").lower() == sup_id.lower() or c_val.get("lei") == sup_id:
+                        sup = c_val
+                        break
+                if not sup and sup_id:
+                    sup = realtime_sourcing_engine.live_discover_and_verify_supplier(sup_id)
+
             if sup:
                 self._send_json({"ok": True, "supplier": sup})
             else:
                 self._send_json({"ok": False, "error": f"Supplier '{sup_id}' not found"}, 404)
+            return
+
+        elif path == "/api/suppliers/live-search":
+            q = query.get("q", [""])[0].strip()
+            country = query.get("country", [""])[0].strip()
+            if not q:
+                self._send_json({"ok": False, "error": "Query 'q' is required"}, 400)
+                return
+            if not realtime_sourcing_engine:
+                self._send_json({"ok": False, "error": "Realtime sourcing engine not available"}, 500)
+                return
+            results = realtime_sourcing_engine.search_live_suppliers(q, country)
+            self._send_json({
+                "ok": True,
+                "count": len(results),
+                "data": results,
+                "source": "REALTIME_GLEIF_SANCTIONS_INTELLIGENCE",
+                "timestamp": datetime.now().strftime("%H:%M:%S %d/%m/%Y")
+            })
+            return
+
+        elif path == "/api/suppliers/reverify":
+            # Real-time Re-verification endpoint
+            company_name = query.get("name", [""])[0].strip() or query.get("q", [""])[0].strip()
+            if not company_name:
+                self._send_json({"ok": False, "error": "Parameter 'name' or 'q' is required"}, 400)
+                return
+            if not realtime_sourcing_engine:
+                self._send_json({"ok": False, "error": "Realtime engine not loaded"}, 500)
+                return
+            dossier = realtime_sourcing_engine.live_discover_and_verify_supplier(company_name)
+            self._send_json({
+                "ok": True,
+                "supplier": dossier,
+                "message": "Đã hoàn tất tái thẩm định thời gian thực qua GLEIF & OpenSanctions"
+            })
             return
 
         elif path == "/api/contacts":
@@ -1528,6 +1580,16 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
 
                 if match:
                     filtered.append(s)
+
+            # Khám phá thời gian thực nếu tìm kiếm cụm từ mà chưa có trong danh bạ mẫu 20 NCC
+            allow_live = query.get("live", ["true"])[0].lower() in ["true", "1"]
+            if allow_live and search_keyword and len(filtered) == 0 and realtime_sourcing_engine:
+                live_matches = realtime_sourcing_engine.search_live_suppliers(search_keyword, country_str=target_country_iso or "")
+                if live_matches:
+                    for lm in live_matches:
+                        if target_country_iso and lm.get("country_code") != target_country_iso:
+                            continue
+                        filtered.append(lm)
 
             def get_score(item):
                 return item.get("score") or item.get("audit_score") or item.get("vat_refund_safety_percent") or 0

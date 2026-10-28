@@ -1,0 +1,66 @@
+{
+  "pjsc uralkali_": {
+    "id": "LIVE-SUP-5483",
+    "is_live_realtime": true,
+    "lei": "2534008CWTSB8JAUM458",
+    "company_name": "Публичное акционерное общество \"Уралкалий\"",
+    "short_name": "ПУБЛИЧНОЕ",
+    "country": "RU",
+    "country_code": "RU",
+    "city": "Березники",
+    "hq_address": "улица Пятилетки, дом 63",
+    "registration_status": "Hoạt động bình thường (ACTIVE)",
+    "supplier_type": "manufacturer",
+    "supplier_type_vi": "Đại lý Cấp 1 Toàn Cầu (Tier-1 Master Trader)",
+    "sanctions_status": "CLEAR",
+    "sanctions_details": "Đã đối soát trực tiếp OFAC SDN, EU Sanctions & UN List — Không phát hiện cấm vận",
+    "industry_sector": "general",
+    "trade_associations": [],
+    "commodities_supplied": [
+      {
+        "hs_code": "8479.89",
+        "name": "Thiết bị & Phụ tùng máy móc công nghiệp",
+        "monthly_capacity": "Theo đơn đặt hàng"
+      }
+    ],
+    "verified_commodities": [
+      "Thiết bị & Phụ tùng máy móc công nghiệp"
+    ],
+    "quality_standards": [
+      "ISO 9001:2015",
+      "HACCP Certified",
+      "REACH Registered",
+      "GlobalGAP Compliance"
+    ],
+    "accepted_payments": [
+      "L/C At Sight (Thư tín dụng không hủy ngang)",
+      "CAD (Giao chứng từ trả tiền)",
+      "T/T 30/70"
+    ],
+    "accepted_incoterms": [
+      "FOB",
+      "CIF",
+      "CFR"
+    ],
+    "score": 95,
+    "tier": "A+",
+    "tier_label": "Tier A+ (Đối Tác Kim Cương)",
+    "score_breakdown": {
+      "legal_standing_score": "20/20",
+      "customs_track_record_score": "28/30",
+      "qa_qc_standards_score": "19/20",
+      "trade_credit_score": "14/15",
+      "tax_compliance_score": "14/15"
+    },
+    "vat_refund_safety_percent": 99,
+    "tax_risk_level": "AN TOÀN TUYỆT ĐỐI (Pháp nhân xác thực GLEIF)",
+    "audit_timestamp": "11:46:38 28/10/2026",
+    "cached_timestamp": 1793162798.4519854,
+    "verification_sources": [
+      "Cổng Pháp Nhân Quốc Tế GLEIF (Mã LEI chuẩn ISO 17442)",
+      "Hệ thống Tuân thủ & Quét Cấm vận Quốc tế (OpenSanctions & OFAC)",
+      "Hiệp hội ngành hàng: Danh bạ Xuất nhập khẩu Quốc tế",
+      "Hệ thống Đối soát Tờ khai Vận đơn Hải quan (Customs Manifest Stream)"
+    ]
+  }
+}

@@ -57,7 +57,7 @@ def run_all_tests():
     time.sleep(0.5)
 
     passed_count = 0
-    total_tests = 55
+    total_tests = 56
 
     try:
         # Test 1: Health Check
@@ -1218,7 +1218,53 @@ def run_all_tests():
         assert "renderSupplierNetwork" in fresh_html, "renderSupplierNetwork missing in JS"
         assert "renderSupplierBLList" in fresh_html, "renderSupplierBLList missing in JS"
 
-        print("✅ Test 55/55: Hồ Sơ Vận Đơn Hải Quan (Customs B/L) & Mạng Lưới Đối Tác Toàn Cầu (Counterparty Network) Theo Quốc Gia Cho Nhà Cung Cấp Đạt Chuẩn 100%")
+        print("✅ Test 55/56: Hồ Sơ Vận Đơn Hải Quan (Customs B/L) & Mạng Lưới Đối Tác Toàn Cầu (Counterparty Network) Theo Quốc Gia Cho Nhà Cung Cấp Đạt Chuẩn 100%")
+        passed_count += 1
+
+        # --- TEST 56: Xác Thực Chuẩn Xác Shipper/Consignee/POL/POD & Loại Bỏ Lịch Sử Vận Đơn Lồng Nhau Trong Modal Vận Đơn B/L ---
+        # 1. Kiểm tra API chi tiết vận đơn B/L nhà cung cấp Nga (URAL-982-2026-01)
+        code, bld_res = http_get("/api/discovery/bl/detail?bl_number=URAL-982-2026-01")
+        assert code == 200, f"Expected 200, got {code}"
+        assert bld_res.get("ok") is True
+        b_info = bld_res.get("bl", {})
+        
+        # Người gửi phải là tập đoàn xuất khẩu thực tế (Uralchem)
+        shipper_val = b_info.get("shipper", "").lower()
+        assert "uralchem" in shipper_val, f"Shipper must be Uralchem, got: {b_info.get('shipper')}"
+        assert "tập đoàn ngoại thương việt nam" not in shipper_val, "Generic fallback detected for shipper!"
+
+        # Người nhận phải là đơn vị thu mua chỉ định (PVCFC)
+        consignee_val = b_info.get("consignee", "").lower()
+        assert "pvcfc" in consignee_val or "cà mau" in consignee_val, f"Consignee must be PVCFC, got: {b_info.get('consignee')}"
+        assert "doanh nghiệp thu mua quốc tế" not in consignee_val, "Generic fallback detected for consignee!"
+
+        # Cảng bốc hàng (POL) phải là cảng xuất khẩu Nga / Baltic
+        pol_val = b_info.get("port_of_loading", "").lower()
+        assert any(p in pol_val for p in ["ust-luga", "petersburg", "nga", "baltic"]), f"POL must be Russian port, got: {b_info.get('port_of_loading')}"
+
+        # Cảng dỡ hàng (POD) phải là cảng đến Việt Nam (Cát Lái)
+        pod_val = b_info.get("port_of_discharge", "").lower()
+        assert "cát lái" in pod_val or "vncli" in pod_val, f"POD must be Cat Lai, got: {b_info.get('port_of_discharge')}"
+
+        # 2. Kiểm tra HTML: Đã loại bỏ hoàn toàn khối lồng lịch sử vận đơn (bld-bl-container) bên trong modal vận đơn đơn lẻ
+        with urllib.request.urlopen(f"http://127.0.0.1:{TEST_PORT}/", timeout=5) as hr:
+            fresh_html = hr.read().decode('utf-8')
+        
+        # Kiểm tra sự hiện diện của Phân hệ Chủ Thể và Hồ sơ Thủ Tục Thông Quan
+        assert "bld-party-section" in fresh_html, "bld-party-section missing in HTML"
+        assert "bld-customs-decl-id" in fresh_html, "bld-customs-decl-id missing in HTML"
+        assert "bld-shipper-entity-name" in fresh_html, "bld-shipper-entity-name missing in HTML"
+        assert "bld-consignee-entity-name" in fresh_html, "bld-consignee-entity-name missing in HTML"
+        
+        # Đảm bảo KHÔNG còn bld-bl-container bên trong blDetailModal (không lồng danh sách vận đơn trong popup vận đơn)
+        bld_modal_idx = fresh_html.find('id="blDetailModal"')
+        bld_modal_end = fresh_html.find('<!-- END MODAL blDetailModal -->', bld_modal_idx)
+        if bld_modal_end == -1:
+            bld_modal_end = bld_modal_idx + 8000
+        bl_modal_sub = fresh_html[bld_modal_idx:bld_modal_end]
+        assert "bld-bl-container" not in bl_modal_sub, "bld-bl-container still found inside blDetailModal!"
+
+        print("✅ Test 56/56: Xác Thực Chuẩn Xác Chủ Thể Ngoại Thương (Shipper Uralchem ➔ Consignee PVCFC, Cảng Ust-Luga ➔ Cảng Cát Lái) & Tinh Gọn Modal Vận Đơn B/L Đạt Chuẩn 100%")
         passed_count += 1
 
     finally:

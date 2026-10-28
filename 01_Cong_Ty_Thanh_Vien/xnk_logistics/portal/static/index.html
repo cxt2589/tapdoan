@@ -1853,7 +1853,7 @@
               <div class="lg:col-span-2">
                 <label class="block text-[10px] font-mono uppercase text-slate-400 mb-1">Tìm Tên / Hàng:</label>
                 <div class="relative">
-                  <input type="text" id="supFilterSearch" oninput="filterSuppliersList()" placeholder="Gõ: Cargill, Urê..."
+                  <input type="text" id="supFilterSearch" oninput="filterSuppliersList()" placeholder="Tìm kiếm thông minh toàn cầu (Latinh, Kirin, Hanzi... Gõ: Uralchem, Yara, Cargill, Уралхим...)"
                     class="w-full pl-7 pr-2 py-2 bg-brand-950 border border-white/10 rounded-xl text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 font-mono">
                   <div class="absolute left-2 top-2.5 text-slate-400 pointer-events-none">
                     <i data-lucide="search" class="w-3.5 h-3.5"></i>
@@ -7910,6 +7910,8 @@
                   <div class="flex flex-wrap items-center gap-2">
                     ${typeBadge}
                     ${s.lei ? `<span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1">⚡ LEI: ${s.lei.slice(0, 8)}...</span>` : ''}
+                    ${s.market_structure === 'OLIGOPOLY' ? `<span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/25 text-amber-300 border border-amber-500/40 flex items-center gap-1">🛡️ ĐỘC QUYỀN NHÓM QUỐC GIA</span>` : ''}
+                    ${s.trade_role ? `<span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-purple-500/15 text-purple-300 border border-purple-500/30">${s.trade_role}</span>` : ''}
                     <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-blue-500/15 text-blue-300 border border-blue-500/30">${s.country || 'Việt Nam'} (${s.city || ''})</span>
                     <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-${tierColor}-500/15 text-${tierColor}-400 border border-${tierColor}-500/30">Tier ${tierLabel}</span>
                   </div>
@@ -8066,7 +8068,17 @@
           </button>
         </div>
       `;
-      document.getElementById('supd-location-sub').innerText = `${sup.country || 'Việt Nam'} • ${sup.city || ''} • ${sup.hq_address || sup.address || 'Trụ sở chính'}`;
+      document.getElementById('supd-location-sub').innerHTML = `
+        <div>${sup.country || 'Việt Nam'} • ${sup.city || ''} • ${sup.hq_address || sup.address || 'Trụ sở chính'}</div>
+        ${sup.corporate_structure ? `
+          <div class="mt-2 p-2.5 rounded-xl bg-purple-950/30 border border-purple-500/30 text-xs font-mono space-y-1">
+            <div class="font-bold text-purple-300 flex items-center gap-1.5"><i data-lucide="network" class="w-3.5 h-3.5"></i> CẤU TRÚC PHẢ HỆ TẬP ĐOÀN ĐA QUỐC GIA:</div>
+            <div class="text-slate-300">Công ty mẹ tối cao: <span class="text-white font-bold">${sup.corporate_structure.ultimate_parent || 'N/A'}</span></div>
+            ${sup.corporate_structure.trading_hub ? `<div class="text-slate-300">Cánh ngoại thương quốc tế: <span class="text-cyan-300 font-bold">${sup.corporate_structure.trading_hub}</span></div>` : ''}
+            ${sup.corporate_structure.logistics_gateway ? `<div class="text-slate-300">Cửa ngõ xuất xứ / Cảng xuất khẩu: <span class="text-amber-300">${sup.corporate_structure.logistics_gateway}</span></div>` : ''}
+          </div>
+        ` : ''}
+      `;
 
       const isTier1 = (sup.supplier_type === 'tier1_global_agent') || ((sup.supplier_type_vi || '').includes('Cấp 1'));
       const typeBadgeEl = document.getElementById('supd-type-badge');

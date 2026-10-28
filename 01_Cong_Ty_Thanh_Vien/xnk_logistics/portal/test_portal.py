@@ -57,7 +57,7 @@ def run_all_tests():
     time.sleep(0.5)
 
     passed_count = 0
-    total_tests = 56
+    total_tests = 57
 
     try:
         # Test 1: Health Check
@@ -1267,6 +1267,28 @@ def run_all_tests():
         assert "bld-bl-container" not in bl_modal_sub, "bld-bl-container still found inside blDetailModal!"
 
         print("✅ Test 56/56: Xác Thực Chuẩn Xác Chủ Thể Ngoại Thương (Shipper Uralchem ➔ Consignee PVCFC, Cảng Ust-Luga ➔ Cảng Cát Lái) & Tinh Gọn Modal Vận Đơn B/L Đạt Chuẩn 100%")
+        passed_count += 1
+
+        # --- TEST 57: Xác Thực Hồ Sơ Chi Tiết Bài Đăng Thu Mua B2B & Cơ Chế Bấm Vào Mã Đơn / Ngày Trên Sàn ---
+        code, rfq_res = http_get("/api/leads/b2b-orders/detail?rfq_id=RFQ-ALI-20261001&lead_id=LEAD-AGRI-001")
+        assert code == 200, f"Expected 200, got {code}"
+        assert rfq_res.get("ok") is True
+        assert rfq_res.get("rfq_id") == "RFQ-ALI-20261001"
+        assert rfq_res.get("commodity") is not None
+        assert rfq_res.get("volume_required") is not None
+        assert rfq_res.get("payment_term") is not None
+        assert rfq_res.get("buyer", {}).get("company_name") is not None
+
+        # Kiểm tra frontend: Modal b2bOrderDetailModal và cơ chế click vào mã đơn/ngày
+        with urllib.request.urlopen(f"http://127.0.0.1:{TEST_PORT}/", timeout=5) as hr:
+            html_content = hr.read().decode('utf-8')
+
+        assert "b2bOrderDetailModal" in html_content, "b2bOrderDetailModal missing in HTML"
+        assert "openB2BOrderDetailModal" in html_content, "openB2BOrderDetailModal missing in HTML"
+        assert "b2b-od-rfq-id" in html_content, "b2b-od-rfq-id missing in HTML"
+        assert "b2b-od-deadline" in html_content, "b2b-od-deadline missing in HTML"
+
+        print("✅ Test 57/57: Hồ Sơ Chi Tiết Gói Thầu Thu Mua B2B (RFQ Dossier) & Cơ Chế Click Trực Tiếp Mã Đơn/Ngày Đạt Chuẩn 100%")
         passed_count += 1
 
     finally:

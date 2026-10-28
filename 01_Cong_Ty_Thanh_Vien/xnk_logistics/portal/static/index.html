@@ -4813,7 +4813,7 @@
                 <span class="text-[10px] font-mono text-slate-400 uppercase">TIÊU ĐỀ ĐƠN HÀNG:</span>
                 <h4 class="text-sm sm:text-base font-bold text-white mt-0.5" id="b2b-highlight-title">Cần tìm nguồn cung cấp sản phẩm</h4>
               </div>
-              <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-white/10 text-slate-300 shrink-0" id="b2b-highlight-id">RFQ-202610</span>
+              <span class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 cursor-pointer hover:underline inline-flex items-center gap-1.5 transition-all shadow-sm shrink-0" id="b2b-highlight-id" onclick="openB2BOrderDetailModal(this.getAttribute('data-rfq-id') || this.innerText, window.currentB2BLeadId)" title="Nhấn để xem chi tiết hồ sơ bài thầu">RFQ-202610</span>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 pt-2 border-t border-white/5 text-xs font-mono">
               <div>
@@ -4919,6 +4919,172 @@
       </div>
     </div>
   </div>
+
+  
+  <!-- ========================================================================= -->
+  <!-- MODAL: HỒ SƠ CHI TIẾT BÀI ĐĂNG THU MUA & MỜI THẦU B2B (RFQ DOSSIER POPUP) -->
+  <!-- ========================================================================= -->
+  <div id="b2bOrderDetailModal" onclick="handleModalBackdropClick(event, 'b2bOrderDetailModal')" class="fixed inset-0 z-[80] bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 overscroll-contain">
+    <div onclick="event.stopPropagation()" class="w-full max-w-3xl rounded-3xl overflow-hidden p-1 bg-gradient-to-b from-cyan-500/40 via-amber-500/20 to-white/5 border border-cyan-500/40 shadow-2xl">
+      <div id="b2bOrderDetailScrollBody" class="bg-brand-900 rounded-[22px] p-5 sm:p-7 space-y-5 max-h-[90vh] overflow-y-auto overscroll-contain modal-scroll-container" style="touch-action: pan-y !important; -webkit-overflow-scrolling: touch !important;">
+        
+        <!-- Header -->
+        <div class="flex items-start justify-between border-b border-white/10 pb-4">
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-bold">HỒ SƠ GÓI THẦU B2B QUỐC TẾ (RFQ DOSSIER)</span>
+              <span id="b2b-od-platform-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30">Alibaba Verified</span>
+              <span id="b2b-od-status-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Đang Mở Thầu</span>
+            </div>
+            <h3 class="text-lg sm:text-xl font-black text-white mt-2 leading-snug" id="b2b-od-title">
+              Tiêu Đề Bài Đăng Mời Thầu Cung Ứng Ngoại Thương
+            </h3>
+            <div class="flex flex-wrap items-center gap-3 mt-1.5 text-xs font-mono text-slate-300">
+              <span class="inline-flex items-center gap-1 text-cyan-300 font-bold">
+                <span>MÃ RFQ:</span>
+                <span id="b2b-od-rfq-id">RFQ-ALI-20261001</span>
+              </span>
+              <span>•</span>
+              <span class="inline-flex items-center gap-1 text-slate-400">
+                <span>Ngày đăng:</span>
+                <span id="b2b-od-date" class="text-white">15/10/2026</span>
+              </span>
+              <span>•</span>
+              <span id="b2b-od-deadline-wrapper" class="inline-flex items-center gap-1 text-rose-300 font-bold">
+                <span>⏳ Hạn nộp:</span>
+                <span id="b2b-od-deadline">15/11/2026</span>
+                <span id="b2b-od-days-left" class="px-1.5 py-0.2 rounded text-[9px] bg-rose-500/20 border border-rose-500/40">Còn 18 ngày</span>
+              </span>
+            </div>
+          </div>
+          <button type="button" onclick="closeB2BOrderDetailModal()" class="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all cursor-pointer shrink-0">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- Section 1: Đơn Vị Phát Hành Hồ Sơ Mời Thầu (Buyer / Importer) -->
+        <div class="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-2.5">
+          <div class="flex items-center justify-between border-b border-white/5 pb-2">
+            <span class="text-xs font-mono font-bold text-amber-300 uppercase flex items-center gap-1.5">
+              <i data-lucide="building-2" class="w-4 h-4 text-amber-400"></i>
+              <span>1. Đơn Vị Mở Thầu / Bên Nhập Khẩu Quốc Tế</span>
+            </span>
+            <button type="button" id="b2b-od-buyer-profile-btn" onclick="" class="text-[10px] font-mono text-cyan-400 hover:text-cyan-200 hover:underline cursor-pointer inline-flex items-center gap-0.5 font-bold">
+              <span>Hồ sơ 360° Buyer</span>
+              <i data-lucide="chevron-right" class="w-3 h-3"></i>
+            </button>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div>
+              <span class="text-[10px] font-mono text-slate-400 uppercase block">TÊN DOANH NGHIỆP:</span>
+              <div class="font-bold text-white text-sm" id="b2b-od-buyer-name">Tập Đoàn Thu Mua Nông Sản</div>
+              <div class="text-[11px] text-slate-300 font-mono mt-0.5" id="b2b-od-buyer-meta">Đức • Doanh thu: $45M USD • Điểm uy tín: 96/100</div>
+            </div>
+            <div>
+              <span class="text-[10px] font-mono text-slate-400 uppercase block">CẢNG TIẾP NHẬN DỰ KIẾN (POD):</span>
+              <div class="font-semibold text-cyan-300" id="b2b-od-buyer-pod">Cảng Biển Quốc Tế Hamburg / Rotterdam</div>
+              <div class="text-[10px] text-slate-400 font-mono mt-0.5">Hải trình: Vận chuyển đường biển quốc tế Container / Hàng rời</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: Thông Số Mặt Hàng & Yêu Cầu Kỹ Thuật (Commodity & Spec) -->
+        <div class="p-4 rounded-2xl bg-cyan-950/30 border border-cyan-500/20 space-y-2.5">
+          <div class="flex items-center justify-between border-b border-white/5 pb-2">
+            <span class="text-xs font-mono font-bold text-cyan-300 uppercase flex items-center gap-1.5">
+              <i data-lucide="package" class="w-4 h-4 text-cyan-400"></i>
+              <span>2. Thông Số Mặt Hàng & Quy Cách Đóng Gói Xuất Khẩu</span>
+            </span>
+            <span class="text-[10px] font-mono text-cyan-300 font-bold bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20" id="b2b-od-hs-badge">HS 0901.11</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div>
+              <span class="text-[10px] font-mono text-slate-400 uppercase block">MẶT HÀNG YÊU CẦU:</span>
+              <div class="font-bold text-white text-sm" id="b2b-od-commodity">Cà phê Robusta FAQ nhân sống</div>
+              <div class="text-[11px] text-amber-300 font-mono mt-1 font-bold">Khối lượng mời thầu: <span id="b2b-od-volume">4.000 Tấn / quý</span></div>
+            </div>
+            <div>
+              <span class="text-[10px] font-mono text-slate-400 uppercase block">QUY CÁCH ĐÓNG GÓI & BAO BÌ:</span>
+              <div class="font-medium text-slate-200" id="b2b-od-packaging">Bao đay 60kg tiêu chuẩn hoặc Túi Jumbo 1.000kg chuyên dụng</div>
+              <div class="text-[10px] text-slate-400 font-mono mt-1">Bao bì mới 100%, có in nhãn mác truy xuất nguồn gốc theo quy định</div>
+            </div>
+          </div>
+          <div class="pt-2 border-t border-white/5">
+            <span class="text-[10px] font-mono text-slate-400 uppercase block mb-1">TIÊU CHUẨN CHẤT LƯỢNG & CHỨNG CHỈ KIỂM ĐỊNH BẮT BUỘC:</span>
+            <div class="flex flex-wrap gap-1.5" id="b2b-od-standards-container">
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-white/5 border border-white/10 text-slate-200">ISO 9001:2015</span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-white/5 border border-white/10 text-slate-200">Giám định độc lập SGS / Vinacontrol C/Q</span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-white/5 border border-white/10 text-slate-200">C/O Ưu Đãi Thuế Quan</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3: Điều Kiện Ngoại Thương & Thanh Toán Quốc Tế (Commercial Terms) -->
+        <div class="p-4 rounded-2xl bg-amber-950/20 border border-amber-500/20 space-y-2.5">
+          <div class="flex items-center justify-between border-b border-white/5 pb-2">
+            <span class="text-xs font-mono font-bold text-amber-300 uppercase flex items-center gap-1.5">
+              <i data-lucide="file-check" class="w-4 h-4 text-amber-400"></i>
+              <span>3. Điều Kiện Thương Mại & Phương Thức Thanh Toán</span>
+            </span>
+            <span class="text-[10px] font-mono text-amber-300 font-bold" id="b2b-od-incoterms-badge">CIF / FOB</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
+            <div>
+              <span class="text-[10px] text-slate-400 uppercase block">ĐIỀU KIỆN THANH TOÁN (PAYMENT TERMS):</span>
+              <div class="font-bold text-white text-xs mt-0.5" id="b2b-od-payment">Irrevocable L/C At Sight (90 ngày)</div>
+              <div class="text-[10px] text-emerald-400 mt-0.5 font-sans">Thư tín dụng không hủy ngang mở qua ngân hàng thương mại quốc tế uy tín</div>
+            </div>
+            <div>
+              <span class="text-[10px] text-slate-400 uppercase block">ĐIỀU KIỆN GIAO HÀNG (INCOTERMS 2020):</span>
+              <div class="font-bold text-cyan-300 text-xs mt-0.5" id="b2b-od-incoterms">FOB Cảng Cát Lái / CIF Cảng Đến</div>
+              <div class="text-[10px] text-slate-400 mt-0.5 font-sans">Giá tham chiếu theo sàn giao dịch hàng hóa quốc tế</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 4: Đối Tác Nhà Cung Cấp Đề Xuất Ghép Cặp (Matched Supplier) -->
+        <div id="b2b-od-supplier-card" class="p-4 rounded-2xl bg-emerald-950/30 border border-emerald-500/20 space-y-2.5">
+          <div class="flex items-center justify-between border-b border-white/5 pb-2">
+            <span class="text-xs font-mono font-bold text-emerald-300 uppercase flex items-center gap-1.5">
+              <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+              <span>4. Nhà Cung Cấp Tương Thích Khuyến Nghị Trong CSDL Tập Đoàn</span>
+            </span>
+            <button type="button" id="b2b-od-sup-profile-btn" onclick="" class="text-[10px] font-mono text-emerald-300 hover:text-emerald-100 hover:underline cursor-pointer inline-flex items-center gap-0.5 font-bold">
+              <span>Hồ sơ 360° NCC</span>
+              <i data-lucide="chevron-right" class="w-3 h-3"></i>
+            </button>
+          </div>
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+            <div>
+              <div class="font-bold text-white text-sm" id="b2b-od-sup-name">Công Ty Cổ Phần Nông Sản Việt</div>
+              <div class="text-[10px] font-mono text-slate-300 mt-0.5" id="b2b-od-sup-meta">Việt Nam • Hạng A • Năng lực: 50.000 Tấn/năm</div>
+            </div>
+            <button type="button" id="b2b-od-dual-rfq-action-btn" onclick="" class="px-3.5 py-1.5 rounded-xl font-mono text-xs font-bold bg-amber-500/20 hover:bg-amber-500 text-amber-300 hover:text-brand-950 border border-amber-500/40 transition-all shrink-0 cursor-pointer inline-flex items-center gap-1.5">
+              <span>⚡ Soạn Báo Giá Ngay</span>
+              <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Footer Actions -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-white/10">
+          <div class="flex items-center gap-2 w-full sm:w-auto">
+            <button type="button" onclick="copyB2BOrderSummary()" class="w-full sm:w-auto px-4 py-2 rounded-xl text-xs font-mono font-bold bg-white/5 hover:bg-white/10 text-cyan-300 border border-cyan-500/30 transition-all inline-flex items-center justify-center gap-1.5 cursor-pointer">
+              <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+              <span>Sao Chép Gói Thầu</span>
+            </button>
+          </div>
+          <div class="flex items-center gap-2 w-full sm:w-auto">
+            <button type="button" onclick="closeB2BOrderDetailModal()" class="w-full sm:w-auto px-4 py-2 rounded-xl text-xs font-mono font-bold bg-white/10 hover:bg-white/20 text-white transition-all cursor-pointer">
+              Quay Lại Sàn B2B
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
 
   <!-- ========================================================================= -->
   <!-- MODAL 3: THÔNG BÁO ĐẦU MỐI LIÊN HỆ DOANH NGHIỆP (SINGLE CONTACT NOTICE)   -->
@@ -9550,6 +9716,7 @@ function closeBLDetailModal() {
     }
 
     async function openB2BMarketplaceModal(leadId) {
+      window.currentB2BLeadId = leadId;
       if (!leadId) return;
       const modal = document.getElementById('b2bMarketplaceModal');
       if (modal) {
@@ -9748,14 +9915,25 @@ function closeBLDetailModal() {
             return `
               <tr class="hover:bg-white/5 transition-colors">
                 <td class="py-2.5 px-3 font-mono">
-                  <div class="font-bold text-cyan-300">${r.rfq_id || 'RFQ-B2B'}</div>
-                  <div class="text-[10px] text-slate-400">📅 ${r.date || '10/2026'}</div>
+                  <div onclick="openB2BOrderDetailModal('${r.rfq_id || 'RFQ-B2B'}', '${leadId}')" 
+                       class="font-bold text-cyan-300 hover:text-cyan-100 hover:underline cursor-pointer inline-flex items-center gap-1 group transition-colors" 
+                       title="Nhấn để xem chi tiết bài đăng mời thầu & hồ sơ RFQ">
+                    <span>${r.rfq_id || 'RFQ-B2B'}</span>
+                    <span class="text-[10px] text-cyan-400 group-hover:translate-x-0.5 transition-transform">↗</span>
+                  </div>
+                  <div onclick="openB2BOrderDetailModal('${r.rfq_id || 'RFQ-B2B'}', '${leadId}')" 
+                       class="text-[10px] text-slate-400 hover:text-amber-300 cursor-pointer hover:underline transition-colors mt-0.5 font-medium" 
+                       title="Nhấn xem chi tiết ngày đăng bài thầu">
+                    📅 ${r.date || '10/2026'}
+                  </div>
                 </td>
                 <td class="py-2.5 px-3">
                   <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-white/5 border border-white/10 text-slate-200">${r.source_platform || r.platform || platform}</span>
                 </td>
                 <td class="py-2.5 px-3">
-                  <div class="font-medium text-white line-clamp-2">${r.title || 'Nhu cầu thu mua'}</div>
+                  <div onclick="openB2BOrderDetailModal('${r.rfq_id || 'RFQ-B2B'}', '${leadId}')" 
+                       class="font-medium text-white hover:text-amber-300 cursor-pointer hover:underline transition-colors line-clamp-2" 
+                       title="Nhấn xem chi tiết thông số gói thầu">${r.title || 'Nhu cầu thu mua'}</div>
                   <div class="text-[10px] text-amber-300 font-mono mt-0.5 font-bold">Khối lượng: ${r.volume_required || 'N/A'}</div>
                 </td>
                 <td class="py-2.5 px-3 whitespace-nowrap">${statusBadge}${deadlineBadge}</td>
@@ -13050,6 +13228,208 @@ function closeBLDetailModal() {
       document.body.classList.remove('modal-open');
       fetchCustomsIngestionStatus();
     });
+  
+    // =========================================================================
+    // MODAL CHI TIẾT BÀI ĐĂNG THU MUA & MỜI THẦU SÀN B2B (B2B ORDER DOSSIER)
+    // =========================================================================
+    window.currentB2BOrderData = null;
+
+    async function openB2BOrderDetailModal(rfqId, leadId) {
+      if (!rfqId) return;
+      const modal = document.getElementById('b2bOrderDetailModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        triggerModalSpringAnimation('b2bOrderDetailModal');
+        lockBodyScroll('b2bOrderDetailModal');
+        resetModalScroll('b2bOrderDetailModal');
+      }
+      const scBody = document.getElementById('b2bOrderDetailScrollBody');
+      if (scBody) scBody.scrollTop = 0;
+
+      // Loading placeholder
+      if (document.getElementById('b2b-od-title')) document.getElementById('b2b-od-title').innerText = 'Đang tải hồ sơ gói thầu B2B...';
+      if (document.getElementById('b2b-od-rfq-id')) document.getElementById('b2b-od-rfq-id').innerText = rfqId;
+
+      let rfqData = null;
+      try {
+        const url = `/api/leads/b2b-orders/detail?rfq_id=${encodeURIComponent(rfqId)}&lead_id=${encodeURIComponent(leadId || window.currentB2BLeadId || '')}`;
+        const res = await fetch(url);
+        const data = await res.json();
+        if (data.ok) {
+          rfqData = data;
+        }
+      } catch (e) {
+        console.warn("Fetch RFQ detail error:", e);
+      }
+
+      // Fallback from cache if offline
+      if (!rfqData) {
+        let lead = (window.cachedLeadsData || []).find(l => l.lead_id === (leadId || window.currentB2BLeadId));
+        rfqData = {
+          rfq_id: rfqId,
+          date: '15/10/2026',
+          platform: (lead && lead.broker_platform) || 'Alibaba Verified B2B',
+          title: `Gói thầu mời cung ứng số lượng lớn nông sản & hàng hóa xuất khẩu`,
+          status: 'Đang mở nhận hồ sơ chào giá',
+          is_closed: false,
+          deadline_date: '15/11/2026',
+          days_remaining: 18,
+          commodity: (lead && lead.commodities_demanded && lead.commodities_demanded[0] && lead.commodities_demanded[0].name) || 'Hàng Hóa Tiêu Chuẩn Xuất Khẩu',
+          hs_code: (lead && lead.commodities_demanded && lead.commodities_demanded[0] && lead.commodities_demanded[0].hs_code) || '0901.11',
+          volume_required: '3.000 Tấn / quý',
+          incoterms: (lead && lead.preferred_incoterms) || 'CIF / FOB',
+          payment_term: (lead && lead.payment_terms_accepted) || 'Irrevocable L/C At Sight (90 ngày)',
+          destination_port: `Cảng Biển Quốc Tế (${(lead && lead.country) || 'Châu Âu'})`,
+          packaging: 'Bao PP 50kg tráng PE / Túi Jumbo 1.000kg chuyên dụng',
+          quality_standards: ['ISO 9001:2015', 'Giám định SGS / Vinacontrol C/Q', 'C/O Ưu Đãi Thuế Quan'],
+          buyer: {
+            lead_id: leadId || window.currentB2BLeadId,
+            company_name: (lead && lead.company_name) || 'Doanh Nghiệp Thu Mua Quốc Tế',
+            country: (lead && lead.country) || 'Quốc Tế',
+            scale: (lead && lead.scale) || 'Doanh nghiệp lớn',
+            annual_revenue_usd: (lead && lead.annual_revenue_usd) || '$35M USD',
+            lead_score: (lead && lead.lead_score) || 95
+          }
+        };
+      }
+
+      window.currentB2BOrderData = rfqData;
+
+      // Populate Modal Fields
+      if (document.getElementById('b2b-od-title')) document.getElementById('b2b-od-title').innerText = rfqData.title || 'Hồ sơ mời thầu cung ứng ngoại thương';
+      if (document.getElementById('b2b-od-rfq-id')) document.getElementById('b2b-od-rfq-id').innerText = rfqData.rfq_id || rfqId;
+      if (document.getElementById('b2b-od-date')) document.getElementById('b2b-od-date').innerText = rfqData.date || '15/10/2026';
+      if (document.getElementById('b2b-od-platform-badge')) document.getElementById('b2b-od-platform-badge').innerText = rfqData.platform || 'Sàn B2B Quốc Tế';
+
+      // Status Badge
+      const statusBadgeEl = document.getElementById('b2b-od-status-badge');
+      if (statusBadgeEl) {
+        if (rfqData.is_closed) {
+          statusBadgeEl.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
+          statusBadgeEl.innerText = 'ĐÃ CHỐT HỢP ĐỒNG';
+        } else {
+          statusBadgeEl.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30';
+          statusBadgeEl.innerText = (rfqData.status || 'ĐANG MỞ THẦU').toUpperCase();
+        }
+      }
+
+      // Deadline
+      if (document.getElementById('b2b-od-deadline')) document.getElementById('b2b-od-deadline').innerText = rfqData.deadline_date || '30/11/2026';
+      const daysLeftEl = document.getElementById('b2b-od-days-left');
+      if (daysLeftEl) {
+        if (rfqData.is_closed) {
+          daysLeftEl.innerText = 'Đã đóng thầu';
+          daysLeftEl.className = 'px-1.5 py-0.2 rounded text-[9px] bg-slate-500/20 text-slate-400 border border-slate-500/30';
+        } else {
+          const dLeft = rfqData.days_remaining !== undefined ? rfqData.days_remaining : 14;
+          daysLeftEl.innerText = `Còn ${dLeft} ngày`;
+          daysLeftEl.className = dLeft <= 7 ? 'px-1.5 py-0.2 rounded text-[9px] bg-rose-500/25 text-rose-300 border border-rose-500/40 animate-pulse' : 'px-1.5 py-0.2 rounded text-[9px] bg-amber-500/20 text-amber-300 border border-amber-500/40';
+        }
+      }
+
+      // Buyer Info
+      const buyer = rfqData.buyer || {};
+      if (document.getElementById('b2b-od-buyer-name')) document.getElementById('b2b-od-buyer-name').innerText = buyer.company_name || 'Doanh Nghiệp Thu Mua Quốc Tế';
+      if (document.getElementById('b2b-od-buyer-meta')) document.getElementById('b2b-od-buyer-meta').innerText = `${buyer.country || 'Quốc Tế'} • Quy mô: ${buyer.scale || 'Doanh nghiệp lớn'} • Doanh thu: ${buyer.annual_revenue_usd || '$35M USD'} • Điểm uy tín: ${buyer.lead_score || 95}/100`;
+      if (document.getElementById('b2b-od-buyer-pod')) document.getElementById('b2b-od-buyer-pod').innerText = rfqData.destination_port || `Cảng Biển Quốc Tế (${buyer.country || 'Quốc Tế'})`;
+      
+      const buyerBtn = document.getElementById('b2b-od-buyer-profile-btn');
+      if (buyerBtn && buyer.lead_id) {
+        buyerBtn.onclick = () => {
+          closeB2BOrderDetailModal();
+          openCompanyDetailModal(buyer.lead_id);
+        };
+      }
+
+      // Commodity & Spec
+      if (document.getElementById('b2b-od-commodity')) document.getElementById('b2b-od-commodity').innerText = rfqData.commodity || 'Nông sản tiêu chuẩn xuất khẩu';
+      if (document.getElementById('b2b-od-hs-badge')) document.getElementById('b2b-od-hs-badge').innerText = `Mã HS ${rfqData.hs_code || '0901.11'}`;
+      if (document.getElementById('b2b-od-volume')) document.getElementById('b2b-od-volume').innerText = rfqData.volume_required || 'Theo hợp đồng';
+      if (document.getElementById('b2b-od-packaging')) document.getElementById('b2b-od-packaging').innerText = rfqData.packaging || 'Bao PP 50kg tráng PE / Jumbo Bag 1.000kg chuyên dụng';
+
+      // Standards
+      const stdContainer = document.getElementById('b2b-od-standards-container');
+      if (stdContainer) {
+        const stds = rfqData.quality_standards || ['ISO 9001:2015', 'Giám định SGS / Vinacontrol C/Q', 'C/O Ưu Đãi Thuế Quan'];
+        stdContainer.innerHTML = stds.map(s => `<span class="px-2 py-0.5 rounded text-[10px] font-mono bg-white/5 border border-white/10 text-slate-200">✓ ${s}</span>`).join(' ');
+      }
+
+      // Commercial Terms
+      if (document.getElementById('b2b-od-incoterms')) document.getElementById('b2b-od-incoterms').innerText = rfqData.incoterms || 'CIF / FOB';
+      if (document.getElementById('b2b-od-incoterms-badge')) document.getElementById('b2b-od-incoterms-badge').innerText = rfqData.incoterms || 'CIF / FOB';
+      if (document.getElementById('b2b-od-payment')) document.getElementById('b2b-od-payment').innerText = rfqData.payment_term || 'Irrevocable L/C At Sight (90 ngày)';
+
+      // Supplier
+      const sup = rfqData.recommended_supplier || (rfqData.buyer && rfqData.buyer.matched_supplier) || null;
+      const supCard = document.getElementById('b2b-od-supplier-card');
+      if (supCard) {
+        if (sup) {
+          supCard.style.display = 'block';
+          if (document.getElementById('b2b-od-sup-name')) document.getElementById('b2b-od-sup-name').innerText = sup.company_name;
+          if (document.getElementById('b2b-od-sup-meta')) document.getElementById('b2b-od-sup-meta').innerText = `${sup.country || 'Việt Nam'} • Hạng ${sup.tier || 'A'} • Điểm uy tín: ${sup.credibility_score || 96}/100 • Năng lực: ${sup.export_capacity || 'Đạt chuẩn'}`;
+          
+          const supBtn = document.getElementById('b2b-od-sup-profile-btn');
+          if (supBtn) {
+            supBtn.onclick = () => {
+              closeB2BOrderDetailModal();
+              openSupplierDetailModal(sup.id);
+            };
+          }
+
+          const dualRfqBtn = document.getElementById('b2b-od-dual-rfq-action-btn');
+          if (dualRfqBtn) {
+            dualRfqBtn.onclick = () => {
+              closeB2BOrderDetailModal();
+              closeB2BMarketplaceModal();
+              openDualRfqFromPair(buyer.lead_id || leadId || window.currentB2BLeadId, sup.id);
+            };
+          }
+        } else {
+          supCard.style.display = 'none';
+        }
+      }
+
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+    }
+
+    function closeB2BOrderDetailModal() {
+      const modal = document.getElementById('b2bOrderDetailModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        resetModalScroll('b2bOrderDetailModal');
+      }
+      // If b2bMarketplaceModal is still open, do NOT unlock body scroll yet
+      const parentModal = document.getElementById('b2bMarketplaceModal');
+      if (!parentModal || parentModal.classList.contains('hidden')) {
+        unlockBodyScroll();
+      }
+    }
+
+    function copyB2BOrderSummary() {
+      const d = window.currentB2BOrderData;
+      if (!d) return;
+      const buyer = d.buyer || {};
+      const text = [
+        `🌐 [TÍN HIỆU GÓI THẦU SÀN B2B QUỐC TẾ - ${d.platform || 'B2B'}]`,
+        `📦 Mã Gói Thầu: ${d.rfq_id || 'RFQ-B2B'}`,
+        `🏢 Bên Mở Thầu: ${buyer.company_name || 'Buyer'} (${buyer.country || 'Quốc tế'})`,
+        `🎯 Mặt Hàng: ${d.commodity || 'Nông sản'} (Mã HS: ${d.hs_code || '0901.11'})`,
+        `⚖️ Khối Lượng: ${d.volume_required || 'Theo hợp đồng'}`,
+        `🚢 Giao Hàng: ${d.incoterms || 'CIF/FOB'} ➔ ${d.destination_port || 'Cảng đến'}`,
+        `💳 Thanh Toán: ${d.payment_term || 'L/C At Sight'}`,
+        `⏳ Hạn Chót Nộp Báo Giá: ${d.deadline_date || '30/11/2026'} (Còn ${d.days_remaining !== undefined ? d.days_remaining : 14} ngày để Sales chào giá)`,
+        `📌 Trạng Thái: ${d.status || 'Đang mở thầu'}`
+      ].join('\n');
+
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast('Đã Sao Chép Gói Thầu B2B', 'Thông tin hồ sơ mời thầu RFQ đã sẵn sàng để gửi cho đội ngũ Sales.');
+        });
+      }
+    }
+
   </script>
 
   <!-- Floating Trade Tag Tooltip Popover -->

@@ -7733,14 +7733,7 @@
     }
 
     async function fetchSuppliersList() {
-      try {
-        const res = await fetch('/api/suppliers');
-        const data = await res.json();
-        cachedSuppliersList = Array.isArray(data) ? data : (data.data || []);
-        filterSuppliersList();
-      } catch (err) {
-        console.error("Lỗi nạp danh sách nhà cung cấp:", err);
-      }
+      await filterSuppliersList();
     }
 
     function formatCommodityBadges(commodities, verified) {
@@ -7813,68 +7806,33 @@
       return { countryIso: null, keyword: cleanQ };
     }
 
+    let _filterSuppliersDebounce = null;
     function filterSuppliersList() {
-      const country = (document.getElementById('supFilterCountry')?.value || 'all').toLowerCase();
-      const supType = (document.getElementById('supFilterType')?.value || 'all').toLowerCase();
-      const cert = (document.getElementById('supFilterCert')?.value || 'all').toLowerCase();
-      const payment = (document.getElementById('supFilterPayment')?.value || 'all').toLowerCase();
-      const rawQ = (document.getElementById('supFilterSearch')?.value || '').trim();
-      const parsed = parseSupplierSearchQuery(rawQ);
+      clearTimeout(_filterSuppliersDebounce);
+      _filterSuppliersDebounce = setTimeout(async () => {
+        const country = (document.getElementById('supFilterCountry')?.value || 'all').toLowerCase();
+        const supType = (document.getElementById('supFilterType')?.value || 'all').toLowerCase();
+        const cert = (document.getElementById('supFilterCert')?.value || 'all').toLowerCase();
+        const payment = (document.getElementById('supFilterPayment')?.value || 'all').toLowerCase();
+        const rawQ = (document.getElementById('supFilterSearch')?.value || '').trim();
+        const targetIso = country !== 'all' ? countryCodeMap[country] : null;
 
-      const targetIso = (country !== 'all' ? countryCodeMap[country] : null) || parsed.countryIso;
-      const searchKeyword = parsed.keyword.toLowerCase();
+        try {
+          const url = `/api/suppliers?country=${encodeURIComponent(country)}&type=${encodeURIComponent(supType)}&cert=${encodeURIComponent(cert)}&payment=${encodeURIComponent(payment)}&q=${encodeURIComponent(rawQ)}`;
+          const res = await fetch(url);
+          const data = await res.json();
+          const suppliers = Array.isArray(data) ? data : (data.data || []);
+          cachedSuppliersList = suppliers;
 
-      let filtered = cachedSuppliersList.filter(s => {
-        const sCountry = (s.country || '').toLowerCase();
-        const sCode = (s.country_code || '').toUpperCase();
-        const sType = (s.supplier_type || '').toLowerCase();
-        const sTypeVi = (s.supplier_type_vi || '').toLowerCase();
-        const sCerts = (s.quality_standards || s.certificates || []).map(c => c.toLowerCase());
-        const sPayments = (s.accepted_payments || []).map(p => p.toLowerCase());
-
-        // 1. Lọc Quốc Gia Chuẩn Xác Tuyệt Đối (Dựa trên Mã Quốc Gia ISO-2 của Trụ Sở NCC)
-        if (targetIso) {
-          if (sCode !== targetIso) return false;
-        } else if (country !== 'all') {
-          if (!sCountry.includes(country)) return false;
-        }
-
-        // 2. Lọc Loại Hình Nhà Cung Cấp
-        if (supType !== 'all') {
-          if (supType === 'tier1' && !sType.includes('tier1') && !sType.includes('agent') && !sType.includes('trading') && !sTypeVi.includes('cấp 1')) return false;
-          if (supType === 'producer' && !sType.includes('producer') && !sType.includes('factory') && !sTypeVi.includes('sản xuất') && !sTypeVi.includes('nhà máy')) return false;
-        }
-
-        // 3. Chứng chỉ QA-QC
-        if (cert !== 'all') {
-          if (!sCerts.some(c => c.includes(cert))) return false;
-        }
-
-        // 4. Phương thức thanh toán
-        if (payment !== 'all') {
-          if (!sPayments.some(p => p.includes(payment))) return false;
-        }
-
-        // 5. Tìm Kiếm Văn Bản: Đối chiếu Tên Cty, Thành Phố, Mặt Hàng Cung Cấp (Không xét Origin để tránh nhầm Trader nước ngoài)
-        if (searchKeyword) {
-          const commList = s.commodities_supplied || [];
-          const commNames = (Array.isArray(commList) ? commList.map(c => typeof c === 'object' ? `${c.hs_code || ''} ${c.name || ''}` : String(c)).join(' ') : '') + ' ' + (Array.isArray(s.verified_commodities) ? s.verified_commodities.join(' ') : '');
-          const searchable = `${s.company_name || s.name || ''} ${s.short_name || ''} ${s.city || ''} ${s.hq_address || ''} ${commNames} ${sTypeVi} ${sCerts.join(' ')} ${sPayments.join(' ')}`.toLowerCase();
-          
-          if (!searchable.includes(searchKeyword)) {
-            return false;
+          if (suppliers.length === 0 && rawQ && rawQ.length >= 2 && !window._isFetchingLive) {
+            triggerLiveDiscovery(rawQ, targetIso);
+          } else {
+            renderSuppliersList(suppliers);
           }
+        } catch (err) {
+          console.error("Lỗi truy vấn nhà cung cấp trực tiếp:", err);
         }
-
-        return true;
-      });
-
-      if (filtered.length === 0 && searchKeyword && searchKeyword.length >= 2 && !window._isFetchingLive) {
-        // Tự động kích hoạt khám phá thời gian thực qua GLEIF LEI
-        triggerLiveDiscovery(searchKeyword, targetIso);
-      } else {
-        renderSuppliersList(filtered);
-      }
+      }, 100);
     }
 
     let _liveDiscoveryTimeout = null;

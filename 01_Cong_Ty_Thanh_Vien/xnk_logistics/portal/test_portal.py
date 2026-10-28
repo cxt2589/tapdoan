@@ -57,7 +57,7 @@ def run_all_tests():
     time.sleep(0.5)
 
     passed_count = 0
-    total_tests = 54
+    total_tests = 55
 
     try:
         # Test 1: Health Check
@@ -1175,7 +1175,51 @@ def run_all_tests():
         assert "CẤU TRÚC PHẢ HỆ TẬP ĐOÀN ĐA QUỐC GIA" in fresh_html
         assert "ĐỘC QUYỀN NHÓM QUỐC GIA" in fresh_html
 
-        print("✅ Test 54/54: Động cơ Săn Tìm Co Giãn Đa Tầng (Elastic Sourcing), Nhận Diện Phả Hệ Tập Đoàn (Uralchem Trading Latvia -> Gốc Nga RU) & Chuyển Tự Động Kirin-Latinh ISO 9 chuẩn 100%")
+        print("✅ Test 54/55: Động cơ Săn Tìm Co Giãn Đa Tầng (Elastic Sourcing), Nhận Diện Phả Hệ Tập Đoàn (Uralchem Trading Latvia -> Gốc Nga RU) & Chuyển Tự Động Kirin-Latinh ISO 9 chuẩn 100%")
+        passed_count += 1
+
+        # --- TEST 55: Lịch Sử Vận Đơn (Customs B/L Records) & Mạng Lưới Đối Tác Toàn Cầu Của Nhà Cung Cấp ---
+        # 1. Kiểm tra nhà cung cấp gốc Nga có đầy đủ lịch sử vận đơn và mạng lưới đối tác
+        code, ru_sups = http_get("/api/suppliers?country=russia")
+        assert code == 200
+        uralchem = next((s for s in ru_sups if "uralchem" in s.get("company_name", "").lower()), None)
+        assert uralchem is not None, "Uralchem not found in Russian suppliers list"
+        
+        # Kiểm tra chuỗi vận đơn hải quan
+        bls = uralchem.get("customs_bl_records", [])
+        assert len(bls) >= 8, f"Expected >= 8 B/L records, got {len(bls)}"
+        assert all(b.get("bl_number") and b.get("vessel") and b.get("discharge_port") and b.get("unit_price") for b in bls), "B/L records missing essential fields"
+        assert uralchem.get("bl_stats_1y", {}).get("total_bl_1y") is not None, "bl_stats_1y missing"
+
+        # Kiểm tra mạng lưới đối tác toàn cầu theo từng quốc gia
+        net = uralchem.get("counterparty_network", {})
+        assert net.get("total_partners") >= 8, f"Expected >= 8 partners, got {net.get('total_partners')}"
+        assert net.get("total_countries") >= 5, f"Expected >= 5 countries, got {net.get('total_countries')}"
+        countries = net.get("countries", {})
+        assert "VN" in countries and "CN" in countries and "IN" in countries and "BR" in countries, "Key trading countries missing in network"
+        partners = net.get("partners", [])
+        assert any("PVCFC" in p.get("name", "") for p in partners), "PVCFC missing in Uralchem network"
+        assert all(len(p.get("sample_bl_records", [])) >= 2 for p in partners), "Sample B/Ls missing in partners"
+
+        # 2. Kiểm tra API chi tiết /api/suppliers/detail?id=SUP-GLB-RU-001
+        code, detail_res = http_get("/api/suppliers/detail?id=SUP-GLB-RU-001")
+        assert code == 200
+        assert detail_res.get("ok") is True
+        det_sup = detail_res.get("supplier", {})
+        assert len(det_sup.get("customs_bl_records", [])) >= 8
+        assert det_sup.get("counterparty_network", {}).get("total_partners") >= 8
+
+        # 3. Kiểm tra giao diện HTML có đầy đủ thành phần modal mạng lưới và vận đơn nhà cung cấp
+        with urllib.request.urlopen(f"http://127.0.0.1:{TEST_PORT}/", timeout=5) as hr:
+            fresh_html = hr.read().decode('utf-8')
+        assert "supd-network-section" in fresh_html, "supd-network-section missing in HTML"
+        assert "supd-network-country-filters" in fresh_html, "supd-network-country-filters missing in HTML"
+        assert "supd-network-partners-list" in fresh_html, "supd-network-partners-list missing in HTML"
+        assert "supd-bl-container" in fresh_html, "supd-bl-container missing in HTML"
+        assert "renderSupplierNetwork" in fresh_html, "renderSupplierNetwork missing in JS"
+        assert "renderSupplierBLList" in fresh_html, "renderSupplierBLList missing in JS"
+
+        print("✅ Test 55/55: Hồ Sơ Vận Đơn Hải Quan (Customs B/L) & Mạng Lưới Đối Tác Toàn Cầu (Counterparty Network) Theo Quốc Gia Cho Nhà Cung Cấp Đạt Chuẩn 100%")
         passed_count += 1
 
     finally:

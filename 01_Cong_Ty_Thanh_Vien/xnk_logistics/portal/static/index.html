@@ -7528,10 +7528,32 @@
       executeSupplierSearch(taxCode);
     }
 
-    function handleSupplierSearch(e) {
+        function handleSupplierSearch(e) {
       e.preventDefault();
       const q = document.getElementById('supplierQueryInput').value.trim();
       if (!q) return;
+
+      // Chuyển hướng thông minh nếu người dùng nhập tên quốc gia (Ví dụ: "nga", "nhà cung cấp ở nga")
+      const parsed = typeof parseSupplierSearchQuery === 'function' ? parseSupplierSearchQuery(q) : { countryIso: null, keyword: q };
+      if (parsed.countryIso && parsed.countryIso !== 'VN') {
+        let dropdownVal = 'all';
+        for (const [k, v] of Object.entries(countryCodeMap)) {
+          if (v === parsed.countryIso) { dropdownVal = k; break; }
+        }
+        switchSupplierSubView('sourcing');
+        const countrySelect = document.getElementById('supFilterCountry');
+        if (countrySelect && dropdownVal !== 'all') {
+          countrySelect.value = dropdownVal;
+        }
+        const searchInput = document.getElementById('supFilterSearch');
+        if (searchInput) {
+          searchInput.value = parsed.keyword ? parsed.keyword : '';
+        }
+        filterSuppliersList();
+        showToast('Chuyển Hướng Danh Bạ', `Đang lọc đối tác cung ứng khu vực ${parsed.countryIso}. Đã chuyển sang Danh Bạ Toàn Cầu.`, false);
+        return;
+      }
+
       executeSupplierSearch(q);
     }
 
@@ -7543,6 +7565,20 @@
           body: JSON.stringify({tax_code: taxCode})
         });
         const data = await res.json();
+        if (data.is_country_query && data.country_code !== 'VN') {
+          let dropdownVal = 'all';
+          for (const [k, v] of Object.entries(countryCodeMap)) {
+            if (v === data.country_code) { dropdownVal = k; break; }
+          }
+          switchSupplierSubView('sourcing');
+          const countrySelect = document.getElementById('supFilterCountry');
+          if (countrySelect && dropdownVal !== 'all') {
+            countrySelect.value = dropdownVal;
+          }
+          filterSuppliersList();
+          showToast('Chuyển Hướng Danh Bạ', `Đang lọc đối tác cung ứng khu vực ${data.country_code}. Đã chuyển sang Danh Bạ Toàn Cầu.`, false);
+          return;
+        }
         currentSupplierData = data;
         renderSupplierResult(data);
       } catch (err) {
@@ -7634,7 +7670,7 @@
         const res = await fetch('/api/suppliers');
         const data = await res.json();
         cachedSuppliersList = Array.isArray(data) ? data : (data.data || []);
-        renderSuppliersList(cachedSuppliersList);
+        filterSuppliersList();
       } catch (err) {
         console.error("Lỗi nạp danh sách nhà cung cấp:", err);
       }
@@ -7660,7 +7696,7 @@
       return '<span class="text-xs text-slate-400 italic">Đang cập nhật danh mục hàng hóa</span>';
     }
 
-    const countryCodeMap = {
+        const countryCodeMap = {
       'vietnam': 'VN',
       'russia': 'RU',
       'china': 'CN',
@@ -7674,12 +7710,52 @@
       'indonesia': 'ID'
     };
 
+    const supplierCountryAliases = {
+      'nga': 'RU', 'russia': 'RU', 'liên bang nga': 'RU', 'lien bang nga': 'RU', 'ru': 'RU',
+      'việt nam': 'VN', 'vietnam': 'VN', 'viet nam': 'VN', 'vn': 'VN',
+      'trung quốc': 'CN', 'trung quoc': 'CN', 'china': 'CN', 'tq': 'CN', 'cn': 'CN',
+      'hoa kỳ': 'US', 'hoa ky': 'US', 'mỹ': 'US', 'my': 'US', 'usa': 'US', 'us': 'US', 'united states': 'US',
+      'thụy sĩ': 'CH', 'thụy sỹ': 'CH', 'thuy si': 'CH', 'thuy sy': 'CH', 'switzerland': 'CH', 'ch': 'CH',
+      'đức': 'DE', 'duc': 'DE', 'germany': 'DE', 'de': 'DE',
+      'singapore': 'SG', 'sing': 'SG', 'sg': 'SG',
+      'ấn độ': 'IN', 'an do': 'IN', 'india': 'IN', 'in': 'IN',
+      'thái lan': 'TH', 'thai lan': 'TH', 'thailand': 'TH', 'th': 'TH',
+      'brazil': 'BR', 'br': 'BR',
+      'indonesia': 'ID', 'indo': 'ID', 'id': 'ID'
+    };
+
+    function parseSupplierSearchQuery(rawQuery) {
+      if (!rawQuery) return { countryIso: null, keyword: '' };
+      let q = rawQuery.toLowerCase().trim();
+      let cleanQ = q.replace(/^(tìm kiếm|tìm|tra cứu|xem|danh sách)\s+/i, '')
+                    .replace(/^(nhà cung cấp|nhà phân phối|đại lý|ncc|doanh nghiệp|công ty|cty)\s+/i, '')
+                    .replace(/^(ở|tại|in|from|quốc gia|nước)\s+/i, '')
+                    .trim();
+
+      if (supplierCountryAliases[cleanQ]) {
+        return { countryIso: supplierCountryAliases[cleanQ], keyword: '' };
+      }
+
+      for (const [alias, iso] of Object.entries(supplierCountryAliases)) {
+        const regexEnd = new RegExp('(?:\\s+(?:ở|tại|in|from|quốc gia))?\\s+' + alias.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '$', 'i');
+        if (regexEnd.test(cleanQ)) {
+          return { countryIso: iso, keyword: cleanQ.replace(regexEnd, '').trim() };
+        }
+      }
+
+      return { countryIso: null, keyword: cleanQ };
+    }
+
     function filterSuppliersList() {
       const country = (document.getElementById('supFilterCountry')?.value || 'all').toLowerCase();
       const supType = (document.getElementById('supFilterType')?.value || 'all').toLowerCase();
       const cert = (document.getElementById('supFilterCert')?.value || 'all').toLowerCase();
       const payment = (document.getElementById('supFilterPayment')?.value || 'all').toLowerCase();
-      const q = (document.getElementById('supFilterSearch')?.value || '').trim().toLowerCase();
+      const rawQ = (document.getElementById('supFilterSearch')?.value || '').trim();
+      const parsed = parseSupplierSearchQuery(rawQ);
+
+      const targetIso = (country !== 'all' ? countryCodeMap[country] : null) || parsed.countryIso;
+      const searchKeyword = parsed.keyword.toLowerCase();
 
       let filtered = cachedSuppliersList.filter(s => {
         const sCountry = (s.country || '').toLowerCase();
@@ -7689,42 +7765,36 @@
         const sCerts = (s.quality_standards || s.certificates || []).map(c => c.toLowerCase());
         const sPayments = (s.accepted_payments || []).map(p => p.toLowerCase());
 
-        const commList = s.commodities_supplied || [];
-        const commText = (Array.isArray(commList) ? commList.map(c => typeof c === 'object' ? `${c.hs_code || ''} ${c.name || ''} ${c.origin || ''}` : String(c)).join(' ') : '') + ' ' + (Array.isArray(s.verified_commodities) ? s.verified_commodities.join(' ') : '');
-        const searchable = `${s.company_name || s.name || ''} ${s.short_name || ''} ${s.country || ''} ${s.city || ''} ${s.hq_address || ''} ${commText} ${sTypeVi} ${sCerts.join(' ')} ${sPayments.join(' ')}`.toLowerCase();
-
-        // 1. Country Filter (Strict ISO-2 code matching to eliminate false substring matches like 'nga' in 'singapore')
-        if (country !== 'all') {
-          const targetIso = countryCodeMap[country];
-          if (targetIso) {
-            if (sCode !== targetIso) return false;
-          } else {
-            if (!sCountry.includes(country)) return false;
-          }
+        // 1. Lọc Quốc Gia Chuẩn Xác Tuyệt Đối (Dựa trên Mã Quốc Gia ISO-2 của Trụ Sở NCC)
+        if (targetIso) {
+          if (sCode !== targetIso) return false;
+        } else if (country !== 'all') {
+          if (!sCountry.includes(country)) return false;
         }
 
-        // 2. Supplier Type Filter
+        // 2. Lọc Loại Hình Nhà Cung Cấp
         if (supType !== 'all') {
           if (supType === 'tier1' && !sType.includes('tier1') && !sType.includes('agent') && !sType.includes('trading') && !sTypeVi.includes('cấp 1')) return false;
           if (supType === 'producer' && !sType.includes('producer') && !sType.includes('factory') && !sTypeVi.includes('sản xuất') && !sTypeVi.includes('nhà máy')) return false;
         }
 
-        // 3. QA-QC Certs
+        // 3. Chứng chỉ QA-QC
         if (cert !== 'all') {
           if (!sCerts.some(c => c.includes(cert))) return false;
         }
 
-        // 4. Payment Terms
+        // 4. Phương thức thanh toán
         if (payment !== 'all') {
           if (!sPayments.some(p => p.includes(payment))) return false;
         }
 
-        // 5. Text Search
-        if (q) {
-          if (q === 'nga') {
-            const regex = /(?:^|\s|\(|\/|-)nga(?:$|\s|\)|\/|-|,|\.)/i;
-            if (!regex.test(searchable) && sCode !== 'RU') return false;
-          } else if (!searchable.includes(q)) {
+        // 5. Tìm Kiếm Văn Bản: Đối chiếu Tên Cty, Thành Phố, Mặt Hàng Cung Cấp (Không xét Origin để tránh nhầm Trader nước ngoài)
+        if (searchKeyword) {
+          const commList = s.commodities_supplied || [];
+          const commNames = (Array.isArray(commList) ? commList.map(c => typeof c === 'object' ? `${c.hs_code || ''} ${c.name || ''}` : String(c)).join(' ') : '') + ' ' + (Array.isArray(s.verified_commodities) ? s.verified_commodities.join(' ') : '');
+          const searchable = `${s.company_name || s.name || ''} ${s.short_name || ''} ${s.city || ''} ${s.hq_address || ''} ${commNames} ${sTypeVi} ${sCerts.join(' ')} ${sPayments.join(' ')}`.toLowerCase();
+          
+          if (!searchable.includes(searchKeyword)) {
             return false;
           }
         }

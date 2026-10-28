@@ -1439,7 +1439,42 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
             cert = query.get("cert", [""])[0].strip().lower()
             payment = query.get("payment", [""])[0].strip().lower()
             incoterm = query.get("incoterm", [""])[0].strip().lower()
-            q = query.get("q", [""])[0].strip().lower()
+            raw_q = query.get("q", [""])[0].strip().lower()
+
+            country_code_map = {
+                "vn": "VN", "vietnam": "VN", "việt nam": "VN",
+                "ru": "RU", "russia": "RU", "nga": "RU", "liên bang nga": "RU",
+                "cn": "CN", "china": "CN", "trung quốc": "CN",
+                "us": "US", "usa": "US", "mỹ": "US", "hoa kỳ": "US", "united states": "US",
+                "ch": "CH", "switzerland": "CH", "thụy sĩ": "CH", "thụy sỹ": "CH",
+                "de": "DE", "germany": "DE", "đức": "DE",
+                "sg": "SG", "singapore": "SG",
+                "in": "IN", "india": "IN", "ấn độ": "IN",
+                "th": "TH", "thailand": "TH", "thái lan": "TH",
+                "br": "BR", "brazil": "BR",
+                "id": "ID", "indonesia": "ID",
+            }
+
+            # Parse query for natural language country detection
+            parsed_country_iso = None
+            search_keyword = raw_q
+            if raw_q:
+                clean_q = re.sub(r'^(tìm kiếm|tìm|tra cứu|xem|danh sách)\s+', '', raw_q)
+                clean_q = re.sub(r'^(nhà cung cấp|nhà phân phối|đại lý|ncc|doanh nghiệp|công ty|cty)\s+', '', clean_q)
+                clean_q = re.sub(r'^(ở|tại|in|from|quốc gia|nước)\s+', '', clean_q).strip()
+
+                if clean_q in country_code_map:
+                    parsed_country_iso = country_code_map[clean_q]
+                    search_keyword = ""
+                else:
+                    for alias, iso in sorted(country_code_map.items(), key=lambda x: -len(x[0])):
+                        pattern = r'(?:\s+(?:ở|tại|in|from|quốc gia))?\s+' + re.escape(alias) + r'$'
+                        if re.search(pattern, clean_q):
+                            parsed_country_iso = iso
+                            search_keyword = re.sub(pattern, '', clean_q).strip()
+                            break
+
+            target_country_iso = country_code_map.get(country) if (country and country != "all") else parsed_country_iso
 
             filtered = []
             for s in suppliers:
@@ -1447,28 +1482,12 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                 s_country = s.get("country", "").lower()
                 s_country_code = s.get("country_code", "").upper()
 
-                if country and country != "all":
-                    country_norm = country.lower().strip()
-                    code_map = {
-                        "vn": "VN", "vietnam": "VN", "việt nam": "VN",
-                        "ru": "RU", "russia": "RU", "nga": "RU", "liên bang nga": "RU",
-                        "cn": "CN", "china": "CN", "trung quốc": "CN",
-                        "us": "US", "usa": "US", "mỹ": "US", "hoa kỳ": "US", "united states": "US",
-                        "ch": "CH", "switzerland": "CH", "thụy sĩ": "CH", "thụy sỹ": "CH",
-                        "de": "DE", "germany": "DE", "đức": "DE",
-                        "sg": "SG", "singapore": "SG",
-                        "in": "IN", "india": "IN", "ấn độ": "IN",
-                        "th": "TH", "thailand": "TH", "thái lan": "TH",
-                        "br": "BR", "brazil": "BR",
-                        "id": "ID", "indonesia": "ID",
-                    }
-                    target_iso = code_map.get(country_norm)
-                    if target_iso:
-                        if s_country_code != target_iso:
-                            match = False
-                    else:
-                        if country_norm not in s_country:
-                            match = False
+                if target_country_iso:
+                    if s_country_code != target_country_iso:
+                        match = False
+                elif country and country != "all":
+                    if country not in s_country:
+                        match = False
 
                 if sup_type and sup_type != "all":
                     st = s.get("supplier_type", "").lower()
@@ -1497,24 +1516,19 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                     if not any(incoterm in t for t in terms):
                         match = False
 
-                if q:
+                if search_keyword:
                     comm_list = s.get("commodities_supplied") or []
                     comm_str = " ".join(
-                        f"{c.get('hs_code','')} {c.get('name','')} {c.get('origin','')}" if isinstance(c, dict) else str(c)
+                        f"{c.get('hs_code','')} {c.get('name','')}" if isinstance(c, dict) else str(c)
                         for c in comm_list
                     )
                     searchable = f"{s.get('company_name', s.get('name',''))} {s.get('short_name','')} {s.get('country','')} {s.get('city','')} {s.get('supplier_type_vi','')} {comm_str} {' '.join(s.get('quality_standards',[]))} {' '.join(s.get('accepted_payments',[]))}".lower()
-                    if q == "nga":
-                        # Prevent 'nga' from substring-matching 'singapore'
-                        if not re.search(r'(?:^|\s|\(|\/|-)nga(?:$|\s|\)|\/|-|,|\.)', searchable) and s_country_code != "RU":
-                            match = False
-                    elif q not in searchable:
+                    if search_keyword not in searchable:
                         match = False
 
                 if match:
                     filtered.append(s)
 
-            # Sắp xếp mặc định theo điểm tín nhiệm / audit_score giảm dần
             def get_score(item):
                 return item.get("score") or item.get("audit_score") or item.get("vat_refund_safety_percent") or 0
             filtered.sort(key=get_score, reverse=True)
@@ -2772,6 +2786,37 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
 
             sup_id = params.get("id", "").strip()
             query_str = (tax_code or name or sup_id).strip()
+
+            # Kiểm tra nếu query là tên quốc gia ngoại quốc (Ví dụ: "nga", "russia", "trung quốc")
+            c_check = query_str.lower()
+            clean_c = re.sub(r'^(tìm kiếm|tìm|tra cứu|xem|danh sách)\s+', '', c_check)
+            clean_c = re.sub(r'^(nhà cung cấp|nhà phân phối|đại lý|ncc|doanh nghiệp|công ty|cty)\s+', '', clean_c)
+            clean_c = re.sub(r'^(ở|tại|in|from|quốc gia|nước)\s+', '', clean_c).strip()
+
+            country_code_map = {
+                "vn": "VN", "vietnam": "VN", "việt nam": "VN",
+                "ru": "RU", "russia": "RU", "nga": "RU", "liên bang nga": "RU",
+                "cn": "CN", "china": "CN", "trung quốc": "CN",
+                "us": "US", "usa": "US", "mỹ": "US", "hoa kỳ": "US", "united states": "US",
+                "ch": "CH", "switzerland": "CH", "thụy sĩ": "CH", "thụy sỹ": "CH",
+                "de": "DE", "germany": "DE", "đức": "DE",
+                "sg": "SG", "singapore": "SG",
+                "in": "IN", "india": "IN", "ấn độ": "IN",
+                "th": "TH", "thailand": "TH", "thái lan": "TH",
+                "br": "BR", "brazil": "BR",
+                "id": "ID", "indonesia": "ID",
+            }
+            if clean_c in country_code_map and country_code_map[clean_c] != "VN":
+                c_iso = country_code_map[clean_c]
+                matched_intl = [s for s in suppliers if s.get("country_code", "").upper() == c_iso]
+                if matched_intl:
+                    first_s = dict(matched_intl[0])
+                    first_s["is_country_query"] = True
+                    first_s["country_code"] = c_iso
+                    first_s["source"] = "GLOBAL_SOURCING_REDIRECT"
+                    first_s["audit_timestamp"] = datetime.now().strftime("%H:%M:%S %d/%m/%Y")
+                    self._send_json(first_s)
+                    return
 
             matched = None
             t_clean = re.sub(r'[^0-9]', '', tax_code)

@@ -334,6 +334,24 @@ def run_all_tests():
         assert len(sups_ru) == 2
         assert all(s.get("country_code") == "RU" for s in sups_ru)
         assert not any("singapore" in (s.get("country", "")).lower() for s in sups_ru)
+
+        # Lọc theo tìm kiếm từ khóa Nga / Nhà cung cấp ở Nga (Bảo đảm không lẫn NCC Việt Nam hay các Hub giao dịch Âu/Mỹ)
+        code, sups_q_ru = http_get("/api/suppliers?q=nga")
+        assert code == 200
+        assert len(sups_q_ru) == 2
+        assert all(s.get("country_code") == "RU" for s in sups_q_ru)
+
+        code, sups_q_nlp = http_get("/api/suppliers?q=nh%C3%A0%20cung%20c%E1%BA%A5p%20%E1%BB%9F%20nga")
+        assert code == 200
+        assert len(sups_q_nlp) == 2
+        assert all(s.get("country_code") == "RU" for s in sups_q_nlp)
+
+        # Kiểm tra API thẩm định thuế (/api/verify/supplier) chuyển hướng thông minh khi nhập tên quốc gia
+        code, v_resp = http_post("/api/verify/supplier", {"tax_code": "nhà cung cấp ở nga"})
+        assert code == 200
+        assert v_resp.get("is_country_query") == True
+        assert v_resp.get("country_code") == "RU"
+        assert "DYNAMIC-SP-" not in v_resp.get("id", "")
         print(f"✅ Test 23/25: Động cơ Săn tìm NCC & Đại lý Cấp 1 Toàn cầu (Tổng {len(sups_all)} NCC, {len(sups_tier1)} Đại lý Tier-1, Lọc theo Quốc gia chuẩn xác 100% không dính nhầm từ khóa)")
         passed_count += 1
 

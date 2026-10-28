@@ -127,6 +127,85 @@ RUSSIAN_STRATEGIC_PORTS = {
     "RUKGD": {"code": "RUKGD", "name": "Cảng Kaliningrad", "basin": "Biển Baltic (Vùng ngoại lãnh thổ)", "type": "Cảng thương mại trung chuyển Châu Âu", "flag": "🇷🇺"},
 }
 
+# CỔNG TRA CỨU HÃNG TÀU TRỰC TIẾP (OFFICIAL CARRIER DIRECT TRACKING PORTALS)
+OFFICIAL_TRACKING_PORTALS = {
+    # Khối Viễn Dương Toàn Cầu
+    "MAEU": "https://www.maersk.com/tracking/{bl}",
+    "MSK":  "https://www.maersk.com/tracking/{bl}",
+    "MEDU": "https://www.msc.com/en/track-a-shipment?reference={bl}",
+    "MSCU": "https://www.msc.com/en/track-a-shipment?reference={bl}",
+    "CMAU": "https://www.cma-cgm.com/ebusiness/tracking/search?SearchBy=BL&SearchValue={bl}",
+    "CMA":  "https://www.cma-cgm.com/ebusiness/tracking/search?SearchBy=BL&SearchValue={bl}",
+    "COSU": "https://lines.coscoshipping.com/ebusiness/cargoTracking?trackingType=BILLOFLADING&number={bl}",
+    "COS":  "https://lines.coscoshipping.com/ebusiness/cargoTracking?trackingType=BILLOFLADING&number={bl}",
+    "HLCU": "https://www.hapag-lloyd.com/en/online-business/track/track-by-booking-solution.html?blno={bl}",
+    "HLC":  "https://www.hapag-lloyd.com/en/online-business/track/track-by-booking-solution.html?blno={bl}",
+    "ONEY": "https://ecomm.one-line.com/one-ecom/manage-shipment/cargo-tracking?trackingNumber={bl}",
+    "ONE":  "https://ecomm.one-line.com/one-ecom/manage-shipment/cargo-tracking?trackingNumber={bl}",
+    "EGLV": "https://www.shipmentlink.com/servlet/TTrk_Tracking?quick_type=BL&quick_no={bl}",
+    "EGL":  "https://www.shipmentlink.com/servlet/TTrk_Tracking?quick_type=BL&quick_no={bl}",
+    "HDMU": "https://www.hmm21.com/cms/business/ebusiness/trackTrace/trackTrace/index.jsp?type=1&number={bl}",
+    "HMM":  "https://www.hmm21.com/cms/business/ebusiness/trackTrace/trackTrace/index.jsp?type=1&number={bl}",
+    "YMLU": "https://www.yangming.com/e-service/track_trace/track_trace_cargo_tracking.aspx?type=BL&num={bl}",
+    "YML":  "https://www.yangming.com/e-service/track_trace/track_trace_cargo_tracking.aspx?type=BL&num={bl}",
+    "ZIMU": "https://www.zim.com/tools/track-a-shipment?consignment={bl}",
+    "ZIM":  "https://www.zim.com/tools/track-a-shipment?consignment={bl}",
+    "WHLC": "https://www.wanhai.com/views/cargoTracking/cargoTracking.xhtml?q_type=BL&q_num={bl}",
+    "WHL":  "https://www.wanhai.com/views/cargoTracking/cargoTracking.xhtml?q_type=BL&q_num={bl}",
+    "PILU": "https://www.pilship.com/en-our-track-and-trace-cargo-tracking/120.html?ref={bl}",
+    "PCLL": "https://www.pilship.com/en-our-track-and-trace-cargo-tracking/120.html?ref={bl}",
+    "SITC": "https://www.sitc.com/en/tracking.html?bl={bl}",
+    "KMTC": "https://www.ekmtc.com/cargoTracking?blNo={bl}",
+    "OOLU": "https://www.oocl.com/eng/ourservices/eservices/cargotracking/Pages/cargotracking.aspx?cargo_tracking_number={bl}",
+    
+    # Khối Chuyên Tuyến Nga & Á - Âu
+    "FESU": "https://www.fesco.ru/en/clients/tracking/?number={bl}",
+    "FESC": "https://www.fesco.ru/en/clients/tracking/?number={bl}",
+    "TRCU": "https://trcont.com/en/tracking?number={bl}",
+    "TRCO": "https://trcont.com/en/tracking?number={bl}",
+    "RSCO": "https://ruscon.delo-group.com/en/services/tracking/?number={bl}",
+    "SASC": "https://sasco.ru/en/tracking?bl={bl}",
+    "SWFT": "https://swifttransport.ru/en/tracking?bl={bl}",
+    "XINX": "https://newnewshipping.com/en/tracking?bl={bl}",
+
+    # Khối Việt Nam & NVOCCs
+    "TCSP": "https://saigonnewport.com.vn/e-port?bl={bl}",
+    "HACU": "https://haian.vn/tra-cuu-van-don?bl={bl}",
+    "HATS": "https://haian.vn/tra-cuu-van-don?bl={bl}",
+    "VIMU": "https://vimc.co/dich-vu-hang-hai/tra-cuu-tau-hang/?bl={bl}",
+    "VML":  "https://vimc.co/dich-vu-hang-hai/tra-cuu-tau-hang/?bl={bl}",
+    "GMD":  "https://www.gemadept.com.vn/e-port/?bl={bl}",
+    "KHNN": "https://mykn.kuehne-nagel.com/public-tracking?query={bl}",
+    "NAKU": "https://mykn.kuehne-nagel.com/public-tracking?query={bl}",
+    "DHLU": "https://www.dhl.com/global-en/home/tracking.html?tracking-id={bl}",
+    "DGF":  "https://www.dhl.com/global-en/home/tracking.html?tracking-id={bl}",
+    "DSVU": "https://www.dsv.com/en/our-solutions/modes-of-transport/sea-freight/track-and-trace-sea?trackId={bl}",
+    "SCHU": "https://www.dbschenker.com/global/eservices/tracking?trackingNumber={bl}",
+    "EXPD": "https://www.expeditors.com/tracking?reference={bl}",
+}
+
+def get_carrier_tracking_url(bl_number, carrier_key=None):
+    """
+    Tạo link tra cứu vận đơn trực tiếp trên Cổng hãng tàu chính thống.
+    Tuyệt đối không chuyển hướng sang Google Search.
+    """
+    clean_bl = str(bl_number or "").strip()
+    key = str(carrier_key or "").strip().upper()
+    
+    if key and key in OFFICIAL_TRACKING_PORTALS:
+        return OFFICIAL_TRACKING_PORTALS[key].replace("{bl}", clean_bl)
+    
+    # Thử bóc tách prefix từ chính mã vận đơn
+    compact_bl = re.sub(r'[^A-Za-z0-9]', '', clean_bl).upper()
+    for prefix_len in (4, 3, 2):
+        if len(compact_bl) >= prefix_len:
+            p = compact_bl[:prefix_len]
+            if p in OFFICIAL_TRACKING_PORTALS:
+                return OFFICIAL_TRACKING_PORTALS[p].replace("{bl}", clean_bl)
+                
+    # Fallback tiêu chuẩn sang Cổng tra cứu container hàng hải quốc tế Đa hãng tàu (SeaRates by DP World)
+    return f"https://www.searates.com/container/tracking/?number={clean_bl}"
+
 def detect_carrier_info(bl_number):
     """
     Tự động phân tích mã B/L để bóc tách Tiền tố và nhận diện Hãng tàu quốc tế.
@@ -139,26 +218,33 @@ def detect_carrier_info(bl_number):
     if len(clean_bl) < 3:
         return None
 
+    def _pack_res(entry, code_key):
+        res = dict(entry)
+        res["code"] = code_key
+        res["scac"] = code_key
+        res["tracking_url"] = get_carrier_tracking_url(bl_number, code_key)
+        return res
+
     # 1. Thử khớp 4 ký tự đầu (Chuẩn SCAC quốc tế)
     prefix_4 = clean_bl[:4]
     if prefix_4 in CARRIER_REGISTRY:
-        return CARRIER_REGISTRY[prefix_4]
+        return _pack_res(CARRIER_REGISTRY[prefix_4], prefix_4)
 
     # 2. Thử khớp 3 ký tự đầu
     prefix_3 = clean_bl[:3]
     if prefix_3 in CARRIER_REGISTRY:
-        return CARRIER_REGISTRY[prefix_3]
+        return _pack_res(CARRIER_REGISTRY[prefix_3], prefix_3)
 
     # 3. Thử tìm kiếm theo tiền tố trước dấu gạch ngang (nếu chuỗi gốc có dạng ONE-SGN..., FES-2026...)
     parts = re.split(r'[-_/]', str(bl_number))
     if len(parts) > 1:
         first_part = parts[0].strip().upper()
         if first_part in CARRIER_REGISTRY:
-            return CARRIER_REGISTRY[first_part]
+            return _pack_res(CARRIER_REGISTRY[first_part], first_part)
         if first_part[:4] in CARRIER_REGISTRY:
-            return CARRIER_REGISTRY[first_part[:4]]
+            return _pack_res(CARRIER_REGISTRY[first_part[:4]], first_part[:4])
         if first_part[:3] in CARRIER_REGISTRY:
-            return CARRIER_REGISTRY[first_part[:3]]
+            return _pack_res(CARRIER_REGISTRY[first_part[:3]], first_part[:3])
 
     # 4. Nhận diện các mã quốc gia đặt làm tiền tố (ví dụ DE-..., RU-..., CH-..., US-..., SG-...)
     country_prefix_map = {
@@ -173,17 +259,25 @@ def detect_carrier_info(bl_number):
     if len(clean_bl) >= 2:
         cc2 = clean_bl[:2]
         if cc2 in country_prefix_map:
-            return country_prefix_map[cc2]
+            res = dict(country_prefix_map[cc2])
+            res["code"] = cc2
+            res["scac"] = cc2
+            res["tracking_url"] = get_carrier_tracking_url(bl_number, cc2)
+            return res
 
     # Mặc định: Vận đơn quốc tế độc lập
-    return {
+    res = {
         "name": "Vận Tải Biển Quốc Tế (Carrier Manifest)",
         "short": "Hàng Hải QT",
         "country": "Global",
         "hub": "Global Trade Line",
         "type": "Vận Đơn Tiêu Chuẩn",
-        "badge": "bg-slate-700/40 text-slate-300 border-slate-600/40"
+        "badge": "bg-slate-700/40 text-slate-300 border-slate-600/40",
+        "code": "INTL",
+        "scac": "INTL",
+        "tracking_url": get_carrier_tracking_url(bl_number)
     }
+    return res
 
 def clean_key_for_search(text):
     """Chuẩn hóa ký tự mềm: loại bỏ ký tự đặc biệt, gạch ngang, khoảng trắng, viết thường."""

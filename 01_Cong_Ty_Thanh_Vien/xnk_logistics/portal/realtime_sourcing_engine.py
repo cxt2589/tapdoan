@@ -163,7 +163,21 @@ STRATEGIC_GLOBAL_PRODUCERS = [
         "sanctions_details": "Nông sản - Phân bón được miễn trừ trừng phạt nhân đạo quốc tế (OFAC General License & EU Regulation)",
         "score": 96,
         "tier": "A+",
-        "tier_label": "Tier A+ (Tập Đoàn Trụ Cột Toàn Cầu)"
+        "tier_label": "Tier A+ (Tập Đoàn Trụ Cột Toàn Cầu)",
+        "website": "https://www.uralchem.com",
+        "domain": "uralchem.com",
+        "hq_address": "Presnenskaya Naberezhnaya 6, Bldg 2, Moscow, Russia",
+        "asia_hub": "Singapore Commodity Hub & Ho Chi Minh City Liaison Desk",
+        "default_pol": "Cảng Ust-Luga / Cảng Saint Petersburg (Biển Baltic, Nga)",
+        "contact": {
+            "name": "Dmitry Konyaev",
+            "title": "General Director & Head of International Sales",
+            "email": "export@uralchem.com",
+            "phone": "+7 495 721 89 89",
+            "department": "Ban Điều Hành Xuất Khẩu Phân Bón Toàn Cầu",
+            "role_type": "primary",
+            "role_badge": "Đầu Mối Bán Hàng Trực Tiếp"
+}
     },
     {
         "id": "SUP-GLB-RU-002",
@@ -192,7 +206,21 @@ STRATEGIC_GLOBAL_PRODUCERS = [
         "sanctions_details": "Tuân thủ hành lang nhân đạo phân bón toàn cầu",
         "score": 97,
         "tier": "A+",
-        "tier_label": "Tier A+ (Tập Đoàn Trụ Cột Toàn Cầu)"
+        "tier_label": "Tier A+ (Tập Đoàn Trụ Cột Toàn Cầu)",
+        "website": "https://www.uralkali.com",
+        "domain": "uralkali.com",
+        "hq_address": "Pyatiletki Street 63, Berezniki, Perm Krai, Russia",
+        "asia_hub": "Singapore Potash Desk (Southeast Asia)",
+        "default_pol": "Cảng Baltic Bulk Terminal, St. Petersburg (Nga)",
+        "contact": {
+            "name": "Vitaly Lauk",
+            "title": "CEO & General Director",
+            "email": "potash-sales@uralkali.com",
+            "phone": "+7 3424 29 61 35",
+            "department": "Khối Thương Mại & Xuất Khẩu Kali",
+            "role_type": "primary",
+            "role_badge": "Đầu Mối Bán Hàng Trực Tiếp"
+}
     },
     {
         "id": "SUP-GLB-RU-003",
@@ -222,7 +250,21 @@ STRATEGIC_GLOBAL_PRODUCERS = [
         "sanctions_details": "Nông sản - Phân bón được miễn trừ trừng phạt nhân đạo",
         "score": 98,
         "tier": "A+",
-        "tier_label": "Tier A+ (Tập Đoàn Trụ Cột Toàn Cầu)"
+        "tier_label": "Tier A+ (Tập Đoàn Trụ Cột Toàn Cầu)",
+        "website": "https://www.phosagro.com",
+        "domain": "phosagro.com",
+        "hq_address": "Leninsky Prospekt 55/1, Bldg 1, Moscow, Russia",
+        "asia_hub": "Singapore Desk & APAC Trade Hub",
+        "default_pol": "Cảng Biển Sâu Ust-Luga / Murmansk (Nga)",
+        "contact": {
+            "name": "Mikhail Rybnikov",
+            "title": "CEO & Chairman of Management Board",
+            "email": "fertilizers-export@phosagro.ru",
+            "phone": "+7 495 232 96 89",
+            "department": "Ban Thương Mại Quốc Tế PhosAgro",
+            "role_type": "primary",
+            "role_badge": "Đầu Mối Đàm Phán Cấp Cao"
+}
     },
     {
         "id": "SUP-GLB-RU-004",
@@ -253,7 +295,21 @@ STRATEGIC_GLOBAL_PRODUCERS = [
         "sanctions_details": "Miễn trừ hàng hóa an ninh lương thực quốc tế",
         "score": 95,
         "tier": "A+",
-        "tier_label": "Tier A+ (Tập Đoàn Trụ Cột Toàn Cầu)"
+        "tier_label": "Tier A+ (Tập Đoàn Trụ Cột Toàn Cầu)",
+        "website": "https://www.eurochemgroup.com",
+        "domain": "eurochemgroup.com",
+        "hq_address": "Baarerstrasse 37, 6300 Zug, Switzerland / Novomoskovsk, Russia",
+        "asia_hub": "Singapore Regional Hub (Asia Pacific)",
+        "default_pol": "Cảng Sillamäe / Cảng Antwerp & Baltic (Nga - EU)",
+        "contact": {
+            "name": "Oleg Shiryaev",
+            "title": "Group Chief Executive Officer",
+            "email": "commercial@eurochemgroup.com",
+            "phone": "+41 41 727 16 00",
+            "department": "Ban Điều Hành Thương Mại Đa Quốc Gia",
+            "role_type": "primary",
+            "role_badge": "Đầu Mối Hợp Đồng Chiến Lược"
+}
     },
     {
         "id": "SUP-GLB-RU-005",
@@ -282,7 +338,21 @@ STRATEGIC_GLOBAL_PRODUCERS = [
         "sanctions_details": "Miễn trừ cấm vận ngành phân bón nông nghiệp",
         "score": 94,
         "tier": "A",
-        "tier_label": "Tier A (Đối Tác Chuẩn Ngoại Thương)"
+        "tier_label": "Tier A (Đối Tác Chuẩn Ngoại Thương)",
+        "website": "https://www.acron.ru",
+        "domain": "acron.ru",
+        "hq_address": "Veliky Novgorod, 173012, Russia",
+        "asia_hub": "Beijing Liaison Office & Ho Chi Minh City Desk",
+        "default_pol": "Cảng Baltic Ust-Luga / Cảng Kaliningrad (Nga)",
+        "contact": {
+            "name": "Vladimir Kunitsky",
+            "title": "President & Chief Executive Officer",
+            "email": "export@acron.ru",
+            "phone": "+7 495 411 55 94",
+            "department": "Ban Xuất Khẩu Phân Đạm Quốc Tế",
+            "role_type": "primary",
+            "role_badge": "Đầu Mối Bán Hàng Trực Tiếp"
+}
     },
     {
         "id": "SUP-GLB-RU-006",
@@ -312,7 +382,21 @@ STRATEGIC_GLOBAL_PRODUCERS = [
         "sanctions_details": "Cần định tuyến thanh toán qua đối tác trung gian Thổ Nhĩ Kỳ/UAE theo quy chuẩn tuân thủ",
         "score": 88,
         "tier": "A",
-        "tier_label": "Tier A (Kiểm Soát Định Tuyến Thanh Toán)"
+        "tier_label": "Tier A (Kiểm Soát Định Tuyến Thanh Toán)",
+        "website": "https://www.severstal.com",
+        "domain": "severstal.com",
+        "hq_address": "Mira Street 30, Cherepovets, Vologda Oblast, Russia",
+        "asia_hub": "Dubai & Shanghai Trade Liaison Hub",
+        "default_pol": "Cảng St. Petersburg / Cảng Novorossiysk (Nga)",
+        "contact": {
+            "name": "Alexander Shevelev",
+            "title": "General Director & CEO",
+            "email": "export-steel@severstal.com",
+            "phone": "+7 8202 53 09 00",
+            "department": "Khối Xuất Khẩu Thép Toàn Cầu",
+            "role_type": "primary",
+            "role_badge": "Đại Diện Thẩm Quyền Ký"
+}
     },
     {
         "id": "SUP-GLB-RU-007",
@@ -341,7 +425,21 @@ STRATEGIC_GLOBAL_PRODUCERS = [
         "sanctions_details": "Tuân thủ định tuyến pháp lý ngoại thương",
         "score": 89,
         "tier": "A",
-        "tier_label": "Tier A (Kiểm Soát Định Tuyến Thanh Toán)"
+        "tier_label": "Tier A (Kiểm Soát Định Tuyến Thanh Toán)",
+        "website": "https://www.nlmk.com",
+        "domain": "nlmk.com",
+        "hq_address": "Ploshchad Metallurgov 2, Lipetsk, Russia",
+        "asia_hub": "Singapore Steel Trading Hub",
+        "default_pol": "Cảng Novorossiysk (Biển Đen, Nga)",
+        "contact": {
+            "name": "Grigory Fedorishin",
+            "title": "President & Group CEO",
+            "email": "sales@nlmk.com",
+            "phone": "+7 495 915 15 75",
+            "department": "Ban Thương Mại Phôi Thép & HRC",
+            "role_type": "primary",
+            "role_badge": "Đầu Mối Hợp Đồng Thép"
+}
     },
     {
         "id": "SUP-GLB-RU-008",
@@ -370,7 +468,21 @@ STRATEGIC_GLOBAL_PRODUCERS = [
         "sanctions_details": "Đã được OFAC dỡ bỏ lệnh trừng phạt trực tiếp từ năm 2019",
         "score": 93,
         "tier": "A",
-        "tier_label": "Tier A (Đối Tác Chuẩn Ngoại Thương)"
+        "tier_label": "Tier A (Đối Tác Chuẩn Ngoại Thương)",
+        "website": "https://www.rusal.ru",
+        "domain": "rusal.ru",
+        "hq_address": "Vasilisy Kozhinoy Street 1, Moscow, Russia",
+        "asia_hub": "Hong Kong & Singapore Aluminium Desk",
+        "default_pol": "Cảng Thương Mại Quốc Tế Vladivostok / Vanino (Viễn Đông Nga)",
+        "contact": {
+            "name": "Evgenii Nikitin",
+            "title": "Chief Executive Officer",
+            "email": "aluminium-sales@rusal.ru",
+            "phone": "+7 495 720 51 70",
+            "department": "Ban Kinh Doanh Kim Loại Toàn Cầu",
+            "role_type": "primary",
+            "role_badge": "Đầu Mối Bán Hàng Trực Tiếp"
+}
     },
     {
         "id": "SUP-GLB-RU-009",
@@ -401,7 +513,21 @@ STRATEGIC_GLOBAL_PRODUCERS = [
         "sanctions_details": "Giao dịch thanh toán theo cơ chế tiền tệ phi USD/EUR",
         "score": 90,
         "tier": "A",
-        "tier_label": "Tier A (Đối Tác Chuẩn Ngoại Thương)"
+        "tier_label": "Tier A (Đối Tác Chuẩn Ngoại Thương)",
+        "website": "https://www.suek.com",
+        "domain": "suek.com",
+        "hq_address": "Dubininskaya Street 53, Bldg 7, Moscow, Russia",
+        "asia_hub": "Singapore Coal & Energy Desk",
+        "default_pol": "Cảng Container Vostochny / Cảng Murmansk (Nga)",
+        "contact": {
+            "name": "Maxim Basov",
+            "title": "Chief Executive Officer",
+            "email": "coal-export@suek.com",
+            "phone": "+7 495 787 04 89",
+            "department": "Khối Xuất Khẩu Than Đá Châu Á - TBD",
+            "role_type": "primary",
+            "role_badge": "Đầu Mối Đàm Phán Cung Ứng"
+}
     },
     {
         "id": "SUP-GLB-RU-010",
@@ -431,7 +557,21 @@ STRATEGIC_GLOBAL_PRODUCERS = [
         "sanctions_details": "Lương thực được bảo hộ hành lang miễn trừ an ninh lương thực toàn cầu",
         "score": 96,
         "tier": "A+",
-        "tier_label": "Tier A+ (Tập Đoàn Trụ Cột Toàn Cầu)"
+        "tier_label": "Tier A+ (Tập Đoàn Trụ Cột Toàn Cầu)",
+        "website": "https://www.demetra-holding.ru",
+        "domain": "demetra-holding.ru",
+        "hq_address": "Leningradsky Prospekt 31A, Moscow, Russia",
+        "asia_hub": "Cairo & Dubai Agri Desk",
+        "default_pol": "Cảng Novorossiysk Grain Terminal / Taman (Nga)",
+        "contact": {
+            "name": "Alexey Gribanov",
+            "title": "General Director & CEO",
+            "email": "grain-trading@demetra-holding.ru",
+            "phone": "+7 495 981 12 00",
+            "department": "Ban Điều Hành Xuất Khẩu Lúa Mì & Ngũ Cốc",
+            "role_type": "primary",
+            "role_badge": "Đầu Mối Bao Tiêu Nông Sản"
+}
     },
 
     # --- BELARUS (OLIGOPOLY EXAMPLE) ---
@@ -462,7 +602,21 @@ STRATEGIC_GLOBAL_PRODUCERS = [
         "sanctions_details": "Yêu cầu cơ chế đại lý ủy thác ngoại thương độc lập",
         "score": 85,
         "tier": "A",
-        "tier_label": "Tier A (Độc Quyền Nhóm - Cần Định Tuyến)"
+        "tier_label": "Tier A (Độc Quyền Nhóm - Cần Định Tuyến)",
+        "website": "https://www.belaruskali.by",
+        "domain": "belaruskali.by",
+        "hq_address": "Korchazhinskaya Street 5, Soligorsk, Minsk Region, Belarus",
+        "asia_hub": "Beijing & New Delhi Fertilizers Office",
+        "default_pol": "Cảng St. Petersburg / Ust-Luga (Tuyến liên vận Belarus - Nga)",
+        "contact": {
+            "name": "Ivan Golovaty",
+            "title": "Director General",
+            "email": "bpc@belpc.by",
+            "phone": "+375 17 306 48 48",
+            "department": "Công Ty Cổ Phần Phân Bón Kali Belarus (BPC)",
+            "role_type": "primary",
+            "role_badge": "Đầu Mối Xuất Khẩu Độc Quyền"
+}
     },
 
     # --- CHILE (OLIGOPOLY EXAMPLE) ---
@@ -490,7 +644,21 @@ STRATEGIC_GLOBAL_PRODUCERS = [
         "sanctions_details": "Không thuộc danh sách trừng phạt quốc tế",
         "score": 97,
         "tier": "A+",
-        "tier_label": "Tier A+ (Tập Đoàn Trụ Cột Toàn Cầu)"
+        "tier_label": "Tier A+ (Tập Đoàn Trụ Cột Toàn Cầu)",
+        "website": "https://www.sqm.com",
+        "domain": "sqm.com",
+        "hq_address": "El Trovador 4285, Las Condes, Santiago, Chile",
+        "asia_hub": "Shanghai SQM Asia Pacific Hub",
+        "default_pol": "Cảng Tocopilla / Cảng Antofagasta (Chile)",
+        "contact": {
+            "name": "Ricardo Ramos",
+            "title": "Chief Executive Officer",
+            "email": "potassium-sales@sqm.com",
+            "phone": "+56 2 2425 2000",
+            "department": "Ban Kinh Doanh Quốc Tế Phân Bón & Dinh Dưỡng Cây Trồng",
+            "role_type": "primary",
+            "role_badge": "Đầu Mối Khu Vực Châu Á"
+}
     },
 
     # --- NA UY (NORWAY) ---
@@ -517,7 +685,21 @@ STRATEGIC_GLOBAL_PRODUCERS = [
         "sanctions_details": "Không thuộc danh sách trừng phạt quốc tế",
         "score": 98,
         "tier": "A+",
-        "tier_label": "Tier A+ (Tập Đoàn Trụ Cột Toàn Cầu)"
+        "tier_label": "Tier A+ (Tập Đoàn Trụ Cột Toàn Cầu)",
+        "website": "https://www.yara.com",
+        "domain": "yara.com",
+        "hq_address": "Drammensveien 131, 0277 Oslo, Norway",
+        "asia_hub": "Yara Asia Pte Ltd, 1 Harbourfront Place, Singapore",
+        "default_pol": "Cảng Porsgrunn (Na Uy) / Cảng Hamburg (Đức)",
+        "contact": {
+            "name": "Svein Tore Holsether",
+            "title": "President & Chief Executive Officer",
+            "email": "fertilizer-apac@yara.com",
+            "phone": "+47 22 57 70 00",
+            "department": "Khối Dinh Dưỡng Cây Trồng & Thương Mại Toàn Cầu",
+            "role_type": "primary",
+            "role_badge": "Đầu Mối Hợp Đồng Cấp 1"
+}
     },
 
     # --- HOA KỲ (USA) ---
@@ -545,7 +727,21 @@ STRATEGIC_GLOBAL_PRODUCERS = [
         "sanctions_details": "Không thuộc danh sách trừng phạt",
         "score": 98,
         "tier": "A+",
-        "tier_label": "Tier A+ (Tập Đoàn Trụ Cột Toàn Cầu)"
+        "tier_label": "Tier A+ (Tập Đoàn Trụ Cột Toàn Cầu)",
+        "website": "https://www.cargill.com",
+        "domain": "cargill.com",
+        "hq_address": "15407 McGinty Rd W, Wayzata, MN 55391, USA",
+        "asia_hub": "Cargill Asia Pacific Holdings Pte Ltd, Singapore",
+        "default_pol": "Cảng New Orleans (USMSY) / Cảng Houston (USA)",
+        "contact": {
+            "name": "Brian Sikes",
+            "title": "President & Chief Executive Officer",
+            "email": "grain-apac@cargill.com",
+            "phone": "+1 952 742 7500",
+            "department": "Ban Kinh Doanh Nông Sản & Ngũ Cốc Quốc Tế",
+            "role_type": "primary",
+            "role_badge": "Đầu Mối Giao Dịch Khu Vực"
+}
     },
     {
         "id": "SUP-GLB-US-002",
@@ -570,7 +766,21 @@ STRATEGIC_GLOBAL_PRODUCERS = [
         "sanctions_details": "Không thuộc danh sách trừng phạt",
         "score": 97,
         "tier": "A+",
-        "tier_label": "Tier A+ (Tập Đoàn Trụ Cột Toàn Cầu)"
+        "tier_label": "Tier A+ (Tập Đoàn Trụ Cột Toàn Cầu)",
+        "website": "https://www.mosaicco.com",
+        "domain": "mosaicco.com",
+        "hq_address": "101 East Kennedy Blvd, Suite 2500, Tampa, FL 33602, USA",
+        "asia_hub": "Mosaic Asia Desk, Singapore",
+        "default_pol": "Cảng Tampa Bay, Florida (USTPA, USA)",
+        "contact": {
+            "name": "Bruce Bodine",
+            "title": "President & Chief Executive Officer",
+            "email": "phosphate-export@mosaicco.com",
+            "phone": "+1 813 775 4200",
+            "department": "Ban Xuất Khẩu Phân Lân DAP & Kali Toàn Cầu",
+            "role_type": "primary",
+            "role_badge": "Đầu Mối Bán Hàng Trực Tiếp"
+}
     }
 ]
 

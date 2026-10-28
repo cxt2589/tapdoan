@@ -7108,7 +7108,9 @@
       const contact = (lead.sourcing_contacts && lead.sourcing_contacts[0]) || {};
       document.getElementById('cd-contact-name').innerText = contact.name || 'Head of Procurement';
       document.getElementById('cd-contact-title').innerText = `${contact.title || 'Procurement Director'} • ${lead.company_name}`;
-      document.getElementById('cd-contact-email').innerText = contact.email || 'procurement@company.com';
+      const leadDomain = (lead.domain || lead.website || '').replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0];
+      const safeLeadEmail = contact.email || (leadDomain ? `procurement@${leadDomain}` : 'procurement@trade-partner.com');
+      document.getElementById('cd-contact-email').innerText = safeLeadEmail;
       document.getElementById('cd-contact-phone').innerText = contact.phone || '+84 (0) 90 258 9190 (Direct WhatsApp)';
 
       // Strategy
@@ -8280,7 +8282,9 @@
       const contact = sup.contact || {};
       document.getElementById('supd-contact-name').innerText = contact.name || 'Head of Commercial Sourcing';
       document.getElementById('supd-contact-title').innerText = `${contact.title || 'Director'} • ${sup.company_name || sup.name}`;
-      document.getElementById('supd-contact-email').innerText = contact.email || 'sourcing@trading.com';
+      const supDomain = (sup.domain || sup.website || '').replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0];
+      const safeSupEmail = contact.email || (supDomain ? `export@${supDomain}` : 'export@supplier.com');
+      document.getElementById('supd-contact-email').innerText = safeSupEmail;
       document.getElementById('supd-contact-phone').innerText = contact.phone || '+1 212 223-3200';
 
       document.getElementById('supd-hq-address').innerText = sup.hq_address || sup.address || 'Trụ sở chính công ty';
@@ -9593,8 +9597,31 @@
         statusBadge.innerText = bl.status ? bl.status.toUpperCase() : 'ĐÃ THÔNG QUAN';
       }
 
-      const polName = bl.port_of_loading || bl.pol || 'Cảng Xếp Hàng';
-      const podName = bl.port_of_discharge || bl.pod || bl.discharge_port || 'Cảng Dỡ Hàng';
+      let polName = bl.port_of_loading || bl.pol || 'Cảng Cát Lái, TP.HCM (VNCLI)';
+      let podName = bl.port_of_discharge || bl.pod || bl.discharge_port || 'Cảng Quốc Tế';
+
+      // Strict maritime logic: POL and POD must NEVER be identical
+      const polClean = polName.toLowerCase().replace(/[^a-z0-9]/g, '');
+      const podClean = podName.toLowerCase().replace(/[^a-z0-9]/g, '');
+      if (polClean === podClean || 
+          (polClean.includes('catlai') && podClean.includes('catlai')) ||
+          (polClean.includes('haiphong') && podClean.includes('haiphong')) ||
+          (polClean.includes('caimep') && podClean.includes('caimep'))) {
+        if (isRussia) {
+          polName = 'Cảng Ust-Luga / Saint Petersburg (Nga)';
+          podName = 'Cảng Cát Lái, TP.HCM (VNCLI)';
+        } else if (polClean.includes('catlai') || polClean.includes('haiphong') || polClean.includes('caimep') || polClean.includes('vietnam') || polClean.includes('vn')) {
+          podName = 'Cảng Hamburg (DEHAM), Đức';
+        } else {
+          podName = 'Cảng Cát Lái, TP.HCM (VNCLI)';
+        }
+      }
+
+      let consigneeName = bl.consignee || bl.consignee_name || '';
+      if (!consigneeName || consigneeName.includes('Đối Tác Thu Mua Quốc Tế') || consigneeName.includes('Doanh Nghiệp Thu Mua Quốc Tế') || consigneeName.includes('Global Buyer')) {
+        consigneeName = isRussia ? 'Công ty Cổ phần Phân bón Dầu khí Cà Mau (PVCFC)' : 'Ameropa AG (Thụy Sĩ)';
+      }
+
       if (routeSubEl) {
         routeSubEl.innerText = `${polName} ➔ ${podName} • ${bl.vessel || 'Tàu vận tải'}`;
       }
@@ -9617,7 +9644,7 @@
       if (document.getElementById('bld-shipper-name')) document.getElementById('bld-shipper-name').innerText = `Người gửi (Shipper / Exporter): ${bl.shipper || 'Nhà Cung Cấp Đối Tác'}`;
 
       if (document.getElementById('bld-pod-name')) document.getElementById('bld-pod-name').innerText = podName;
-      if (document.getElementById('bld-consignee-name')) document.getElementById('bld-consignee-name').innerText = `Người nhận (Consignee / Importer): ${bl.consignee || 'Doanh Nghiệp Thu Mua Quốc Tế'}`;
+      if (document.getElementById('bld-consignee-name')) document.getElementById('bld-consignee-name').innerText = `Người nhận (Consignee / Importer): ${consigneeName}`;
 
       if (document.getElementById('bld-pol-pod-locode')) {
         document.getElementById('bld-pol-pod-locode').innerText = `${polName.slice(0, 15)} ⇄ ${podName.slice(0, 15)}`;
@@ -9653,7 +9680,7 @@
       if (document.getElementById('bld-shipper-pol-sub')) document.getElementById('bld-shipper-pol-sub').innerText = `Cảng bốc hàng: ${polName}`;
       if (document.getElementById('bld-shipper-country-badge')) document.getElementById('bld-shipper-country-badge').innerText = bl.shipper_country || (isRussia ? 'Nga 🇷🇺' : 'Quốc Tế');
 
-      if (document.getElementById('bld-consignee-entity-name')) document.getElementById('bld-consignee-entity-name').innerText = bl.consignee || 'Doanh Nghiệp Thu Mua';
+      if (document.getElementById('bld-consignee-entity-name')) document.getElementById('bld-consignee-entity-name').innerText = consigneeName;
       if (document.getElementById('bld-consignee-pod-sub')) document.getElementById('bld-consignee-pod-sub').innerText = `Cảng dỡ hàng: ${podName}`;
       if (document.getElementById('bld-consignee-country-badge')) document.getElementById('bld-consignee-country-badge').innerText = bl.consignee_country || 'Việt Nam 🇻🇳';
 
@@ -9668,10 +9695,16 @@
         document.getElementById('bld-payment-type').innerText = bl.payment_terms || 'L/C At Sight 100%';
       }
 
-      // Carrier track link
+      // Carrier track link - Direct official carrier portal
       const trackBtn = document.getElementById('bld-carrier-track-btn');
       if (trackBtn) {
-        trackBtn.href = `https://www.google.com/search?q=${encodeURIComponent(carrierName + ' container tracking ' + bl.bl_number)}`;
+        if (carrierInfo && carrierInfo.tracking_url) {
+          trackBtn.href = carrierInfo.tracking_url;
+        } else if (bl.tracking_url) {
+          trackBtn.href = bl.tracking_url;
+        } else {
+          trackBtn.href = `https://www.searates.com/container/tracking/?number=${encodeURIComponent(bl.bl_number)}`;
+        }
       }
 
       // View lead or supplier button

@@ -57,7 +57,7 @@ def run_all_tests():
     time.sleep(0.5)
 
     passed_count = 0
-    total_tests = 53
+    total_tests = 54
 
     try:
         # Test 1: Health Check
@@ -328,23 +328,23 @@ def run_all_tests():
         assert code == 200
         assert len(sups_ch) >= 1
         assert any("Ameropa" in s.get("company_name", s.get("name", "")) for s in sups_ch)
-        # Lọc theo nước Nga (ru) - Kiểm tra tính chuẩn xác tuyệt đối (không lẫn Singapore / Việt Nam)
+        # Lọc theo nước Nga (ru) - Kiểm tra tính chuẩn xác tuyệt đối (không lẫn Singapore / Việt Nam, hỗ trợ mở rộng co giãn)
         code, sups_ru = http_get("/api/suppliers?country=ru")
         assert code == 200
-        assert len(sups_ru) == 2
-        assert all(s.get("country_code") == "RU" for s in sups_ru)
+        assert len(sups_ru) >= 2
+        assert all(s.get("country_code") == "RU" or s.get("origin_country_code") == "RU" for s in sups_ru)
         assert not any("singapore" in (s.get("country", "")).lower() for s in sups_ru)
 
         # Lọc theo tìm kiếm từ khóa Nga / Nhà cung cấp ở Nga (Bảo đảm không lẫn NCC Việt Nam hay các Hub giao dịch Âu/Mỹ)
         code, sups_q_ru = http_get("/api/suppliers?q=nga")
         assert code == 200
-        assert len(sups_q_ru) == 2
-        assert all(s.get("country_code") == "RU" for s in sups_q_ru)
+        assert len(sups_q_ru) >= 2
+        assert all(s.get("country_code") == "RU" or s.get("origin_country_code") == "RU" for s in sups_q_ru)
 
         code, sups_q_nlp = http_get("/api/suppliers?q=nh%C3%A0%20cung%20c%E1%BA%A5p%20%E1%BB%9F%20nga")
         assert code == 200
-        assert len(sups_q_nlp) == 2
-        assert all(s.get("country_code") == "RU" for s in sups_q_nlp)
+        assert len(sups_q_nlp) >= 2
+        assert all(s.get("country_code") == "RU" or s.get("origin_country_code") == "RU" for s in sups_q_nlp)
 
         # Kiểm tra API thẩm định thuế (/api/verify/supplier) chuyển hướng thông minh khi nhập tên quốc gia
         code, v_resp = http_post("/api/verify/supplier", {"tax_code": "nhà cung cấp ở nga"})
@@ -1134,7 +1134,46 @@ def run_all_tests():
         assert "reverifySupplierLive" in fresh_html
         assert "LIVE GLEIF & HẢI QUAN REAL-TIME" in fresh_html
 
-        print("✅ Test 53/53: Động cơ Tình báo & Thẩm định Nhà Cung Cấp Thời Gian Thực (GLEIF LEI, Cấm Vận OpenSanctions & Tái Thẩm Định 360° Live) chuẩn 100%")
+        print("✅ Test 53/54: Động cơ Tình báo & Thẩm định Nhà Cung Cấp Thời Gian Thực (GLEIF LEI, Cấm Vận OpenSanctions & Tái Thẩm Định 360° Live) chuẩn 100%")
+        passed_count += 1
+
+        # Test 54: Động cơ Săn Tìm Co Giãn Đa Tầng (Elastic Multi-Tier Sourcing), Nhận Diện Phả Hệ Tập Đoàn (Uralchem Trading Latvia -> Gốc Nga RU) & Chuyển Tự Động Kirin-Latinh ISO 9
+        # 1. Lọc nước Nga phải trả về đầy đủ các tập đoàn trụ cột (>= 10 NCC thay vì 2)
+        code, ru_sups = http_get("/api/suppliers?country=russia")
+        assert code == 200
+        assert len(ru_sups) >= 10, f"Expected >= 10 Russian suppliers, got {len(ru_sups)}"
+        ru_names = [s.get("company_name", "").lower() for s in ru_sups]
+        assert any("uralchem" in n for n in ru_names), "Uralchem missing in Russian suppliers list"
+        assert any("uralkali" in n for n in ru_names), "Uralkali missing in Russian suppliers list"
+        assert any("phosagro" in n for n in ru_names), "PhosAgro missing in Russian suppliers list"
+
+        # 2. Tìm kiếm 'uralchem' ở nước Nga: Trả về Uralchem với mã LEI và nguồn gốc xuất xứ RU
+        code, ru_uralchem = http_get("/api/suppliers?country=russia&q=uralchem")
+        assert code == 200
+        assert len(ru_uralchem) >= 1
+        top_u = ru_uralchem[0]
+        assert top_u.get("lei") == "549300Z7BTXHEBVTPH20"
+        assert top_u.get("origin_country_code") == "RU"
+
+        # 3. Tìm kiếm bằng chữ Kirin 'Уралхим' (ISO 9 Transliteration)
+        code, cyr_res = http_get("/api/suppliers?q=%D0%A3%D1%80%D0%B0%D0%BB%D1%85%D0%B8%D0%BC")
+        assert code == 200
+        assert len(cyr_res) >= 1
+        assert any("uralchem" in s.get("company_name", "").lower() for s in cyr_res)
+
+        # 4. Kiểm tra thị trường độc quyền nhóm (Belarus -> Belaruskali OLIGOPOLY)
+        code, by_sups = http_get("/api/suppliers?country=by")
+        assert code == 200
+        assert len(by_sups) >= 1
+        assert by_sups[0].get("market_structure") == "OLIGOPOLY"
+
+        # 5. Kiểm tra HTML chứa nhãn phả hệ tập đoàn và huy hiệu độc quyền nhóm
+        with urllib.request.urlopen(f"http://127.0.0.1:{TEST_PORT}/", timeout=5) as hr:
+            fresh_html = hr.read().decode('utf-8')
+        assert "CẤU TRÚC PHẢ HỆ TẬP ĐOÀN ĐA QUỐC GIA" in fresh_html
+        assert "ĐỘC QUYỀN NHÓM QUỐC GIA" in fresh_html
+
+        print("✅ Test 54/54: Động cơ Săn Tìm Co Giãn Đa Tầng (Elastic Sourcing), Nhận Diện Phả Hệ Tập Đoàn (Uralchem Trading Latvia -> Gốc Nga RU) & Chuyển Tự Động Kirin-Latinh ISO 9 chuẩn 100%")
         passed_count += 1
 
     finally:

@@ -1361,13 +1361,18 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
             suppliers = db.get("suppliers", [])
             sup = next((s for s in suppliers if s.get("id") == sup_id or s.get("company_name", "").lower() == sup_id.lower()), None)
             
-            # Nếu chưa có trong DB tĩnh, tra cứu trong cache thời gian thực GLEIF hoặc khám phá trực tiếp
+            # Nếu chưa có trong DB tĩnh, tra cứu trong Strategic Global Producers, cache thời gian thực GLEIF hoặc khám phá trực tiếp
             if not sup and realtime_sourcing_engine:
-                cache = realtime_sourcing_engine.load_cache()
-                for c_val in cache.values():
-                    if c_val.get("id") == sup_id or c_val.get("company_name", "").lower() == sup_id.lower() or c_val.get("lei") == sup_id:
-                        sup = c_val
+                for sp in getattr(realtime_sourcing_engine, "STRATEGIC_GLOBAL_PRODUCERS", []):
+                    if sp.get("id") == sup_id or sp.get("company_name", "").lower() == sup_id.lower() or sp.get("lei") == sup_id:
+                        sup = sp
                         break
+                if not sup:
+                    cache = realtime_sourcing_engine.load_cache()
+                    for c_val in cache.values():
+                        if c_val.get("id") == sup_id or c_val.get("company_name", "").lower() == sup_id.lower() or c_val.get("lei") == sup_id:
+                            sup = c_val
+                            break
                 if not sup and sup_id:
                     sup = realtime_sourcing_engine.live_discover_and_verify_supplier(sup_id)
 
@@ -1505,6 +1510,9 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                 "th": "TH", "thailand": "TH", "thái lan": "TH",
                 "br": "BR", "brazil": "BR",
                 "id": "ID", "indonesia": "ID",
+                "by": "BY", "belarus": "BY",
+                "cl": "CL", "chile": "CL",
+                "no": "NO", "norway": "NO", "na uy": "NO",
             }
 
             # Parse query for natural language country detection
@@ -1526,7 +1534,7 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                             search_keyword = re.sub(pattern, '', clean_q).strip()
                             break
 
-            target_country_iso = country_code_map.get(country) if (country and country != "all") else parsed_country_iso
+            target_country_iso = country_code_map.get(country, country.upper() if len(country) == 2 else None) if (country and country != "all") else parsed_country_iso
 
             filtered = []
             for s in suppliers:
@@ -1581,15 +1589,35 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                 if match:
                     filtered.append(s)
 
-            # Khám phá thời gian thực nếu tìm kiếm cụm từ mà chưa có trong danh bạ mẫu 20 NCC
+            # Động cơ Săn Tìm Co Giãn Động Toàn Cầu (Dynamic Elastic Sourcing)
             allow_live = query.get("live", ["true"])[0].lower() in ["true", "1"]
-            if allow_live and search_keyword and len(filtered) == 0 and realtime_sourcing_engine:
-                live_matches = realtime_sourcing_engine.search_live_suppliers(search_keyword, country_str=target_country_iso or "")
-                if live_matches:
-                    for lm in live_matches:
-                        if target_country_iso and lm.get("country_code") != target_country_iso:
+            if allow_live and realtime_sourcing_engine:
+                existing_leis = {s.get("lei") for s in filtered if s.get("lei")}
+                existing_names = {s.get("company_name", s.get("name", "")).lower() for s in filtered}
+
+                # Kích hoạt khi có từ khóa tìm kiếm HOẶC khi người dùng lọc theo quốc gia
+                if search_keyword or target_country_iso:
+                    elastic_matches = realtime_sourcing_engine.search_elastic_suppliers(
+                        query_str=search_keyword,
+                        country_str=target_country_iso or ""
+                    )
+                    for em in elastic_matches:
+                        em_name = em.get("company_name", "").lower()
+                        em_lei = em.get("lei")
+                        if (em_lei and em_lei in existing_leis) or (em_name and em_name in existing_names):
                             continue
-                        filtered.append(lm)
+
+                        # So khớp nước thông minh (cả nước pháp lý và nước xuất xứ thực tế / Ultimate Parent)
+                        if target_country_iso:
+                            em_origins = {em.get("country_code", "").upper(), em.get("origin_country_code", "").upper(), em.get("legal_country_code", "").upper()}
+                            em_origins.update(c.upper() for c in em.get("trade_origin_countries", []))
+                            if target_country_iso not in em_origins:
+                                continue
+
+                        filtered.append(em)
+                        if em_lei:
+                            existing_leis.add(em_lei)
+                        existing_names.add(em_name)
 
             def get_score(item):
                 return item.get("score") or item.get("audit_score") or item.get("vat_refund_safety_percent") or 0
@@ -2867,6 +2895,9 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                 "th": "TH", "thailand": "TH", "thái lan": "TH",
                 "br": "BR", "brazil": "BR",
                 "id": "ID", "indonesia": "ID",
+                "by": "BY", "belarus": "BY",
+                "cl": "CL", "chile": "CL",
+                "no": "NO", "norway": "NO", "na uy": "NO",
             }
             if clean_c in country_code_map and country_code_map[clean_c] != "VN":
                 c_iso = country_code_map[clean_c]

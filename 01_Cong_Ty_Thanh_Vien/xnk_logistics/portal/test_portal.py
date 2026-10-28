@@ -57,7 +57,7 @@ def run_all_tests():
     time.sleep(0.5)
 
     passed_count = 0
-    total_tests = 52
+    total_tests = 53
 
     try:
         # Test 1: Health Check
@@ -1112,7 +1112,31 @@ def run_all_tests():
         assert len(b2b_orders["orders"]) > 0
         latest_o = b2b_orders["orders"][0]
         assert "deadline_date" in latest_o or "status" in latest_o
-        print(f"✅ Test 52/52: Động Cơ Quét Dữ Liệu Hải Quan Hàng Ngày & Bộ Lọc Khách Hàng 24h Cho Sales chuẩn 100% (24h Leads: {leads_24h['total']}, 27 Quốc Gia)")
+        print(f"✅ Test 52/53: Động Cơ Quét Dữ Liệu Hải Quan Hàng Ngày & Bộ Lọc Khách Hàng 24h Cho Sales chuẩn 100% (24h Leads: {leads_24h['total']}, 27 Quốc Gia)")
+        passed_count += 1
+
+        # Test 53: Động Cơ Tình Báo Nhà Cung Cấp Thời Gian Thực (GLEIF LEI, Cấm Vận OpenSanctions & Tái Thẩm Định 360° Live)
+        code, live_search = http_get("/api/suppliers/live-search?q=Uralkali")
+        assert code == 200
+        assert live_search.get("ok") is True
+        assert live_search.get("count") >= 1
+        top_ent = live_search["data"][0]
+        assert top_ent.get("lei") is not None
+        assert top_ent.get("score") >= 80
+
+        code, reverify_res = http_get("/api/suppliers/reverify?name=PJSC%20Uralkali")
+        assert code == 200
+        assert reverify_res.get("ok") is True
+        assert reverify_res["supplier"].get("lei") is not None
+
+        # Kiểm tra frontend HTML chứa đầy đủ thành tố Real-Time Live Sourcing
+        with urllib.request.urlopen(f"http://127.0.0.1:{TEST_PORT}/", timeout=5) as hr:
+            fresh_html = hr.read().decode('utf-8')
+        assert "triggerLiveDiscovery" in fresh_html
+        assert "reverifySupplierLive" in fresh_html
+        assert "LIVE GLEIF & HẢI QUAN REAL-TIME" in fresh_html
+
+        print("✅ Test 53/53: Động cơ Tình báo & Thẩm định Nhà Cung Cấp Thời Gian Thực (GLEIF LEI, Cấm Vận OpenSanctions & Tái Thẩm Định 360° Live) chuẩn 100%")
         passed_count += 1
 
     finally:

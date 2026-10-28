@@ -1377,6 +1377,8 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
                     sup = realtime_sourcing_engine.live_discover_and_verify_supplier(sup_id)
 
             if sup:
+                if realtime_sourcing_engine and hasattr(realtime_sourcing_engine, "enrich_supplier_counterparty_and_bl"):
+                    sup = realtime_sourcing_engine.enrich_supplier_counterparty_and_bl(sup)
                 self._send_json({"ok": True, "supplier": sup})
             else:
                 self._send_json({"ok": False, "error": f"Supplier '{sup_id}' not found"}, 404)

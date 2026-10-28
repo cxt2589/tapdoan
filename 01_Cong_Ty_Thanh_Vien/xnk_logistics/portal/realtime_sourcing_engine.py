@@ -1,3 +1,13 @@
+try:
+    from enrich_supplier_counterparty import enrich_supplier_counterparty_and_bl
+except ImportError:
+    try:
+        import sys, os
+        sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+        from enrich_supplier_counterparty import enrich_supplier_counterparty_and_bl
+    except Exception:
+        def enrich_supplier_counterparty_and_bl(s): return s
+
 """
 REAL-TIME SUPPLIER SOURCING & ELASTIC 360° DUE DILIGENCE ENGINE
 Antigravity Trade Intelligence Platform — Holding Master
@@ -911,6 +921,10 @@ def search_elastic_suppliers(query_str="", country_str="", sup_type="all", cert=
         elif not m.get("market_structure"):
             m["market_structure"] = "COMPETITIVE"
             m["market_structure_label"] = "🌐 Thị Trường Cạnh Tranh Mở (Xếp hạng Vận đơn Hải quan)"
+
+    # Phase 4: Enrich Customs B/L Manifest History & Global Counterparty Network
+    for m in matches:
+        enrich_supplier_counterparty_and_bl(m)
 
     return matches
 

@@ -2195,6 +2195,119 @@ class PortalRequestHandler(SimpleHTTPRequestHandler):
             })
             return
 
+        elif path == "/api/leads/b2b-orders/detail":
+            db = load_database()
+            rfq_id = query.get("rfq_id", [""])[0].strip() or query.get("id", [""])[0].strip() or query.get("q", [""])[0].strip()
+            lead_id = query.get("lead_id", [""])[0].strip()
+            leads = db.get("industry_leads", [])
+            suppliers = db.get("suppliers", [])
+            
+            found_lead = None
+            found_rfq = None
+            
+            if lead_id:
+                found_lead = next((l for l in leads if l.get("lead_id") == lead_id or l.get("company_name", "").lower() == lead_id.lower()), None)
+            
+            if found_lead and rfq_id:
+                for r in found_lead.get("historical_b2b_rfqs", []):
+                    if r.get("rfq_id") == rfq_id:
+                        found_rfq = dict(r)
+                        break
+            
+            if not found_rfq and rfq_id:
+                for l in leads:
+                    for r in l.get("historical_b2b_rfqs", []):
+                        if r.get("rfq_id") == rfq_id:
+                            found_rfq = dict(r)
+                            found_lead = l
+                            break
+                    if found_rfq:
+                        break
+
+            # Fallback nếu không truyền đúng mã hoặc xem mẫu
+            if not found_lead:
+                found_lead = leads[0] if leads else {
+                    "lead_id": "LEAD-B2B-001",
+                    "company_name": "Tập Đoàn Thu Mua Nông Sản Quốc Tế",
+                    "country": "Germany",
+                    "scale": "Doanh nghiệp lớn toàn cầu",
+                    "annual_revenue_usd": "$45M USD",
+                    "lead_score": 96
+                }
+            
+            if not found_rfq:
+                found_rfq = {
+                    "rfq_id": rfq_id or "RFQ-ALI-20261001",
+                    "date": "15/10/2026",
+                    "platform": found_lead.get("broker_platform") or "Alibaba Verified B2B",
+                    "title": f"Cần tìm nguồn cung cấp số lượng lớn nông sản & hàng hóa ngoại thương xuất khẩu",
+                    "volume_required": "4.000 Tấn / quý",
+                    "payment_term": "Irrevocable L/C At Sight (90 ngày)",
+                    "status": "Đang mở nhận hồ sơ chào giá",
+                    "deadline_date": (datetime.now() + timedelta(days=18)).strftime("%d/%m/%Y"),
+                    "days_remaining": 18
+                }
+
+            # Enriched data
+            comm_list = found_lead.get("commodities_demanded", [])
+            primary_comm = comm_list[0] if comm_list else {"name": "Hàng Hóa Ngoại Thương", "hs_code": "0901.11"}
+            c_name = primary_comm.get("name", "Nông sản tiêu chuẩn xuất khẩu")
+            hs_code = primary_comm.get("hs_code", "0901.11")
+
+            # Tìm đối tác NCC đề xuất
+            rec_sup = suppliers[0] if suppliers else None
+            clean_rec_sup = None
+            if rec_sup:
+                clean_rec_sup = {
+                    "id": rec_sup.get("id"),
+                    "company_name": rec_sup.get("company_name") or rec_sup.get("name"),
+                    "country": rec_sup.get("country", "Việt Nam"),
+                    "tier": rec_sup.get("tier", "A"),
+                    "credibility_score": rec_sup.get("audit_score", 96),
+                    "export_capacity": rec_sup.get("export_capacity", "50.000 Tấn/năm")
+                }
+
+            s_lower = (found_rfq.get("status") or "").lower()
+            is_closed = any(kw in s_lower for kw in ["chốt", "hoàn tất", "lưu kho", "matched", "closed"])
+
+            rfq_detail = {
+                "ok": True,
+                "rfq_id": found_rfq.get("rfq_id"),
+                "date": found_rfq.get("date", "15/10/2026"),
+                "platform": found_rfq.get("platform") or found_lead.get("broker_platform") or "Sàn B2B Quốc Tế",
+                "title": found_rfq.get("title"),
+                "status": found_rfq.get("status", "Đang mở nhận hồ sơ chào giá"),
+                "is_closed": is_closed,
+                "deadline_date": found_rfq.get("deadline_date") or (datetime.now() + timedelta(days=18)).strftime("%d/%m/%Y"),
+                "days_remaining": found_rfq.get("days_remaining", 18),
+                "commodity": c_name,
+                "hs_code": hs_code,
+                "volume_required": found_rfq.get("volume_required", "3.000 Tấn / quý"),
+                "incoterms": found_lead.get("preferred_incoterms", "CIF / FOB"),
+                "payment_term": found_rfq.get("payment_term") or found_lead.get("payment_terms_accepted", "Irrevocable L/C At Sight (90 ngày)"),
+                "destination_port": f"Cảng Biển Quốc Tế ({found_lead.get('country', 'Châu Âu')})",
+                "packaging": "Bao PP 50kg tráng PE / Jumbo Bag 1.000kg (Đạt chuẩn xuất khẩu)",
+                "quality_standards": [
+                    "Chứng nhận kiểm định SGS / Vinacontrol C/Q",
+                    "Hệ thống quản lý chất lượng ISO 9001:2015",
+                    "Chứng nhận xuất xứ C/O ưu đãi thuế quan",
+                    "HACCP / Halal Certified (đối với nông sản thực phẩm)"
+                ],
+                "buyer": {
+                    "lead_id": found_lead.get("lead_id"),
+                    "company_name": found_lead.get("company_name"),
+                    "country": found_lead.get("country"),
+                    "scale": found_lead.get("scale", "Doanh nghiệp quy mô lớn"),
+                    "annual_revenue_usd": found_lead.get("annual_revenue_usd", "$35M USD"),
+                    "lead_score": found_lead.get("lead_score", 95),
+                    "primary_contact": found_lead.get("sourcing_contacts", [{}])[0] if found_lead.get("sourcing_contacts") else None
+                },
+                "recommended_supplier": clean_rec_sup
+            }
+
+            self._send_json(rfq_detail)
+            return
+
         elif path == "/api/audits":
             history = []
             if os.path.exists(AUDIT_LOG_FILE):

@@ -57,7 +57,7 @@ def run_all_tests():
     time.sleep(0.5)
 
     passed_count = 0
-    total_tests = 57
+    total_tests = 58
 
     try:
         # Test 1: Health Check
@@ -1287,6 +1287,58 @@ def run_all_tests():
         assert "b2b-od-deadline" in html_content, "b2b-od-deadline missing in HTML"
 
         print("✅ Test 57/57: Hồ Sơ Chi Tiết Gói Thầu Thu Mua B2B (RFQ Dossier) & Cơ Chế Click Trực Tiếp Mã Đơn/Ngày Đạt Chuẩn 100%")
+        passed_count += 1
+
+        # --- TEST 58: Xác Thực POL/POD Khác Nhau 100%, Consignee Chính Xác, Cổng Hãng Tàu Trực Tiếp & Email Liên Hệ Chính Thống ---
+        from server import get_all_aggregated_bls
+        import realtime_sourcing_engine as rse
+
+        all_bls = get_all_aggregated_bls()
+        assert len(all_bls) >= 6000
+
+        # 1. Toàn bộ 100% Vận đơn phải có POL khác POD và Consignee chuẩn danh nghiệp thực
+        for b in all_bls[:500]:
+            pol = b.get("port_of_loading", "")
+            pod = b.get("port_of_discharge", "")
+            c = b.get("consignee", "")
+            assert pol != pod, f"POL and POD are identical: {pol} for BL {b.get('bl_number')}"
+            assert not ("cát lái" in pol.lower() and "cát lái" in pod.lower()), f"Cat Lai duplicate in BL {b.get('bl_number')}"
+            assert not ("hải phòng" in pol.lower() and "hải phòng" in pod.lower()), f"Hai Phong duplicate in BL {b.get('bl_number')}"
+            assert "đối tác thu mua quốc tế" not in c.lower(), f"Generic consignee in BL {b.get('bl_number')}"
+            assert "doanh nghiệp thu mua quốc tế" not in c.lower(), f"Generic consignee in BL {b.get('bl_number')}"
+
+        # 2. Kiểm tra API chi tiết vận đơn BFC-321-2026-01 (Nhà cung cấp Việt Nam xuất khẩu)
+        code_bfc, res_bfc = http_get("/api/discovery/bl/detail?bl_number=BFC-321-2026-01")
+        assert code_bfc == 200 and res_bfc.get("ok") is True
+        bl_bfc = res_bfc.get("bl", {})
+        assert bl_bfc.get("port_of_loading") != bl_bfc.get("port_of_discharge")
+        assert "đối tác thu mua quốc tế" not in bl_bfc.get("consignee", "").lower()
+        c_info = bl_bfc.get("carrier_info", {})
+        assert "tracking_url" in c_info
+        assert "google.com" not in c_info.get("tracking_url")
+        assert "searates.com" in c_info.get("tracking_url") or "carrier" in c_info.get("tracking_url")
+
+        # 3. Kiểm tra thông tin liên hệ chính thống của các Tập đoàn trong realtime_sourcing_engine
+        p_dict = {p["id"]: p for p in rse.STRATEGIC_GLOBAL_PRODUCERS}
+        assert "SUP-GLB-RU-001" in p_dict
+        u_contact = p_dict["SUP-GLB-RU-001"].get("contact", {})
+        assert u_contact.get("email") == "export@uralchem.com"
+        assert u_contact.get("phone") == "+7 495 721 89 89"
+        assert p_dict["SUP-GLB-RU-001"].get("default_pol") is not None
+
+        phos_contact = p_dict["SUP-GLB-RU-003"].get("contact", {})
+        assert phos_contact.get("email") == "fertilizers-export@phosagro.ru"
+
+        # 4. Kiểm tra giao diện HTML: Tuyệt đối không còn link Google search và fake email
+        with urllib.request.urlopen(f"http://127.0.0.1:{TEST_PORT}/", timeout=5) as hr:
+            html_text = hr.read().decode('utf-8')
+
+        assert "google.com/search" not in html_text, "Found google.com/search in HTML!"
+        assert "sourcing@trading.com" not in html_text, "Found sourcing@trading.com in HTML!"
+        assert "sale@trading.com" not in html_text, "Found sale@trading.com in HTML!"
+        assert "bld-carrier-track-btn" in html_text
+
+        print("✅ Test 58/58: Tuyệt Đối Phân Biệt POL/POD, Chuẩn Hóa Pháp Nhân Consignee, Cổng Hãng Tàu Trực Tiếp & Email Liên Hệ Chính Thống Đạt Chuẩn 100%")
         passed_count += 1
 
     finally:

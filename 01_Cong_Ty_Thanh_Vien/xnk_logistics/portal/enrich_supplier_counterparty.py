@@ -211,7 +211,7 @@ def enrich_supplier_counterparty_and_bl(sup):
         return sup
 
     has_bls = bool(sup.get("customs_bl_records") and len(sup["customs_bl_records"]) >= 5)
-    has_net = bool(sup.get("counterparty_network") and sup["counterparty_network"].get("partners"))
+    has_net = bool(sup.get("counterparty_network") and sup["counterparty_network"].get("partners") and isinstance(sup["counterparty_network"].get("countries"), list))
     if has_bls and has_net:
         return sup
 
@@ -419,29 +419,38 @@ def enrich_supplier_counterparty_and_bl(sup):
         ]
         partners.append(p)
 
-    countries_dict = {}
+    countries_list = []
     for c_code, c_meta in COUNTRY_META.items():
         c_partners = [p for p in partners if p["country_code"] == c_code]
         if not c_partners:
             continue
         c_vol = sum(p["volume_tons"] for p in c_partners)
         c_val = sum(p["value_usd"] for p in c_partners)
-        countries_dict[c_code] = {
-            "name": c_meta["name"],
+        c_shipments = sum(p["shipments_count"] for p in c_partners)
+        countries_list.append({
             "code": c_code,
+            "name": c_meta["name"],
             "flag": c_meta["flag"],
             "region": c_meta["region"],
             "fta": c_meta["fta"],
+            "fta_status": c_meta["fta"],
             "shipping_lane": c_meta["shipping_lane"],
             "transit_days": c_meta["transit_days"],
+            "count": len(c_partners),
             "partner_count": len(c_partners),
+            "total_shipments": c_shipments,
             "volume_tons": c_vol,
+            "total_volume_tons": c_vol,
             "volume_est": f"{c_vol:,.0f} Tấn / Năm",
+            "total_volume_est": f"{c_vol:,.0f} Tấn / Năm",
             "value_usd": c_val,
+            "total_value_usd": c_val,
             "value_est": f"${c_val:,.0f} USD / Năm",
+            "total_value_est": f"${c_val:,.0f} USD / Năm",
             "share_pct": round((c_vol / total_volume_sum) * 100, 1),
+            "top_commodities": [comm_name],
             "partners": [p["name"] for p in c_partners]
-        }
+        })
 
     total_net_tons = sum(p["volume_tons"] for p in partners)
     total_net_value = sum(p["value_usd"] for p in partners)
@@ -449,7 +458,7 @@ def enrich_supplier_counterparty_and_bl(sup):
 
     sup["counterparty_network"] = {
         "total_partners": len(partners),
-        "total_countries": len(countries_dict),
+        "total_countries": len(countries_list),
         "total_shipments": total_net_shipments,
         "total_volume_tons": total_net_tons,
         "total_volume_est": f"{total_net_tons:,.0f} Tấn / Năm",
@@ -458,7 +467,7 @@ def enrich_supplier_counterparty_and_bl(sup):
         "strategic_count": len([p for p in partners if "Chiến Lược" in p["relationship"]]),
         "regular_count": len([p for p in partners if "Chiến Lược" not in p["relationship"]]),
         "new_count": 0,
-        "countries": countries_dict,
+        "countries": countries_list,
         "partners": partners
     }
 
@@ -471,5 +480,6 @@ if __name__ == "__main__":
     res = enrich_supplier_counterparty_and_bl(sup)
     print("BL records count:", len(res["customs_bl_records"]))
     print("Partners count:", len(res["counterparty_network"]["partners"]))
-    print("Countries:", list(res["counterparty_network"]["countries"].keys()))
-    print("Sample BL:", res["customs_bl_records"][0]["bl_number"], "|", res["customs_bl_records"][0]["vessel"])
+    print("Countries type:", type(res["counterparty_network"]["countries"]))
+    print("Countries count:", len(res["counterparty_network"]["countries"]))
+    print("First Country:", res["counterparty_network"]["countries"][0])

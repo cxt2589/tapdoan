@@ -8052,11 +8052,11 @@
         resetModalScroll('supplierDetailModal');
       }
       let sup = (cachedSuppliersList || []).find(s => s.id === supId);
-      if (!sup) {
-        if (document.getElementById('supd-company-name')) {
+      if (!sup || !sup.counterparty_network || !sup.counterparty_network.partners || !sup.counterparty_network.partners.length || !sup.customs_bl_records) {
+        if (!sup && document.getElementById('supd-company-name')) {
           document.getElementById('supd-company-name').innerHTML = `<span>${supId}</span> <span class="text-xs px-2.5 py-0.5 rounded-full font-mono bg-cyan-500/20 text-cyan-300 font-semibold border border-cyan-500/30 animate-pulse">Đang nạp hồ sơ nhà cung cấp...</span>`;
         }
-        if (document.getElementById('supd-location-sub')) {
+        if (!sup && document.getElementById('supd-location-sub')) {
           document.getElementById('supd-location-sub').innerText = 'Đang truy vấn hồ sơ năng lực sản xuất và xuất khẩu...';
         }
         try {
@@ -8064,6 +8064,11 @@
           const data = await res.json();
           if (data.ok && data.supplier) {
             sup = data.supplier;
+            if (Array.isArray(cachedSuppliersList)) {
+              const sIdx = cachedSuppliersList.findIndex(s => s.id === supId);
+              if (sIdx !== -1) cachedSuppliersList[sIdx] = sup;
+              else cachedSuppliersList.push(sup);
+            }
           }
         } catch (e) {
           console.error("Lỗi lấy chi tiết supplier:", e);
@@ -8610,19 +8615,24 @@
       }
 
       // 2. Country Filter Chips
+      const rawCountries = net.countries;
+      const countriesList = Array.isArray(rawCountries) 
+        ? rawCountries 
+        : (rawCountries && typeof rawCountries === 'object' ? Object.values(rawCountries) : []);
+
       if (filterContainer) {
         let chipsHtml = `
           <button type="button" onclick="filterSupplierNetworkByCountry('ALL')" class="px-3 py-1.5 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer flex items-center gap-1.5 ${selectedCountry === 'ALL' ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-brand-950 shadow-md shadow-cyan-500/20' : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10'}">
             <span>🌐</span>
-            <span>Tất Cả (${net.total_partners})</span>
+            <span>Tất Cả (${net.total_partners || (net.partners ? net.partners.length : 0)})</span>
           </button>
         `;
-        (net.countries || []).forEach(c => {
+        countriesList.forEach(c => {
           const isAct = selectedCountry === c.code;
           chipsHtml += `
             <button type="button" onclick="filterSupplierNetworkByCountry('${c.code}')" class="px-3 py-1.5 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer flex items-center gap-1.5 ${isAct ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-brand-950 shadow-md shadow-cyan-500/20' : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10'}">
-              <span>${c.flag}</span>
-              <span>${c.name} (${c.count})</span>
+              <span>${c.flag || '🌐'}</span>
+              <span>${c.name} (${c.count || c.partner_count || 1})</span>
             </button>
           `;
         });
@@ -8633,9 +8643,9 @@
       if (countryDetailBox) {
         if (selectedCountry === 'ALL') {
           countryDetailBox.classList.add('hidden');
-          if (showingText) showingText.textContent = `Hiển thị: Toàn thế giới (${net.total_partners} đối tác)`;
+          if (showingText) showingText.textContent = `Hiển thị: Toàn thế giới (${net.total_partners || (net.partners ? net.partners.length : 0)} đối tác)`;
         } else {
-          const cData = (net.countries || []).find(c => c.code === selectedCountry);
+          const cData = countriesList.find(c => c.code === selectedCountry);
           if (cData) {
             countryDetailBox.classList.remove('hidden');
             if (showingText) showingText.textContent = `Hiển thị: ${cData.flag} ${cData.name} (${cData.count} đối tác)`;

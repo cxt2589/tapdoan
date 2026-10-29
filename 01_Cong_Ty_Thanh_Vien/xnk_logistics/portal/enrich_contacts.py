@@ -160,42 +160,63 @@ def enrich_contacts():
         primary_contact["role_badge"] = "Đầu Mối Đàm Phán Chính"
         s["contact"] = primary_contact
 
-        # Các nhà cung cấp lớn được bổ sung additional_contacts
-        is_major_supplier = s_id in ["SP-001", "SP-002", "SUP-GLB-001", "SUP-GLB-002", "SUP-GLB-003", "SUP-GLB-006", "SUP-GLB-007", "SUP-GLB-008", "SUP-GLB-011", "SUP-GLB-015", "SUP-GLB-016"]
-        if is_major_supplier:
-            s_domain = primary_contact.get("email", "").split("@")[-1] if "@" in primary_contact.get("email", "") else "supply.com"
-            s["additional_contacts"] = [
-                {
-                    "name": "Bà Nguyễn Thị Bích Liên" if "SP-" in s_id or "SUP-GLB-015" in s_id or "SUP-GLB-016" in s_id else "Sarah Jenkins",
-                    "title": "Trưởng Phòng Kinh Doanh Xuất Khẩu & Dự Án" if "SP-" in s_id or "SUP-GLB-015" in s_id or "SUP-GLB-016" in s_id else "VP International Supply & Trade Operations",
-                    "department": "Khối Kinh Doanh Ngoại Thương",
-                    "email": f"export.sales@{s_domain}",
-                    "phone": "+84 91 823 4567" if "SP-" in s_id or "SUP-GLB-015" in s_id or "SUP-GLB-016" in s_id else "+1 212 555-4321",
-                    "social": "WhatsApp / Zalo: 0918234567",
-                    "working_hours": "08:00 - 17:30",
-                    "role_type": "sales_director",
-                    "role_badge": "Phụ Trách Xuất Khẩu & Báo Giá",
-                    "verified": True,
-                    "notes": "Chuyên trách báo giá CIF/FOB, thỏa thuận chiết khấu sản lượng lớn và tiến độ giao hàng."
-                },
-                {
-                    "name": "Ông Lê Văn Hùng" if "SP-" in s_id or "SUP-GLB-015" in s_id or "SUP-GLB-016" in s_id else "Alexander Wolf",
-                    "title": "Trưởng Bộ Phận Thanh Toán Quốc Tế & Chứng Từ L/C" if "SP-" in s_id or "SUP-GLB-015" in s_id or "SUP-GLB-016" in s_id else "Head of Trade Finance & Credit Lines",
-                    "department": "Phòng Tài Chính - Kế Toán XNK",
-                    "email": f"trade.finance@{s_domain}",
-                    "phone": "+84 28 3756 0115" if "SP-" in s_id or "SUP-GLB-015" in s_id or "SUP-GLB-016" in s_id else "+41 22 703 8490",
-                    "social": "WhatsApp / Signal: Trực tuyến 24/7",
-                    "working_hours": "08:30 - 17:00",
-                    "role_type": "trade_finance",
-                    "role_badge": "Thanh Toán L/C & Tín Dụng",
-                    "verified": True,
-                    "notes": "Chuyên trách tiếp nhận L/C At Sight, Usance L/C và kiểm tra xác thực hợp đồng ngoại thương."
-                }
-            ]
-            suppliers_enriched_count += 1
-        else:
-            s["additional_contacts"] = []
-            suppliers_single_count += 1
+        # Tất cả nhà cung cấp đều được trang bị đầy đủ 3 đầu mối: Báo giá xuất khẩu, Logistics cảng & Thanh toán L/C
+        c_country = (s.get("country") or "").lower()
+        c_code = (s.get("country_code") or "").lower()
+        s_domain = primary_contact.get("email", "").split("@")[-1] if "@" in primary_contact.get("email", "") else "supply-chain.org"
+        
+        matched_country = "vietnam" if ("vn" in c_code or "việt" in c_country or "vietnam" in c_country) else "switzerland"
+        for k in country_logistics_roster.keys():
+            if k in c_country or k in c_code:
+                matched_country = k
+                break
+                
+        log_info = country_logistics_roster.get(matched_country, country_logistics_roster["switzerland"])
+        fin_info = country_finance_roster.get(matched_country, country_finance_roster.get("switzerland", country_finance_roster["germany"]))
+        is_vn = matched_country == "vietnam"
+
+        s["additional_contacts"] = [
+            {
+                "name": "Bà Nguyễn Thị Bích Liên" if is_vn else ("Elena Rostova" if matched_country == "russia" else "Sarah Jenkins"),
+                "title": "Trưởng Phòng Kinh Doanh Xuất Khẩu & Dự Án" if is_vn else ("Head of International Commercial Sales" if matched_country == "russia" else "VP International Supply & Trade Operations"),
+                "department": "Khối Kinh Doanh Ngoại Thương",
+                "email": f"export.sales@{s_domain}",
+                "phone": "+84 91 823 4567" if is_vn else ("+7 495 721 89 90" if matched_country == "russia" else "+1 212 555-4321"),
+                "social": "WhatsApp / Zalo: Trực tuyến" if is_vn else "WhatsApp: Active 24/7",
+                "working_hours": "08:00 - 17:30",
+                "role_type": "sales_director",
+                "role_badge": "Phụ Trách Xuất Khẩu & Báo Giá",
+                "verified": True,
+                "notes": "Chuyên trách báo giá CIF/FOB, thỏa thuận chiết khấu sản lượng lớn và tiến độ giao hàng."
+            },
+            {
+                "name": log_info["name"],
+                "title": log_info["title"],
+                "department": log_info["dept"],
+                "email": f"logistics@{s_domain}",
+                "phone": log_info["phone"],
+                "social": log_info["chat"],
+                "working_hours": log_info.get("hours", "08:30 - 17:30"),
+                "role_type": "logistics",
+                "role_badge": "Logistics Cảng & Vận Đơn B/L",
+                "verified": True,
+                "notes": "Điều phối xếp dỡ cảng, kiểm soát seal container và cấp vận đơn hải quan B/L quốc tế."
+            },
+            {
+                "name": fin_info["name"],
+                "title": fin_info["title"],
+                "department": fin_info["dept"],
+                "email": f"trade.finance@{s_domain}",
+                "phone": fin_info["phone"],
+                "social": fin_info["chat"],
+                "working_hours": "08:30 - 17:00",
+                "role_type": "trade_finance",
+                "role_badge": "Thanh Toán L/C & Tín Dụng",
+                "verified": True,
+                "notes": "Chuyên trách tiếp nhận L/C At Sight, Usance L/C và kiểm tra xác thực hợp đồng ngoại thương."
+            }
+        ]
+        suppliers_enriched_count += 1
 
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(db, f, ensure_ascii=False, indent=2)

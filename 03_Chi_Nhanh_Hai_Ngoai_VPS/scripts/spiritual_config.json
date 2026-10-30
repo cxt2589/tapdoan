@@ -2,6 +2,14 @@
   "enabled": true,
   "dispatch_time": "06:30",
   "location": "Hà Nội",
+  "ai_engine": {
+    "provider": "google",
+    "model": "gemini-3.8-flash",
+    "secondary_model": "gemini-3.6-flash",
+    "fallback_model": "gemini-2.5-flash",
+    "api_key": "AIzaSyBQBYOWijtNbm84EaMnEK_WFhStvfn4lhk",
+    "enabled": true
+  },
   "chairman_profile": {
     "full_name": "Cao Xuân Trường",
     "birth_datetime": "1990-04-19 13:45",
